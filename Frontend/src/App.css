@@ -1,0 +1,86 @@
+.App {
+  text-align: center;
+  display:flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-image:linear-gradient(to top right,#a29f9f,#5F9EA0,#1cd3da);
+  color:rgb(6, 53, 38);
+}
+
+.auth-form-container, .login-form{
+  display: flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:2rem;
+}
+ input{
+  margin:0.5rem;
+  padding:1rem;
+  border:none;
+  border-radius:10px;
+  width:200px;
+  height: 10px;
+ }
+
+ .submitbutton{
+  border-color: rgb(6, 53, 38);
+  background-color: rgb(6, 53, 38);
+  padding: 10px;
+  border-radius: 10px;
+  width: 240px;
+  color: rgb(165, 239, 232);
+  cursor: pointer;
+  margin-top: 10px;
+  
+ }
+ .regButton{
+  background:none;
+  border:none;
+  text-decoration: underline;
+  cursor: pointer;
+  color:rgb(6, 53, 38);
+  font-weight: bold;
+  font-size: 14px;
+ }
+
+ ::placeholder{
+  color:rgb(6, 53, 38);
+  font-weight:bold;
+  font-size:14px;
+ 
+ }
+ .hr-lines:before{
+  content:" ";
+  display: block;
+  height: 2px;
+  width: 130px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  background: red;
+}
+.hr-lines{
+  position: relative;
+
+}
+.hr-lines{
+  position: relative;
+  /*  new lines  */
+  max-width: 500px;
+  text-align: center;
+}
+
+
+.hr-lines:after{
+  content:" ";
+  height: 2px;
+  width: 130px;
+  background: rgb(21, 21, 21);
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+
