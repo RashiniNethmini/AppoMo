@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import NavBar from "./NavBar";
 
 export const Login =(props) => {
     const [username, setUsername] = useState("");
@@ -8,7 +9,7 @@ export const Login =(props) => {
         e.preventDefault();
         console.log(username); 
     }
-    
+    const navbar = NavBar();   
 
     return(
         <div className="auth-form-container">
@@ -16,7 +17,7 @@ export const Login =(props) => {
         <form className="login-form"onSubmit ={handleSubmit}>
             <input value={username} onChange={(e) => setUsername(e.target.value)}type="username" placeholder="Username" id="username" name="username"/>
             <input value={password} onChange={(e) => setPassword(e.target.value)}type="password" placeholder="Password" id="password" name="password"/>
-            <button className="submitbutton"type="submit">Log in</button>
+            <button className="submitbutton" type="submit" onClick={navbar}>Log in</button>
         </form>
         
      
