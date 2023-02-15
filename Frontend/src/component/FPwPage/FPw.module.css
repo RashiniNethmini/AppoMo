@@ -1,0 +1,25 @@
+.FPwContainer {
+    display: flex;
+    justify-content: center;
+    padding-left: 50vw;
+    padding-right: 50vw;
+
+
+}
+.pDiv{
+
+    max-width: 700px;
+    border-radius: 25px !important;
+    width: 75vw;
+    margin: 10vw;
+    padding: 200px;
+}
+.FPwTitle{
+    display: flex;
+    justify-content: center;
+}
+.FTextbox{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}

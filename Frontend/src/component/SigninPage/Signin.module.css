@@ -1,0 +1,50 @@
+.regTitle{
+    display: flex;
+    justify-content: center;
+}
+.regContainer {
+    display: flex;
+    justify-content: center;
+    padding-left: 50vw;
+    padding-right: 50vw;
+
+
+}
+.papDiv {
+    max-width: 700px;
+    border-radius: 25px !important;
+    width: 75vw;
+    margin: 10vw;
+    padding: 200px;
+}
+.regDiv{
+    display: flex;
+    flex-direction: column;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    justify-content: center;
+
+
+}
+.regBodyText {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+.regFPw {
+    display: flex;
+    justify-content: center;
+}
+.regOR{
+    display: flex;
+    justify-content: center;
+}
+.regNot{
+    display: flex;
+    justify-content: center;
+}
+.signButton{
+    display: flex;
+    justify-content: center;
+    border-radius: 15px;
+}

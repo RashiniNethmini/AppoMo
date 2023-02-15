@@ -1,0 +1,50 @@
+.headTitleContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    padding-left: 50vw;
+    padding-right: 50vw;
+
+
+}
+
+.paperDiv {
+    max-width: 700px;
+    border-radius: 25px !important;
+    width: 75vw;
+    margin: 10vw;
+    padding: 10px;
+}
+
+.bodyMain {
+    display: flex;
+    flex-direction: column;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    justify-content: center;
+
+
+}
+
+.bodyTextbox {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.radioBoxContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.buttonMain {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+
+
+}
