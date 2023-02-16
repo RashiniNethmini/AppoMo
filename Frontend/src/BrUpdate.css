@@ -1,0 +1,9 @@
+.outer{
+display: flex;
+flex-direction: column;
+}
+.firstLine{
+
+    display: flex;
+    flex-direction: row;
+}
