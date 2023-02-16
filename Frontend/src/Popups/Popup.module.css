@@ -1,0 +1,19 @@
+.buttonOuter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.OuterContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.audio{
+    height :24px;
+    
+}
+.audioOuter{
+padding-top: 2px;
+}

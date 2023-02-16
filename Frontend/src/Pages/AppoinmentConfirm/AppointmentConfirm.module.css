@@ -1,0 +1,46 @@
+.mainContainer{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    padding-left:50vw;
+    padding-right: 50vw;
+    
+}
+
+.heading{
+    color:black;
+    display:flex;
+    justify-content: center;
+}
+
+
+.paper{
+    border-radius:25px;
+    width:900px;
+    margin:10vw;
+    padding: 10px;
+   
+  
+}
+
+.appointmentTabs{
+    display: flex !important;;
+    flex-direction: row!important;
+    justify-content:center!important;
+    padding: 10px !important;;
+   
+    
+    width: max-content!important;
+    flex-wrap: wrap!important;
+   
+  
+}
+
+
+.buttonOuter{
+padding: 10px;
+
+
+}
+
+

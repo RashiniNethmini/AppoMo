@@ -9,6 +9,7 @@ import BranchUpdate from "./BranchUpdate"
 import Table from "./Table";
 import BrUpdate from "./BrUpdate";
 import FormBr from "./component/FormBr"
+import AppointmentConfirm from "./Pages/AppoinmentConfirm/AppointmentConfirm";
 
 
 
@@ -17,7 +18,7 @@ function App() {
   return (
     <div className="App">
       
-        
+      <AppointmentConfirm/>
       <FormBr/>
     </div>
   );
