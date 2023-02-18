@@ -63,7 +63,7 @@ export default function Popup({ Appointment }) {
           </div>
           </div>
           <div className={styles.buttonOuter}>
-              <Button className={style.button1} variant="contained">Accept</Button>
+              <Button className={style.button1} variant="contained" >Accept</Button>
             <Button variant="contained">Reject</Button>
             </div>
 

@@ -8,7 +8,10 @@ import styles from './AppointmentConfirm.module.css';
 import Paper from '@mui/material/Paper';
 import { Container } from '@mui/system';
 
+
+
 export default function AppointmentConfirm() {
+
 
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -24,6 +27,7 @@ export default function AppointmentConfirm() {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+
   return (
     <div className={styles.mainContainer}>
       <Paper elevation={6} className={styles.paper}>
@@ -35,7 +39,7 @@ export default function AppointmentConfirm() {
         {AppointmentList.map((Appointment) => (
 
           
-            <div key={Appointment.id} className={styles.buttonOuter}>
+            <div key={Appointment.id} className={styles.buttonOuter} >
             <Popup className={styles.popup}Appointment={Appointment}/>
             </div>
           

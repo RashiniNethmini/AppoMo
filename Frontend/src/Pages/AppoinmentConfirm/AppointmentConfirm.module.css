@@ -28,8 +28,6 @@
     flex-direction: row!important;
     justify-content:center!important;
     padding: 10px !important;;
-   
-    
     width: max-content!important;
     flex-wrap: wrap!important;
    
@@ -39,6 +37,7 @@
 
 .buttonOuter{
 padding: 10px;
+
 
 
 }
