@@ -9,6 +9,7 @@ import BranchUpdate from "./BranchUpdate"
 import Table from "./Table";
 import BrUpdate from "./BrUpdate";
 import FormBr from "./component/FormBr"
+import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -49,15 +50,15 @@ function App() {
   // );
     <div className='App'> 
       <ThemeProvider theme={theme}>
-        {/* <NavBar/> */}
+     
       <AppointmentConfirm/>
       <FormBr/>
       </ThemeProvider>
      {/* <style>{'body { background-color: #108F94; }'}</style> */}
-     
+   
   <Router>
       <NavBar/>
-     {/* <ResetPassword/> */}
+     <ResetPassword/>
      {/* <Dashboard/> */}
      {/* <EditProfile/> */}
     
