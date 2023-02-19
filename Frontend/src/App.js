@@ -10,6 +10,7 @@ import Table from "./Table";
 import BrUpdate from "./BrUpdate";
 import FormBr from "./component/FormBr"
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
+import EditProfile from "./Pages/EditProfile/EditProfile";
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -60,7 +61,7 @@ function App() {
       <NavBar/>
      <ResetPassword/>
      {/* <Dashboard/> */}
-     {/* <EditProfile/> */}
+     <EditProfile/>
     
       <Routes>
         {/* <Route path="/Appointment" component={<Appointment/>} /> */}

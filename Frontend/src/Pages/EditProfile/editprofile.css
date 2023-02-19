@@ -1,0 +1,51 @@
+.edit{
+    margin-top: 20px; 
+}
+
+.editPaper{
+    border-radius: 5px; 
+ }
+
+
+
+.editform{
+   margin-top: 10px;
+   display: flex;
+}
+.editdetails{
+  
+    align-items: center;
+    display: flex;
+  
+    justify-content: flex-start;
+
+} 
+
+.editDetailForm{
+    margin-top: 20px; 
+    padding:3rem;
+    justify-content: flex-end;
+}
+.editdetailsButton{
+  
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    justify-content: flex-end;
+
+} 
+.editdetailslogo{
+  
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+ 
+    justify-content: flex-end;
+  
+
+} 
+
+.editbutton{
+    background-color: #084C4F;
+}
