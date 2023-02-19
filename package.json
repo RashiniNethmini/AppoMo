@@ -2,10 +2,18 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.7",
     "@mui/styled-engine-sc": "^5.11.0",
+    "@themesberg/react-bootstrap": "^1.4.1",
+    "react-bootstrap-validation": "^0.1.11",
+    "react-datetime": "^3.2.0",
     "react-google-button": "^0.7.2",
+    "react-responsive-select": "^7.0.4",
     "styled-components": "^5.3.6"
   }
 }
