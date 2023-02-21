@@ -1,127 +1,107 @@
 import React, { useState } from "react";
+import styleset from './brUpdate.module.css';
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import './BrUpdate.css'
-import { Typography } from "@mui/material";
-import { margin } from "@mui/system";
-import { AlignHorizontalLeft } from "@mui/icons-material";
+import { Container, Button, FormControl, Box, NativeSelect, Card, CardContent, IconButton, Paper, Stack, TextField, Typography, Select, MenuItem, InputLabel, CssBaseline } from "@mui/material";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { AlignHorizontalCenter } from "@mui/icons-material";
 
 
 export default function BranchForm() {
-    const [time, setTime] = useState("")
 
 
-    const changeTime = (e) => {
-      setTime(e.target.value || "08:00")
-    }
 
-return(
+  const columns = [
+    { id: 'BrName', label: 'Branch Name', Width: 300, align: 'center' },
+    { id: 'ManName', label: 'Name of Manager', Width: 300, align: 'center' },
+    { id: 'Cntct', label: 'Contact Number', Width: 300, align: 'center' },
+    { id: 'Addrs', label: 'Address', Width: 300, align: 'center' },
 
-    <div className="BranchDetails">
-    <h1>Branch Details</h1>
+  ];
+  function createData(BrName, ManName, Cntct, Addrs) {
+    return { BrName, ManName, Cntct, Addrs };
+  }
 
-  <div className="outer">
-<div className="firstLine">
-    <Typography sx={{pr:{xs:3,sm:5,md:7,lg:6,xlg:9}}}>
-     Weekdays Open
+  const rows = [
+    createData('Colombo', 'L.Malith Perera', '0114512892', 'No.12,Duplication Road,Colombo 6'),
+    createData("Aluthgama", "A. Senith Cooray", "0344589632", "No.108,Galle Road,Aluthgama"),
+    createData("Matara", "S.Malan Peiris", "0485789632", "No.85,Galle Road Matara"),
 
-    </Typography>
-  
-   
-    <Stack component="form" noValidate spacing={3}>
-    
+
+  ]
+
  
-  <div>
- 
-  <Stack direction="row" spacing={2}>
-    
-  <TextField
-          id="outlined-read-only-input"
-          label=""
-          variant="filled"
-          type="text"
-          defaultValue="Weekdays Open"
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-  <TextField
-        id="weekdaysfrom"
-        label="From"
-        type="time"
-        defaultValue="07:30"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-        }}
-        sx={{ width: 150 }}
-      />
-       <TextField
-        id="weekdaysto"
-        label="To"
-        type="time"
-        defaultValue="05:00"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-        }}
-        sx={{ width: 150 }}
-      />
-      </Stack>
 
-  </div>
-  <div className="secondLine">
-    <Typography sx={{pr:{xs:3,sm:5,md:7,lg:6,xlg:9}} }>
+  return (
 
-     Weekends Open
+    <div className={styleset.mainContainer}>
+      <div >
+        <Paper elevation={6} className={styleset.brDetails} sx={{ mr: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" }, alignItems: "center", borderRadius: "31px", overflow: "auto" }} >
+          <div className={styleset.headTitleContainer}>
+            <h1>Branch Details</h1></div>
+          <TableContainer  >
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead >
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ maxWidth: column.Width }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
 
-    </Typography></div>
-  <div>
-  
-  <Stack direction="row" spacing={2}>
-  <TextField
-        id="weekdaysfrom"
-        label="From"
-        type="time"
-        defaultValue="07:30"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-        }}
-        sx={{ width: 150 }}
-      />
-       <TextField
-        id="weekdaysto"
-        label="To"
-        type="time"
-        defaultValue="05:00"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        inputProps={{
-          step: 300, // 5 min
-        }}
-        sx={{ width: 150 }}
-      />
-      </Stack>
+                  .map((row) => {
+                    return (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === 'number'
+                                ? column.format(value)
+                                : value}
 
-  </div>
+                            </TableCell>
 
-  </Stack>
+                          );
+
+                        })}
+                        <div className={styleset.buttonUpDel}>
+                          <Button variant="contained" sx={{ mr: '10px' }}>Update</Button>
+                          <Button variant="contained" sx={{ mr: '10px' }}>Delete</Button>
+                        </div>
+
+                      </TableRow>
+
+                    );
+
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <div className={styleset.buttonadd}>
+            <Button variant="contained" sx={{ mr: '10px' }} onClick={handleChange}>Add more</Button>
+          </div>
+
+        </Paper>
+
+      </div>
+    </div>
+
+  )
 
 
-</div>
-  </div>
-  </div>
-
-)
-
-}
+} 

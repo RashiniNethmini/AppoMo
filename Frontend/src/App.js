@@ -18,8 +18,10 @@ function App() {
   return (
     <div className="App">
       
-      <AppointmentConfirm/>
-      <FormBr/>
+    
+    <BrUpdate/>
+    <FormBr/>
+
     </div>
   );
 }
