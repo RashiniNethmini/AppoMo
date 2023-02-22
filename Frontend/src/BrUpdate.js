@@ -93,7 +93,7 @@ export default function BranchForm() {
             </Table>
           </TableContainer>
           <div className={styleset.buttonadd}>
-            <Button variant="contained" sx={{ mr: '10px' }} onClick={handleChange}>Add more</Button>
+            <Button variant="contained" sx={{ mr: '10px' }} >Add more</Button>
           </div>
 
         </Paper>

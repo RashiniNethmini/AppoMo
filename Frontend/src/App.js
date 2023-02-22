@@ -18,7 +18,6 @@ import NavBar from "./component/NavBar/NavBar";
 import AppointmentConfirm from "./Pages/AppoinmentConfirm/AppointmentConfirm";
 import { deepmerge } from "@mui/utils";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Aone from "./Aone";
 
 const theme = createTheme({
   palette: {
@@ -50,26 +49,14 @@ function App() {
       <Reg/>
       
       </ThemeProvider>
-     {/* <style>{'body { background-color: #108F94; }'}</style> */}
+     
    
-  
+  </div>
 
-    //   <Router>
-    //     <NavBar />
-    //     <ResetPassword />
-    //     <EditProfile />
-    //     <Dashboard />
-
-    //     <Routes>
-    //       {/* <Route path="/Appointment" component={<Appointment/>} /> */}
-    //       {/* <Route path="/dashboard"><dashboard/></Route>
-    //     {/* <Route path="/service" component={<service/>} /> */}
-    //       {/* <Route path="/service" component={<service/>} />  */}
-    //     </Routes>
-    //   </Router>
-    // </div>
-    //  <NavBar/>
-    //   <EditProfile/>
+    
+    
+    
+    
     
   );
 }
