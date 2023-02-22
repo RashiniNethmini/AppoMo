@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from './FormBr.module.css';
 import { Paper, TextField, RadioGroup, Radio, FormControlLabel,Button } from "@mui/material";
 import FormControl from '@mui/material/FormControl';
-import 'react-responsive-select/dist/react-responsive-select.css';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -87,7 +86,7 @@ return (
 
                         </div>
                          <div classname={styles.bodyTextbox}>
-                            <FormControl sx={{ xs:1,s:1,m:1, width: 621, margin:1 }}>
+                            <FormControl sx={{ mr:{xs:"10 px",sm: "15px", md: "15px", lg: "18px", xl: "20px", width: 621, margin:1} }}>
                                 <InputLabel id="demo-multiple-chip-label">Working Days</InputLabel>
                                 <Select 
                                 labelId="demo-multiple-chip-label"

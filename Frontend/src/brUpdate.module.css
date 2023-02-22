@@ -1,0 +1,40 @@
+
+.brDetails{
+    max-width: 1000px;
+    border-radius: 25px !important;
+    width: 100vw;
+    margin: 10vw;
+    padding: 10px;
+
+  
+}
+
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    max-width: 800px;
+    padding-left: 50vw;
+    padding-right: 50vw;
+ 
+}
+.headTitleContainer {
+    display: flex;
+    justify-content: center;
+    
+   
+}
+.buttonUpDel {
+    display: flex;
+    justify-content: right;
+    margin: 20px;
+
+
+}
+.buttonadd {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+
+
+}
+
