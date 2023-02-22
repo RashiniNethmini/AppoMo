@@ -18,9 +18,9 @@ export default function ResetPassword() {
 
   return (
     <div>
-      <div>
+      {/* <div>
     <NavBar/>
-    </div>
+    </div> */}
     <div className='resetPassword'>
    
       <Paper elevation={6} classname="resetPaper" >

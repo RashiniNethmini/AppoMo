@@ -1,57 +1,52 @@
-import React, {useState} from "react";
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
-import {Signin} from "./component/SigninPage/Signin";
-import {Reg} from "./component/RegistrationPage/Reg";
+import { Signin } from "./component/SigninPage/Signin";
+import { Reg } from "./component/RegistrationPage/Reg";
 import FPw from "./component/FPwPage/FPw";
 import BrUpdate from "./BrUpdate";
-import FormBr from "./component/FormBr"
+import FormBr from "./component/FormBr";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
-
+import Dashboard from "./Pages/Dashboard/Dashboard";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-
-
-import NavBar from './component/NavBar/NavBar';
-
+import NavBar from "./component/NavBar/NavBar";
 
 import AppointmentConfirm from "./Pages/AppoinmentConfirm/AppointmentConfirm";
-import { deepmerge } from '@mui/utils';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { deepmerge } from "@mui/utils";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Aone from "./Aone";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main:'#084C4F'
+      main: "#084C4F",
     },
     secondary: {
-      main:'#0C6D71'
+      main: "#0C6D71",
+    },
+    info: {
+      main: "#042A2C",
+    },
+    success: {
+      main: "#108F94",
+    },
   },
-  info: {
-    main:'#042A2C'
-  },
-  success: {
-    main:'#108F94'
-  }
-
-}
-})
+});
 
 function App() {
- 
-   return (
-  //   <div className="App">
-    
-  //   </div>
-  // );
-    <div className='App'> 
-      <ThemeProvider theme={theme}>
+  return (
+      <div className="App">
+         <ThemeProvider theme={theme}>
+         <AppointmentConfirm />
+         <FormBr />
+        
+        
      
-      <AppointmentConfirm/>
-      <FormBr/>
+      
       <Reg/>
       
       </ThemeProvider>
@@ -59,9 +54,22 @@ function App() {
    
   
 
-   </div>
-//  <NavBar/>
-//   <EditProfile/>
+    //   <Router>
+    //     <NavBar />
+    //     <ResetPassword />
+    //     <EditProfile />
+    //     <Dashboard />
+
+    //     <Routes>
+    //       {/* <Route path="/Appointment" component={<Appointment/>} /> */}
+    //       {/* <Route path="/dashboard"><dashboard/></Route>
+    //     {/* <Route path="/service" component={<service/>} /> */}
+    //       {/* <Route path="/service" component={<service/>} />  */}
+    //     </Routes>
+    //   </Router>
+    // </div>
+    //  <NavBar/>
+    //   <EditProfile/>
     
   );
 }
