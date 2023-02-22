@@ -5,8 +5,6 @@ import './App.css';
 import {Signin} from "./component/SigninPage/Signin";
 import {Reg} from "./component/RegistrationPage/Reg";
 import FPw from "./component/FPwPage/FPw";
-import BranchUpdate from "./BranchUpdate"
-import Table from "./Table";
 import BrUpdate from "./BrUpdate";
 import FormBr from "./component/FormBr"
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
@@ -54,22 +52,12 @@ function App() {
      
       <AppointmentConfirm/>
       <FormBr/>
+      <Reg/>
+      
       </ThemeProvider>
      {/* <style>{'body { background-color: #108F94; }'}</style> */}
    
-  <Router>
-      <NavBar/>
-     <ResetPassword/>
-     {/* <Dashboard/> */}
-     <EditProfile/>
-    
-      <Routes>
-        {/* <Route path="/Appointment" component={<Appointment/>} /> */}
-        {/* <Route path="/dashboard"><dashboard/></Route>
-        {/* <Route path="/service" component={<service/>} /> */}
-        {/* <Route path="/service" component={<service/>} />  */}
-      </Routes> 
-    </Router>
+  
 
    </div>
 //  <NavBar/>
