@@ -1,9 +1,7 @@
 .FPwContainer {
     display: flex;
     justify-content: center;
-    padding-left: 50vw;
-    padding-right: 50vw;
-
+   
 
 }
 .pDiv{
@@ -12,7 +10,7 @@
     border-radius: 25px !important;
     width: 75vw;
     margin: 10vw;
-    padding: 200px;
+    padding: 10px;
 }
 .FPwTitle{
     display: flex;
@@ -22,4 +20,14 @@
     display: flex;
     justify-content: center;
     margin: 10px;
+}
+.resetPwB{
+    border-radius: 500px !important;
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+.goBack{
+    display: flex;
+    justify-content: center;
 }

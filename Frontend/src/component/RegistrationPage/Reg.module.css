@@ -1,9 +1,19 @@
-.headTitleContainer {
+.regTitle {
     display: flex;
     justify-content: center;
 }
+.reglogoB{
+    display: flex;
+    justify-content: flex-end;
+    
+}
+.regUlogo{
+    display: flex;
+    justify-content: center !important;
+    align-items:center;
+}
 
-.mainContainer {
+.regContainer {
     display: flex;
     justify-content: center;
     padding-left: 50vw;
@@ -12,7 +22,7 @@
 
 }
 
-.paperDiv {
+.regpaperDiv {
     max-width: 700px;
     border-radius: 25px !important;
     width: 75vw;
@@ -20,7 +30,7 @@
     padding: 10px;
 }
 
-.bodyMain {
+.regBody {
     display: flex;
     flex-direction: column;
     padding-left: 2vw;
@@ -30,21 +40,28 @@
 
 }
 
-.bodyTextbox {
+.regBodyTextbox {
     display: flex;
     justify-content: center;
     margin: 10px;
 }
 
-.radioBoxContainer {
+.regBodyRadioBox {
     display: flex;
     justify-content: center;
+    margin-right: 200px !important;
+    margin: 40px;
 }
 
-.buttonMain {
+.regButton {
     display: flex;
     justify-content: center;
     margin: 20px;
 
 
+}
+.combined{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 }

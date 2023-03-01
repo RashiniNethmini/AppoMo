@@ -39,16 +39,16 @@ const theme = createTheme({
 function App() {
   return (
       <div className="App">
-         <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
          <AppointmentConfirm />
-         <FormBr />
+         {/* <FormBr /> */}
         
         
-     
+          <FPw/>
+          <Signin/>
+          <Reg/>
       
-      <Reg/>
-      
-      </ThemeProvider>
+        </ThemeProvider>
      
    
   </div>
