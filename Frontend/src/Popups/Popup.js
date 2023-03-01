@@ -3,11 +3,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { IconButton } from "@mui/material";
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import styles from './Popup.module.css';
-
 import CloseIcon from '@mui/icons-material/Close';
 import { Button } from "@mui/material";
+import TextField from '@mui/material/TextField';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
+
 
 const style = {
   position: 'absolute',
@@ -38,38 +41,55 @@ export default function Popup({ Appointment }) {
       >
         <Box sx={style}>
           <div style={{ display: 'flex', alignItems: 'right', justifyContent: 'right' }}>
-            <IconButton onClick={handleClose}><CloseIcon sx={{ color: '#000', fontSize: 25 }} /></IconButton>
+            <IconButton onClick={handleClose}><CloseIcon sx={{ color: '#000', fontSize: 25 }} />
+            </IconButton>
           </div>
           <div className={styles.OuterContainer}>
-          <div className={styles.leftContainer}>
-          <Typography sx={{ p: 2 }}>
-            Name <br></br>
-            Contact No<br></br>
-            Invoice No<br></br>
-            Product<br></br>
-            Issue<br></br>
-            Voice Message<br></br>
-          </Typography>
-          </div>
-          <div className={styles.rightContainer}>
-          <Typography sx={{ p: 2 }}>
-            : {Appointment.name}<br></br>
-            : {Appointment.contactNumber}<br></br>
-            : {Appointment.invoice}<br></br>
-            : {Appointment.product}<br></br>
-           : {Appointment.issue}<br></br>
-            <div className={styles.audioOuter}>:<audio src={Appointment.voiceSrc} className={styles.audio} controls></audio></div><br></br>
-          </Typography>
-          </div>
-          </div>
-          <div className={styles.buttonOuter}>
-              <Button className={style.button1} variant="contained" >Accept</Button>
-            <Button variant="contained">Reject</Button>
+            <div className={styles.leftContainer}>
+              <Typography sx={{ p: 2 }}>
+                Name <br></br>
+                Contact No<br></br>
+                <div>Invoice No<br></br></div>
+                Product<br></br>
+                Issue<br></br>
+                Voice Message<br></br>
+              </Typography>
+            
+            </div>
+            <div className={styles.rightContainer}>
+              <Typography sx={{ p: 2 }}>
+                : {Appointment.name}<br></br>
+                : {Appointment.contactNumber}<br></br>
+                :<FormControlLabel
+          value="start"
+          control={<Checkbox />}
+          label={Appointment.invoice}
+          labelPlacement="start"
+        /><br></br>
+                
+                : {Appointment.product}<br></br>
+                : {Appointment.issue}<br></br>
+                <div className={styles.audioOuter}>:<audio src={Appointment.voiceSrc} className={styles.audio} controls></audio></div><br></br>
+              </Typography>
+              
             </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
-
           </div>
+
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent:'center' }}>
+            <TextField className={styles.commentbox}id="outlined-basic" label="comment" variant="outlined" />
+          </div>
+
+       
+
+
+          <div className={styles.buttonOuter}>
+          
+            <Button className={style.button1} variant="contained" >Accept</Button>
+            <Button variant="contained">Reject</Button>
+          </div>
+
+          
         </Box>
       </Modal>
     </div>
