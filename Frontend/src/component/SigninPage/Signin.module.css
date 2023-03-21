@@ -1,8 +1,8 @@
-.regTitle{
+.signTitle{
     display: flex;
     justify-content: center;
 }
-.regContainer {
+.signContainer {
     display: flex;
     justify-content: center;
     padding-left: 50vw;
@@ -10,14 +10,15 @@
 
 
 }
-.papDiv {
+.signpapDiv {
     max-width: 700px;
     border-radius: 25px !important;
     width: 75vw;
     margin: 10vw;
-    padding: 200px;
+    padding: 10px;
+    
 }
-.regDiv{
+.signDiv{
     display: flex;
     flex-direction: column;
     padding-left: 2vw;
@@ -26,25 +27,37 @@
 
 
 }
-.regBodyText {
+.signBodyText {
     display: flex;
     justify-content: center;
     margin: 10px;
 }
-.regFPw {
+.signFPw {
     display: flex;
-    justify-content: center;
+    justify-content: center; 
+    margin: 10px;
 }
-.regOR{
+.signOR{
     display: flex;
     justify-content: center;
+    
 }
-.regNot{
+.signNot{
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content:center ;
+    margin: 10px;
 }
 .signButton{
     display: flex;
     justify-content: center;
     border-radius: 15px;
+    margin: 10px;
+}
+.GButton{
+    border-radius: 20px !important;
+    display: flex;
+    justify-content: center;
+    
 }

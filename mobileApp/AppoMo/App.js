@@ -1,6 +1,10 @@
 import React from 'react';
-import { View,StyleSheet } from 'react-native';
 import { Provider,} from 'react-native-paper';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View,Button,TouchableOpacity,SafeAreaView,
+  TouchableWithoutFeedback,
+  Animated } from 'react-native';
+import CompanyOrServiceCenter from './CompanyOrServiceCenter';
 import IssueSubmission from './Pages/IssueSubmission';
 
 
@@ -13,6 +17,8 @@ export default function App() {
     
     
       </Provider>
+    <CompanyOrServiceCenter/>
+      <StatusBar style="auto" />
     </View>
   );
 }
@@ -24,5 +30,6 @@ export default function App() {
     backgroundColor:'#108F94',
   } 
 });
+
 
 

@@ -1,55 +1,59 @@
 import React, {useState} from "react";
 import styles from './Signin.module.css';
-import { Paper, TextField, Chip, Button } from "@mui/material";
+import { Paper, TextField, Button, Link} from "@mui/material";
 import { maxWidth } from "@mui/system";
 import GoogleButton from 'react-google-button';
 
 export const Signin = (props) => {
-    const handleClick = () => {
-        console.info('You clicked the Chip.');
-      };
-    
+   
        
 
     return(
-        <div className={styles.regContainer}>
-            <Paper elevation={6} className={styles.papDiv}>
-                <div className={styles.regTitle}>
-                    <h1>Sign in to AppoMo</h1>
-                </div>
-                
-                <div className={styles.regDiv}>
-                    <div className={styles.regBodyText}>
-                        <TextField id="outlined-basic" label="Username" variant="outlined" />
+        <div className={styles.signContainer}>
+        <Paper elevation={6} className={styles.signpapDiv}>
+            <div className={styles.signTitle}>
+                <h1>Sign in to AppoMo</h1>
+            </div>
+            <div>
+                <div className={styles.signDiv}>
+                    <div className={styles.signBodyText}>
+                        <TextField required id="outlined-required" label="Username" variant="outlined" sx={{ width: '100vw' }} />
                     </div>
-                    <div className={styles.regBodyText}>
-                        <TextField id="outlined-basic" label="Password" variant="outlined" />
+                    <div className={styles.signBodyText}>
+                        <TextField required id="outlined-required" label="Password" variant="outlined" sx={{ width: '100vw' }} />
                     </div> 
                     <div className={styles.signButton}>
-                        <Chip label="Sign in" onClick={handleClick}/>
+                        <Button variant="contained" sx={{mr:'10px'}}>Sign in</Button>
                     </div>
-                    <div className={styles.regFPw}>
-                        <p>Forgot Password?</p>
+                    <div className={styles.signFPw}>
+                        <Link href="#" color="inherit">Forgot Password?</Link>
                     </div> 
 
-                    <div className={styles.regOR}>
+                    <div className={styles.signOR}>
                         <p>OR</p>
                     </div> 
 
-                    <div className={styles.regNot}>
-                        <p>Not Registered? Register Now</p>
+                    <div className={styles.signNot}>
+                        <div>
+                            <p>Not Registered?</p>
+                        </div>
+                        <div>
+                            <Link href="#">Register Now</Link>
+                        </div>
+                        
+                        
                     </div>  
-                    
-                    <GoogleButton onClick={() => { console.log('Google button clicked')}}/>  
-                    
+                    <div className={styles.GButton}>
+                        <GoogleButton onClick={() => { console.log('Google button clicked')}}/>  
+                    </div>
                 </div>
-                
-                
-                
-        
-                
-            </Paper>
-        </div>
-        
-    )
+            </div>
+            
+            
+    
+            
+        </Paper>
+    </div>
+    
+)
 }
