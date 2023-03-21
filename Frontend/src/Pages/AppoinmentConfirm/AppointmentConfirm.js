@@ -2,7 +2,7 @@ import * as React from 'react';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Popup from '../../Popups/Popup'; 
+import AppointmentPopup from '../../Popups/AppointmentPopup';
 import { AppointmentList } from '../../AppointmentList';
 import styles from './AppointmentConfirm.module.css';
 import Paper from '@mui/material/Paper';
@@ -12,20 +12,18 @@ import { Container } from '@mui/system';
 
 export default function AppointmentConfirm() {
 
+  const [appointments, setAppointments] = React.useState(AppointmentList);
 
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+
+
+  const handleAccept = (appointment) => {
+    const filteredAppointments = appointments.filter(a => a.id !== appointment.id);
+    setAppointments(filteredAppointments);
+  }
 
 
   return (
@@ -35,17 +33,18 @@ export default function AppointmentConfirm() {
           <h3>Confirm/Reject Appointments</h3>
         </div>
 
-      <Container className={styles.appointmentTabs}  sx={{ maxWidth:{xs:'250px',sm:'400px',md:'700px'}}}>
-        {AppointmentList.map((Appointment) => (
+        <Container className={styles.appointmentTabs} sx={{ maxWidth: { xs: '250px', sm: '400px', md: '700px' } }}>
+          {appointments.map((Appointment) => (
 
-          
+
             <div key={Appointment.id} className={styles.buttonOuter} >
-            <Popup className={styles.popup}Appointment={Appointment}/>
-            </div>
-          
+             <AppointmentPopup className={styles.popup} appointment={Appointment} onAccept={() => handleAccept(Appointment)} />
 
-        ))}
-      </Container>
+            </div>
+
+
+          ))}
+        </Container>
       </Paper>
 
     </div>
