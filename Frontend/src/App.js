@@ -11,7 +11,7 @@ import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+//import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import NavBar from "./component/NavBar/NavBar";
 

@@ -25,14 +25,19 @@ const style = {
   p: 3,
 };
 
-export default function Popup({ Appointment }) {
+export default function AppointmentPopup({ appointment, onAccept }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleAcceptClick = () => {
+    onAccept(appointment);
+    handleClose();
+  }
+
   return (
     <div>
-      <Button onClick={handleOpen} variant='contained' >Appointment {Appointment.id}</Button>
+      <Button onClick={handleOpen} variant='contained' >Appointment {appointment.id}</Button>
       <Modal
         open={open}
         // onClose={handleClose}
@@ -54,42 +59,32 @@ export default function Popup({ Appointment }) {
                 Issue<br></br>
                 Voice Message<br></br>
               </Typography>
-            
+
             </div>
             <div className={styles.rightContainer}>
               <Typography sx={{ p: 2 }}>
-                : {Appointment.name}<br></br>
-                : {Appointment.contactNumber}<br></br>
-                :<FormControlLabel
-          value="start"
-          control={<Checkbox />}
-          label={Appointment.invoice}
-          labelPlacement="start"
-        /><br></br>
-                
-                : {Appointment.product}<br></br>
-                : {Appointment.issue}<br></br>
-                <div className={styles.audioOuter}>:<audio src={Appointment.voiceSrc} className={styles.audio} controls></audio></div><br></br>
+                : {appointment.name}<br></br>
+                : {appointment.contactNumber}<br></br>
+                :{appointment.invoice}<br></br>
+
+                : {appointment.product}<br></br>
+                : {appointment.issue}<br></br>
+                <div className={styles.audioOuter}>:<audio src={appointment.voiceSrc} className={styles.audio} controls></audio></div><br></br>
               </Typography>
-              
+
             </div>
 
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent:'center' }}>
-            <TextField className={styles.commentbox}id="outlined-basic" label="comment" variant="outlined" />
-          </div>
-
-       
 
 
           <div className={styles.buttonOuter}>
-          
-            <Button className={style.button1} variant="contained" >Accept</Button>
-            <Button variant="contained">Reject</Button>
+
+            <Button className={style.button1} variant="contained" onClick={handleAcceptClick}>Accept</Button>
+            <Button variant="contained" onClick={handleClose}>Reject</Button>
           </div>
 
-          
+
         </Box>
       </Modal>
     </div>

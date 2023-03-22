@@ -8,7 +8,8 @@ export const AppointmentList = [
         invoice: '2589721',
         product: 'Ipad',
         issue: 'My tablet has broken down',
-        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3'
+        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3',
+        isAccept:false,
     },
     {
         id: 2,
@@ -17,7 +18,8 @@ export const AppointmentList = [
         invoice: '2599720',
         product: 'Laptop',
         issue: 'Issue in spekear',
-        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3'
+        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3',
+        isAccept:false,
     },
     {
         id: 3,
@@ -26,7 +28,8 @@ export const AppointmentList = [
         invoice: '9309725',
         product: 'TV',
         issue: 'Display is not working',
-        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3'
+        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3',
+        isAccept:false,
     },
     {
         id: 4,
@@ -35,7 +38,8 @@ export const AppointmentList = [
         invoice: '2599720',
         product: 'Laptop',
         issue: 'Issue in spekear',
-        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3'
+        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3',
+        isAccept:false,
     },
 
     {
@@ -45,7 +49,8 @@ export const AppointmentList = [
         invoice: '2599720',
         product: 'Laptop',
         issue: 'Issue in spekear',
-        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3'
+        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3',
+        isAccept:false,
     },
     {
         id:6,
@@ -54,7 +59,8 @@ export const AppointmentList = [
         invoice: '2599720',
         product: 'Laptop',
         issue: 'Issue in spekear',
-        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3'
+        voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3',
+        isAccept:false,
     },
 
 ]
