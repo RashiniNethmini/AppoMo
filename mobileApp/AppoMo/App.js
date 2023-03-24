@@ -1,23 +1,27 @@
 import React from 'react';
-import { Provider,} from 'react-native-paper';
+import { Provider, Appbar, Searchbar} from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,Button,TouchableOpacity,SafeAreaView,
   TouchableWithoutFeedback,
   Animated } from 'react-native';
 import CompanyOrServiceCenter from './CompanyOrServiceCenter';
 import IssueSubmission from './Pages/IssueSubmission';
-
+import CompanyDetails from './Pages/CompanyDetails';
+import ComBranchDetails from './Pages/ComBranchDetails';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <Provider>
      
-      <IssueSubmission />
+      {/* <IssueSubmission /> */}
     
-    
+       
+      {/* <CompanyDetails/>  */}
       </Provider>
-    <CompanyOrServiceCenter/>
+      {/* <CompanyOrServiceCenter/>  */}
+      
+      {/* <ComBranchDetails/>  */}
       <StatusBar style="auto" />
     </View>
   );
