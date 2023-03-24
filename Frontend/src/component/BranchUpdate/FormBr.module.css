@@ -17,6 +17,7 @@
     width: 75vw;
     margin: 10vw;
     padding: 10px;
+    margin: auto;
 }
 
 .bodyMain {
@@ -33,6 +34,8 @@
     display: flex;
     justify-content: center;
     margin: 10px;
+    flex-wrap:wrap ;
+  
 }
 
 .radioBoxContainer {

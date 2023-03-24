@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider, Appbar, Searchbar} from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet, Text, View,Button,TouchableOpacity,SafeAreaView,
   TouchableWithoutFeedback,
   Animated } from 'react-native';
@@ -24,6 +25,12 @@ export default function App() {
       {/* <ComBranchDetails/>  */}
       <StatusBar style="auto" />
     </View>
+
+
+
+
+
+
   );
 }
  const styles=StyleSheet.create({
