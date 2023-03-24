@@ -10,6 +10,7 @@ import FormBr from "./component/FormBr";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Dashboard from "./Pages/Dashboard/Dashboard";
+import Termination from "./Pages/Termination/Termination";
 
 //import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
