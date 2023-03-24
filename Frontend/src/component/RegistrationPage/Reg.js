@@ -42,7 +42,7 @@ export const Reg = (props) => {
 
                 <div className={styles.reglogoB}>
                 
-                    <Avatar rc="/broken-image.jpg" variant="contained" component="label" display="flex" justify-content="center" align="center"sx={{ width: 100, height: 100 }}>
+                    <Avatar src="./avatar.jpg" variant="contained" component="label" display="flex" justify-content="center" align="center"sx={{ width: 100, height: 100 }}>
                     <p className={styles.regUlogo}>Upload Logo</p>
                     <input hidden accept="image/*" multiple type="file" />
                     
