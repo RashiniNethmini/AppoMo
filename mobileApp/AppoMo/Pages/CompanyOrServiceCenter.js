@@ -8,12 +8,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 function CompanyOrServiceCenter() {
   return (
 
-    <View>
+    <View style={{flexDirection:'column'}}>
       <View>
       <TouchableOpacity 
       // onPress={onPress} 
       style={styles.appButtonContainer}>
-    <Text style={styles.appButtonText}>&nbsp;&nbsp;&nbsp;&nbsp;Company&nbsp;&nbsp;&nbsp;&nbsp;</Text>
+    <Text style={styles.appButtonText}>Company</Text>
   </TouchableOpacity>
       </View>
       <View>

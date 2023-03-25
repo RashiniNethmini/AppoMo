@@ -6,13 +6,15 @@ import { StyleSheet, Text, View,Button,TouchableOpacity,SafeAreaView,
   TouchableWithoutFeedback,
   Animated } from 'react-native';
   import AdvPayment from './Pages/AdvancePayment';
-import CompanyOrServiceCenter from './CompanyOrServiceCenter';
+import CompanyOrServiceCenter from './Pages/CompanyOrServiceCenter';
 import IssueSubmission from './Pages/IssueSubmission';
 import CompanyDetails from './Pages/CompanyDetails';
 import ComBranchDetails from './Pages/ComBranchDetails';
 import Login from './Pages/Login';
 import ForgotPW from './Pages/ForgotPw';
 import CompanyReg from './Pages/CompanyReg';
+import ServiceCenter from './Pages/ServiceCenter';
+
 
 export default function App() {
   return (
@@ -33,6 +35,9 @@ export default function App() {
 
     
       
+    {/* <CompanyOrServiceCenter/> */}
+    <ServiceCenter/>
+    
       <StatusBar style="auto" />
     </View>
   );
