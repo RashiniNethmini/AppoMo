@@ -1,0 +1,37 @@
+ [
+{
+
+   "BrId":1 ,
+   "BrName": "Colombo",
+   "ManName":"Perera" , 
+   "Cntct":"04546875", 
+   "Addrs":"Galle road,Colombo",
+   "Email":"dsjkasdkadjk.com",
+   "ApptmntsPerHr":4,
+   "WrkngDays":"Monday,Tuesday"
+},
+
+{
+
+    "BrId":2 ,
+    "BrName": "Aluthgama",
+    "ManName":"Perera" , 
+    "Cntct":"04546875", 
+    "Addrs":"Galle road,Colombo",
+    "Email":"dsjkasdkadjk.com",
+    "ApptmntsPerHr":4,
+    "WrkngDays":"Monday,Tuesday"
+ },
+ {
+
+   "BrId":3,
+   "BrName": "Aluthgama",
+   "ManName":"Perera" , 
+   "Cntct":"04546875", 
+   "Addrs":"Galle road,Colombo",
+   "Email":"dsjkasdkadjk.com",
+   "ApptmntsPerHr":4,
+   "WrkngDays":"Monday,Tuesday"
+}
+    
+]

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-
+import {nanoid} from "nanoid";
 import { Signin } from "./component/SigninPage/Signin";
 import { Reg } from "./component/RegistrationPage/Reg";
 import FPw from "./component/FPwPage/FPw";
-import BrUpdate from "./BrUpdate";
-import FormBr from "./component/FormBr";
+import BrUpdate from "./component/BranchUpdate/BrUpdate";
+import FormBr from "./component/BranchUpdate/FormBr";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Dashboard from "./Pages/Dashboard/Dashboard";
+import Termination from "./Pages/Termination/Termination";
 
 //import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -48,7 +49,7 @@ function App() {
           <FPw/>
           <Signin/>
           <Reg/>
-      
+          <BrUpdate/>
         
      
       <ResetPassword/>
@@ -56,16 +57,14 @@ function App() {
       
       <Dashboard/>
       </ThemeProvider>
-     
+      
    
-  </div>
-
-    
-    
-    
-    
+  </div>  
     
   );
 }
 
 export default App;
+//<AppointmentConfirm />
+//<Reg/>
+//   
