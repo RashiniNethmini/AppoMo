@@ -103,17 +103,17 @@ export default function IssueSubmission() {
 
               <View>
               <Text variant="bodyLarge">Invoice No</Text>
-              <TextInput type="outlined"  value={invoice} onChangeText={text => setTextinvoice(text)} styles={StyleSheet.textbox} />
+              <TextInput type="outlined"  value={invoice} onChangeText={text => setTextinvoice(text)} style={styles.input} />
               </View>
 
               <View>
               <Text variant="bodyLarge">Product</Text>
-              <TextInput type="outlined"  value={product} onChangeText={text => setTextproduct(text)} styles={StyleSheet.textbox}/>
+              <TextInput type="outlined"  value={product} onChangeText={text => setTextproduct(text)} style={styles.input}/>
               </View>
 
               <View>
               <Text variant="bodyLarge">Issue in brief</Text>
-              <TextInput type="outlined"  value={issue} onChangeText={text => setTextissue(text)} styles={StyleSheet.textbox} />
+              <TextInput type="outlined"  value={issue} onChangeText={text => setTextissue(text)} style={styles.input} />
               </View>
 
               <View>
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#fff',
-    color: 'red',
+   
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#ccc',
