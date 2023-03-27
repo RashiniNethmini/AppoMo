@@ -15,7 +15,7 @@ export default function App() {
     <View style={styles.container}>
       <Provider>
      
-      {/* <IssueSubmission /> */}
+      <IssueSubmission />
     
        
       {/* <CompanyDetails/>  */}

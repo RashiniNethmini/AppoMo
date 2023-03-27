@@ -1,12 +1,29 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styles from './Signin.module.css';
 import { Paper, TextField, Button, Link} from "@mui/material";
 import { maxWidth } from "@mui/system";
-import GoogleButton from 'react-google-button';
+
 
 export const Signin = (props) => {
    
-       
+    const [isSignedIn, setIsSignedIn] = useState(false);
+
+    function handleCallbackResponse(response){
+        console.log("Encoded JWT ID token: " + response.credential);
+   } 
+   useEffect(() => {
+    if(window.google){
+        window.google.accounts.id.initialize({
+            client_id: "305172675804-madk45o2f4tr9937pbs05pvpvg8rpii5.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+        });
+    
+        window.google.accounts.id.renderButton(document.getElementById("signInDiv"), 
+            {theme:"outline", size: "large"}); 
+    }
+    
+
+   }, []);    
 
     return(
         <div className={styles.signContainer}>
@@ -42,10 +59,9 @@ export const Signin = (props) => {
                         </div>
                         
                         
-                    </div>  
-                    <div className={styles.GButton}>
-                        <GoogleButton onClick={() => { console.log('Google button clicked')}}/>  
-                    </div>
+                    </div> 
+                    <div className={styles.GButton} id="signInDiv"></div> 
+                    
                 </div>
             </div>
             

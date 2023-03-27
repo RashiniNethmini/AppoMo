@@ -22,7 +22,7 @@ export default function Fpw() {
                     </div>
                     <div className={styles.goBack}>
                         
-                        <Link href="#">GO BACK</Link>
+                        <Link href="#"> GO BACK</Link>
                     </div>
                 </div>
             </Paper>

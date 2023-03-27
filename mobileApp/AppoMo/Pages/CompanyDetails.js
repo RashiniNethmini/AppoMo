@@ -2,6 +2,7 @@ import  React, { useState }  from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native';
 import { Card, Searchbar, Avatar } from 'react-native-paper';
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 
@@ -9,10 +10,18 @@ import { Card, Searchbar, Avatar } from 'react-native-paper';
 
 
 export default function CompanyDetails() {
+
+  // React.useEffect(() => {
+  //   if (contentHeight >= MAX_HEIGHT) {
+  //     setScrollEnabled(false);
+  //   } else {
+  //     setScrollEnabled(true);
+  //   }
+  // }, [contentHeight]);
   
   const [searchQuery, setSearchQuery] = React.useState('');
-
   const onChangeSearch = (query) => setSearchQuery(query);
+  
   return (
     
     
