@@ -13,14 +13,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 
 export const Reg = (props) => {
     const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {setOpen(true);};
+    const handleClose = () => {setOpen(false);};
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+    
     
     return (
         <div className={styles.regContainer}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from './Termination.css';
+import styles from './Termination.module.css';
 import { Paper, TextField, RadioGroup, Radio, FormControlLabel,Button } from "@mui/material";
 
 function Termination(){
