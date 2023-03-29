@@ -16,7 +16,21 @@ import ForgotPW from './Pages/ForgotPw';
 import ServiceCenter from './Pages/ServiceCenter';
 import AdvPayment from './Pages/AdvancePayment';
 import UserRegistr from './Pages/UserReg';
+import SelectServiceCenter from './Pages/SelectServiceCenter'
 
+// const AppNavigator= createStackNavigator(
+//   {
+//     Select:{
+//       screen:CompanyOrServiceCenter
+//     },
+//     SelectServiceCenter:{
+//       screen:SelectServiceCenter
+//     },
+//     serviceCenter:{
+//       screen:ServiceCenter
+//     }
+//   }
+// )
 
 export default function App() {
   return (

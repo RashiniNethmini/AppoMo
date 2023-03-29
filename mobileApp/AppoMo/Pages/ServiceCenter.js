@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View,TouchableOpacity,
     TouchableWithoutFeedback,
-    Animated } from 'react-native';
+    Animated,
+    ScrollView } from 'react-native';
 import {Table,Row,Rows} from 'react-native-table-component';
 import { MaterialIcons } from '@expo/vector-icons';
     
@@ -9,7 +10,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 const HeadTable= ['Name', 'Address', 'Contact No '];
 const DataTable= [
         ['Colombo', '87/5,Main Roard,Colombo.', '011-2456825'],
-        ['Panadura', 'No.507,Galle Road,Panadura.', '038-2247896']
+        ['Panadura', 'No.507,Galle Road,Panadura.', '038-2247896'],
+
+        
       ];
 
 
@@ -46,17 +49,22 @@ function ServiceCenter() {
     
   return (
     <View>
-    <View style={{flex:3,justifyContent:'flex-end'}}>
+    <View style={{marginTop:200}}>
       <View>
         <Text style={styles.serviceCenterText}>Service Center A</Text>
       </View>
       
         <View>
-          <Table borderStyle={{borderWidth:1}} style={styles.a}>
-          <Row data={HeadTable} style={styles.HeadStyle} textStyle={styles.TableText}/>
-              <Rows data={DataTable}  style={{backgroundColor:'white'}} textStyle={styles.TableRowText}/>
-            </Table>
+              <Table borderStyle={{borderWidth:1}} style={styles.a}>
+                <Row data={HeadTable} style={styles.HeadStyle} textStyle={styles.TableText}/>
+                <ScrollView>
+                <Table borderStyle={{borderWidth:1}}>
+                <Rows data={DataTable}  style={{backgroundColor:'white'}} textStyle={styles.TableRowText}/>
+              </Table>
+              </ScrollView>
+              </Table> 
         </View>
+       
 
         <View>
             {/* <Text style={styles.heading}>{starRating ? `${starRating}*` : 'Tap to rate'}</Text> */}
@@ -99,12 +107,13 @@ const styles = StyleSheet.create({
     color: "#084C4F",
     textAlign:'center',
     fontWeight:'bold',
-    fontSize: 35
+    fontSize: 35,
   },
   HeadStyle: { 
     height: 50,
     alignContent: "center",
     backgroundColor: "#084C4F",
+    width:375
   },
   TableText: { 
     margin: 10,
@@ -132,18 +141,19 @@ const styles = StyleSheet.create({
     color: '#ffb300',
   },
   a:{
-    marginVertical:30
+    marginVertical:40,
+    maxHeight:200
   },
   serviceIssueButton: {
     elevation: 6,
     backgroundColor: "#084C4F",
     paddingVertical: 20,
-  
     marginVertical:30,
     position: 'absolute',
     bottom:0,
     right:0,
-    left:0
+    left:0,
+  
   },
   serviceIssueButtonText: {
     fontSize: 22,
