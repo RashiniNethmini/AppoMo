@@ -130,7 +130,7 @@ export default function IssueSubmission() {
                 <Dialog visible={visible} onDismiss={() => setVisible(false)}>
                   
                   <Dialog.Content>
-                    <Paragraph>Please wait till we looking to your issue.</Paragraph>
+                    <Paragraph>Please wait till we look into your issue.</Paragraph>
                   </Dialog.Content>
                   <Dialog.Actions>
                     <Button onPress={() => setVisible(false)}>Ok</Button>

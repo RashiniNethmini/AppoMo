@@ -45,7 +45,7 @@ function App() {
          
         <FormBr />
         
-        
+        <Termination/>
           <FPw/>
           <Signin/>
           <Reg/>
