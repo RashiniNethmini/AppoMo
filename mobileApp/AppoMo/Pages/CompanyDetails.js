@@ -29,36 +29,55 @@ export default function CompanyDetails() {
       <Avatar.Image size={70} source={require('../assets/avatar.jpg')} style={styles.avatar}/>
       <Searchbar style={styles.searchBar} placeholder='Search Company' onChangeText={onChangeSearch} value={searchQuery}></Searchbar>
       
+      
       <View style={styles.container}>
         <View>
           <View style={styles.cardContainer}>
+            <TouchableOpacity>
             <Card style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/abans.jpg')}/> 
-              {/* <Text>ABANS</Text> */}
-            </Card>
-               
+            </Card>    
+            </TouchableOpacity>
+              
+            <View >
+              <Text>ABANS</Text>
+            </View>
           </View>
+          
           <View style={styles.cardContainer}>
+            <TouchableOpacity>
             <Card style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/sinhagiri.png')}/>
-              {/* <Text>ABANS</Text> */}
             </Card>
+            </TouchableOpacity>
+            <View >
+              <Text>SINHAGIRI</Text>
+            </View>
           </View> 
         </View>
+        
         <View>
           <View style={styles.cardContainer}>
+            <TouchableOpacity>
             <Card style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/Singer-logo.jpg')}/>
-              {/* <Text>ABANS</Text>  */}
             </Card>
+            </TouchableOpacity>
+            <View >
+              <Text>SINGER</Text>
+            </View>
           </View>
           
           
           <View style={styles.cardContainer}>
+            <TouchableOpacity>
             <Card style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/damro.png')}/>
-              {/* <Text>ABANS</Text> */}
             </Card>
+            </TouchableOpacity>
+            <View >
+              <Text variant="headlineLarge">DAMRO</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -76,15 +95,15 @@ export default function CompanyDetails() {
 const styles =StyleSheet.create({
   mainContainer: {
     flex: 1,
-    // backgroundColor: '#fff',
+    // backgroundColor: '#ffffff',
     alignItems: 'center', 
     justifyContent: 'center',
     width: 350,
-    maxheight: 500,
+    maxheight: 1000,
     marginTop: 50,
-    marginBottom: 50,
-    marginLeft: 10,
-    marginRight: 10,
+    // marginBottom: 50,
+    marginLeft: 5,
+    marginRight: 5,
     
       
   },
@@ -104,9 +123,9 @@ const styles =StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ffffff',
-    marginTop: 90,
+    marginTop: 100,
     maxHeight: 50,
-    width: 300,
+    width: 320,
     
 
   },
@@ -114,28 +133,29 @@ const styles =StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    // backgroundColor: '#ffff00',
+    backgroundColor: '#ffff00',
     alignItems: 'center', 
     justifyContent: 'center',
-    width: 300,
-    height: 200,
-    marginTop: 30,
-    marginBottom: 50,
+    width: 320,
+    height: 700,
+    marginTop: 20,
+    // marginBottom: 50,
     
   },
 
   cardContainer: {
     flex: 1,
-    flexDirection: 'row',
-    // backgroundColor: '#ffff00',
+    flexDirection: 'column',
+    backgroundColor: '#ffff00',
     alignItems: 'center', 
     justifyContent: 'center',
     width: 140,
-    height: 140, 
-    margin: 10,
-    marginTop: 30,
-    paddingBottom: 20,
-    paddingTop: 0,
+    maxHeight: 160, 
+    margin: 20,
+    marginTop: 10,
+    paddingBottom: 10,
+    // paddingTop: 6,
+    
       
 
   },
@@ -149,6 +169,8 @@ const styles =StyleSheet.create({
     width: 140,
     height: 140,
     overflow: 'hidden',
+    marginBottom: 7,
+    
       
       
 

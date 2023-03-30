@@ -41,21 +41,21 @@ function App() {
   return (
       <div className="App">
         <ThemeProvider theme={theme}>
-         <AppointmentConfirm />
+         {/* <AppointmentConfirm /> */}
          
-        <FormBr />
+        {/* <FormBr /> */}
         
         
-          <FPw/>
+          {/* <FPw/> */}
           <Signin/>
           <Reg/>
-          <BrUpdate/>
+          {/* <BrUpdate/> */}
         
      
-      <ResetPassword/>
-      <EditProfile/> 
+      {/* <ResetPassword/> */}
+      {/* <EditProfile/>  */}
       
-      <Dashboard/>
+      {/* <Dashboard/> */}
       </ThemeProvider>
       
    

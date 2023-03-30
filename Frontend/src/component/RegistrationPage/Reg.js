@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import styles from './Reg.module.css';
-import { Paper, TextField, RadioGroup, Radio, FormControlLabel, Button, Stack, Avatar } from "@mui/material";
+import { Paper, TextField, RadioGroup, Radio, FormControlLabel, Button, Stack, Avatar, IconButton, InputAdornment } from "@mui/material";
 import { maxWidth } from "@mui/system";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+// import Visibility from '@material-ui/icons/Visibility';
+// import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 
+function validatePassword(password) {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&+*^()_])[A-Za-z\d!@#$%&+*^()_]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return 'Password must be at least 8 characters contain at least one uppercase letter, at least one lowercase letter, at least one number & at least one following symbols: !@#$%&+*^()_';
+    }
+    return null;
+}
 
 
 
@@ -16,7 +25,22 @@ export const Reg = (props) => {
     const handleClickOpen = () => {setOpen(true);};
     const handleClose = () => {setOpen(false);};
 
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const handlePasswordChange = (event) => {
+      const value = event.target.value;
+      setPassword(value);
+      setError(validatePassword(value));
+    };
+
+    // const [showPassword, setShowPassword] = React.useState(false);
+    // const handleClickShowPassword = () => setShowPassword((show) => !show);
+    // const handleMouseDownPassword = (event) => {
+    //     event.preventDefault();
+    // };
+
     
+
     
     return (
         <div className={styles.regContainer}>
@@ -58,7 +82,22 @@ export const Reg = (props) => {
 
                     </div>
                     <div className={styles.regBodyTextbox}>
-                        <TextField required id="outlined-password-input" label="Password" type="password" autoComplete="current-password" variant="outlined" helperText="Password must be at least 8 characters contain at least one uppercase letter, at least one number & at least one following symbols: !@#$%&+*^()_." sx={{ width: '100vw' }} />
+                        <TextField required id="outlined-adornment-password" label="Password" type="password" autoComplete="current-password" variant="outlined"
+                         onChange={handlePasswordChange} error={Boolean(error)}
+                         helperText="Password must be at least 8 characters contain at least one uppercase letter, at least one lowercase letter, at least one number & at least one following symbols: !@#$%&+*^()_." sx={{ width: '100vw' }}
+                        //  endAdornment={
+                        //     <InputAdornment position="end">
+                        //       <IconButton
+                        //         aria-label="toggle password visibility"
+                        //         onClick={handleClickShowPassword}
+                        //         onMouseDown={handleMouseDownPassword}
+                        //         edge="end"
+                        //       >
+                        //         {showPassword ? <VisibilityOff /> : <Visibility />}
+                        //       </IconButton>
+                        //     </InputAdornment>
+                        // }
+                      />
 
                     </div>
                     <div className={styles.regBodyTextbox}>
