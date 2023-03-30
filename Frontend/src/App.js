@@ -47,6 +47,8 @@ function App() {
         
         
           {/* <FPw/> */}
+        {/* <Termination/> */}
+          <FPw/>
           <Signin/>
           <Reg/>
           {/* <BrUpdate/> */}
