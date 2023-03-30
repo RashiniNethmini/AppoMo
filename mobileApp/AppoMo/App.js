@@ -10,7 +10,7 @@ import CompanyOrServiceCenter from './Pages/CompanyOrServiceCenter';
 import IssueSubmission from './Pages/IssueSubmission';
 import CompanyDetails from './Pages/CompanyDetails';
 import ComBranchDetails from './Pages/ComBranchDetails';
-import Login from './Pages/Login';
+// import Login from './Pages/Login';
 import ForgotPW from './Pages/ForgotPw';
 //import CompanyReg from './Pages/CompanyReg';
 import ServiceCenter from './Pages/ServiceCenter';
@@ -37,6 +37,19 @@ export default function App() {
     <View style={styles.container}>
       <Provider>
    
+     {/* <AdvPayment/>  */}
+     
+        {/* <IssueSubmission /> */}
+    
+       
+        <CompanyDetails/>
+      
+      {/* <CompanyOrServiceCenter/>  */}
+      
+      {/* <ComBranchDetails/>  */}
+     
+      {/* <ServiceCenter/> */}
+    
       {/* { <AdvPayment/>  } */}
       {/* { <UserRegistr/>} */}
       
