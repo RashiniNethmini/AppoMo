@@ -4,10 +4,8 @@ import './App.css';
 import {Signin} from "./component/SigninPage/Signin";
 import {Reg} from "./component/RegistrationPage/Reg";
 import FPw from "./component/FPwPage/FPw";
-import BranchUpdate from "./BranchUpdate"
-import Table from "./Table";
-import BrUpdate from "./BrUpdate";
-import FormBr from "./component/FormBr"
+import BrUpdate from "./component/BranchUpdate/BrUpdate";
+import FormBr from "./component/BranchUpdate/FormBr"
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
@@ -46,21 +44,13 @@ function App() {
  
    return (
   <div className="App">
-    
+   <ThemeProvider theme={theme}>
+     <AppointmentConfirm/>
+     <FormBr/>
+     <ResetPassword/>
+     </ThemeProvider>
   </div>
   );
-    <div className='App'> 
-      <ThemeProvider theme={theme}>
-     
-      <AppointmentConfirm/>
-      <FormBr/>
-      </ThemeProvider>
-
-   
-
-
-  </div>
-
    
   
 }
