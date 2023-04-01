@@ -5,7 +5,9 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View,Button,TouchableOpacity,SafeAreaView,
   TouchableWithoutFeedback,
   Animated, AppRegistry} from 'react-native';
-  
+  // import { NavigationContainer } from '@react-navigation/native';
+  // import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AdvPayment from './Pages/AdvancePayment';
 import CompanyOrServiceCenter from './Pages/CompanyOrServiceCenter';
 import IssueSubmission from './Pages/IssueSubmission';
 import CompanyDetails from './Pages/CompanyDetails';
@@ -14,35 +16,34 @@ import ComBranchDetails from './Pages/ComBranchDetails';
 import ForgotPW from './Pages/ForgotPw';
 //import CompanyReg from './Pages/CompanyReg';
 import ServiceCenter from './Pages/ServiceCenter';
-import AdvPayment from './Pages/AdvancePayment';
 import UserRegistr from './Pages/UserReg';
 import SelectServiceCenter from './Pages/SelectServiceCenter'
 
-// const AppNavigator= createStackNavigator(
-//   {
-//     Select:{
-//       screen:CompanyOrServiceCenter
-//     },
-//     SelectServiceCenter:{
-//       screen:SelectServiceCenter
-//     },
-//     serviceCenter:{
-//       screen:ServiceCenter
-//     }
-//   }
-// )
+// const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+   
     <View style={styles.container}>
       <Provider>
+
+       {/* <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="serviceCenter" component={ServiceCenter} />
+        <Stack.Screen name="SelectserviceCenter" component={SelectServiceCenter} />
+      </Stack.Navigator>
+
+    </NavigationContainer> */}
+    
+      {/* <Provider>
    
      {/* <AdvPayment/>  */}
      
         {/* <IssueSubmission /> */}
+      {/* <IssueSubmission /> */}
     
        
-        <CompanyDetails/>
+        {/* <CompanyDetails/> */}
       
       {/* <CompanyOrServiceCenter/>  */}
       
@@ -54,9 +55,17 @@ export default function App() {
       {/* { <UserRegistr/>} */}
       
 {/* <AdvPayment/> */}
+{/* <SelectServiceCenter/> */}
       </Provider> 
+    
+    <ServiceCenter/>
+
+
+   
+   
       <StatusBar style="auto" />
-   </View>
+    </View>
+   
   );
 }
  {/* <ServiceCenter/> */}

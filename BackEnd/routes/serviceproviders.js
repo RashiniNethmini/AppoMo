@@ -34,4 +34,47 @@ router.route("/add").post ((req,res) => {
 
 })
 
+router.route("/").get((req,res)=>{
+    ServiceProvider.find().then((serviceproviders)=>{
+        res.json(serviceproviders)
+    }).catch((err)=>{
+        cosole.log(err)
+    })
+})
+
+
+router.route("/update/:id").put (async (req,res)=>{
+    let serviceProviderId=req.params.id;
+    const{ type,
+        username,
+        password,
+        serviceProviderName,
+        address,
+        email,
+        ceoName,
+        regNo,
+        logo}=req.body;
+
+    const updateServiceprovider={
+        type,
+        username,
+        password,
+        serviceProviderName,
+        address,
+        email,
+        ceoName,
+        regNo,
+        logo
+    }
+
+    const update=await ServiceProvider.findByIdAndUpdate(serviceProviderId, updateServiceprovider)
+    .then(()=>{
+    res.status(200).send({status:"Service Provider updated"})
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with updating data"});
+    })
+
+})
+
 module.exports = router;
