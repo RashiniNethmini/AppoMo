@@ -19,20 +19,20 @@ import ServiceCenter from './Pages/ServiceCenter';
 export default function App() {
   return (
     <View style={styles.container}>
-      {/* <Provider>
+       <Provider>
    
-     <AdvPayment/> */}
+     
      
       <IssueSubmission />
     
        
-      {/* <CompanyDetails/>  */}
-      {/* </Provider> */}
-      {/* <CompanyOrServiceCenter/>  */}
-      
-      {/* <ComBranchDetails/>  */}
+
+      </Provider> 
      
-    <ServiceCenter/>
+      
+     
+     
+    
     
       <StatusBar style="auto" />
     </View>
