@@ -11,12 +11,21 @@ import {
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { SocialIcon, Button } from '@rneui/themed';
 import GoogleSVG from '../assets/googlelogo.svg'
+//import { useNavigation } from '@react-navigation/native';
+
 
 
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigation = useNavigation();
+
+    // const handlePressReg = () => {
+    //     navigation.navigate('UserReg');
+    //   };
+
     return (
         <View style={styles.container}>
             <View>
@@ -78,7 +87,7 @@ function Login() {
             <View style={styles.regText}>
 
                 <Text>Not Registered?</Text>
-                <TouchableOpacity><Text style={styles.innerRegText}>  Register Now</Text></TouchableOpacity>
+                <TouchableOpacity onPress={handlePressReg}><Text style={styles.innerRegText}>  Register Now</Text></TouchableOpacity>
             </View>
 
 

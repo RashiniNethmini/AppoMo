@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     resetCancelBtn:{
         backgroundColor: "#084C4F",
         borderRadius: 10,
+        borderBottomWidth:0.5,
         width: "70%",
         height: 40,
         padding: 5,

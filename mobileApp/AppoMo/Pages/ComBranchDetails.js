@@ -1,11 +1,19 @@
-import * as React from "react";
-import {View, Text, StyleSheet, Image} from 'react-native';
+import  React, { useState }  from 'react';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import { Card, Searchbar, Avatar } from 'react-native-paper';
 
 export default function ComBranchDetails() {
+    
+    
+    
+    
+
     return (
-        <View style={styles.mainContainer1}>
-            <Avatar.Image size={70} source={require('../assets/avatar.jpg')} style={styles.avatar1}/>
+        <View style={styles.mainContaine1}>
+            
+                <Avatar.Image size={70} source={require('../assets/avatar.jpg')} style={styles.avatar1}/>
+            
+
             <View style={styles.cardContainer1}>
                 <Card style={styles.card1} >
                     <Image style={styles.coverImage1} resizeMode="contain" source={require('../assets/abans.jpg')}/> 
@@ -25,25 +33,22 @@ export default function ComBranchDetails() {
 }
 
 const styles = StyleSheet.create({
-    mainContainer1: {
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: '#fff',
-        alignItems: 'center', 
-        justifyContent: 'center',
-        width: 350,
-        maxheight: 500,
-        marginTop: 10,
-        marginBottom: 50,
-        marginLeft: 10,
-        marginRight: 10,
-    },
+    mainContaine1: {
+    // backgroundColor: '#ffffff',
+    alignItems: 'center', 
+    justifyContent: 'center',
+    marginTop: 50,
+    
+
+        
+          
+      },
 
     avatar1: {
         flex:1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#ffffff',
+        // backgroundColor: '#ffffff',
         maxHeight: 70,
         marginLeft: 210,
         
@@ -58,7 +63,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
         justifyContent: 'center',
         width: 70,
-        height: 70, 
+        maxHeight: 70, 
         margin: 10,
         marginTop: 30,
           
@@ -94,7 +99,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         marginTop: 20,
         maxHeight: 50,
-        width: 300,
+        width: 320,
     },
 
     container1: {
@@ -103,10 +108,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffff00',
         alignItems: 'center', 
         justifyContent: 'center',
-        width: 300,
-        height: 200,
-        marginTop: 30,
-        marginBottom: 50,
+        width: 320,
+        height: 700,
+        marginTop: 20,
+        // marginBottom: 50,
         
     },
 
@@ -121,4 +126,4 @@ const styles = StyleSheet.create({
         marginTop: 30,
         marginBottom: 50,
     }
-})
+});

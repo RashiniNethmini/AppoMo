@@ -32,4 +32,11 @@ app.use("/Issues", IssueRouter);
 
 app.listen(PORT, () => {
     console.log('Server is running on port ' + PORT);
+const serviceproviderRouter = require ("./routes/serviceproviders.js");
+app.use("/serviceprovider", serviceproviderRouter);
+})
+
+
+app.listen(PORT,() =>{
+    console.log('Server is running on port '+PORT);
 });
