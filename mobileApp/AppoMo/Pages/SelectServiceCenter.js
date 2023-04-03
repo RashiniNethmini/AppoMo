@@ -1,11 +1,14 @@
 import React from 'react';
 import {StyleSheet, Pressable, Image, View, Alert,Text,TouchableOpacity,ScrollView} from 'react-native';
 import { SearchBar } from "react-native-elements";
+// import { useNavigation } from '@react-navigation/native';
+import ServiceCenter from './ServiceCenter';
 
 
 function SelectServiceCenter() {
-  
+  // const navigation = useNavigation();
   return (
+    
     <View>
           <View style={styles.searchStyles}>
               <SearchBar
@@ -35,7 +38,8 @@ function SelectServiceCenter() {
             <View style={styles.list}>
                 <View style={styles.item}>
                   <TouchableOpacity style={styles.imagesStyle}
-                  // onPress={()=>createStackNavigator("ServiceCenter")}
+                  //  onPress={()=>navigation.navigate("serviceCenter")}
+                  // onPress={() => navigation.navigate('serviceCenter')}
                   >
                     <Image
                         // source={this.props.itemImage}a
@@ -44,7 +48,7 @@ function SelectServiceCenter() {
                         style={styles.imageStyle}
                         />
                   </TouchableOpacity>
-                  <Text style={styles.tStyle}>Service Center A</Text>
+                  <Text style={styles.tStyle}>Service Center </Text>
                 </View>
               <View style={styles.item}>
                 <TouchableOpacity>
