@@ -1,7 +1,7 @@
 import  React, { useState }  from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native';
-import { Card, Searchbar, Avatar } from 'react-native-paper';
+import { StyleSheet, Text, View,Image, TouchableOpacity,ScrollView } from 'react-native';
+import { Searchbar, Avatar } from 'react-native-paper';
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
@@ -9,7 +9,7 @@ import { Card, Searchbar, Avatar } from 'react-native-paper';
 
 
 
-export default function CompanyDetails() {
+function CompanyDetails() {
 
   // React.useEffect(() => {
   //   if (contentHeight >= MAX_HEIGHT) {
@@ -26,17 +26,18 @@ export default function CompanyDetails() {
     
     
     <View style={styles.mainContainer}>
-      <Avatar.Image size={70} source={require('../assets/avatar.jpg')} style={styles.avatar}/>
-      <Searchbar style={styles.searchBar} placeholder='Search Company' onChangeText={onChangeSearch} value={searchQuery}></Searchbar>
+      <View><Avatar.Image size={70} source={require('../assets/avatar.jpg')} style={styles.avatar}/></View>
+      <View><Searchbar style={styles.searchBar} placeholder='Search Company' onChangeText={onChangeSearch} value={searchQuery}></Searchbar></View>
       
       
+      <ScrollView>
       <View style={styles.container}>
-        <View>
+        
           <View style={styles.cardContainer}>
             <TouchableOpacity>
-            <Card style={styles.card} >
+            <View style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/abans.jpg')}/> 
-            </Card>    
+            </View>    
             </TouchableOpacity>
               
             <View >
@@ -46,22 +47,22 @@ export default function CompanyDetails() {
           
           <View style={styles.cardContainer}>
             <TouchableOpacity>
-            <Card style={styles.card} >
+            <View  style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/sinhagiri.png')}/>
-            </Card>
+            </View >
             </TouchableOpacity>
             <View >
               <Text>SINHAGIRI</Text>
             </View>
           </View> 
-        </View>
         
-        <View>
+        
+        
           <View style={styles.cardContainer}>
             <TouchableOpacity>
-            <Card style={styles.card} >
+            <View  style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/Singer-logo.jpg')}/>
-            </Card>
+            </View >
             </TouchableOpacity>
             <View >
               <Text>SINGER</Text>
@@ -71,17 +72,17 @@ export default function CompanyDetails() {
           
           <View style={styles.cardContainer}>
             <TouchableOpacity>
-            <Card style={styles.card} >
+            <View  style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/damro.png')}/>
-            </Card>
+            </View >
             </TouchableOpacity>
             <View >
               <Text variant="headlineLarge">DAMRO</Text>
             </View>
           </View>
-        </View>
+        
       </View>
-          
+      </ScrollView>    
 
             
             
@@ -99,7 +100,7 @@ const styles =StyleSheet.create({
     alignItems: 'center', 
     justifyContent: 'center',
     width: 350,
-    maxheight: 1000,
+    maxheight: 1500,
     marginTop: 50,
     // marginBottom: 50,
     marginLeft: 5,
@@ -114,7 +115,7 @@ const styles =StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#ffffff',
     maxHeight: 70,
-    marginLeft: 210,
+    marginLeft: 230,
     
     
   },
@@ -126,6 +127,7 @@ const styles =StyleSheet.create({
     marginTop: 100,
     maxHeight: 50,
     width: 320,
+    marginBottom:20,
     
 
   },
@@ -133,27 +135,27 @@ const styles =StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#ffff00',
+    flexWrap:'wrap',
+    // backgroundColor: '#ffff00',
     alignItems: 'center', 
     justifyContent: 'center',
     width: 320,
-    height: 700,
-    marginTop: 20,
-    // marginBottom: 50,
+    height: 900,
+    
     
   },
 
   cardContainer: {
     flex: 1,
-    flexDirection: 'column',
     backgroundColor: '#ffff00',
     alignItems: 'center', 
     justifyContent: 'center',
     width: 140,
-    maxHeight: 160, 
-    margin: 20,
+    height: 140, 
+    margin: 60,
     marginTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 20,
+    
     // paddingTop: 6,
     
       
@@ -166,10 +168,12 @@ const styles =StyleSheet.create({
     flex: 1,
     alignItems: 'center', 
     justifyContent: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
     width: 140,
     height: 140,
     overflow: 'hidden',
-    marginBottom: 7,
+    // marginBottom: 7,
     
       
       
@@ -188,4 +192,6 @@ const styles =StyleSheet.create({
   },
 
 });
+
+export default CompanyDetails;
   

@@ -3,7 +3,8 @@ let ServiceProvider = require("../models/ServiceProvider");
 
 router.route("/add").post ((req,res) => {
 
-    const type = req.body.type;
+    const providerType = req.body.type;
+    const logo = req.body.logo;
     const username = req.body.username;
     const  password = req.body.password;
     const serviceProviderName = req.body.serviceProviderName;
@@ -11,10 +12,11 @@ router.route("/add").post ((req,res) => {
     const email = req.body.email;
     const ceoName = req.body.ceoName;
     const regNo = req.body.regNo;
-    const logo = req.body.logo;
+    
 
     const newServiceProvider = new ServiceProvider({
-        type,
+        providerType,
+        logo,
         username,
         password,
         serviceProviderName,
@@ -22,7 +24,7 @@ router.route("/add").post ((req,res) => {
         email,
         ceoName,
         regNo,
-        logo
+        
 
     })
     newServiceProvider.save().then(()=>{

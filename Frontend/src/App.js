@@ -11,14 +11,17 @@ import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Termination from "./Pages/Termination/Termination";
+// import { BrowserRouter as Router, Route } from "react-router-dom";
 
-//import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+
 
 import NavBar from "./component/NavBar/NavBar";
 
 import AppointmentConfirm from "./Pages/AppoinmentConfirm/AppointmentConfirm";
 import { deepmerge } from "@mui/utils";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { AppointmentList } from "./AppointmentList";
 
 const theme = createTheme({
   palette: {
@@ -39,34 +42,27 @@ const theme = createTheme({
 
 function App() {
   return (
+    // <Router>
       <div className="App">
         <ThemeProvider theme={theme}>
-         {/* <AppointmentConfirm /> */}
-         
-        {/* <FormBr /> */}
-        
-        
-          {/* <FPw/> */}
-        {/* <Termination/> */}
-          <FPw/>
+          {/* <AppointmentConfirm /> */}
+          {/* <FormBr /> */}
+          {/* <Termination/>  */}
+          {/* <BrUpdate/> */}
+          {/* <ResetPassword/> */}
+          
+          
+          {/* <Route path="/forgotpassword" exact component={FPw}/> */}
           <Signin/>
           <Reg/>
-          {/* <BrUpdate/> */}
-        
-     
-      {/* <ResetPassword/> */}
-      {/* <EditProfile/>  */}
-      
-      {/* <Dashboard/> */}
-      </ThemeProvider>
+          <FPw/>
+          
+        </ThemeProvider>
       
    
-  </div>  
-    
+      </div>  
+    // </Router> 
   );
 }
 
 export default App;
-//<AppointmentConfirm />
-//<Reg/>
-//   

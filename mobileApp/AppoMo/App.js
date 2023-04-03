@@ -42,25 +42,24 @@ export default function App() {
         {/* <IssueSubmission /> */}
     
        
-        <CompanyDetails/>
-      
+        {/* <CompanyDetails/> */}
+      <ComBranchDetails/> 
       {/* <CompanyOrServiceCenter/>  */}
       
-      {/* <ComBranchDetails/>  */}
+      
      
       {/* <ServiceCenter/> */}
     
       {/* { <AdvPayment/>  } */}
       {/* { <UserRegistr/>} */}
       
-{/* <AdvPayment/> */}
+      {/* <AdvPayment/> */}
       </Provider> 
       <StatusBar style="auto" />
    </View>
   );
 }
- {/* <ServiceCenter/> */}
-{/* <ComBranchDetails/>  */}
+ 
 //<CompanyOrServiceCenter/>
 //<IssueSubmission />
 //<Login/>

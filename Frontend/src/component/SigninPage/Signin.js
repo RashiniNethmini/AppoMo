@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
 import styles from './Signin.module.css';
-import { Paper, TextField, Button, Link} from "@mui/material";
+import { Paper, TextField, Button, Link,InputAdornment, IconButton} from "@mui/material";
 import { maxWidth } from "@mui/system";
+import {Visibility, VisibilityOff} from '@mui/icons-material';
 
 
 export const Signin = (props) => {
@@ -21,9 +22,15 @@ export const Signin = (props) => {
         window.google.accounts.id.renderButton(document.getElementById("signInDiv"), 
             {theme:"outline", size: "large"}); 
     }
-    
+   }, []);
+   
+   
+   const [showPassword, setShowPassword] = React.useState(false);
+   const handleClickShowPassword = () => setShowPassword((show) => !show);
+   const handleMouseDownPassword = (event) => {
+       event.preventDefault();
+   };
 
-   }, []);    
 
     return(
         <div className={styles.signContainer}>
@@ -37,7 +44,21 @@ export const Signin = (props) => {
                         <TextField required id="outlined-required" label="Username" variant="outlined" sx={{ width: '100vw' }} />
                     </div>
                     <div className={styles.signBodyText}>
-                        <TextField required id="outlined-required" label="Password" variant="outlined" sx={{ width: '100vw' }} />
+                        <TextField required id="outlined-required" label="Password" variant="outlined" type={showPassword ? 'text' : 'password'} sx={{ width: '100vw' }}
+                        InputProps={{
+                            endAdornment:(
+                                <InputAdornment position="end">
+                                    <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                                </InputAdornment>
+                            ),
+                          }} />
                     </div> 
                     <div className={styles.signButton}>
                         <Button variant="contained" sx={{mr:'10px'}}>Sign in</Button>
@@ -51,15 +72,10 @@ export const Signin = (props) => {
                     </div> 
 
                     <div className={styles.signNot}>
-                        <div>
-                            <p>Not Registered?</p>
-                        </div>
-                        <div>
-                            <Link href="#">Register Now</Link>
-                        </div>
+                        <p>Not Registered? &nbsp;</p>
+                        <Link href="#">Register Now</Link>
                         
-                        
-                    </div> 
+                     </div> 
                     <div className={styles.GButton} id="signInDiv"></div> 
                     
                 </div>
