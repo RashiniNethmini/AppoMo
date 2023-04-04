@@ -20,11 +20,31 @@ function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const navigation = useNavigation();
+    //const navigation = useNavigation();
 
-    // const handlePressReg = () => {
-    //     navigation.navigate('UserReg');
-    //   };
+  const handlePressReg = () => {
+     navigation.navigate('UserReg');
+     };
+
+     const handleLogin = async () => {
+        const response = await fetch('https://your-server.com/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: enteredUsername,
+            password: enteredPassword
+          })
+        });
+        const data = await response.json();
+      
+        if (data.success) {
+          // Login successful, navigate to the home screen
+        } else {
+          // Login failed, show error message to the user
+        }
+      };
 
     return (
         <View style={styles.container}>
@@ -51,14 +71,14 @@ function Login() {
                 />
             </View>
             <TouchableOpacity>
-                <Text onPress={() => { }} style={styles.forgot_button}>Forgot Password?</Text>
+                <Text onPress={() => {}} style={styles.forgot_button}>Forgot Password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { }} style={styles.loginBtn}>
+            <TouchableOpacity onPress={() => { handleLogin}} style={styles.loginBtn}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20 }}>
-                <View style={{ flex: 1, height: 1, backgroundColor: 'white' }} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20,paddingBottom:30 }}>
+                <View style={{ flex: 1, height: 1, backgroundColor: 'white', }} />
                 <View>
                     <Text style={{ width: 50, textAlign: 'center' }}>Or</Text>
                 </View>
@@ -158,7 +178,7 @@ const styles = StyleSheet.create({
  googleButton:{
    paddingTop: 70,
    marginTop:40,
-   color:'#042A2C'
+   color:'#084C4F'
 
  }
 

@@ -119,10 +119,7 @@ const styles = StyleSheet.create({
         paddingTop: 180,
         fontSize: 30,
         color: '#fff',
-        marginBottom:50
-
-
-
+        marginBottom:50,
     },
     inputs:{
         padding:10,
@@ -136,7 +133,15 @@ const styles = StyleSheet.create({
         backgroundColor:'#FFFFFF',
         height:50,
         width:'80%',
-        marginVertical:30
+        marginVertical:30,
+        shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 10,
     },
     confirmBtn:{
         backgroundColor: "#084C4F",
@@ -149,7 +154,15 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         alignItems: "center",
         marginTop:20,
-        marginHorizontal:3
+        marginHorizontal:3,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 20,
        // 
     },
     confirmText: {
