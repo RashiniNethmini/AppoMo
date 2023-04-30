@@ -38,13 +38,9 @@ export default function App() {
       </Stack.Navigator>
 
     </NavigationContainer> */}
-    
-      {/* <Provider>
    
-     {/* <AdvPayment/>  */}
-     
-        {/* <IssueSubmission /> */}
-      {/* <IssueSubmission /> */}
+    
+    {/* <CompanyOrServiceCenter/>  */}
     
        
         {/* <CompanyDetails/> */}
@@ -62,7 +58,7 @@ export default function App() {
 {/* <SelectServiceCenter/> */}
       </Provider> 
     
-    <ServiceCenter/>
+    {/* <ServiceCenter/> */}
 
 
    

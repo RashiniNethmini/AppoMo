@@ -79,4 +79,21 @@ router.route("/update/:id").put (async (req,res)=>{
 
 })
 
+router.route("/get/:id").get(async(req,res)=>{
+    let serviceProviderId=req.params.id;   
+   
+    const select=await ServiceProvider.findById(serviceProviderId)
+    .then((serviceprovider)=>{
+    res.status(200).send({status:"Service Provider fetched",serviceprovider})
+   
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get service provider"});
+    })
+})
+
+
+
+
+
 module.exports = router;

@@ -67,7 +67,7 @@ function ServiceCenter() {
        
 
         <View>
-            {/* <Text style={styles.heading}>{starRating ? `${starRating}*` : 'Tap to rate'}</Text> */}
+           
           <Text style={styles.heading}>Tap to rate</Text>
           <View style={styles.stars}>
               {starRatingOptions.map((option) => (
