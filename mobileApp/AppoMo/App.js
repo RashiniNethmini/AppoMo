@@ -1,7 +1,7 @@
 import React , { useState } from 'react';
 import { Provider, Appbar, Searchbar} from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+//import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View,Button,TouchableOpacity,SafeAreaView,
   TouchableWithoutFeedback,
   Animated, AppRegistry} from 'react-native';
@@ -17,7 +17,7 @@ import ForgotPW from './Pages/ForgotPw';
 //import CompanyReg from './Pages/CompanyReg';
 import ServiceCenter from './Pages/ServiceCenter';
 import UserRegistr from './Pages/UserReg';
-import SelectServiceCenter from './Pages/SelectServiceCenter'
+import SelectServiceCenter from './Pages/SelectServiceCenter';
 
 // const Stack = createNativeStackNavigator();
 
@@ -38,13 +38,9 @@ export default function App() {
       </Stack.Navigator>
 
     </NavigationContainer> */}
-    
-      {/* <Provider>
    
-     {/* <AdvPayment/>  */}
-     
-        {/* <IssueSubmission /> */}
-      {/* <IssueSubmission /> */}
+    
+    {/* <CompanyOrServiceCenter/>  */}
     
        
 
@@ -54,10 +50,10 @@ export default function App() {
      
     
         {/* <CompanyDetails/> */}
-      
+      <ComBranchDetails/> 
       {/* <CompanyOrServiceCenter/>  */}
       
-      {/* <ComBranchDetails/>  */}
+      
      
       {/* <ServiceCenter/> */}
     
@@ -76,12 +72,14 @@ export default function App() {
    
   );
 }
- {/* <ServiceCenter/> */}
-{/* <ComBranchDetails/>  */}
+ 
 //<CompanyOrServiceCenter/>
 //<IssueSubmission />
 //<Login/>
 //<ForgotPW/>
+
+
+  
  const styles=StyleSheet.create({
   container: {
     flex:1,
@@ -91,6 +89,5 @@ export default function App() {
   } 
 });
 
-//AppRegistry.registerComponent('App', () => App);
 
 

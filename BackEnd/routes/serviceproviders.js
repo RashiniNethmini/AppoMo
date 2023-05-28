@@ -3,7 +3,8 @@ let ServiceProvider = require("../models/ServiceProvider");
 
 router.route("/add").post ((req,res) => {
 
-    const type = req.body.type;
+    const providerType = req.body.type;
+    const logo = req.body.logo;
     const username = req.body.username;
     const  password = req.body.password;
     const serviceProviderName = req.body.serviceProviderName;
@@ -11,10 +12,11 @@ router.route("/add").post ((req,res) => {
     const email = req.body.email;
     const ceoName = req.body.ceoName;
     const regNo = req.body.regNo;
-    const logo = req.body.logo;
+    
 
     const newServiceProvider = new ServiceProvider({
-        type,
+        providerType,
+        logo,
         username,
         password,
         serviceProviderName,
@@ -22,7 +24,7 @@ router.route("/add").post ((req,res) => {
         email,
         ceoName,
         regNo,
-        logo
+        
 
     })
     newServiceProvider.save().then(()=>{
@@ -76,5 +78,22 @@ router.route("/update/:id").put (async (req,res)=>{
     })
 
 })
+
+router.route("/get/:id").get(async(req,res)=>{
+    let serviceProviderId=req.params.id;   
+   
+    const select=await ServiceProvider.findById(serviceProviderId)
+    .then((serviceprovider)=>{
+    res.status(200).send({status:"Service Provider fetched",serviceprovider})
+   
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get service provider"});
+    })
+})
+
+
+
+
 
 module.exports = router;

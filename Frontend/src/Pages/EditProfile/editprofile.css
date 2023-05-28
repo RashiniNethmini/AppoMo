@@ -1,5 +1,6 @@
 .edit{
-    margin-top: 20px; 
+    /* margin-top: 20px;  */
+    
 }
 
 .editPaper{
@@ -40,7 +41,6 @@
     align-items: center;
     display: flex;
     flex-direction: row;
- 
     justify-content: flex-end;
   
 

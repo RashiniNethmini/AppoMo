@@ -9,6 +9,10 @@ import FormBr from "./component/BranchUpdate/FormBr"
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
+// import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import Dashboard from "./Pages/Dashboard/Dashboard"
+
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

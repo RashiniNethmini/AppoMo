@@ -16,18 +16,42 @@
     display: flex;
     justify-content: center;
 }
-.FTextbox{
+.Femail{
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     margin: 10px;
 }
-.resetPwB{
-    border-radius: 500px !important;
+.sendB{
     display: flex;
     justify-content: center;
-    margin: 10px;
 }
-.goBack{
+.Fcode{
+    
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px;
+    padding-right: 400;
+}
+.codeB{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    width: 60px;
+}
+.verifyB{
+    display: flex;
+    justify-content: center;
+ 
+}
+.resendB{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px;
 }

@@ -1,26 +1,97 @@
-import React from 'react';
+import React,{useState,useRef} from 'react';
 import './resetPassword.css';
-import {Box,IconButton,OutlinedInput,InputAdornment,Stack, Button,Paper} from '@mui/material';
+import {IconButton,OutlinedInput,InputAdornment,Stack, Button,Paper} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import NavBar from '../../component/NavBar/NavBar';
+
 
 
 
 export default function ResetPassword() {
+
+  
   const [showPassword, setShowPassword] = React.useState(false);
-
+  const [passwordError0, setPasswordErr0] = useState("");
+  const [passwordError1, setPasswordErr1] = useState("");
+  const [passwordError2, setPasswordErr2] = useState("");
+  const [currentPass, setCurrent] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirm] = useState('');
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
+const CurrentPass=(evnt)=>{
+  const currentPasswordInputValue = evnt.target.value.trim();
+  if(currentPasswordInputValue===''){
+    setPasswordErr0("**required");
+   
+  }else{
+    setPasswordErr0("");
+
+  }
+}  
+
+
+const handleValidation= (evnt)=>{
+  const passwordInputValue = evnt.target.value.trim();
+  const passwordInputFieldName = evnt.target.name;
+      //for password 
+if(passwordInputFieldName==='password'){
+  const uppercaseRegExp   = /(?=.*?[A-Z])/;
+  const lowercaseRegExp   = /(?=.*?[a-z])/;
+  const digitsRegExp      = /(?=.*?[0-9])/;
+  const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+  const minLengthRegExp   = /.{8,}/;
+  const passwordLength =      passwordInputValue.length;
+  const uppercasePassword =   uppercaseRegExp.test(passwordInputValue);
+  const lowercasePassword =   lowercaseRegExp.test(passwordInputValue);
+  const digitsPassword =      digitsRegExp.test(passwordInputValue);
+  const specialCharPassword = specialCharRegExp.test(passwordInputValue);
+  const minLengthPassword =   minLengthRegExp.test(passwordInputValue);
+  let errMsg ="";
+  if(passwordLength===0){
+          errMsg="**required";
+  }else if(!uppercasePassword){
+          errMsg="**Please enter at least one Uppercase";
+  }else if(!lowercasePassword){
+          errMsg="**Please enter at least one Lowercase";
+  }else if(!digitsPassword){
+          errMsg="**Please enter at least one digit";
+  }else if(!specialCharPassword){
+          errMsg="**Please enter at least one Special Characters";
+  }else if(!minLengthPassword){
+          errMsg="**Please enter at least minumum 8 characters";
+  }else{
+      errMsg="";
+  }
+  setPasswordErr1(errMsg);
+  }
+};
+
+const RePass=(evnt)=>{
+  const RePasswordInputValue = evnt.target.value.trim();
+  if(RePasswordInputValue===''){
+    setPasswordErr2("**required");
+   
+  }else{
+    setPasswordErr2("");
+
+  }
+}
+
+
+const ref = useRef(null);
+const Cancel = () => {
+  // 👇️ reset input field's value
+  ref.current.value = '';
+};
+
+
+
   return (
     <div>
-      {/* <div>
-    <NavBar/>
-    </div> */}
     <div className='resetPassword'>
    
       <Paper elevation={6} classname="resetPaper" >
@@ -30,9 +101,13 @@ export default function ResetPassword() {
 
           <div className='resetElement'>
             <label>Enter Current Password &nbsp;</label>
-            <OutlinedInput
+            <OutlinedInput ref={ref}
                 id="outlined-adornment-password"
                 type={showPassword ? 'text' : 'password'}
+                name='currentPass'
+                value={currentPass}
+              onChange={event => setCurrent(event.target.value)}
+                onKeyUp={CurrentPass}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -46,7 +121,7 @@ export default function ResetPassword() {
                   </InputAdornment>
                 }
             />
-                      
+              <p className="text-danger">{passwordError0}</p>        
           </div>
           <br/>
 
@@ -56,12 +131,15 @@ export default function ResetPassword() {
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? 'text' : 'password'}
+               onKeyUp={handleValidation}
+                name="password"
+                value={password}
+              onChange={event => setPassword(event.target.value)}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
                     edge="end"
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -69,6 +147,7 @@ export default function ResetPassword() {
                 </InputAdornment>
               }
             />
+             <p className="text-danger">{passwordError1}</p>
             
           </div>
           <br/>
@@ -77,15 +156,18 @@ export default function ResetPassword() {
 
           <div>
             <label>Re-enter New Password &nbsp;</label>
-            <OutlinedInput
+            <OutlinedInput disabled={passwordError1===""?false:true}
               id="outlined-adornment-password"
               type={showPassword ? 'text' : 'password'}
+              onKeyUp={RePass}
+              name="confirmPassword" 
+              value={confirmPassword}
+              onChange={event => setConfirm(event.target.value)}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
                     edge="end"
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -93,6 +175,7 @@ export default function ResetPassword() {
                 </InputAdornment>
               }
             />
+            <p className="text-danger">{passwordError2}</p>
             
           </div>
           <br/>
@@ -102,8 +185,8 @@ export default function ResetPassword() {
             <div>
               
               <Stack spacing={2} direction="row">
-                  <Button variant="contained" className='resetbutton' style={{backgroundColor:"#084C4F"}}>CHANGE PASSWORD</Button>
-                  <Button variant="contained" className='resetbutton'>CANCEL</Button>
+                  <Button variant="contained" disabled={!(currentPass && confirmPassword && password)}>CHANGE PASSWORD</Button>
+                  <Button  onClick={Cancel} variant="contained">CANCEL</Button>
               </Stack>
             </div>
           

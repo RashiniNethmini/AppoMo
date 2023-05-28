@@ -2,9 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const serviceproviderSchema = new Schema({
-    type :{
+    providerType :{
         type : Boolean,
         required: true
+    },
+    logo :{
+        type : String,
+    
     },
     username : {
         type : String,
@@ -34,10 +38,7 @@ const serviceproviderSchema = new Schema({
         type : String,
         required: true
     },
-    logo :{
-        type : String,
     
-    }
 
 })
 
