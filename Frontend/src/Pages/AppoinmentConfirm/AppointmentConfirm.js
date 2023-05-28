@@ -1,23 +1,17 @@
 import * as React from 'react';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+
+import Paper from '@mui/material/Paper';
+import { Container } from '@mui/system';
 import AppointmentPopup from '../../Popups/AppointmentPopup';
 import { AppointmentList } from '../../AppointmentList';
 import styles from './AppointmentConfirm.module.css';
-import Paper from '@mui/material/Paper';
-import { Container } from '@mui/system';
+
 
 
 
 export default function AppointmentConfirm() {
 
   const [appointments, setAppointments] = React.useState(AppointmentList);
-
-
-
-
-
 
 
   const handleAccept = (appointment) => {

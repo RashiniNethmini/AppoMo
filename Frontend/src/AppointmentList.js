@@ -6,7 +6,7 @@ export const AppointmentList = [
         name: 'Rashini Nethmini',
         contactNumber:'231444144',
         invoice: '2589721',
-        product: 'Ipad',
+        product: 'Laptop',
         issue: 'My tablet has broken down',
         voiceSrc:'http://mp3.ananmanan.lk/sinhala_mp3/Arash_ft_Helena_Broken_Angel.mp3',
         isAccept:false,

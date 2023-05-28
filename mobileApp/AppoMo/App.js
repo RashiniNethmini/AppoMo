@@ -15,7 +15,6 @@ import CompanyDetails from './Pages/CompanyDetails';
 import ComBranchDetails from './Pages/ComBranchDetails';
 import Login from './Pages/Login';
 import ForgotPW from './Pages/ForgotPw';
-//import CompanyReg from './Pages/CompanyReg';
 import ServiceCenter from './Pages/ServiceCenter';
 import UserRegistr from './Pages/UserReg';
 import SelectServiceCenter from './Pages/SelectServiceCenter';

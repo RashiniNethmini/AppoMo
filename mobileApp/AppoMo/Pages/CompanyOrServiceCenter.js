@@ -8,7 +8,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 function CompanyOrServiceCenter() {
   return (
 
-    <View style={{flexDirection:'column'}}>
+    <View 
+    style={{flex:2,flexDirection:'column'}}
+    >
       <View>
       <TouchableOpacity 
       // onPress={onPress} 
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
     color: "#084C4F",
     fontWeight: "bold",
     alignSelf: "center",
-    // textTransform: "uppercase"
+
   }
 });
 

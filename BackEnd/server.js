@@ -26,8 +26,12 @@ connection.once("open", () => {
     console.log("Mongodb connection successful");
 })
 
-const BrDetailsRouter = require("./routes/BranchDetails.js");
- app.use("/BranchDetails", BrDetailsRouter);
+// const BrDetailsRouter = require("./routes/BranchDetails.js");
+//  app.use("/BranchDetails", BrDetailsRouter);
+// const IssueRouter = require("./routes/Issues.js");
+// app.use("/Issues", IssueRouter);
+// const smsRouter = require("./APIs/sms.js");
+// app.use('/sms', smsRouter);
 
 
 // const UserDetailsRouter = require("./routes/UserDetails.js");
@@ -38,3 +42,10 @@ app.listen(PORT, () => {
 })
 
 
+//const serviceproviderRouter = require ("./routes/serviceproviders.js");
+//app.use("/serviceprovider", serviceproviderRouter);
+//})
+
+
+//app.listen(PORT,() =>{
+    //console.log('Server is running on port '+PORT);

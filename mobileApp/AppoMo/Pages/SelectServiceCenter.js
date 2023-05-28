@@ -16,8 +16,6 @@ function SelectServiceCenter() {
                 lightTheme
                 round
                 style={{width:'100%'}}
-                // value={this.state.searchValue}
-                // onChangeText={(text) => this.searchFunction(text)}
                 containerStyle={{borderWidth: 0, borderTopWidth: 0, borderBottomWidth: 0, backgroundColor:'transparent'}}
                 autoCorrect={false}
               />
@@ -27,8 +25,6 @@ function SelectServiceCenter() {
                 lightTheme
                 round
                 style={{width:'100%'}}
-                // value={this.state.searchValue}
-                // onChangeText={(text) => this.searchFunction(text)}
                 containerStyle={{borderWidth: 0, borderTopWidth: 0, borderBottomWidth: 0, backgroundColor:'transparent'}}
                 autoCorrect={false}
               />
@@ -42,9 +38,7 @@ function SelectServiceCenter() {
                   // onPress={() => navigation.navigate('serviceCenter')}
                   >
                     <Image
-                        // source={this.props.itemImage}a
                         source={require('../assets/a.jpg')}
-                        // style={StyleSheet.image}
                         style={styles.imageStyle}
                         />
                   </TouchableOpacity>
@@ -53,9 +47,7 @@ function SelectServiceCenter() {
               <View style={styles.item}>
                 <TouchableOpacity>
                   <Image
-                        // source={this.props.itemImage}a
                         source={require('../assets/a.jpg')}
-                        // style={StyleSheet.image}
                         style={styles.imageStyle}
                         />
                 </TouchableOpacity>
@@ -64,9 +56,7 @@ function SelectServiceCenter() {
               <View style={styles.item}>
                 <TouchableOpacity>
                   <Image
-                        // source={this.props.itemImage}a
                         source={require('../assets/a.jpg')}
-                        // style={StyleSheet.image}
                         style={styles.imageStyle}
                         />
                 </TouchableOpacity>
@@ -75,14 +65,13 @@ function SelectServiceCenter() {
               <View style={styles.item}>
                 <TouchableOpacity>
                   <Image
-                        // source={this.props.itemImage}a
                         source={require('../assets/a.jpg')}
-                        // style={StyleSheet.image}
                         style={styles.imageStyle}
                         />
                 </TouchableOpacity>
                 <Text style={styles.tStyle}>Service Center D</Text>
               </View>
+              
             </View>
           </ScrollView>
     </View>
