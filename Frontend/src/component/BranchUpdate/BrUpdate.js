@@ -1,115 +1,215 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, {  useState } from "react";
 import styleset from './brUpdate.module.css';
-import { nanoid } from "nanoid";
-import AddHomeWorkRoundedIcon from '@mui/icons-material/AddHomeWorkRounded';
-import Chip from '@mui/material/Chip';
-import {  Button, FormControl, Box,  IconButton, Paper,  TextField, Select, MenuItem, InputLabel, Tooltip } from "@mui/material";
+import { Button, IconButton, Paper, TextField, Tooltip } from "@mui/material";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-
 import DialogTitle from '@mui/material/DialogTitle';
-import { useTheme } from '@mui/material/styles';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditIcon from '@mui/icons-material/Edit';
 import data from './mock-data.json';
-import FormBr from "./FormBr";
-//import { data, states } from './makeData';
 
-function getStyles(days, workingDays, theme) {
-  return {
-    fontWeight:
-      workingDays.indexOf(days) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 
 export default function BranchForm() {
+
+
+  const validateBrName = (brName) => {
+    const regex = /^[a-zA-Z\s]*$/;
+    return regex.test(brName);
+  }
+
+  
+  const validateManName = (manName) => {
+    const regex = /^[a-zA-Z\s]*$/;
+    return regex.test(manName);
+  }
+  
+  const validateAddress = (address) => {
+    // Address should not be empty and should contain only letters, digits, spaces, and commas
+    const regex = /^[a-zA-Z0-9\s,]+$/;
+    return address.trim() !== '' && regex.test(address);
+  };
+
+  const validateContactNumber = (contactNumber) => {
+    const regex = /^\d{10}$/;
+    return regex.test(contactNumber);
+  }
+  const validateAptmntHrs = (hrs) => {
+    const regex = /^\d{2}$/;
+    return regex.test(hrs);
+  }
+
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+  
+
+
+
   const [tableData, setTableData] = useState(data);
-  const [addFormData, setAddFormData] = useState({
-    BrId: '',
-    BrName: '',
-    ManName: '',
-    Cntct: '',
-    Addrs: ''
-  });
-  const [validationErrors, setValidationErrors] = useState({});
+  const [addFormData, setAddFormData] = useState({});
 
+
+  const [brName, setBrName] = useState('');
+  const [manName, setManName] = useState('');
+  const [address, setAddress] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [hrs, setHrs] = useState('');
+  const [email, setEmail] = useState('');
+  const [brNameError, setBrNameError] = useState('');
+  const [manNameError, setManNameError] = useState('');
+  const [addressError, setAddressError] = useState('');
+  const [contactNumberError, setContactNumberError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [hrsError, setHrsError] = useState('');
+ 
+
+
+  const handleBrNameChange = (event) => {
+    setBrName(event.target.value);
+    if (!validateBrName(event.target.value)) {
+      setBrNameError('*Name should contain only alphabets and spaces');
+    } else {
+      setBrNameError('');
+    }
+  };
+
+  
+  const handleManNameChange = (event) => {
+    setManName(event.target.value);
+    if (!validateBrName(event.target.value)) {
+      setManNameError('*Name should contain only alphabets and spaces');
+    } else {
+      setManNameError('');
+    }
+  };
+  
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+    if (!validateManName(event.target.value)) {
+      setAddressError('*Name should contain only alphabets and spaces');
+    } else {
+      setAddressError('');
+    }
+  };
+
+  const handleContactNumberChange = (event) => {
+    
+    setContactNumber(event.target.value);
+   
+    if (!validateContactNumber(event.target.value)) {
+      setContactNumberError('*Contact number should contain only  digits');
+    } else {
+      setContactNumberError('');
+    }
+  
+  };
+  
+  const handleAptmntHrsChange = (event) => {
+    setHrs(event.target.value);
+    if (!validateAptmntHrs(event.target.value)) {
+      setHrsError('*Enter hours in two digits');
+    } else {
+      setHrsError('');
+    }
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    if (!validateEmail(event.target.value)) {
+      setEmailError('*Please enter a valid email address');
+    } else {
+      setEmailError('');
+    }
+  };
   const handleCreateNewRow = (values) => {
-    tableData.push(values);
+    tableData.params(values);
     setTableData([...tableData]);
+
   };
 
 
-  const handleCancelRowEdits = () => {
-    setValidationErrors({});
-  };
-
+  //open and close modal
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-
   const handleOnClose = () => {
     setOpen(false);
   };
 
-  const handleOnDelete = useCallback(
-    (tableDataId) => {
+  //delete row
+  const handleOnDelete =
+    (index) => {
       if (
         !window.confirm(`Are you sure you want to delete this row?`)
       ) {
         //eslint-disable-line
         this.props.handleOnDelete(tableData);
-      } 
-      const newtableData = [...tableData];
+      }
 
-     const index= tableData.findIndex((tableData)=>tableData.BrId === tableDataId)
-      newtableData.splice(index, 1);
-      setTableData([...tableData]);  
-    },
-    [tableData],
-  );
-  const handleOnEdit = () => {
+      tableData.splice(index, 1);
+      setTableData([...tableData]);
+    }
 
-  };
+//edit row
+   const handleOnEdit = (i) => {
+   //setTableData(addFormData[i])
+   };
+
+  // const handleUpdate =()=>{
+  //  addFormData.splice(editIndex,1,tableData)
+  // setAddFormData([...addFormData])
+  // }
+
   const columns = [
-    { id: 'BrId', label: 'Branch Id', Width: 300, align: 'center' },
     { id: 'BrName', label: 'Branch Name', Width: 300, align: 'center' },
     { id: 'ManName', label: 'Name of Manager', Width: 300, align: 'center' },
     { id: 'Cntct', label: 'Contact Number', Width: 300, align: 'center' },
     { id: 'Addrs', label: 'Address', Width: 300, align: 'center' },
     { id: 'Email', label: 'Email', Width: 300, align: 'center' },
     { id: 'ApptmntsPerHr', label: 'No. of Appointments Per Hour', Width: 300, align: 'center' },
-    { id: 'WrkngDays', label: 'Working days', Width: 300, align: 'center' },
+  
 
   ];
-  //function createData(BrId, BrName, ManName, Cntct, Addrs, Email, ApptmntsperHr, WrkngDays) {
-  //return { BrId, BrName, ManName, Cntct, Addrs, Email, ApptmntsperHr, WrkngDays };
 
-  // }
+   const handleAddFormChange = (event) => {
+     event.preventDefault();
 
-  //const rows = [
-  //createData('C01', 'Colombo', 'L.Malith Perera', '0114512892', 'No.12,Duplication Road,Colombo 6'),
-  //createData('A01', "Aluthgama", "A. Senith Cooray", "0344589632", "No.108,Galle Road,Aluthgama"),
-  //createData('M01', "Matara", "S.Malan Peiris", "0485789632", "No.85,Galle Road Matara"),
+    const fieldName = event.target.getAttribute("id");
+     const fieldValue = event.target.value;
 
-  // ];
+    const newFormData = { ...addFormData };
+     newFormData[fieldName] = fieldValue;
 
-  const handleAddFormChange = (event) => {
+     setAddFormData(newFormData);
+  };
+
+  const handleAddFormSubmit = (event) => {
     event.preventDefault();
+    if (validateBrName(brName) && validateManName(manName) && validateAddress(address) && validateContactNumber(contactNumber) && validateEmail(email)) {
+    const newBranch = {
+    
+      BrName: addFormData.BrName,
+      ManName: addFormData.ManName,
+      Cntct: addFormData.Cntct,
+      Addrs: addFormData.Addrs,
+      Email: addFormData.Email,
+      ApptmntsPerHr: addFormData.ApptmntsPerHr
+    };
+    const newBranches = [...tableData, newBranch];
+    setTableData(newBranches);
+    handleOnClose();
 
     const fieldName = event.target.getAttribute("id");
     const fieldValue = event.target.value;
@@ -117,51 +217,29 @@ export default function BranchForm() {
     const newFormData = { ...addFormData };
     newFormData[fieldName] = fieldValue;
 
-    setAddFormData(newFormData);
-
-  };
-
-  const handleAddFormSubmit = (event) => {
-    event.preventDefault();
-
-    const newBranch = {
-      id: nanoid(),
-      BrId: addFormData.BrId,
-      BrName: addFormData.BrName,
-      ManName: addFormData.ManName,
-      Cntct: addFormData.Cntct,
-      Addrs: addFormData.Addrs
-    };
-    const newBranches = [...tableData, newBranch];
-    setTableData(newBranches);
-    handleOnClose();
-
-  };
-
-
-  const theme = useTheme();
-  const [workingDays, setWorkingDays] = React.useState([]);
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setWorkingDays(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
-
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; //chip data
-
+     setAddFormData(newFormData);
+  }
+  else {
+    alert('Please fill in all fields correctly');
+  }
+};
 
   return (
-
-
     <div className={styleset.mainContainer}>
       <div >
-        <Paper elevation={6} className={styleset.brDetails} sx={{ mr: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" }, alignItems: "center", borderRadius: "31px", overflow: "auto" }} >
+        <Paper elevation={6}
+          className={styleset.brDetails}
+          sx={{
+            mr: { xs: "60px", sm: "65px", md: "65px", lg: "68px", xl: "70px" },
+            alignItems: "center",
+            borderRadius: "31px",
+            overflow: "auto"
+          }} >
+
           <div className={styleset.headTitleContainer}>
             <h1>Branch Details</h1></div>
+
+          {/* to add new  branch */}
           <div className={styleset.buttonadd}>
             <Button variant="contained" sx={{ mr: '10px' }} onClick={handleClickOpen}>Add Branch</Button>
 
@@ -171,67 +249,68 @@ export default function BranchForm() {
               </DialogTitle>
 
               <DialogContent>
-                
                 <div className={styleset.bodyTextbox}>
-                  <TextField required id="outlined-basic" label="Branch Name " variant="outlined" sx={{ width: '100vw' }} onChange={handleAddFormChange} />
-                </div>
-                <div className={styleset.bodyTextbox}>
-                  <TextField required id="outlined-basic" label="Name of Manager" variant="outlined" sx={{ width: '100vw' }} onChange={handleAddFormChange} />
-
-                </div>
-                <div className={styleset.bodyTextbox}>
-                  <TextField required id="outlined-basic" label="Contact No" variant="outlined" sx={{ width: '100vw' }} onChange={handleAddFormChange} />
-
+                  <TextField
+                    required id="outlined-basic"
+                    label="Branch Name "
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    onChange={handleBrNameChange} />
+                     {brNameError && <span style={{ color: 'red' }}>{brNameError}</span>}
                 </div>
 
                 <div className={styleset.bodyTextbox}>
-                  <TextField required id="outlined-basic" label="Address" variant="outlined" sx={{ width: '100vw' }} onChange={handleAddFormChange} />
-
+                  <TextField
+                    required id="outlined-basic"
+                    label="Name of Manager"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    onChange={handleManNameChange} />
+                     {manNameError && <span style={{ color: 'red' }}>{manNameError}</span>}
                 </div>
+
                 <div className={styleset.bodyTextbox}>
-                  <TextField required id="outlined-basic" label="Email" variant="outlined" sx={{ width: '100vw' }} onChange={handleAddFormChange} />
-
+                  <TextField
+                    required id="outlined-basic"
+                    label="Contact No"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    onChange={handleContactNumberChange} />
+                   {contactNumberError && <span style={{ color: 'red' }}>{contactNumberError}</span>}
                 </div>
+
                 <div className={styleset.bodyTextbox}>
-                  <TextField required id="outlined-basic" label="No. of Appointments Per Hour" variant="outlined" sx={{ width: '100vw' }} onChange={handleAddFormChange} />
-
+                  <TextField
+                    required id="outlined-basic"
+                    label="Address"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    onChange={handleAddressChange} />
+                     {addressError && <span style={{ color: 'red' }}>{addressError}</span>}
+                   
                 </div>
+
                 <div className={styleset.bodyTextbox}>
-                  <TextField required id="outlined-basic" label="Working Hours" placeholder="e.g: 9 a.m. - 5 p.m." variant="outlined" sx={{ width: '100vw' }} onChange={handleAddFormChange} />
-
+                  <TextField
+                    required id="outlined-basic"
+                    label="Email"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    onChange={handleEmailChange} />
+                      {emailError && <span style={{ color: 'red' }}>{emailError}</span>}
                 </div>
-                <div className={styleset.bodyTextbox} >
-                  <FormControl sx={{ maxWidth: { xs: '300px', sm: '400px', md: '900px', lg: '1000px', width: '69vw', margin: '5px' } }} onChange={handleAddFormChange}>
-                    <InputLabel id="demo-multiple-chip-label">Working Days</InputLabel>
-                    <Select
-                      labelId="demo-multiple-chip-label"
-                      id="demo-multiple-chip"
-                      multiple
-                      value={workingDays}
-                      onChange={handleChange}
-                      input={<OutlinedInput id="select-multiple-chip" label="workingDays" />}
-                      renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                          {selected.map((value) => (
-                            <Chip key={value} label={value} />
-                          ))}
-                        </Box>
-                      )}
 
-                    >
-                      {days.map((days) => (
-                        <MenuItem
-                          key={days}
-                          value={days}
-                          style={getStyles(days, workingDays, theme)}
-                        >
-                          {days}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="outlined-basic"
+                    label="No. of Appointments Per Hour"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    onChange={handleAptmntHrsChange} />
                 </div>
+                {hrsError && <span style={{ color: 'red' }}>{hrsError}</span>}
+
+              
 
               </DialogContent>
 
@@ -261,11 +340,11 @@ export default function BranchForm() {
               </TableHead>
               <TableBody>
 
-                {tableData.map((tableData) => {
+                {tableData.map((tableData, i) => {
                   return (
-                   
+
                     <TableRow hover role="checkbox" tabIndex={-1} key={tableData.code}>
-                      
+
                       {columns.map((column) => {
                         const value = tableData[column.id];
                         return (
@@ -275,48 +354,35 @@ export default function BranchForm() {
                               : value}
 
                           </TableCell>
-
                         );
-
                       })}
 
                       <div className={styleset.iconsUpDel}>
-                        
                         <Tooltip arrow placement="left" title="Edit">
-
-                          <IconButton aria-label="" onClick={handleOnEdit}>
+                          <IconButton aria-label="" onClick={() => handleOnEdit(i)}>
                             <EditIcon color="primary" />
                           </IconButton>
                         </Tooltip>
-                      
+
                         <Tooltip arrow placement="left" title="Delete">
-                        
-                          <IconButton aria-label="" onClick={() => handleOnDelete(tableData)}>
+                          <IconButton aria-label="" onClick={() => handleOnDelete(i)}>
                             <DeleteRoundedIcon color="primary" />
                           </IconButton>
-                       
                         </Tooltip>
-                        
+
                       </div>
 
                     </TableRow>
-                    )})
-                  };
-                
+                  )
+                })
+                }
 
-                
               </TableBody>
             </Table>
           </TableContainer>
-
-
         </Paper>
-
       </div >
     </div >
-
   )
-
-
 }
 

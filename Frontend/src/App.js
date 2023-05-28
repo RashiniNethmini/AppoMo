@@ -5,7 +5,6 @@ import {Signin} from "./component/SigninPage/Signin";
 import {Reg} from "./component/RegistrationPage/Reg";
 import FPw from "./component/FPwPage/FPw";
 import BrUpdate from "./component/BranchUpdate/BrUpdate";
-import FormBr from "./component/BranchUpdate/FormBr"
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
@@ -48,17 +47,9 @@ function App() {
     // <Router>
       <div className="App">
         <ThemeProvider theme={theme}>
-          {/* <AppointmentConfirm /> */}
-          {/* <FormBr /> */}
-          {/* <Termination/>  */}
-          {/* <BrUpdate/> */}
-          {/* <ResetPassword/> */}
-          
-          
-          {/* <Route path="/forgotpassword" exact component={FPw}/> */}
-          <Signin/>
-          <Reg/>
-          <FPw/>
+  
+
+          <BrUpdate/> 
           
         </ThemeProvider>
       

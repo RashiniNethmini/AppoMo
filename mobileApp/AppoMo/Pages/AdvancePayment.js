@@ -89,7 +89,7 @@ function AdvPayment() {
           onChangeText={handleNumberChange}
           keyboardType="numeric"
         />
-        {!isNumberValid && <Text style={{color:'white'}}>*Please enter a valid number.</Text>}
+        {!isNumberValid && <Text style={{color:'white'}}>* Enter your mobile number.</Text>}
       </View>
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

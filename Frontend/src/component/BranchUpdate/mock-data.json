@@ -1,37 +1,35 @@
  [
 {
 
-   "BrId":1 ,
    "BrName": "Colombo",
    "ManName":"Perera" , 
    "Cntct":"04546875", 
    "Addrs":"Galle road,Colombo",
    "Email":"dsjkasdkadjk.com",
-   "ApptmntsPerHr":4,
-   "WrkngDays":"Monday,Tuesday"
+   "ApptmntsPerHr":4
+   
 },
 
 {
 
-    "BrId":2 ,
+
     "BrName": "Aluthgama",
     "ManName":"Perera" , 
     "Cntct":"04546875", 
     "Addrs":"Galle road,Colombo",
     "Email":"dsjkasdkadjk.com",
-    "ApptmntsPerHr":4,
-    "WrkngDays":"Monday,Tuesday"
- },
+    "ApptmntsPerHr":5
+},
  {
 
-   "BrId":3,
-   "BrName": "Aluthgama",
+   
+   "BrName": "Bentota",
    "ManName":"Perera" , 
    "Cntct":"04546875", 
    "Addrs":"Galle road,Colombo",
    "Email":"dsjkasdkadjk.com",
-   "ApptmntsPerHr":4,
-   "WrkngDays":"Monday,Tuesday"
+   "ApptmntsPerHr":3
+  
 }
     
 ]

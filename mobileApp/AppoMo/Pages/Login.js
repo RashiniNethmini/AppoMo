@@ -3,54 +3,83 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
     TextInput,
-  
     TouchableOpacity,
 } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { SocialIcon, Button } from '@rneui/themed';
-import GoogleSVG from '../assets/googlelogo.svg'
+
+import { Button } from '@rneui/themed';
+import GoogleSVG from '../assets/googlelogo.svg';
 //import { useNavigation } from '@react-navigation/native';
 
 
 
 
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
 
-    //const navigation = useNavigation();
+    // const navigation = useNavigation();
 
-  const handlePressReg = () => {
-     navigation.navigate('UserReg');
-     };
+    const handlePressReg = () => {
+        // navigation.navigate('UserReg');
+    };
 
-     const handleLogin = async () => {
-        const response = await fetch('https://your-server.com/api/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username: enteredUsername,
-            password: enteredPassword
-          })
-        });
-        const data = await response.json();
-      
-        if (data.success) {
-          // Login successful, navigate to the home screen
-        } else {
-          // Login failed, show error message to the user
+    // backend
+    // const handleLogin = async () => {
+    //     const response = await fetch('https://loccalhost:8070/api/login', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             username: enteredUsername,
+    //             password: enteredPassword
+    //         })
+    //     });
+    //     const data = await response.json();
+
+    //     if (data.success) {
+    //         // Login successful, navigate to the home screen
+    //     } else {
+    //         // Login failed, show error message to the user
+    //     }
+    // };
+    const [enteredUsername, setUsername] = useState("");
+    const [enteredPassword, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+
+
+    const validateUsername = (enteredUsername) => {
+        if (!enteredUsername) {
+            return "*Username is required";
         }
-      };
+        return null;
+    }
+
+    const validatePassword = (enteredPassword) => {
+        if (!enteredPassword) {
+            return "*Password is required";
+        }
+
+    }
+
+    const handleLogin = () => {
+        const usernameError = validateUsername(enteredUsername);
+        const passwordError = validatePassword(enteredPassword);
+
+
+        if (usernameError || passwordError) {
+            setErrors({ enteredUsername: usernameError, enteredPassword: passwordError });
+        }
+        else {
+            // navigation.navigate('CompanyOrServiceCenter');
+        }
+    }
 
     return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.title} >Appomo</Text>
+                <Text style={styles.title} >AppoMo</Text>
             </View>
+
 
             <View style={styles.inputView}>
                 <TextInput
@@ -58,26 +87,36 @@ function Login() {
                     placeholder="Username"
                     placeholderTextColor="#003f5c"
                     alignItems='center'
-                    onChangeText={(username) => setUsername(username)}
+                    onChangeText={(enteredUsername) => setUsername(enteredUsername)}
                 />
             </View>
+            {errors.enteredUsername && <Text style={{ color: 'white',paddingBottom:20 }}>{errors.enteredUsername}</Text>}
             <View style={styles.inputView}>
                 <TextInput
                     style={styles.TextInput}
                     placeholder="Password"
                     placeholderTextColor="#003f5c"
                     secureTextEntry={true}
-                    onChangeText={(password) => setPassword(password)}
+                    onChangeText={(enteredPassword) => setPassword(enteredPassword)}
                 />
+               
             </View>
+            {errors.enteredPassword && <Text style={{ color: 'white' }}>{errors.enteredPassword}</Text>}
             <TouchableOpacity>
-                <Text onPress={() => {}} style={styles.forgot_button}>Forgot Password?</Text>
+                <Text
+                    //onPress={navigation.navigate('CompanyOrServiceCenter')}
+                    style={styles.forgot_button}>
+                    Forgot Password?
+                </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { handleLogin}} style={styles.loginBtn}>
+
+            <TouchableOpacity
+                onPress={handleLogin}
+                style={styles.loginBtn}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20,paddingBottom:30 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20, paddingBottom: 30 }}>
                 <View style={{ flex: 1, height: 1, backgroundColor: 'white', }} />
                 <View>
                     <Text style={{ width: 50, textAlign: 'center' }}>Or</Text>
@@ -85,10 +124,10 @@ function Login() {
                 <View style={{ flex: 1, height: 1, backgroundColor: 'white' }} />
             </View>
 
-            
-                <TouchableOpacity >
-                 <Button style={styles.googleButton}> Sign in with Google</Button> 
-                </TouchableOpacity>
+
+            <TouchableOpacity >
+                <Button style={styles.googleButton}> Sign in with Google</Button>
+            </TouchableOpacity>
             {/* <SocialIcon
       button
       fontStyle={{}}
@@ -135,8 +174,8 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         width: "70%",
         height: 45,
-        padding: 5,
-        marginBottom: 20,
+        padding: 4,
+        marginBottom: 8,
         alignItems: "center",
     },
     TextInput: {
@@ -149,6 +188,7 @@ const styles = StyleSheet.create({
     forgot_button: {
         height: 30,
         marginBottom: 30,
+        paddingTop:10
     },
     loginBtn: {
         width: "80%",
@@ -175,12 +215,12 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
 
     },
- googleButton:{
-   paddingTop: 70,
-   marginTop:40,
-   color:'#084C4F'
+    googleButton: {
+        paddingTop: 70,
+        marginTop: 40,
+        color: '#084C4F'
 
- }
+    }
 
 
 });

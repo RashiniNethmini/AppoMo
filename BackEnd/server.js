@@ -14,10 +14,10 @@ app.use(bodyParser.json());
 
 const URL = process.env.MONGODB_URL;
 mongoose.connect(URL, {
-    //useCreateIndex: true,
+   // useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    //useFindAndModify:false,
+   // useFindAndModify:false,
 
 });
 
@@ -26,17 +26,15 @@ connection.once("open", () => {
     console.log("Mongodb connection successful");
 })
 
-const IssueRouter = require("./routes/Issues.js");
-app.use("/Issues", IssueRouter);
+const BrDetailsRouter = require("./routes/BranchDetails.js");
+ app.use("/BranchDetails", BrDetailsRouter);
 
+
+// const UserDetailsRouter = require("./routes/UserDetails.js");
+// app.use("/UserDetails", UserDetailsRouter);
 
 app.listen(PORT, () => {
     console.log('Server is running on port ' + PORT);
-const serviceproviderRouter = require ("./routes/serviceproviders.js");
-app.use("/serviceprovider", serviceproviderRouter);
 })
 
 
-app.listen(PORT,() =>{
-    console.log('Server is running on port '+PORT);
-});

@@ -4,15 +4,11 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TextInput,
   ScrollView,
-  TouchableOpacity,
   Button,
   Alert,
 } from "react-native";
-import { color } from 'react-native-elements/dist/helpers';
-import { Dialog } from 'react-native-paper';
 
 //import { useNavigation } from '@react-navigation/native';
 
@@ -29,7 +25,7 @@ function UserRegistr() {
       return "*Username should be at least 5 charachters and may contain '-' and '_'marks only ";
     }
 
-    return null; // Validation passed
+    return null;
   };
 
   // Validate password
@@ -47,7 +43,8 @@ function UserRegistr() {
     }
 
 
-    return null; // Validation passed
+
+    return null; 
   };
 
   // Validate confirm password
@@ -60,7 +57,7 @@ function UserRegistr() {
       return "*Passwords do not match";
     }
 
-    return null; // Validation passed
+    return null; 
   };
 
   // Validate email
@@ -74,7 +71,7 @@ function UserRegistr() {
       return "*Invalid email format";
     }
 
-    return null; // Validation passed
+    return null; 
   };
 
   // Validate contact number
@@ -88,16 +85,18 @@ function UserRegistr() {
       return "*Invalid contact number";
     }
 
-    return null; // Validation passed
+    return null; 
   };
 
-  // Validate username
+  // Validate address
   const validateAddress = (address) => {
     if (!address) {
       return "*Address is required";
     }
-    return null; // Validation passed
+    return null; 
   };
+
+    // Validate NIC
   const validateNIC = (nic) => {
     if (!nic) {
       return "*NIC is required";
@@ -110,7 +109,7 @@ function UserRegistr() {
       return "*Invalid NIC number";
     }
 
-    return null; // Validation passed
+    return null; 
   };
 
 
@@ -188,7 +187,7 @@ function UserRegistr() {
             style={styles.input}
             placeholder="Contact Number"
             value={contactNumber}
-            nChangeText={setContactNumber}
+            onChangeText={setContactNumber}
           />
           {errors.contactNumber && <Text style={{ color: 'red' }}>{errors.contactNumber}</Text>}
 
