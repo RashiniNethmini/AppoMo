@@ -6,9 +6,7 @@ import { IconButton } from "@mui/material";
 import styles from './Popup.module.css';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button } from "@mui/material";
-import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+//import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 
@@ -40,7 +38,7 @@ export default function AppointmentPopup({ appointment, onAccept }) {
       <Button onClick={handleOpen} variant='contained' >Appointment {appointment.id}</Button>
       <Modal
         open={open}
-        // onClose={handleClose}
+       
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -54,7 +52,7 @@ export default function AppointmentPopup({ appointment, onAccept }) {
               <Typography sx={{ p: 2 }}>
                 Name <br></br>
                 Contact No<br></br>
-                <div>Invoice No<br></br></div>
+                Invoice No<br></br>
                 Product<br></br>
                 Issue<br></br>
                 Voice Message<br></br>

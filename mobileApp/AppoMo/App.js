@@ -29,7 +29,7 @@ export default function App() {
        <IssueSubmission />
    
      
-      <Provider>
+      </Provider>
 
        {/* <NavigationContainer>
       <Stack.Navigator>
@@ -48,7 +48,6 @@ export default function App() {
     
        
 
-      </Provider> 
      
       
      
@@ -67,9 +66,7 @@ export default function App() {
       
 {/* <AdvPayment/> */}
 {/* <SelectServiceCenter/> */}
-      </Provider> 
-    
-    <ServiceCenter/>
+      
 
 
    
