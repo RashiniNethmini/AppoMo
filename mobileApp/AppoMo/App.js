@@ -18,6 +18,9 @@ import ForgotPW from './Pages/ForgotPw';
 import ServiceCenter from './Pages/ServiceCenter';
 import UserRegistr from './Pages/UserReg';
 import SelectServiceCenter from './Pages/SelectServiceCenter';
+import EditProfile from './Pages/EditProfile';
+import ResetPwd from './Pages/ResetPwd';
+import CustomerProfile from './Pages/CustomerProfile';
 
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +29,7 @@ export default function App() {
   return (
 
     <View style={styles.container}>
+<<<<<<< Updated upstream
       <Provider>
         {/* 
         <NavigationContainer>
@@ -41,6 +45,15 @@ export default function App() {
 
       </Provider>
 
+=======
+       <Provider>
+
+      </Provider> 
+    
+    
+    <EditProfile/>
+
+>>>>>>> Stashed changes
       <StatusBar style="auto" />
     </View>
 

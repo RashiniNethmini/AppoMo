@@ -16,24 +16,29 @@
     "expo": "~48.0.4",
     "expo-av": "^13.2.1",
     "expo-status-bar": "~1.4.4",
+    "formik": "^2.2.9",
     "lodash.filter": "^4.6.0",
     "react": "18.2.0",
     "react-google-button": "^0.7.2",
     "react-native": "0.71.6",
+<<<<<<< Updated upstream
     "react-native-audio-recorder-player": "^3.5.3",
+=======
+>>>>>>> Stashed changes
     "react-native-elements": "^3.4.3",
     "react-native-image-picker": "^5.3.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-login-screen": "^5.0.0",
     "react-native-navigate": "^0.1.11",
-    "react-native-paper": "^5.5.0",
+    "react-native-paper": "^5.6.0",
     "react-native-safe-area-context": "^4.5.0",
     "react-native-screens": "~3.20.0",
     "react-native-search-bar": "^3.5.1",
     "react-native-star-rating": "^1.1.0",
     "react-native-table-component": "^1.2.2",
     "react-native-vector-icons": "^9.2.0",
-    "react-navigation": "^4.4.4"
+    "react-navigation": "^4.4.4",
+    "expo-image-picker": "~14.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

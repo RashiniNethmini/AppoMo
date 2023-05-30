@@ -7,11 +7,11 @@ function Termination(){
         <div className={styles.mainContainer}>
             <Paper elevation={6} className={styles.paperDiv}>
                 <div className={styles.bodyMain}>
+                    
                     <div className={styles.radioBoxContainer}>
-                        <label>Repairment&nbsp;</label>
                         <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group" >
-                            <FormControlLabel value="Completed" control={<Radio />} label="Completed" />
-                            <FormControlLabel value="NotCompleted" control={<Radio />} label="Not Completed" />
+                            <FormControlLabel value="Completed" control={<Radio/>} label="Repairment is completed" />
+                            <FormControlLabel value="NotCompleted" control={<Radio/>} label="Repairment is not completed" />
                         </RadioGroup>
                     </div>
                     <div className={styles.buttonMain}>
@@ -21,7 +21,7 @@ function Termination(){
                        <TextField id="outlined-basic" label="Total Amount : LKR " variant="outlined" sx={{ width: '100vw' }} />
                     </div>                       
                     <div className={styles.buttonMain}>
-                            <Button variant="contained" sx={{mr:'10px'}}>Generate Invoice</Button>
+                        <Button variant="contained" sx={{mr:'10px'}}>Generate Invoice</Button>
                     </div>   
                 </div>
             </Paper>
