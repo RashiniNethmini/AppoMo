@@ -7,6 +7,8 @@
     
 }
 
+
+
 .heading{
     color:black;
     display:flex;
@@ -38,8 +40,29 @@
 .buttonOuter{
 padding: 10px;
 
-
-
 }
+
+.rejectAppointmentList{
+    display: inline-block;
+    width: 200px;
+    word-wrap: break-word;
+}
+
+.searchContainer {
+    display: flex;
+   
+  }
+  
+.deleteallButton{
+    padding: 10px;
+}
+
+.border {
+    border: 2px solid #084C4F;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  
 
 

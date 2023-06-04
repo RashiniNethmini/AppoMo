@@ -29,7 +29,6 @@ export default function App() {
   return (
 
     <View style={styles.container}>
-<<<<<<< Updated upstream
       <Provider>
         {/* 
         <NavigationContainer>
@@ -45,15 +44,6 @@ export default function App() {
 
       </Provider>
 
-=======
-       <Provider>
-
-      </Provider> 
-    
-    
-    <EditProfile/>
-
->>>>>>> Stashed changes
       <StatusBar style="auto" />
     </View>
 

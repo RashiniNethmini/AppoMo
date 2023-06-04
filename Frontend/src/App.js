@@ -8,12 +8,9 @@ import BrUpdate from "./component/BranchUpdate/BrUpdate";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
-<<<<<<< Updated upstream
 // import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Dashboard from "./Pages/Dashboard/Dashboard"
-=======
->>>>>>> Stashed changes
 
 
 
@@ -47,26 +44,16 @@ const theme = createTheme({
 })
 
 function App() {
-<<<<<<< Updated upstream
 
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         <AppointmentConfirm />
-        <FormBr />
+    
         <ResetPassword />
         <BrUpdate/>
       </ThemeProvider>
     </div>
-=======
- 
-   return (
-  <div className="App">
-   <ThemeProvider theme={theme}>
-     <Termination/>
-    </ThemeProvider>
-  </div>
->>>>>>> Stashed changes
   );
 
 
