@@ -9,18 +9,9 @@ import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
 // import { BrowserRouter as Router, Route } from "react-router-dom";
-
 import Dashboard from "./Pages/Dashboard/Dashboard"
-
-
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-
-
 import NavBar from './component/NavBar/NavBar';
-
-
 import AppointmentConfirm from "./Pages/AppoinmentConfirm/AppointmentConfirm";
 import { deepmerge } from '@mui/utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -48,10 +39,17 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <AppointmentConfirm />
-    
+       
+        <Signin/>
+        <Reg/>
+        <FPw/>
         <ResetPassword />
+        <Dashboard/>
+        <AppointmentConfirm />
         <BrUpdate/>
+        <EditProfile/>
+        <Termination/>
+        
       </ThemeProvider>
     </div>
   );
