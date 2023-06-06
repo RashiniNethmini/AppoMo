@@ -39,6 +39,7 @@ export default function App() {
           </Stack.Navigator>
 
         </NavigationContainer> */}
+     
 
         <IssueSubmission></IssueSubmission>
 
@@ -50,7 +51,6 @@ export default function App() {
   );
 }
 
-//<ForgotPW/>
 
 
 
@@ -64,4 +64,9 @@ const styles = StyleSheet.create({
 });
 
 
-
+{/* <UserRegistr/>
+<ForgotPW/>
+<CompanyDetails/>
+<ComBranchDetails/>
+<ServiceCenter/> 
+*/}
