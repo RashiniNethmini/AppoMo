@@ -40,7 +40,7 @@ export default function App() {
 
         </NavigationContainer> */}
 
-        <AdvPayment/>
+        <IssueSubmission></IssueSubmission>
 
       </Provider>
 
