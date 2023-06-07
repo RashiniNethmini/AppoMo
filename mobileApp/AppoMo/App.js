@@ -42,7 +42,7 @@ export default function App() {
         </NavigationContainer> */}
         <SplashScreen/>
 
-        
+        <IssueSubmission></IssueSubmission>
 
       </Provider>
 

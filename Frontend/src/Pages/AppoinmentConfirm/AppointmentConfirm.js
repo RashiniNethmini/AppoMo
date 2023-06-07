@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import { Container } from '@mui/system';
 import AppointmentPopup from '../../Popups/AppointmentPopup';
-import { AppointmentList } from '../../AppointmentList';
+//import { AppointmentList } from '../../AppointmentList';
 import styles from './AppointmentConfirm.module.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,30 +11,44 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
 
 export default function AppointmentConfirm() {
-  const [appointments, setAppointments] = useState(AppointmentList);
+  //const [appointments, setAppointments] = useState(AppointmentList);
   const [rejectedAppointments, setRejectedAppointments] = useState([]);
   const [showRejectedAppointmentDetails, setShowRejectedAppointmentDetails] = useState(false);
   const [deleteAllRejectedAppointments, setDeleteAllRejectedAppointments] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
+  const [appointments, setAppointments] = useState([]);
+
+  useEffect(() => {
+    function getAppointments(){
+    axios
+      .get('http://localhost:8070/Issues/') 
+      .then((res) => {
+      
+        setAppointments(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }getAppointments();
+  }, []);
 
   
-
-
   const handleAcceptAppointment = (appointmentId) => {
     setAppointments((prevAppointments) =>
-      prevAppointments.filter((appointment) => appointment.id !== appointmentId)
+      prevAppointments.filter((appointment) => appointment._id !== appointmentId)
     );
   };
 
   const handleRejectAppointment = (appointmentId, comment) => {
-    const rejectedAppointment = appointments.find((appointment) => appointment.id === appointmentId);
+    const rejectedAppointment = appointments.find((appointment) => appointment._id === appointmentId);
     rejectedAppointment.comment = comment; // Add the comment to the rejected appointment object
     setRejectedAppointments((prevRejectedAppointments) => [...prevRejectedAppointments, rejectedAppointment]);
     setAppointments((prevAppointments) =>
-      prevAppointments.filter((appointment) => appointment.id !== appointmentId)
+      prevAppointments.filter((appointment) => appointment._id !== appointmentId)
     );
   };
 
@@ -44,7 +58,7 @@ export default function AppointmentConfirm() {
       setDeleteAllRejectedAppointments(true);
     } else {
       setRejectedAppointments((prevRejectedAppointments) =>
-        prevRejectedAppointments.filter((appointment) => appointment.id !== appointmentId)
+        prevRejectedAppointments.filter((appointment) => appointment._id !== appointmentId)
       );
     }
   };
@@ -62,8 +76,8 @@ export default function AppointmentConfirm() {
   const filteredRejectedAppointments = searchQuery
   ? rejectedAppointments.filter(
       (appointment) =>
-        appointment.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        appointment.id.toString().includes(searchQuery)
+        appointment.Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        appointment.issueNumber.toString().includes(searchQuery)
     )
   : rejectedAppointments;
 
@@ -75,9 +89,9 @@ export default function AppointmentConfirm() {
           <h3>Confirm/Reject Appointments</h3>
         </div>
 
-        <Container className={styles.appointmentTabs} sx={{ maxWidth: { xs: '250px', sm: '400px', md: '700px' } }}>
+        <Container className={styles.issueTabs} sx={{ maxWidth: { xs: '250px', sm: '400px', md: '700px' } }}>
           {appointments.map((appointment) => (
-            <div key={appointment.id} className={styles.buttonOuter}>
+            <div key={appointment._id} className={styles.buttonOuter}>
               <AppointmentPopup
                 className={styles.popup}
                 appointment={appointment}
@@ -114,18 +128,18 @@ export default function AppointmentConfirm() {
           
 
 
-            {filteredRejectedAppointments.map((appointment) => (
-  <div key={appointment.id}>
+  {filteredRejectedAppointments.map((appointment) => (
+  <div key={appointment._id}>
     <p>
-      <u>Appointment: {appointment.id}</u>
+      <u>Appointment: {appointment.issueNumber}</u>
       <br />
-      Name: {appointment.name}
+      Name: {appointment.Name}
       <br />
-      Issue: {appointment.issue}
+      Issue: {appointment.IssueInBrief}
       <br />
       Comment: {appointment.comment}
       {deleteAllRejectedAppointments ? null : (
-        <IconButton aria-label="delete" onClick={() => handleDeleteRejectedAppointment(appointment.id)}>
+        <IconButton aria-label="delete" onClick={() => handleDeleteRejectedAppointment(appointment._id)}>
           <DeleteIcon />
         </IconButton>
       )}

@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Audio } from 'expo-av';
 
+
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const MAX_HEIGHT = 500;
 
@@ -13,7 +14,7 @@ export default function IssueSubmission() {
   const [contactNo, setTextcontactNo] = useState("");
   const [invoice, setTextinvoice] = useState("");
   const [product, setTextproduct] = useState("");
-  const [issue, setTextissue] = useState("");
+  const [issueInBrief, setTextissue] = useState("");
 
   const [error, setError] = useState('');  // set restriction to add only 10 numbers to contact number.
   const handleInputChange = (text) => {
@@ -78,7 +79,7 @@ export default function IssueSubmission() {
 
   const [disableSubmit, setDisableSubmit] = useState(true); // disable the submit button at begining.
   const checkInputs = () => {
-    if (name && contactNo && product && issue) {
+    if (name && contactNo && product && issueInBrief) {
       setDisableSubmit(false);
     } else {
       setDisableSubmit(true);
@@ -88,19 +89,52 @@ export default function IssueSubmission() {
 
   const handleSubmit = () => {
     console.log('Submit button pressed');
-    //below 5 lines helps to  clear all inputs when touch the submit button.
+    console.log(name,contactNo);
+   
+  
+// Make an API request to send the data to the backend
+fetch("http://192.168.1.226:8070/Issues/add", {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    "Name": name,
+    "ContactNo": contactNo,
+    "InvoiceNo": invoice,
+    "Product": product,
+    "IssueInBrief": issueInBrief
+  })
+})
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+  
+    // Clear the input fields
     setTextname('');
     setTextcontactNo('');
     setTextinvoice('');
     setTextproduct('');
     setTextissue('');
+  
+    // Set the visibility state
     setVisible(true);
-    setDisableSubmit(true); // disable submit button after form submission
-    checkInputs(); // check input fields after form submission
+  
+    // Disable the submit button
+    setDisableSubmit(true);
+  
+    // Check the input fields
+    checkInputs();
   };
+  
   React.useEffect(() => {
     checkInputs();
-  }, [name, contactNo, invoice, product, issue]);
+  }, [name, contactNo, invoice, product, issueInBrief]);
 
   
   const [visible, setVisible] = useState(false);
@@ -166,7 +200,7 @@ export default function IssueSubmission() {
 
                     <View>
                       <Text variant="bodyLarge">Issue in brief</Text>
-                      <TextInput type="outlined" value={issue} onChangeText={text => setTextissue(text)} style={styles.input} activeUnderlineColor='#388F82'  />
+                      <TextInput type="outlined" value={issueInBrief} onChangeText={text => setTextissue(text)} style={styles.input} activeUnderlineColor='#388F82'  />
                     </View>
 
                     <View>
@@ -181,7 +215,7 @@ export default function IssueSubmission() {
                     </View>
 
                     <View>
-                      <Button mode="contained" onPress={handleSubmit} style={{ backgroundColor: disableSubmit ? "#ccc" : '#388F82', }} disabled={disableSubmit}>
+                      <Button mode="contained" onPress={()=>handleSubmit()} style={{ backgroundColor: disableSubmit ? "#ccc" : '#388F82', }} disabled={disableSubmit}>
                         Submit
                       </Button>
                       <Portal>
