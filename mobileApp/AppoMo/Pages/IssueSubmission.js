@@ -4,7 +4,7 @@ import { Card, Button, Text, TextInput, IconButton, Dialog, Paragraph, Portal, c
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Audio } from 'expo-av';
-import axios from 'axios';
+
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const MAX_HEIGHT = 500;
