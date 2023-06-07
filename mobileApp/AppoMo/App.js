@@ -21,6 +21,7 @@ import SelectServiceCenter from './Pages/SelectServiceCenter';
 import EditProfile from './Pages/EditProfile';
 import ResetPwd from './Pages/ResetPwd';
 import CustomerProfile from './Pages/CustomerProfile';
+import SplashScreen from './Pages/Splashscreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -39,7 +40,7 @@ export default function App() {
           </Stack.Navigator>
 
         </NavigationContainer> */}
-        <Login/>
+        <SplashScreen/>
 
         
 
