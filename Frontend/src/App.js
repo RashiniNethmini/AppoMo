@@ -45,9 +45,10 @@ function App() {
         <FPw/>
         <ResetPassword />
         <Dashboard/>
+        <EditProfile/>
         <AppointmentConfirm />
         <BrUpdate/>
-        <EditProfile/>
+       
         <Termination/>
         
       </ThemeProvider>

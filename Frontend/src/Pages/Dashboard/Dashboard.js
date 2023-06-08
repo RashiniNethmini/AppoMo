@@ -1,4 +1,5 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
+import axios from 'axios';
 import './dashboard.css';
 import { AppointmentList } from '../../AppointmentList';
 import {Paper} from '@mui/material';
@@ -16,21 +17,66 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 
+  export default function CollapsibleTable() {
+    const [open, setOpen] = React.useState(false);
+    const [data,setData]=useState("");
+  
 
 
-    const Appointment = ({id,name,contactNumber,invoice,product,issue,voiceSrc}) => {
-      const [open, setOpen] = React.useState(false);
+  useEffect(()=>{
+const fetchdata= async ()=>{
+  const data=await axios.get("http://localhost:8070/Appointments/get/true");
+  setData(data);
+};
+fetchdata();
+},[]);
+
+// const groupDataByDate = () => {
+//   const groupedData = {};
+//   data.forEach((item) => {
+//     const date = item.ApntmntDate;
+//     if (groupedData[date]) {
+//       groupedData[date].push(item);
+//     } else {
+//       groupedData[date] = [item];
+//     }
+//   });
+//   return groupedData;
+// };
+
+// const categorizedData = groupDataByDate();
+
+
     return (
-      
-      <React.Fragment>
+     
+      <TableContainer component={Paper} style={{marginTop:'20px'}}>
+       
+ 
+     
+        <Table aria-label="collapsible table">
+        
+          <TableHead>
+            <TableRow >
+            
+              <TableCell colSpan="2" >
+              <Typography variant="h6" >Today
+              {/* {date} */}
+              </Typography></TableCell>
+              
+            </TableRow>
+          </TableHead>
+          <TableBody>
+          {
+      data && data?.data.map((a)=>(
+        <React.Fragment>
         <TableRow >
           
           <TableCell component="th" scope="row">
-          Appointment {id}
+          {a.Time} &nbsp;&nbsp;&nbsp;Appointment
            
           </TableCell>
-          <TableCell align="right">{name}
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{contactNumber}
+          <TableCell align="right">{a.Name}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{a.ContactNo}
           <IconButton
               aria-label="expand row"
               size="small"
@@ -45,35 +91,35 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6">
-               Appointment {id}
+               {/* Appointment {id} */}
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   
                   <TableBody>
                   <TableRow>
                     <TableCell>Name</TableCell>
-                    <TableCell> {name}</TableCell>
+                    <TableCell> {a.Name}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Contact No</TableCell>
-                    <TableCell> {contactNumber}</TableCell>
+                    <TableCell> {a.ContactNo}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Invoice No</TableCell>
-                    <TableCell>   {invoice}</TableCell>
+                    <TableCell>   {a.InvoiceNo}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Product</TableCell>
-                    <TableCell>{product}</TableCell>
+                    <TableCell>{a.Product}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Issue</TableCell>
-                    <TableCell>{issue}</TableCell>
+                    <TableCell>{a.IssueInBrief}</TableCell>
                   </TableRow>
-                  <TableRow>
+                  {/* <TableRow>
                     <TableCell>Voice Message</TableCell>
                     <TableCell><audio src={voiceSrc} controls></audio></TableCell>
-                  </TableRow>
+                  </TableRow> */}
                     
                   </TableBody>
                 </Table>
@@ -83,40 +129,11 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
           
         </TableRow>
       </React.Fragment>
-    );
-  }
-
-
-
-
-
-  
-  export default function CollapsibleTable() {
-    return (
-     
-      <TableContainer component={Paper} style={{marginTop:'20px'}}>
-
-     
-
-        <Table aria-label="collapsible table">
-          <TableHead >
-            <TableRow >
-            
-              <TableCell colSpan="2" >
-              <Typography variant="h6" >
-              Today
-              </Typography></TableCell>
-              
-            </TableRow>
-          </TableHead>
-          <TableBody>
-        
-        
-            {AppointmentList.map(Appointment)}
-     
-           
+      ))}
           </TableBody>
+        
         </Table>
+    
       </TableContainer>
 
       

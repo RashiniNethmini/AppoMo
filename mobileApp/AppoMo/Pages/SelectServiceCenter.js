@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import {StyleSheet, Pressable, Image, View, Alert,Text,TouchableOpacity,ScrollView} from 'react-native';
 import { SearchBar } from "react-native-elements";
 // import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,22 @@ import ServiceCenter from './ServiceCenter';
 
 function SelectServiceCenter() {
   // const navigation = useNavigation();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://10.0.2.2:8070/serviceprovider/");
+      const jsonData = await response.json();
+      setData(jsonData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   return (
     
     <View>
@@ -29,10 +45,13 @@ function SelectServiceCenter() {
                 autoCorrect={false}
               />
           </View>
-
-          <ScrollView>
+        
+          <ScrollView style={{ flexGrow: 0.75 }}>     
+    
             <View style={styles.list}>
+            {data.map(item => (
                 <View style={styles.item}>
+                
                   <TouchableOpacity style={styles.imagesStyle}
                   //  onPress={()=>navigation.navigate("serviceCenter")}
                   // onPress={() => navigation.navigate('serviceCenter')}
@@ -42,38 +61,16 @@ function SelectServiceCenter() {
                         style={styles.imageStyle}
                         />
                   </TouchableOpacity>
-                  <Text style={styles.tStyle}>Service Center </Text>
+                  
+                  <Text style={styles.tStyle}>{item.serviceProviderName}
+                  </Text>
+               
                 </View>
-              <View style={styles.item}>
-                <TouchableOpacity>
-                  <Image
-                        source={require('../assets/a.jpg')}
-                        style={styles.imageStyle}
-                        />
-                </TouchableOpacity>
-                <Text style={styles.tStyle}>Service Center B</Text>
-              </View>
-              <View style={styles.item}>
-                <TouchableOpacity>
-                  <Image
-                        source={require('../assets/a.jpg')}
-                        style={styles.imageStyle}
-                        />
-                </TouchableOpacity>
-                <Text style={styles.tStyle}>Service Center C</Text>
-              </View>
-              <View style={styles.item}>
-                <TouchableOpacity>
-                  <Image
-                        source={require('../assets/a.jpg')}
-                        style={styles.imageStyle}
-                        />
-                </TouchableOpacity>
-                <Text style={styles.tStyle}>Service Center D</Text>
-              </View>
-              
+                ))}
             </View>
-          </ScrollView>
+        
+        </ScrollView> 
+      
     </View>
 
   )
@@ -89,7 +86,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap:'wrap',
     margin:20,
-    gap:80 
+    gap:80 ,
+
   },
   tStyle:{
     color:'white',
@@ -107,7 +105,8 @@ const styles = StyleSheet.create({
     width:100,
     borderRadius:10,
     marginVertical:10
-  }
+  },
+
 });
 
 export default SelectServiceCenter;
