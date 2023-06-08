@@ -7,6 +7,7 @@ import styles from './Popup.module.css';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button } from "@mui/material";
 
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -28,12 +29,12 @@ export default function AppointmentPopup({ appointment, onAccept, onReject }) {
   const handleClose = () => setOpen(false);
 
   const handleAcceptClick = () => {
-    onAccept(appointment.id);
+    onAccept(appointment._id);
     handleClose();
   };
 
   const handleRejectClick = () => {
-    onReject(appointment.id, comment);
+    onReject(appointment._id, comment);
     handleClose();
   };
 
@@ -41,9 +42,11 @@ export default function AppointmentPopup({ appointment, onAccept, onReject }) {
     setComment(event.target.value);
   };
 
+  
+
   return (
     <div>
-      <Button onClick={handleOpen} variant='contained'>Appointment {appointment.id}</Button>
+      <Button onClick={handleOpen} variant='contained'><span>Appointment {appointment.issueNumber}</span></Button>
       <Modal
         open={open}
         aria-labelledby="modal-modal-title"
@@ -66,11 +69,11 @@ export default function AppointmentPopup({ appointment, onAccept, onReject }) {
             </div>
             <div className={styles.rightContainer}>
               <Typography sx={{ p: 2 }}>
-                : {appointment.name}<br />
-                : {appointment.contactNumber}<br />
-                : {appointment.invoice}<br />
-                : {appointment.product}<br />
-                : {appointment.issue}<br />
+                : {appointment.Name}<br />
+                : {appointment.ContactNo}<br />
+                : {appointment.InvoiceNo}<br />
+                : {appointment.Product}<br />
+                : {appointment.IssueInBrief}<br />
                 <div className={styles.audioOuter}><audio src={appointment.voiceSrc} className={styles.audio} controls /></div>
               </Typography>
             </div>
