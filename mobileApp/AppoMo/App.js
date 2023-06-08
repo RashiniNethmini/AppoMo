@@ -50,7 +50,7 @@ export default function App() {
         {/* <ForgotPW/> */}
         {/* <CompanyDetails/> */}
         {/* <ComBranchDetails/> */}
-        <SelectServiceCenter/>
+        {/* <SelectServiceCenter/> */}
         {/* <IssueSubmission/> */}
         {/* <AdvPayment/> */}
         {/* <EditProfile/> */}
