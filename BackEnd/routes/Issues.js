@@ -34,16 +34,53 @@ router.route("/").get((req, res) => {
 
 })
 
-router.route("/delete/:id").delete(async (req, res) => {
-    let issueId = req.params.id;
 
-    await Issue.findByIdAndDelete(issueId)
-        .then(() => {
-            res.status(200).send({ status: "Issue deleted successfully" });
-        }).catch((err) => { console.log(err.message); })
-    //res.status(500).send({ status:"Error deleting issue"});
 
-})
+router.route('/delete/:id').delete(async (req, res) => {
+  const appointmentId = req.params.id;
+
+  try {
+    await Issue.findByIdAndDelete(appointmentId);
+    res.status(200).send({ status: 'Appointment deleted successfully' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ status: 'Error deleting appointment' });
+  }
+});
+
+router.route('/deleteAllRejected').delete(async (req, res) => {
+  try {
+    await Issue.deleteMany({ status: 'rejected' });
+    res.status(200).send({ status: 'All rejected appointments deleted successfully' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ status: 'Error deleting rejected appointments' });
+  }
+});
+
+
+  router.route("/update/:id").patch(async (req, res) => {
+    try {
+      const issueId = req.params.id;
+      const { comment, status } = req.body;
+  
+      const updatedIssue = await Issue.findByIdAndUpdate(
+        issueId,
+        { $set: { comment, status } },
+        { new: true }
+      );
+  
+      if (updatedIssue) {
+        res.status(200).send({ status: "Comment updated successfully", updatedIssue });
+      } else {
+        res.status(404).send({ status: "Issue not found" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ status: "Error with updating comment" });
+    }
+  });
+  
 
 router.route("/get/:id").get(async (req, res) => {
     let issueId = req.params.id;

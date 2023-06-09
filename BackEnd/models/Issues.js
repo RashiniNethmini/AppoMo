@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-//const Counter = require('./Counter');
+
 
 
 const Schema = mongoose.Schema;
@@ -9,31 +9,38 @@ const CounterSchema = new Schema({
   });
   const Counter = mongoose.model('Counter', CounterSchema);
 const issueSchema = new Schema({
-    issueNumber: { 
-        type: Number, 
-        },
-    Name: {
-        type: String,
-        required: true,
-    },
-    ContactNo: {
-        type: Number,
-        required: true,
-    },
-    InvoiceNo: {
-        type: String,
-        required: true,
-    },
-    Product: {
-        type: String,
-        required: true,
-    },
-    IssueInBrief: {
-        type: String,
-        required: true,
-    }
+  issueNumber: {
+    type: Number,
+  },
+  Name: {
+    type: String,
+    required: true,
+  },
+  ContactNo: {
+    type: Number,
+    required: true,
+  },
+  InvoiceNo: {
+    type: String,
+    required: true,
+  },
+  Product: {
+    type: String,
+    required: true,
+  },
+  IssueInBrief: {
+    type: String,
+    required: true,
+  },
+  comment: {
+    type: String,
+  },
+  status: {
+    type: String,
+    default: null,
+  },
+});
 
-})
 issueSchema.pre('save', function (next) {
     const doc = this;
     Counter.findByIdAndUpdate(
