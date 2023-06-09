@@ -33,5 +33,34 @@ router.route("/add").post((req, res) => {
 
 })
 
+router.route("/").get((req,res)=>{
+    Appointment.find().then((Appointments)=>{
+        res.json(Appointments)
+    }).catch((err)=>{
+        cosole.log(err)
+    })
+})
+
+router.route("/get/:id").get(async(req,res)=>{
+    console.log(req.params.id);   
+
+    let data=await Appointment.find(
+        {
+            "$or":[
+                {
+                   "AptmntStatus":{$eq:req.params.id}
+                }
+            ]
+        }
+    )
+    // res.send(data);
+    .then((data)=>{
+    res.send(data)
+   
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get Appointment"});
+    })
+})
 
 module.exports = router;

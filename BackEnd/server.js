@@ -30,9 +30,9 @@ connection.once("open", () => {
 const ConfApntmntsRouter = require("./routes/Appointments.js");
  app.use("/Appointments",ConfApntmntsRouter);
 
- app.listen(PORT, () => {
-    console.log('Server is running on port ' + PORT);
-})
+//  app.listen(PORT, () => {
+//     console.log('Server is running on port ' + PORT);
+// })
 
 // const BrDetailsRouter = require("./routes/BranchDetails.js");
 //  app.use("/BranchDetails", BrDetailsRouter);
@@ -45,9 +45,15 @@ app.use("/Issues", IssueRouter);
 // const UserDetailsRouter = require("./routes/UserDetails.js");
 // app.use("/UserDetails", UserDetailsRouter);
 
+// app.listen(PORT, () => {
+//     console.log('Server is running on port ' + PORT);
+// })
 
-//const serviceproviderRouter = require ("./routes/serviceproviders.js");
-//app.use("/serviceprovider", serviceproviderRouter);
-//})
+
+const serviceproviderRouter = require ("./routes/serviceproviders.js");
+app.use("/serviceprovider", serviceproviderRouter);
 
 
+app.listen(PORT,() =>{
+    console.log('Server is running on port '+PORT);
+})

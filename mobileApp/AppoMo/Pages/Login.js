@@ -4,13 +4,19 @@ import {
     Text,
     View,
     TextInput,
+    StatusBar,
     TouchableOpacity,
 } from "react-native";
 
 import { Button } from '@rneui/themed';
 import GoogleSVG from '../assets/googlelogo.svg';
 //import { useNavigation } from '@react-navigation/native';
-
+import * as Animatable from 'react-native-animatable';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useTheme } from '@react-navigation/native';
+import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 
 
 
@@ -42,186 +48,316 @@ function Login() {
     //         // Login failed, show error message to the user
     //     }
     // };
-    const [enteredUsername, setUsername] = useState("");
-    const [enteredPassword, setPassword] = useState("");
-    const [errors, setErrors] = useState({});
 
+    const [data, setData] = React.useState({
+        username: '',
+        password: '',
+        check_textInputChange: false,
+        secureTextEntry: true,
+        isValidUser: true,
+        isValidPassword: true,
+    });
 
-    const validateUsername = (enteredUsername) => {
-        if (!enteredUsername) {
-            return "*Username is required";
+    const { colors } = useTheme();
+
+    // const { signIn } = React.useContext(AuthContext);
+
+    const textInputChange = (val) => {
+        if (val.trim().length >= 4) {
+            setData({
+                ...data,
+                username: val,
+                check_textInputChange: true,
+                isValidUser: true
+            });
+        } else {
+            setData({
+                ...data,
+                username: val,
+                check_textInputChange: false,
+                isValidUser: false
+            });
         }
-        return null;
     }
 
-    const validatePassword = (enteredPassword) => {
-        if (!enteredPassword) {
-            return "*Password is required";
+    const handlePasswordChange = (val) => {
+        if (val.trim().length >= 8) {
+            setData({
+                ...data,
+                password: val,
+                isValidPassword: true
+            });
+        } else {
+            setData({
+                ...data,
+                password: val,
+                isValidPassword: false
+            });
         }
-
     }
 
-    const handleLogin = () => {
-        const usernameError = validateUsername(enteredUsername);
-        const passwordError = validatePassword(enteredPassword);
+    const updateSecureTextEntry = () => {
+        setData({
+            ...data,
+            secureTextEntry: !data.secureTextEntry
+        });
+    }
 
+    const handleValidUser = (val) => {
+        if (val.trim().length >= 4) {
+            setData({
+                ...data,
+                isValidUser: true
+            });
+        } else {
+            setData({
+                ...data,
+                isValidUser: false
+            });
+        }
+    }
 
-        if (usernameError || passwordError) {
-            setErrors({ enteredUsername: usernameError, enteredPassword: passwordError });
+    const loginHandle = (userName, password) => {
+
+        const foundUser = Users.filter(item => {
+            return userName == item.username && password == item.password;
+        });
+
+        if (data.username.length == 0 || data.password.length == 0) {
+            Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
+                { text: 'Okay' }
+            ]);
+            return;
         }
-        else {
-            // navigation.navigate('CompanyOrServiceCenter');
+
+        if (foundUser.length == 0) {
+            Alert.alert('Invalid User!', 'Username or password is incorrect.', [
+                { text: 'Okay' }
+            ]);
+            return;
         }
+        Login(foundUser);
     }
 
     return (
         <View style={styles.container}>
-            <View>
-                <Text style={styles.title} >AppoMo</Text>
-            </View>
+            <StatusBar backgroundColor='#009387' barStyle="light-content" />
+            <Animatable.View
+                animation="slideInLeft"
+                style={styles.header}>
+                <Text style={styles.text_header}>Login</Text>
 
-
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Username"
-                    placeholderTextColor="#003f5c"
-                    alignItems='center'
-                    onChangeText={(enteredUsername) => setUsername(enteredUsername)}
-                />
-            </View>
-            {errors.enteredUsername && <Text style={{ color: 'white',paddingBottom:20 }}>{errors.enteredUsername}</Text>}
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Password"
-                    placeholderTextColor="#003f5c"
-                    secureTextEntry={true}
-                    onChangeText={(enteredPassword) => setPassword(enteredPassword)}
-                />
-               
-            </View>
-            {errors.enteredPassword && <Text style={{ color: 'white' }}>{errors.enteredPassword}</Text>}
-            <TouchableOpacity>
-                <Text
-                    //onPress={navigation.navigate('CompanyOrServiceCenter')}
-                    style={styles.forgot_button}>
-                    Forgot Password?
-                </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                onPress={handleLogin}
-                style={styles.loginBtn}>
-                <Text style={styles.loginText}>LOGIN</Text>
-            </TouchableOpacity>
-
-            <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20, paddingBottom: 30 }}>
-                <View style={{ flex: 1, height: 1, backgroundColor: 'white', }} />
-                <View>
-                    <Text style={{ width: 50, textAlign: 'center' }}>Or</Text>
+            </Animatable.View>
+            <Animatable.View
+                animation="fadeInUpBig"
+                style={[styles.footer, {
+                    backgroundColor: colors.background
+                }]}
+            >
+                <Text style={[styles.text_footer, {
+                    color: colors.text
+                }]}>Username</Text>
+                <View style={styles.action}>
+                    <FontAwesome
+                        name="user-o"
+                        color={colors.text}
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder="Your Username"
+                        placeholderTextColor="#666666"
+                        style={[styles.textInput, {
+                            color: colors.text
+                        }]}
+                        autoCapitalize="none"
+                        onChangeText={(val) => textInputChange(val)}
+                        onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                    />
+                    {data.check_textInputChange ?
+                        <Animatable.View
+                            animation="bounceIn"
+                        >
+                            <Feather
+                                name="check-circle"
+                                color="green"
+                                size={20}
+                            />
+                        </Animatable.View>
+                        : null}
                 </View>
-                <View style={{ flex: 1, height: 1, backgroundColor: 'white' }} />
-            </View>
+                {data.isValidUser ? null :
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                        <Text style={styles.errorMsg}>Username must be at least 5 characters long.</Text>
+                    </Animatable.View>
+                }
 
 
-            <TouchableOpacity >
-                <Button style={styles.googleButton}> Sign in with Google</Button>
-            </TouchableOpacity>
-            {/* <SocialIcon
-      button
-      fontStyle={{}}
-      iconSize={50}
-      iconStyle={{}}
-      iconWidth={100}
-      iconType="font-awesome"
-      iconColor=""
-      onPress={() => console.log("onPress()")}
-      style={{ paddingHorizontal: 10 }}
-      title="Sign in with Google"
-      type='google'
-    /> */}
+                <Text style={[styles.text_footer, {
+                    color: colors.text,
+                    marginTop: 35
+                }]}>Password</Text>
+                <View style={styles.action}>
+                    <Feather
+                        name="lock"
+                        color={colors.text}
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder="Your Password"
+                        placeholderTextColor="#666666"
+                        secureTextEntry={data.secureTextEntry ? true : false}
+                        style={[styles.textInput, {
+                            color: colors.text
+                        }]}
+                        autoCapitalize="none"
+                        onChangeText={(val) => handlePasswordChange(val)}
+                    />
+                    <TouchableOpacity
+                        onPress={updateSecureTextEntry}
+                    >
+                        {data.secureTextEntry ?
+                            <Feather
+                                name="eye-off"
+                                color="grey"
+                                size={20}
+                            />
+                            :
+                            <Feather
+                                name="eye"
+                                color="grey"
+                                size={20}
+                            />
+                        }
+                    </TouchableOpacity>
+                </View>
+                {data.isValidPassword ? null :
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                        <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+                    </Animatable.View>
+                }
 
 
-            <View style={styles.regText}>
+                <TouchableOpacity>
+                    <Text style={{ color: '#009387', marginTop: 15 }}>Forgot password?</Text>
+                </TouchableOpacity>
+                <View style={styles.button}>
 
-                <Text>Not Registered?</Text>
-                <TouchableOpacity onPress={handlePressReg}><Text style={styles.innerRegText}>  Register Now</Text></TouchableOpacity>
-            </View>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('SignUpScreen')}
+                        style={[styles.signIn, {
+                            borderColor: '#009387',
+                            borderWidth: 1,
+                            marginTop: 125,
+
+                        }]}
+
+                    >
+                        <Text style={[styles.textSign, {
+                            color: '#009387'
+                        }]}
+                            onPress={() => { loginHandle(data.username, data.password) }}
+
+                        >Sign In</Text>
+                    </TouchableOpacity>
 
 
-
-
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('')}
+                        style={[styles.signIn, {
+                            borderColor: '#009387',
+                            borderWidth: 1,
+                            marginTop: 15,
+                            marginVertical: 0
+                        }]}
+                    >
+                        <Text style={[styles.textSign, {
+                            color: '#009387'
+                        }]}>Sign in with Google</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "center", marginTop: 10 }}>
+                    <Text style={{ fontSize: 16, }}>Don't have an account ? </Text>
+                    <TouchableOpacity onPress={() => props.navigation.navigate("UserRegistr")}>
+                        <Text style={{ color: "#084C4F", fontWeight: 'bold', fontSize: 16,textDecorationLine:'underline' }}>Signup</Text>
+                    </TouchableOpacity>
+                </View>
+            </Animatable.View>
         </View>
-
     );
-}
+};
+
+export default Login;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        width: 400,
+        backgroundColor: '#108F94'
     },
-    title: {
-        fontSize: 50,
-        paddingBottom: 80,
-        color: "#fff",
-
-    },
-    inputView: {
-        backgroundColor: "#fff",
-        borderRadius: 30,
-        width: "70%",
-        height: 45,
-        padding: 4,
-        marginBottom: 8,
-        alignItems: "center",
-    },
-    TextInput: {
-        height: 50,
+    header: {
         flex: 1,
-        padding: 10,
-        marginLeft: 5,
-
+        justifyContent: 'flex-end',
+        paddingHorizontal: 20,
+        paddingBottom: 50
     },
-    forgot_button: {
-        height: 30,
-        marginBottom: 30,
-        paddingTop:10
+    footer: {
+        flex: 4,
+        backgroundColor: '#fff',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 20,
+        paddingHorizontal: 20,
+        paddingVertical: 30,
+        width: ScreenWidth
     },
-    loginBtn: {
-        width: "80%",
-        borderRadius: 35,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 10,
-        backgroundColor: "#084C4F",
-    },
-    loginText: {
+    text_header: {
         color: '#fff',
-        fontSize: 20,
-    },
-
-    regText: {
-        paddingTop: 40,
-        flexDirection: 'row',
-        fontSize: 20,
-    },
-    innerRegText: {
         fontWeight: 'bold',
-        borderBottomColor: 'black',
-        textDecorationLine: 'underline',
+        fontSize: 40
+    },
+    text_footer: {
+        color: '#05375a',
+        fontSize: 18
+    },
+    action: {
+        flexDirection: 'row',
+        marginTop: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#f2f2f2',
+        paddingBottom: 5
+    },
+    actionError: {
+        flexDirection: 'row',
+        marginTop: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#FF0000',
+        paddingBottom: 5
+    },
+    textInput: {
+        flex: 1,
+        marginTop: Platform.OS === 'ios' ? 0 : -12,
+        paddingLeft: 10,
+        color: '#05375a',
+    },
+    errorMsg: {
+        color: '#FF0000',
+        fontSize: 14,
+    },
+    button: {
+        alignItems: 'center',
+        marginTop: 50,
 
     },
-    googleButton: {
-        paddingTop: 70,
-        marginTop: 40,
-        color: '#084C4F'
 
+    signIn: {
+        width: '100%',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+    },
+
+
+    textSign: {
+        fontSize: 15,
+        color: "white"
     }
-
-
 });
-export default Login;

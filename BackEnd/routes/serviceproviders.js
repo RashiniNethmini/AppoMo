@@ -69,7 +69,16 @@ router.route("/update/:id").put (async (req,res)=>{
         logo
     }
 
-    const update=await ServiceProvider.findByIdAndUpdate(serviceProviderId, updateServiceprovider)
+    const update=await ServiceProvider.findOneAndUpdate(
+            {
+                "$or":[
+                    {
+                       "serviceProviderName":{$regex:serviceProviderId}
+                    }
+                ]
+              
+        }
+        , updateServiceprovider)
     .then(()=>{
     res.status(200).send({status:"Service Provider updated"})
     }).catch((err)=>{
@@ -79,20 +88,63 @@ router.route("/update/:id").put (async (req,res)=>{
 
 })
 
-router.route("/get/:id").get(async(req,res)=>{
-    let serviceProviderId=req.params.id;   
+// router.route("/get/:id").get(async(req,res)=>{
+//     let serviceProviderId=req.params.id;   
    
-    const select=await ServiceProvider.findById(serviceProviderId)
-    .then((serviceprovider)=>{
-    res.status(200).send({status:"Service Provider fetched",serviceprovider})
+//     const select=await ServiceProvider.findById(serviceProviderId)
+//     .then((serviceprovider)=>{
+//     res.status(200).send({status:"Service Provider fetched",serviceprovider})
+   
+//     }).catch((err)=>{
+//     console.log(err);
+//     res.status(500).send({status:"Error with get service provider"});
+//     })
+// })
+
+router.route("/get/:id").get(async(req,res)=>{
+    console.log(req.params.id);   
+
+    let SP=await ServiceProvider.find(
+        {
+            "$or":[
+                {
+                   "serviceProviderName":{$regex:req.params.id}
+                }
+            ]
+        }
+    )
+    // res.send(data);
+    .then((SP)=>{
+    res.send(SP)
    
     }).catch((err)=>{
     console.log(err);
-    res.status(500).send({status:"Error with get service provider"});
+    res.status(500).send({status:"Error with get Appointment"});
     })
 })
 
+router.route("/search/:id").get(async(req,res)=>{
+    console.log(req.params.id);  
+    const{ 
+        password}=req.body; 
 
+    let SPP=await ServiceProvider.find(
+        {
+            "$or":[
+                {
+                   "serviceProviderName":{$regex:req.params.id}
+                }
+            ]
+        },'password'
+    )
+    // res.send(data);
+    .then((SPP)=>{
+    res.send(SPP);
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get Appointment"});
+    })
+})
 
 
 

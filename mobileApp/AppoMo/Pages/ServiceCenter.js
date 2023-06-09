@@ -12,7 +12,8 @@ const DataTable= [
         ['Colombo', '87/5,Main Roard,Colombo.', '011-2456825'],
         ['Panadura', 'No.507,Galle Road,Panadura.', '038-2247896'],
 
-        
+        ['Colombo', '87/5,Main Roard,Colombo.', '011-2456825'],
+        ['Panadura', 'No.507,Galle Road,Panadura.', '038-2247896'],
       ];
 
 
