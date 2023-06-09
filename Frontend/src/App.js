@@ -40,16 +40,16 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
        
-        <Signin/>
+        {/* <Signin/>
         <Reg/>
-        <FPw/>
-        <ResetPassword />
+        <FPw/>*/}
+        <ResetPassword /> 
         <Dashboard/>
-        <EditProfile/>
+        {/* <EditProfile/>
         <AppointmentConfirm />
-        <BrUpdate/>
+        <BrUpdate/> */}
        
-        <Termination/>
+        {/* <Termination/> */}
         
       </ThemeProvider>
     </div>
