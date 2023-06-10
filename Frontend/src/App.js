@@ -42,12 +42,12 @@ function App() {
        
         {/* <Signin/>
         <Reg/>
-        <FPw/>*/}
-        <ResetPassword /> 
-        <Dashboard/>
-        {/* <EditProfile/>
-        <AppointmentConfirm />
-        <BrUpdate/> */}
+        <FPw/>
+        <ResetPassword />  */}
+        {/* <Dashboard/> */}
+        {/* <EditProfile/> */}
+        {/* <AppointmentConfirm /> */}
+        {/* <BrUpdate/>  */}
        
         {/* <Termination/> */}
         
