@@ -1,58 +1,228 @@
 import React, { useState } from "react";
 import styles from './Reg.module.css';
-import { Paper, TextField, RadioGroup, Radio, FormControlLabel, Button, Stack, Avatar, IconButton, InputAdornment} from "@mui/material";
-import { maxWidth } from "@mui/system";
+import { Paper, TextField, RadioGroup, Radio, FormControlLabel, Button, Stack, Avatar, IconButton, InputAdornment, Typography, FormHelperText} from "@mui/material";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
-// import axios from "axios";
+import axios  from "axios";
 
 
 
-function validatePassword(password) {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&+*^()_])[A-Za-z\d!@#$%&+*^()_]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      return 'Password must be at least 8 characters contain at least one uppercase letter, at least one lowercase letter, at least one number & at least one following symbols: !@#$%&+*^()_';
+
+function validateUsername(username){
+    
+    const lengthURegex = /^.{3,16}$/; // ensure that the username is between 3 and 16 characters long.
+    const contentRegex = /^[a-zA-Z0-9_-]*$/; // ensure that the username contains only letters, numbers, underscores, or hyphens.
+    
+    if(username.trim()===""){
+        return "Username is required.";
+    }else if (!lengthURegex.test(username)){
+        return "Username must be in between 3 and 16 characters long.";
+    } else if (!contentRegex.test(username)){
+        return "Username must contain only letters, numbers, underscores, or hyphens.";
     }
-    return null;
-}
+};
+function validatePassword(password) { 
+    
+    
+    const lengthPRegex = /^.{8,}$/; // ensure that the password is at least 8 characters long.
+    const uppercaseRegex = /^(?=.*[A-Z])/; // ensure that the password contains at least one uppercase letter.
+    const lowercaseRegex = /^(?=.*[a-z])/; // ensure that the password contains at least one lowercase letter.
+    const numberRegex = /^(?=.*\d)/; // ensure that the password contains at least one number.
+    const specialCharRegex = /^(?=.*[!@#$%&+*^()_])/; // ensure that the password contains at least one of the following symbols: !@#$%&+*^()_.
+    
+    if(password.trim()===""){
+        return "Password is required.";
+    }else if (!lengthPRegex.test(password)){
+        return "Password must be at least 8 characters long.";
+    } else if (!uppercaseRegex.test(password)){
+        return "Password must contain at least one uppercase letter.";
+    } else if (!lowercaseRegex.test(password)){
+        return "Password must contain at least one lowercase letter.";
+    } else if (!numberRegex.test(password)){
+        return "Password must contain at least one number.";
+    } else if (!specialCharRegex.test(password)){
+        return "Password must contain at least one of the following symbols: !@#$%&+*^()_.";
+    }
+    
+};
+function validateServiceProviderName(serviceProviderName){  // checks if the Service Provider Name field is not empty after removing any leading or trailing whitespace.
+    const lettersSPNRegex = /^[a-zA-Z ,/'-]*$/; // ensure that the Service Provider Name contains only letters and numbers.
+    if(serviceProviderName.trim()===""){
+        return "Company / Service Center Name is required.";
+    }else if(!lettersSPNRegex.test(serviceProviderName)){
+        return "Company / Service Center Name is invalid."; 
+    }
+};
+
+function validateAddress(address){  // checks if the address field is not empty after removing any leading or trailing whitespace.
+    const lettersARegex = /^[a-zA-Z0-9. ,/-]*$/; // ensure that the address contains only letters and numbers.
+    if(address.trim()===""){
+        return "Address is required.";
+    }else if(!lettersARegex.test(address)){
+        return "Address is invalid."; 
+    }
+};
+function validateEmail(email){  //ensure that the email address is in a valid format.
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(email.trim()===""){
+        return "Email is required.";
+    }else if (!emailRegex.test(email)){
+        return "Email is invalid.";
+    }
+};
+function validateCEOName(ceoName){  // checks if the CEOName field is not empty after removing any leading or trailing whitespace.
+    const lettersCEORegex = /^[a-zA-Z ]*$/; // ensure that the CEO Name contains only letters.
+    if(!lettersCEORegex.test(ceoName)){
+        return "CEO Name is invalid."; 
+    }
+};
+function validateRegNo(regNo){  // checks if the Reg No field is not empty after removing any leading or trailing whitespace.
+    const lettersRNRegex = /^[a-zA-Z0-9]*$/; // ensure that the Reg No contains only letters and numbers.
+    if(regNo.trim()===""){
+        return "Reg No is required.";
+    }else if(!lettersRNRegex.test(regNo)){
+        return "Reg No is invalid."; 
+    }
+};
+function validateWorkingDates(workingDates){  // checks if the Working Dates field is not empty after removing any leading or trailing whitespace.
+    const lettersWDRegex = /^[a-zA-Z, ]*$/; // ensure that the working dates contain only letters with commas.
+    if(workingDates.trim()===""){
+        return "Reg No is required.";
+    }else if(!lettersWDRegex.test(workingDates)){
+        return "Working Dates are invalid.";
+    }
+}; 
+function validateWorkingHours(workingHours){  // checks if the Working Hours field is not empty after removing any leading or trailing whitespace.
+    const lettersWHRegex = /^[0-9]*$/; //ensure that the no of appoinments contain only numbers.
+    if(workingHours.trim()===""){
+        return "Reg No is required.";
+    } else if(!lettersWHRegex.test(workingHours)){
+        return "Working Hours are invalid.";
+    }
+};
+function validateNoOfAppoinments(noOfAppoinments){  // checks if the No of appoinments per day field is not empty after removing any leading or trailing whitespace.
+    const numbersRegex = /^[0-9]*$/; //ensure that the no of appoinments contain only numbers.
+    if(noOfAppoinments.trim()===""){
+        return "Reg No is required.";
+    }else if(!numbersRegex.test(noOfAppoinments)){
+        return "No of appoinments per day is invalid.";
+    }
+};
 
 
 
 export const Reg = (props) => {
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {setOpen(true);};
-    const handleClose = () => {setOpen(false);};
 
+    
+    const [radio, setradio] = useState(false);
+    const [radioError, setradioError] = useState(false);
+    
+    const [logo, setLogo] =useState("");
+
+    const [username, setUsername] =useState("");
+    const [usernameError, setUsernameError] = useState(null);
+    const handleUsernameChange = (event) => {
+        const value = event.target.value;
+        setUsername(value);
+        setUsernameError(validateUsername(value));
+      };
+    
     const [password, setPassword] =useState("");
-    const [error, setError] = useState(null);
+    const [passwordError, setPasswordError] = useState(null);
     const handlePasswordChange = (event) => {
       const value = event.target.value;
       setPassword(value);
-      setError(validatePassword(value));
+      setPasswordError(validatePassword(value));
     };
-
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = React.useState(false); // Password visibility icon.
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
 
-    // const [providerType, setProviderType] =useState("");
-    const [username, setUsername] =useState("");
-    const [logo, setLogo] =useState("");
     const [serviceProviderName, setServiceProviderName] =useState("");
+    const [serviceProviderNameError, setServiceProviderNameError] = useState(null);
+    const handleServiceProviderNameChange = (event) => {
+        const value = event.target.value;
+        setServiceProviderName(value);
+        setServiceProviderNameError(validateServiceProviderName(value));
+      };
+
     const [address, setAddress] =useState("");
+    const [addressError, setAddressError] = useState(null);
+    const handleAddressChange = (event) => {
+        const value = event.target.value;
+        setAddress(value);
+        setAddressError(validateAddress(value));
+      };
+
     const [email, setEmail] =useState("");
+    const [emailError, setEmailError] = useState(null);
+    const handleEmailChange = (event) => {
+        const value = event.target.value;
+        setEmail(value);
+        setEmailError(validateEmail(value));
+      };
+
     const [ceoName, setCEOName] =useState("");
+    const [ceoNameError, setCEONameError] = useState(null);
+    const handleCEONameChange = (event) => {
+        const value = event.target.value;
+        setCEOName(value);
+        setCEONameError(validateCEOName(value));
+      };
+
     const [regNo, setRegNo] =useState("");
+    const [regNoError, setRegNoError] = useState(null);
+    const handleRegNoChange = (event) => {
+        const value = event.target.value;
+        setRegNo(value);
+        setRegNoError(validateRegNo(value));
+      };
+
+    const [workingDates, setWorkingDates] =useState("");
+    const [workingDatesError, setWorkingDatesError] = useState(null);
+    const handleWorkingDatesChange = (event) => {
+        const value = event.target.value;
+        setWorkingDates(value);
+        setWorkingDatesError(validateWorkingDates(value));
+      };
+
+    const [workingHours, setWorkingHours] = useState("");
+    const [workingHoursError, setWorkingHoursError] = useState(null);
+    const handleWorkingHoursChange = (event) => {
+        const value = event.target.value;
+        setWorkingHours(value);
+        setWorkingHoursError(validateWorkingHours(value));
+      };
+
+    const [noOfAppoinments, setNoOfAppoinments] = useState("");
+    const [noOfAppoinmentsError, setNoOfAppoinmentsError] = useState(null);
+    const handleNoOfAppoinmentsChange = (event) => {
+        const value = event.target.value;
+        setNoOfAppoinments(value);
+        setNoOfAppoinmentsError(validateNoOfAppoinments(value));
+    };
+
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {setOpen(true);}; //Opening popup messages.
+    const handleClose = () => {setOpen(false);}; //Closing the popup messages.
+    const CombinedOnClick = ()=> {
+        handleClickOpen();
+        
+        sendRegDetails();
+    };
+    
+
 
     function sendRegDetails(e){
         e.preventDefault();
         
-        const newServiceProvider={
+        
+        const newServiceProvider={  //To parsing data to backend.
             // providerType,
             logo,
             username,
@@ -62,17 +232,23 @@ export const Reg = (props) => {
             email,
             ceoName,
             regNo,
+            workingDates,
+            workingHours,
+            noOfAppoinments,
             
 
         }
-        console.log(newServiceProvider);
-        // axios.post("http://localhost:8070/serviceprovider/add", newServiceProvider).then(()=>{
-        //     alert("Service Provider Added")
-        // }).catch((err)=>{
-        //     alert(err)
-        // })
+        
+        // console.log(newServiceProvider);
+        axios.post("http://localhost:8070/serviceprovider/add",newServiceProvider).then(()=>{
+            alert("Student Added")
+        }).catch((err)=>{
+            alert(err)
+        })
     }
 
+    
+   
     
     return (
         <div className={styles.regContainer}>
@@ -85,21 +261,18 @@ export const Reg = (props) => {
             </div>
             
             <div className={styles.combined}>
-                <div className={styles.regBodyRadioBox}>
-                    <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group" >
-                        <FormControlLabel value="Company" control={<Radio />} label="Company" id="providerType"
-                        // onChange={(e)=>{
-                        //     setProviderType(e.target.value);
-    
-                        // }}
+                <div className={styles.regBodyRadioBox} required error={radioError}>
+                    <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group" required id="providerType" 
+                    
+                    >
+                        <FormControlLabel value="Company" control={<Radio required />} label="Company" 
+                        
                         />
-                        <FormControlLabel value="Service Center" control={<Radio />} label="Service Center" id="providerType"
-                        // onChange={(e)=>{
-                        //     setProviderType(e.target.value);
-    
-                        // }}
+                        <FormControlLabel value="Service Center" control={<Radio required />} label="Service Center" 
+                        
                         />
                     </RadioGroup>
+                    {radioError && <FormHelperText>Please select an option</FormHelperText>}
                 </div>
 
 
@@ -107,17 +280,17 @@ export const Reg = (props) => {
                 
                     <Avatar src="./avatar.jpg" variant="contained" component="label" display="flex" justify-content="center" align="center"sx={{ width: 100, height: 100 }}
                         id="logo" 
-                    //     onChange={(e)=>{
-                    //     setLogo(e.target.value);
+                        onChange={(e)=>{
+                        setLogo(e.target.value);
 
-                    // }}
+                    }}
                     >
                     <p className={styles.regUlogo}>Upload Logo</p>
                     <input hidden accept="image/*" type="file" 
-                    //     onChange={(e)=>{
-                    //         setLogo(e.target.files[0]);
+                        onChange={(e)=>{
+                            setLogo(e.target.files[0]);
 
-                    // }}
+                    }}
                     />
                     
                     </Avatar>
@@ -133,18 +306,15 @@ export const Reg = (props) => {
                     
                     <div className={styles.regBodyTextbox}>
                         <TextField required="outlined-required" label="Username" sx={{ width: '100vw' }} id="username"
-                            onChange={(e)=>{
-                                setUsername(e.target.value);
-        
-                            }}
+                            onChange={handleUsernameChange} error={Boolean(usernameError)}
+                            helperText={usernameError}
                         />
 
                     </div>
                     <div className={styles.regBodyTextbox}>
-                        <TextField required="outlined-adornment-password" label="Password" type={showPassword ? 'text' : 'password'} id="password"
-                            onChange={handlePasswordChange} error={Boolean(error)}
-                      
-                            helperText="Password must be at least 8 characters contain at least one uppercase letter, at least one lowercase letter, at least one number & at least one following symbols: !@#$%&+*^()_." sx={{ width: '100vw' }}
+                        <TextField required="outlined-adornment-password" label="Password" type={showPassword ? 'text' : 'password'} sx={{ width: '100vw' }} id="password"
+                            onChange={handlePasswordChange} error={Boolean(passwordError)}
+                            helperText={passwordError}
                             InputProps={{
                                 endAdornment:(
                                     <InputAdornment position="end">
@@ -165,49 +335,59 @@ export const Reg = (props) => {
                     </div>
                     <div className={styles.regBodyTextbox}>
                         <TextField required="outlined-required" label="Company / Service Center Name" sx={{ width: '100vw' }} id="serviceProviderName"
-                        onChange={(e)=>{
-                            setServiceProviderName(e.target.value);
-    
-                        }} />
+                            onChange={handleServiceProviderNameChange} error={Boolean(serviceProviderNameError)} 
+                            helperText={serviceProviderNameError}/>
 
                     </div>
                     <div className={styles.regBodyTextbox}>
                         <TextField required="outlined-required" label="Address" variant="outlined" sx={{ width: '100vw' }} id="address"
-                        onChange={(e)=>{
-                            setAddress(e.target.value);
-    
-                        }}/>
+                            onChange={handleAddressChange} error={Boolean(addressError)}
+                            helperText={addressError}/>
 
                     </div>
                     <div className={styles.regBodyTextbox}>
                         <TextField required="outlined-required" label="Email" variant="outlined" type="email" sx={{ width: '100vw' }} id="email"
-                        onChange={(e)=>{
-                            setEmail(e.target.value);
-    
-                        }}/>
+                            onChange={handleEmailChange} error={Boolean(emailError)}
+                            helperText={emailError}/>
 
                     </div>
                     <div className={styles.regBodyTextbox}>
                         <TextField label="CEO Name" variant="outlined" sx={{ width: '100vw' }} id="ceoName"
-                        onChange={(e)=>{
-                            setCEOName(e.target.value);
-    
-                        }} />
+                        onChange={handleCEONameChange} error={Boolean(ceoNameError)} 
+                        helperText={ceoNameError}/>
 
                     </div>
                     <div className={styles.regBodyTextbox}>
                         <TextField required="outlined-required" label="Registration No" variant="outlined" sx={{ width: '100vw' }} id="regNo"
-                        onChange={(e)=>{
-                            setRegNo(e.target.value);
-    
-                        }} />
+                        onChange={handleRegNoChange} error={Boolean(regNoError)}
+                        helperText={regNoError}/>
+
+                    </div>
+                    <div className={styles.regBodyTextbox}>
+                        <TextField label="Working dates" required="outlined" sx={{ width: '100vw' }} id="workingDates"
+                        onChange={handleWorkingDatesChange} error={Boolean(workingDatesError)}
+                        helperText={workingDatesError}/>
+
+                    </div>
+                    <div className={styles.regBodyTextbox}>
+                        <TextField label="Working hours per day" required="outlined" sx={{ width: '100vw' }} id="workingHours"
+                        onChange={handleWorkingHoursChange} error={Boolean(workingHoursError)}
+                        helperText={workingHoursError}/>
+
+                    </div>
+                    <div className={styles.regBodyTextbox}>
+                        <TextField label="No of Appoinments per day" required="outlined" sx={{ width: '100vw' }} id="noOfAppoinments"
+                        onChange={handleNoOfAppoinmentsChange} error={Boolean(noOfAppoinmentsError)}
+                        helperText={noOfAppoinmentsError}/>
 
                     </div>
 
                     <div className={styles.regButton}>
-                        <Button variant="contained" sx={{mr:'10px'}} type="submit" onClick={sendRegDetails}>Cancel</Button>
+                        <Button variant="contained" sx={{mr:'10px'}} type="submit" >Cancel</Button>
                         <div>
-                            <Button variant="contained" type="submit" onClick={handleClickOpen}  sx={{mr:'10px'}}>Next</Button>
+                            <Button variant="contained" type="submit"  sx={{mr:'10px'}} 
+                            // onClick={CombinedOnClick} 
+                            onClick={sendRegDetails}>Next</Button> 
                             <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         
                                 <DialogContent>
@@ -216,7 +396,7 @@ export const Reg = (props) => {
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
-                                <Button onClick={handleClose} >OK</Button>
+                                <Button onClick={handleClose} >OK</Button>  
                                 </DialogActions>
                             </Dialog>
                         </div>

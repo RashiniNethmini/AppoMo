@@ -1,8 +1,8 @@
-import  React, { useState }  from 'react';
+import  React, { useState, useEffect }  from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,Image, TouchableOpacity,ScrollView } from 'react-native';
 import { Searchbar, Avatar } from 'react-native-paper';
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import axios from 'axios';
 
 
 
@@ -11,17 +11,26 @@ import { Searchbar, Avatar } from 'react-native-paper';
 
 function CompanyDetails() {
 
-  // React.useEffect(() => {
-  //   if (contentHeight >= MAX_HEIGHT) {
-  //     setScrollEnabled(false);
-  //   } else {
-  //     setScrollEnabled(true);
-  //   }
-  // }, [contentHeight]);
-  
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
   
+  const [serviceProviders, setServiceProviders] = React.useState('');
+
+  const fetchServiceProviders = async () => {
+    try {
+      const response = await axios.get("http://localhost:8070/serviceprovider/get/serviceProviders" );
+      setServiceProviders(response.data);
+    } catch (error) {
+      console.error('Error fetching service providers:', error);
+    }
+  };
+
+  useEffect(() => {
+    
+    fetchServiceProviders();
+  }, []);
+
+
   return (
     
     
@@ -38,11 +47,11 @@ function CompanyDetails() {
             <View style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/abans.jpg')}/> 
             </View>    
-            </TouchableOpacity>
+            
               
-            <View >
-              <Text>ABANS</Text>
-            </View>
+            
+              <Text style={styles.tStyle}>ABANS</Text>
+              </TouchableOpacity>
           </View>
           
           <View style={styles.cardContainer}>
@@ -50,10 +59,10 @@ function CompanyDetails() {
             <View  style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/sinhagiri.png')}/>
             </View >
-            </TouchableOpacity>
-            <View >
-              <Text>SINHAGIRI</Text>
-            </View>
+            
+            
+              <Text style={styles.tStyle}>SINHAGIRI</Text>
+              </TouchableOpacity>
           </View> 
         
         
@@ -63,23 +72,24 @@ function CompanyDetails() {
             <View  style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/Singer-logo.jpg')}/>
             </View >
+            
+            
+              <Text style={styles.tStyle}>SINGER</Text>
             </TouchableOpacity>
-            <View >
-              <Text>SINGER</Text>
-            </View>
           </View>
           
           
           <View style={styles.cardContainer}>
-            <TouchableOpacity>
+          <TouchableOpacity>
             <View  style={styles.card} >
               <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/damro.png')}/>
             </View >
-            </TouchableOpacity>
-            <View >
-              <Text variant="headlineLarge">DAMRO</Text>
-            </View>
+            
+            
+              <Text style={styles.tStyle}>DAMRO</Text>
+          </TouchableOpacity>
           </View>
+          
         
       </View>
       </ScrollView>    
@@ -96,13 +106,12 @@ function CompanyDetails() {
 const styles =StyleSheet.create({
   mainContainer: {
     flex: 1,
-    // backgroundColor: '#ffffff',
+
     alignItems: 'center', 
     justifyContent: 'center',
     width: 350,
     maxheight: 1500,
     marginTop: 50,
-    // marginBottom: 50,
     marginLeft: 5,
     marginRight: 5,
     
@@ -113,7 +122,6 @@ const styles =StyleSheet.create({
     flex:1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
     maxHeight: 70,
     marginLeft: 230,
     
@@ -136,7 +144,6 @@ const styles =StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap:'wrap',
-    // backgroundColor: '#ffff00',
     alignItems: 'center', 
     justifyContent: 'center',
     width: 320,
@@ -147,16 +154,12 @@ const styles =StyleSheet.create({
 
   cardContainer: {
     flex: 1,
-    backgroundColor: '#ffff00',
     alignItems: 'center', 
     justifyContent: 'center',
     width: 140,
     height: 140, 
-    margin: 60,
+    margin: 55,
     marginTop: 10,
-    paddingBottom: 20,
-    
-    // paddingTop: 6,
     
       
 
@@ -173,13 +176,12 @@ const styles =StyleSheet.create({
     width: 140,
     height: 140,
     overflow: 'hidden',
-    // marginBottom: 7,
     
-      
-      
-
+    
 
   },
+
+  
     
 
   coverImage: {
@@ -190,8 +192,24 @@ const styles =StyleSheet.create({
     height: 140,
       
   },
+  tStyle:{
+    color:'white',
+    fontWeight: "bold",
+    fontSize: 18
+  },
 
 });
 
 export default CompanyDetails;
   
+
+// return (
+//   <View style={styles.container}>
+//     {companies.map((company) => (
+//       <View key={company._id}>
+//         <Text>{company.name}</Text>
+//         {/* Display other company details */}
+//       </View>
+//     ))}
+//   </View>
+// );

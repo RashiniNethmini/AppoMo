@@ -8,10 +8,11 @@ import BrUpdate from "./component/BranchUpdate/BrUpdate";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
+import RPw from "./component/ResetPwPage/RPw";
 // import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Dashboard from "./Pages/Dashboard/Dashboard"
-
+ 
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -48,10 +49,12 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <AppointmentConfirm />
-        <FormBr />
+        {/* <AppointmentConfirm /> */}
+        {/* <RPw/>       
         <ResetPassword />
-        <BrUpdate/>
+        <BrUpdate/> */}
+        <Signin/>
+        <Reg/>
       </ThemeProvider>
     </div>
   );

@@ -7,8 +7,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const HeadTable= ['Name', 'Address', 'Contact No '];
 const DataTable= [
-        ['Colombo', '87/5,Main Roard,Colombo.', '011-2456825'],
+        ['Kalutara', 'No.28,Galle Road,Kalutara.', '034-2456825'],
         ['Panadura', 'No.507,Galle Road,Panadura.', '038-2247896'],
+        
 
         
       ];
@@ -51,9 +52,9 @@ function ComBranchDetails() {
                 <Avatar.Image size={70} source={require('../assets/avatar.jpg')} style={styles.avatar1}/>
             </View>
             <View style={styles. cardContainer1}>
-            <View style={styles.card1} >
-                <Image style={styles.coverImage1} resizeMode="contain" source={require('../assets/abans.jpg')}/> 
-            </View>
+              <View style={styles.card1} >
+                  <Image style={styles.coverImage1} resizeMode="contain" source={require('../assets/abans.jpg')}/> 
+              </View>
             </View >   
             
                
@@ -74,7 +75,7 @@ function ComBranchDetails() {
             </View>
 
             <View>
-            {/* <Text style={styles.heading}>{starRating ? `${starRating}*` : 'Tap to rate'}</Text> */}
+            
           <Text style={styles.heading}>Tap to rate</Text>
           <View style={styles.stars}>
               {starRatingOptions.map((option) => (
@@ -98,7 +99,7 @@ function ComBranchDetails() {
         
           <View style={{flex:1,justifyContent: 'center'}}>
             <TouchableOpacity 
-              // onPress={onPress} 
+              
             style={styles. serviceIssueButton}>
               <Text style={styles.serviceIssueButtonText}>Submit your issue</Text>
             </TouchableOpacity>

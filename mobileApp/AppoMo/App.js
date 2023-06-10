@@ -26,18 +26,18 @@ export default function App() {
   return (
 
     <View style={styles.container}>
-      <Provider>
-        {/* 
-        <NavigationContainer>
-          <Stack.Navigator>
+       <Provider>
+       {/* <IssueSubmission /> */}
+   
+     
+      
 
             <Stack.Screen name="login" component={Login} />
             <Stack.Screen name=" userRegistr" component={UserRegistr} />
-          </Stack.Navigator>
-
-        </NavigationContainer> */}
-
-        <AdvPayment/>
+          
+        <CompanyDetails/>
+        {/* <ComBranchDetails/> */}
+        {/* <AdvPayment/> */}
 
       </Provider>
 

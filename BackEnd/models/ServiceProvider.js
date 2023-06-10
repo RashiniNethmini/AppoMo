@@ -38,6 +38,19 @@ const serviceproviderSchema = new Schema({
         type : String,
         required: true
     },
+    workingDates : {
+        type : String,
+        required: true
+    },
+    workingHours : {
+        type : String,
+        required: true
+    },
+    noOfAppoinments : {
+        type : String,
+        required: true
+    },
+    
     
 
 })

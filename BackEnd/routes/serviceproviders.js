@@ -12,6 +12,9 @@ router.route("/add").post ((req,res) => {
     const email = req.body.email;
     const ceoName = req.body.ceoName;
     const regNo = req.body.regNo;
+    const workingDates = req.body.workingDates;
+    const workingHours = req.body.workingHours;
+    const noOfAppoinments = req.body.noOfAppoinments;
     
 
     const newServiceProvider = new ServiceProvider({
@@ -24,6 +27,10 @@ router.route("/add").post ((req,res) => {
         email,
         ceoName,
         regNo,
+        workingDates,
+        workingHours,
+        noOfAppoinments,
+            
         
 
     })
@@ -55,7 +62,10 @@ router.route("/update/:id").put (async (req,res)=>{
         email,
         ceoName,
         regNo,
-        logo}=req.body;
+        logo,
+        workingDates,
+        workingHours,
+        noOfAppoinments}=req.body;
 
     const updateServiceprovider={
         type,
@@ -66,7 +76,10 @@ router.route("/update/:id").put (async (req,res)=>{
         email,
         ceoName,
         regNo,
-        logo
+        logo,
+        workingDates,
+        workingHours,
+        noOfAppoinments
     }
 
     const update=await ServiceProvider.findByIdAndUpdate(serviceProviderId, updateServiceprovider)
