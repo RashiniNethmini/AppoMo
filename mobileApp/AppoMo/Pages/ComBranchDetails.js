@@ -48,14 +48,14 @@ function ComBranchDetails() {
 
     return (
         <View style={styles.mainContainer1}>
-            <View>
-                <Avatar.Image size={70} source={require('../assets/avatar.jpg')} style={styles.avatar1}/>
+            <View style={{marginTop:100}}>
+                {/* <Avatar.Image size={70} source={require('../assets/avatar.jpg')} style={styles.avatar1}/> */}
             </View>
-            <View style={styles. cardContainer1}>
-              <View style={styles.card1} >
-                  <Image style={styles.coverImage1} resizeMode="contain" source={require('../assets/abans.jpg')}/> 
-              </View>
-            </View >   
+            {/* <View style={styles. cardContainer1}>
+            <View style={styles.card1} >
+                <Image style={styles.coverImage1} resizeMode="contain" source={require('../assets/abans.jpg')}/> 
+            </View>
+            </View >    */}
             
                
             <View>

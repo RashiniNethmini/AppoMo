@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 const URL = process.env.MONGODB_URL;
 mongoose.connect(URL, {
-   // useCreateIndex: true,
+   //useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
    // useFindAndModify:false,
@@ -26,8 +26,20 @@ connection.once("open", () => {
     console.log("Mongodb connection successful");
 })
 
-// const IssueRouter = require("./routes/Issues.js");
-// app.use("/Issues", IssueRouter);
+
+const ConfApntmntsRouter = require("./routes/Appointments.js");
+ app.use("/Appointments",ConfApntmntsRouter);
+
+//  app.listen(PORT, () => {
+//     console.log('Server is running on port ' + PORT);
+// })
+
+// const BrDetailsRouter = require("./routes/BranchDetails.js");
+//  app.use("/BranchDetails", BrDetailsRouter);
+const IssueRouter = require("./routes/Issues.js");
+app.use("/Issues", IssueRouter);
+// const smsRouter = require("./APIs/sms.js");
+// app.use('/sms', smsRouter);
 
 const serviceproviderRouter = require ("./routes/serviceproviders.js");
 app.use("/serviceprovider", serviceproviderRouter);
@@ -35,15 +47,15 @@ app.use("/serviceprovider", serviceproviderRouter);
 // const UserDetailsRouter = require("./routes/UserDetails.js");
 // app.use("/UserDetails", UserDetailsRouter);
 
-app.listen(PORT, () => {
-    console.log('Server is running on port ' + PORT);
+// app.listen(PORT, () => {
+//     console.log('Server is running on port ' + PORT);
+// })
+
+
+const serviceproviderRouter = require ("./routes/serviceproviders.js");
+app.use("/serviceprovider", serviceproviderRouter);
+
+
+app.listen(PORT,() =>{
+    console.log('Server is running on port '+PORT);
 })
-
-
-//const serviceproviderRouter = require ("./routes/serviceproviders.js");
-//app.use("/serviceprovider", serviceproviderRouter);
-//})
-
-
-//app.listen(PORT,() =>{
-    //console.log('Server is running on port '+PORT);

@@ -1,4 +1,5 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
+import axios from 'axios';
 import './editprofile.css';
 import {Avatar,Stack,TextField,Paper,Button} from '@mui/material';
 import validator from 'validator';
@@ -12,8 +13,59 @@ export default function EditProfile() {
   const [address, setAddress] = useState('');
   const [email, setemail] = useState('');
   const [valid, validity] = useState('');
+  const [ceoName, setceo] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null);
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    setProfilePicture(URL.createObjectURL(file));
+  };
+
+  const handleClick = () => {
+    // Trigger file input click
+    document.getElementById('fileInput').click();
+  };
 
 
+const [data,setData]=useState("");
+const Sname = 'ABC';
+
+  useEffect(()=>{
+const fetchdata= async ()=>{
+  const data=await axios.get(`http://localhost:8070/serviceprovider/get/${Sname}`);
+  setData(data);
+  setName(data.serviceProviderName);
+  setAddress(data.address);
+  setemail(data.email);
+  setceo(data.ceoName);
+  validity(true);
+};
+fetchdata();
+},[]);
+
+
+  const handleUpdate = async () => {
+    try {
+      const updateFields = {
+        address,
+        email,
+        ceoName
+      };
+      await axios.put(`http://localhost:8070/serviceprovider/update/${Sname}`,updateFields);
+      alert('Details updated successfully');
+    } catch (error) {
+      console.error('Error updating item:', error);
+    }
+  };
+
+ const reset=()=>{
+  setData(data);
+  setName(data.serviceProviderName);
+  setAddress(data.address);
+  setemail(data.email);
+  setceo(data.ceoName);
+  validity(true);
+ }
 
   const NAme=(evnt)=>{
     const nameInputValue = evnt.target.value.trim();
@@ -61,31 +113,40 @@ const validateEmail = (e) => {
 
 
   return (
+  
     <div className='edit'>
       <Paper elevation={6} className="editPaper">
         <div classname="editform" style={{padding:"10px"}}>
             <div className='editdetailslogo' >
                 <div>Change Logo</div>&nbsp;&nbsp;
                 <div>
-                <Avatar src="./avatar.jpg" variant="contained" component="label" display="flex" justify-content="center" align="center" sx={{ width: 100, height: 100 }}>
-                    <input hidden accept="image/*" multiple type="file" />  
+                <Avatar src={profilePicture}
+        alt="Profile Picture" onClick={handleClick} variant="contained" component="label" display="flex" justify-content="center" align="center" sx={{ width: 100, height: 100 }}>
+                    <input hidden accept="image/*" multiple type="file" onChange={handleFileUpload}/>  
                     </Avatar>
                 </div>
             </div> 
-            
-           
+            {
+      data && data?.data.map((a)=>(
+        <div>
               <div  className='editdetails'>
-                <label>Company Name&nbsp;</label><TextField size='small' value={address}
-              onChange={event => setAddress(event.target.value)} onKeyUp={NAme} />&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>Company Name&nbsp;</label>
+                <TextField size='small' defaultValue={a.serviceProviderName}
+              onChange={event => setName(event.target.value)} onKeyUp={NAme} />
+              &nbsp;&nbsp;&nbsp;&nbsp;
               <p className="text-danger">{Error0}</p>
               </div><br/>
+
+
               <div className='editdetails'>
-              <label>Address&nbsp;</label><TextField size='small' value={name}
-              onChange={event => setName(event.target.value)} onKeyUp={Addr}/>&nbsp;&nbsp;&nbsp;&nbsp;
+              <label>Address&nbsp;</label><TextField size='small' defaultValue={a.address} 
+              onChange={event => setAddress(event.target.value)} onKeyUp={Addr}/>&nbsp;&nbsp;&nbsp;&nbsp;
                <p className="text-danger">{Error1}</p>
               </div> <br/>
+
+
               <div  className='editdetails'>
-                <label>Email&nbsp;</label><TextField size='small' value={email}
+                <label>Email&nbsp;</label><TextField size='small' defaultValue={a.email} 
                 onChange={event => setemail(event.target.value)}
                 // onKeyUp={(e) => validateEmail(e)} 
                 onKeyUp={validateEmail}
@@ -93,24 +154,32 @@ const validateEmail = (e) => {
                 />&nbsp;&nbsp;&nbsp;&nbsp;
                 <p className="text-danger">{Error2}</p>
               </div><br/>
+
+
               <div  className='editdetails'>
-                <label>CEO Name&nbsp;</label><TextField size='small' />
+                <label>CEO Name&nbsp;</label><TextField size='small' defaultValue={a.ceoName} 
+                onChange={event => setceo(event.target.value)} />
               </div>
                 
               <br/>
               <div  className='editdetails'>
-                <label>Weekdays-Open&nbsp;</label><TextField size='small' />&nbsp;<TextField size='small' /> &nbsp;&nbsp;&nbsp;&nbsp;
+                
                 <label>Working Hours Per Day&nbsp;</label><TextField size='small' />
               </div><br/>
               
-              <div  className='editdetails'>
-                <label>No of Appointments per hour&nbsp;</label><TextField size='small' />
-              </div><br/>
-             
+              </div>
+      ))
+    }
+              
+              <br/>
+          
               <div  className='editdetailsButton'>
                 <Stack spacing={2} direction="row">
-                      <Button variant="contained" disabled={!(name && address && email && valid)}>SAVE CHANGES</Button>
-                      <Button variant="contained">CANCEL</Button>
+                      <Button variant="contained" 
+                      disabled={!((name || address || email) && valid)} 
+                      onClick={handleUpdate}
+                      >SAVE CHANGES</Button>
+                      <Button variant="contained" onClick={reset}>CANCEL</Button>
 
                 </Stack>
        
@@ -118,8 +187,11 @@ const validateEmail = (e) => {
 
             </div>
       </Paper>
+      
   </div>
   
 
   );
+
 }
+

@@ -9,7 +9,7 @@ import {
   Button,
   Alert,
 } from "react-native";
-
+import * as Animatable from 'react-native-animatable';
 //import { useNavigation } from '@react-navigation/native';
 
 
@@ -145,7 +145,7 @@ function UserRegistr() {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.card}>
+        <Animatable.View style={styles.card} animation = "fadeInUpBig">
 
           <View><Text style={styles.title}>Enter Details to Register</Text></View>
           <TextInput
@@ -212,7 +212,7 @@ function UserRegistr() {
             color="#084C4F"
             onPress={handleSubmit}
           />
-        </View>
+        </Animatable.View>
       </ScrollView>
     </View>
   );

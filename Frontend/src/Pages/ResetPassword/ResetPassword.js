@@ -1,4 +1,5 @@
-import React,{useState,useRef} from 'react';
+import React,{useState,useRef,useEffect} from 'react';
+import axios from 'axios';
 import './resetPassword.css';
 import {IconButton,OutlinedInput,InputAdornment,Stack, Button,Paper} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -15,22 +16,77 @@ export default function ResetPassword() {
   const [passwordError1, setPasswordErr1] = useState("");
   const [passwordError2, setPasswordErr2] = useState("");
   const [currentPass, setCurrent] = useState('');
+  const [cPass, setCP] = useState('');
+  const [iPass, setIP] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirm] = useState('');
+  const [match, setmatch] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
+  const [data,setData]=useState("");
+  const Sname = 'ABC';
+  
+  useEffect(() => {
+    fetchdata();
+  }, []);
+
+  const fetchdata= async ()=>{
+    const up = {
+      password
+    };
+    const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Sname}`,up);
+    setData(data);
+    const response = data.data[0].password;
+    setCP(response);
+  };
+
+
+  const handleUpdate = async () => {
+    try {
+      const updateFields = {
+        password
+      };
+      await axios.put(`http://localhost:8070/serviceprovider/update/${Sname}`,updateFields);
+      
+      setIP(false);
+ setCurrent("");
+ setPassword("");
+ setConfirm("");
+ setPasswordErr0("");
+ setPasswordErr0("");
+ setPasswordErr0("");
+ alert('Password updated successfully');
+
+    } catch (error) {
+      console.error('Error updating item:', error);
+    }
+  };
+
 const CurrentPass=(evnt)=>{
   const currentPasswordInputValue = evnt.target.value.trim();
-  if(currentPasswordInputValue===''){
-    setPasswordErr0("**required");
-   
-  }else{
+  setIP(false);
+  if(currentPasswordInputValue===cPass){
+    setIP(true);
+    if(currentPasswordInputValue===''){
+      setPasswordErr0("**required");
+     
+    }
     setPasswordErr0("");
 
   }
+ else {
+    // alert(currentPasswordInputValue);
+    setPasswordErr0("Incorrect");
+    setIP(false);
+    if(currentPasswordInputValue===''){
+      setPasswordErr0("**required");
+     
+    }
+  }
+  
 }  
 
 
@@ -72,20 +128,34 @@ if(passwordInputFieldName==='password'){
 
 const RePass=(evnt)=>{
   const RePasswordInputValue = evnt.target.value.trim();
-  if(RePasswordInputValue===''){
-    setPasswordErr2("**required");
-   
+  if(password!==confirmPassword){
+    setPasswordErr2("Not match");
+    if(RePasswordInputValue===''){
+      setPasswordErr2("**required");
+     
+    }
+    setmatch(false);
   }else{
+    if(RePasswordInputValue===''){
+      setPasswordErr2("**required");
+     
+    }
     setPasswordErr2("");
-
+    setmatch(true);
   }
 }
 
 
-const ref = useRef(null);
+// const ref = useRef(null);
 const Cancel = () => {
-  // 👇️ reset input field's value
-  ref.current.value = '';
+  setIP(false);
+ setCurrent("");
+ setPassword("");
+ setConfirm("");
+ setPasswordErr0("");
+ setPasswordErr0("");
+ setPasswordErr0("");
+
 };
 
 
@@ -98,16 +168,20 @@ const Cancel = () => {
           
         <div className='resetForm'>
 
-
+        {/* {
+      data && data?.data.map((a)=>( 
+        <text onMouseDown={event=>setCP(a.password)}></text>
+       ))} */}
           <div className='resetElement'>
             <label>Enter Current Password &nbsp;</label>
-            <OutlinedInput ref={ref}
+            <OutlinedInput 
                 id="outlined-adornment-password"
                 type={showPassword ? 'text' : 'password'}
                 name='currentPass'
                 value={currentPass}
               onChange={event => setCurrent(event.target.value)}
                 onKeyUp={CurrentPass}
+               
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -123,6 +197,7 @@ const Cancel = () => {
             />
               <p className="text-danger">{passwordError0}</p>        
           </div>
+    
           <br/>
 
 
@@ -185,7 +260,7 @@ const Cancel = () => {
             <div>
               
               <Stack spacing={2} direction="row">
-                  <Button variant="contained" disabled={!(currentPass && confirmPassword && password)}>CHANGE PASSWORD</Button>
+                  <Button variant="contained" disabled={!(iPass && currentPass && confirmPassword && password && match)}  onClick={handleUpdate}>CHANGE PASSWORD</Button>
                   <Button  onClick={Cancel} variant="contained">CANCEL</Button>
               </Stack>
             </div>
