@@ -40,12 +40,18 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        {/* <AppointmentConfirm /> */}
-        {/* <RPw/>       
-        <ResetPassword />
-        <BrUpdate/> */}
-        <Signin/>
+       
+        {/* <Signin/>
         <Reg/>
+        <FPw/>
+        <ResetPassword />  */}
+        {/* <Dashboard/> */}
+        {/* <EditProfile/> */}
+        {/* <AppointmentConfirm /> */}
+        {/* <BrUpdate/>  */}
+       
+        {/* <Termination/> */}
+        
       </ThemeProvider>
     </div>
   );

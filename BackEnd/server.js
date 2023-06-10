@@ -52,8 +52,7 @@ app.use("/serviceprovider", serviceproviderRouter);
 // })
 
 
-const serviceproviderRouter = require ("./routes/serviceproviders.js");
-app.use("/serviceprovider", serviceproviderRouter);
+
 
 
 app.listen(PORT,() =>{

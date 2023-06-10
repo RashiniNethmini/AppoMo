@@ -32,18 +32,9 @@ export default function App() {
   return (
 
     <View style={styles.container}>
-       <Provider>
-       {/* <IssueSubmission /> */}
-   
-     
+      <Provider>
       
-
-            <Stack.Screen name="login" component={Login} />
-            <Stack.Screen name=" userRegistr" component={UserRegistr} />
-          {/* </Stack.Navigator>
-
-        </NavigationContainer> */}
-        {/* <SplashScreen/> */} 
+        <SplashScreen/>
 
         {/* <IssueSubmission></IssueSubmission> */}
         {/* <Login/> */}
