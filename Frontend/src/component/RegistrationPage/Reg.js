@@ -210,11 +210,11 @@ export const Reg = (props) => {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {setOpen(true);}; //Opening popup messages.
     const handleClose = () => {setOpen(false);}; //Closing the popup messages.
-    const CombinedOnClick = ()=> {
-        handleClickOpen();
+    // const CombinedOnClick = ()=> {
+    //     handleClickOpen();
         
-        sendRegDetails();
-    };
+    //     sendRegDetails();
+    // };
     
 
 
@@ -241,7 +241,8 @@ export const Reg = (props) => {
         
         // console.log(newServiceProvider);
         axios.post("http://localhost:8070/serviceprovider/add",newServiceProvider).then(()=>{
-            alert("Student Added")
+            alert("Service provider Added")
+            handleClickOpen();
         }).catch((err)=>{
             alert(err)
         })

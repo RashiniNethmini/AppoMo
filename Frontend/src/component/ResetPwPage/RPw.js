@@ -1,9 +1,9 @@
-import React,{useState,useRef} from 'react';
+import React,{useState,useRef,useEffect} from 'react';
 import './RPw.module.css';
 import {IconButton,OutlinedInput,InputAdornment,Stack, Button,Paper} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
+import axios from 'axios';
 
 
 
@@ -11,27 +11,82 @@ export default function ResetPassword() {
 
   
   const [showPassword, setShowPassword] = React.useState(false);
-  const [passwordError0, setPasswordErr0] = useState("");
+  // const [passwordError0, setPasswordErr0] = useState("");
   const [passwordError1, setPasswordErr1] = useState("");
   const [passwordError2, setPasswordErr2] = useState("");
   const [currentPass, setCurrent] = useState('');
+  const [cPass, setCP] = useState('');
+  const [iPass, setIP] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirm] = useState('');
+  const [match, setmatch] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-const CurrentPass=(evnt)=>{
-  const currentPasswordInputValue = evnt.target.value.trim();
-  if(currentPasswordInputValue===''){
-    setPasswordErr0("**required");
-   
-  }else{
-    setPasswordErr0("");
+  const [data,setData]=useState("");
+  const SEmail = 'abc@gmai.com';
+  
+  useEffect(() => {
+    fetchdata();
+  }, []);
 
-  }
-}  
+  const fetchdata= async ()=>{
+    const up = {
+      password
+    };
+    const data=await axios.get(`http://localhost:8070/serviceprovider/search/${SEmail}`,up);
+    setData(data);
+    const response = data.data[0].password;
+    setCP(response);
+  };
+
+
+  const handleUpdate = async () => {
+    try {
+      const updateFields = {
+        password
+      };
+      await axios.put(`http://localhost:8070/serviceprovider/update/${SEmail}`,updateFields);
+      
+      setIP(false);
+      setCurrent("");
+      setPassword("");
+      setConfirm("");
+      // setPasswordErr0("");
+      // setPasswordErr0("");
+      // setPasswordErr0("");
+      alert('Password updated successfully');
+
+    } catch (error) {
+      console.error('Error updating item:', error);
+    }
+  };
+
+// const CurrentPass=(evnt)=>{
+//   const currentPasswordInputValue = evnt.target.value.trim();
+//   setIP(false);
+//   if(currentPasswordInputValue===cPass){
+//     setIP(true);
+//     if(currentPasswordInputValue===''){
+//       setPasswordErr0("**required");
+     
+//     }
+//     setPasswordErr0("");
+
+//   }
+//  else {
+//     // alert(currentPasswordInputValue);
+//     setPasswordErr0("Incorrect");
+//     setIP(false);
+//     if(currentPasswordInputValue===''){
+//       setPasswordErr0("**required");
+     
+//     }
+//   }
+  
+// }  
 
 
 const handleValidation= (evnt)=>{
@@ -72,20 +127,34 @@ if(passwordInputFieldName==='password'){
 
 const RePass=(evnt)=>{
   const RePasswordInputValue = evnt.target.value.trim();
-  if(RePasswordInputValue===''){
-    setPasswordErr2("**required");
-   
+  if(password!==confirmPassword){
+    setPasswordErr2("Not match");
+    if(RePasswordInputValue===''){
+      setPasswordErr2("**required");
+     
+    }
+    setmatch(false);
   }else{
+    if(RePasswordInputValue===''){
+      setPasswordErr2("**required");
+     
+    }
     setPasswordErr2("");
-
+    setmatch(true);
   }
 }
 
 
-const ref = useRef(null);
+// const ref = useRef(null);
 const Cancel = () => {
-  // 👇️ reset input field's value
-  ref.current.value = '';
+  setIP(false);
+  setCurrent("");
+  setPassword("");
+  setConfirm("");
+  // setPasswordErr0("");
+  // setPasswordErr0("");
+  // setPasswordErr0("");
+
 };
 
 
@@ -98,8 +167,13 @@ const Cancel = () => {
           
         <div className='resetForm'>
 
+        {/* {
+      data && data?.data.map((a)=>( 
+        <text onMouseDown={event=>setCP(a.password)}></text>
+       ))} */}
+
           <div>
-            <label>New Password &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <label>Enter New Password &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? 'text' : 'password'}
@@ -127,7 +201,7 @@ const Cancel = () => {
 
 
           <div>
-            <label>Confirm Password &nbsp;</label>
+            <label>Confirm Password &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
             <OutlinedInput disabled={passwordError1===""?false:true}
               id="outlined-adornment-password"
               type={showPassword ? 'text' : 'password'}
@@ -157,8 +231,9 @@ const Cancel = () => {
             <div>
               
               <Stack spacing={2} direction="row">
-                  <Button variant="contained" disabled={!(currentPass && confirmPassword && password)}>CHANGE PASSWORD</Button>
                   <Button  onClick={Cancel} variant="contained">CANCEL</Button>
+                  <Button variant="contained" disabled={!(iPass && confirmPassword && password && match)}  onClick={handleUpdate}>CHANGE PASSWORD</Button>
+                  
               </Stack>
             </div>
           

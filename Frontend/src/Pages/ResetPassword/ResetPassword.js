@@ -52,13 +52,13 @@ export default function ResetPassword() {
       await axios.put(`http://localhost:8070/serviceprovider/update/${Sname}`,updateFields);
       
       setIP(false);
- setCurrent("");
- setPassword("");
- setConfirm("");
- setPasswordErr0("");
- setPasswordErr0("");
- setPasswordErr0("");
- alert('Password updated successfully');
+      setCurrent("");
+      setPassword("");
+      setConfirm("");
+      setPasswordErr0("");
+      setPasswordErr0("");
+      setPasswordErr0("");
+      alert('Password updated successfully');
 
     } catch (error) {
       console.error('Error updating item:', error);
@@ -149,12 +149,12 @@ const RePass=(evnt)=>{
 // const ref = useRef(null);
 const Cancel = () => {
   setIP(false);
- setCurrent("");
- setPassword("");
- setConfirm("");
- setPasswordErr0("");
- setPasswordErr0("");
- setPasswordErr0("");
+  setCurrent("");
+  setPassword("");
+  setConfirm("");
+  setPasswordErr0("");
+  setPasswordErr0("");
+  setPasswordErr0("");
 
 };
 

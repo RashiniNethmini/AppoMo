@@ -5,6 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import axios from 'axios';
 
 function validateEmail(email){  //ensure that the email address is in a valid format.
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -39,7 +40,7 @@ export default function Fpw() {
         const value = event.target.value;
         setEmail(value);
         setEmailError(validateEmail(value));
-      };
+    };
 
     const [otp, setOtp] = useState("");
     const [otpError, setOtpError] = useState(null);
@@ -48,6 +49,23 @@ export default function Fpw() {
         setOtp(value);
         setOtpError(validateOtp(value));
     };
+
+    function sendEmail(e){
+        e.preventDefault();
+        
+        
+        const newEmail={  
+            email,
+           
+        }
+        
+       
+        axios.post("http://localhost:8070/forgot-password",newEmail).then(()=>{
+            alert("Email sent")
+        }).catch((err)=>{
+            alert(err)
+        })
+    }
 
     return (
         <div className={styles.FPwContainer}>
