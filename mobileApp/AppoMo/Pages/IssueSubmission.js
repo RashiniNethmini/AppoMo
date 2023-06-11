@@ -6,6 +6,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Audio } from 'expo-av';
 
 
+
+
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const MAX_HEIGHT = 500;
 
@@ -15,6 +17,11 @@ export default function IssueSubmission() {
   const [invoice, setTextinvoice] = useState("");
   const [product, setTextproduct] = useState("");
   const [issueInBrief, setTextissue] = useState("");
+  const [recording, setRecording] = useState(null);
+  const [audioUri, setAudioUri] = useState(null);
+  
+
+  
 
   const [error, setError] = useState('');  // set restriction to add only 10 numbers to contact number.
   const handleInputChange = (text) => {
@@ -42,37 +49,55 @@ export default function IssueSubmission() {
 
 
 
-  const [recording, setRecording] = useState();
-  const startRecording = async () => {
-    try {
-      console.log('Requesting recording permission');
-      await Audio.requestPermissionsAsync();
-      console.log('Starting recording...');
-      const recording = new Audio.Recording();
-      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
-      await recording.startAsync();
-      setRecording(recording);
-    } catch (err) {
-      console.error('Failed to start recording', err);
-    }
-  };
-  const stopRecording = async () => {
-    console.log('Stopping recording...');
-    try {
-      await recording.stopAndUnloadAsync();
-    } catch (err) {
-      console.error('Failed to stop recording', err);
-    }
-    setRecording(undefined);
-  };
 
-  const handleMicPress = () => {
+
+const startRecording = async () => {
+  try {
+    // Request recording permission
+    console.log('Requesting recording permission');
+    await Audio.requestPermissionsAsync();
+
+    // Start recording
+    console.log('Starting recording...');
+    const recording = new Audio.Recording();
+    await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+    await recording.startAsync();
+    setRecording(recording);
+  } catch (error) {
+    console.error('Failed to start recording', error);
+  }
+};
+
+const stopRecording = async () => {
+  console.log('Stopping recording...');
+  try {
     if (recording) {
-      stopRecording();
+      // Stop recording
+      await recording.stopAndUnloadAsync();
+      const uri = recording.getURI(); // Modify this line
+      setAudioUri(uri);
+      console.log('Audio URI:', uri); // Log the audio URI
     } else {
-      startRecording();
+      console.log('No recording found.');
     }
-  };
+  } catch (error) {
+    console.error('Failed to stop recording', error);
+  }
+  setRecording(null);
+};
+
+
+
+
+
+const handleMicPress = async () => {
+  if (recording) {
+    await stopRecording();
+  } else {
+    await startRecording();
+  }
+};
+
 
 
 
@@ -87,50 +112,54 @@ export default function IssueSubmission() {
   };
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('Submit button pressed');
-    console.log(name,contactNo);
-   
+    console.log(name, contactNo);
   
-// Make an API request to send the data to the backend
-fetch("http://192.168.1.226:8070/Issues/add", {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    "Name": name,
-    "ContactNo": contactNo,
-    "InvoiceNo": invoice,
-    "Product": product,
-    "IssueInBrief": issueInBrief
-  })
-})
-  .then(res => res.json())
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => {
-    console.log(error);
-  });
-
+    // Make an API request to send the data to the backend
+    const requestBody = {
+      Name: name,
+      ContactNo: contactNo,
+      InvoiceNo: invoice,
+      Product: product,
+      IssueInBrief: issueInBrief,
+      AudioUri: audioUri, // Add the audio URI field
+    };
   
-    // Clear the input fields
-    setTextname('');
-    setTextcontactNo('');
-    setTextinvoice('');
-    setTextproduct('');
-    setTextissue('');
-  
-    // Set the visibility state
-    setVisible(true);
-  
-    // Disable the submit button
-    setDisableSubmit(true);
-  
-    // Check the input fields
-    checkInputs();
+    try {
+      // Make an API request to send the data to the backend
+      const response = await fetch("http://192.168.1.226:8070/Issues/add", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+    
+      const data = await response.json();
+      console.log(data);
+    
+      // Clear the input fields
+      setTextname('');
+      setTextcontactNo('');
+      setTextinvoice('');
+      setTextproduct('');
+      setTextissue('');
+      setAudioUri(null);
+    
+      // Set the visibility state
+      setVisible(true);
+    
+      // Disable the submit button
+      setDisableSubmit(true);
+    
+      // Check the input fields
+      checkInputs();
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
   
   React.useEffect(() => {
     checkInputs();
@@ -218,17 +247,7 @@ fetch("http://192.168.1.226:8070/Issues/add", {
                       <Button mode="contained" onPress={()=>handleSubmit()} style={{ backgroundColor: disableSubmit ? "#ccc" : '#388F82', }} disabled={disableSubmit}>
                         Submit
                       </Button>
-                      <Portal>
-                        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
-
-                          <Dialog.Content>
-                            <Paragraph>Please wait till we look into your issue.</Paragraph>
-                          </Dialog.Content>
-                          <Dialog.Actions>
-                            <Button onPress={() => setVisible(false)}>Ok</Button>
-                          </Dialog.Actions>
-                        </Dialog>
-                      </Portal>
+                     
                     </View>
 
 

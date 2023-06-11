@@ -45,9 +45,9 @@ function App() {
         <FPw/>*/}
         <ResetPassword /> 
         <Dashboard/>
-        {/* <EditProfile/>
+         <EditProfile/>
         <AppointmentConfirm />
-        <BrUpdate/> */}
+        <BrUpdate/> 
        
         {/* <Termination/> */}
         

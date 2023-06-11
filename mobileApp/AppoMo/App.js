@@ -24,6 +24,8 @@ import EditProfile from './Pages/EditProfile';
 import ResetPwd from './Pages/ResetPwd';
 import CustomerProfile from './Pages/CustomerProfile';
 import SplashScreen from './Pages/Splashscreen';
+import IssueSubmitMsg from './Pages/IssueSubmitMsg';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -42,9 +44,10 @@ export default function App() {
           </Stack.Navigator>
 
         </NavigationContainer> */}
-        <SplashScreen/>
+        {/*<SplashScreen/>*/}
+        {/*<IssueSubmitMsg/>*/}
 
-        {/* <IssueSubmission></IssueSubmission> */}
+         <IssueSubmission/>
         {/* <Login/> */}
         {/* <UserRegistr/> */}
         {/* <ForgotPW/> */}
