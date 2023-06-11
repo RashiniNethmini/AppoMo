@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Audio } from 'expo-av';
 
-
-
+import { useParams } from 'react-router-native';
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const MAX_HEIGHT = 500;
@@ -20,8 +20,9 @@ export default function IssueSubmission() {
   const [recording, setRecording] = useState(null);
   const [audioUri, setAudioUri] = useState(null);
   
+  const { _id } = useParams();
 
-  
+  const navigate = useNavigate();
 
   const [error, setError] = useState('');  // set restriction to add only 10 numbers to contact number.
   const handleInputChange = (text) => {
@@ -115,7 +116,7 @@ const handleMicPress = async () => {
   const handleSubmit = async () => {
     console.log('Submit button pressed');
     console.log(name, contactNo);
-  
+    navigate('/IssueSubmitMsg');
     // Make an API request to send the data to the backend
     const requestBody = {
       Name: name,
@@ -242,12 +243,13 @@ const handleMicPress = async () => {
                       />
 
                     </View>
-
+                    
                     <View>
+                    
                       <Button mode="contained" onPress={()=>handleSubmit()} style={{ backgroundColor: disableSubmit ? "#ccc" : '#388F82', }} disabled={disableSubmit}>
                         Submit
                       </Button>
-                     
+                   
                     </View>
 
 

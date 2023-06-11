@@ -31,7 +31,7 @@ const appntmntSchema = new Schema({
         required: true,
     },
     ApntmntDate: {
-        type: Date,
+        type: String,
         required: true,
     },
     Time: {
@@ -41,7 +41,11 @@ const appntmntSchema = new Schema({
     AptmntStatus:{
         type: Boolean,
         required: true,
-    }
+    },
+    Completed:{
+      type: Boolean,
+      required: true,
+  }
 
 
 })
