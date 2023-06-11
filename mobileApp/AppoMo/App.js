@@ -52,7 +52,7 @@ export default function App() {
         {/* <UserRegistr/> */}
         {/* <ForgotPW/> */}
         {/* <CompanyDetails/> */}
-        {/* <ComBranchDetails/> */}
+        <ComBranchDetails/>
         {/* <SelectServiceCenter/> */}
         {/* <IssueSubmission/> */}
         {/* <AdvPayment/> */}

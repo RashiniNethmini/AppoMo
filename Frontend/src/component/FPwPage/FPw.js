@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import styles from './FPw.module.css';
 import {Paper, TextField, Button, Link, OutlinedInput} from "@mui/material";
 import Dialog from '@mui/material/Dialog';
@@ -42,6 +42,25 @@ export default function Fpw() {
         setEmailError(validateEmail(value));
     };
 
+    const [data,setData]=useState("");
+    const Sname = 'ABC';
+
+    useEffect(() => {
+        fetchdata();
+      }, []);
+    
+      const fetchdata= async ()=>{
+        // const up = {
+        //   password
+        // };
+        const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Sname}`
+        // ,up
+        );
+        setData(data);
+        // const response = data.data[0].password;
+        // setCP(response);
+      };
+
     const [otp, setOtp] = useState("");
     const [otpError, setOtpError] = useState(null);
     const handleOtpChange = (event) => {
@@ -49,23 +68,6 @@ export default function Fpw() {
         setOtp(value);
         setOtpError(validateOtp(value));
     };
-
-    function sendEmail(e){
-        e.preventDefault();
-        
-        
-        const newEmail={  
-            email,
-           
-        }
-        
-       
-        axios.post("http://localhost:8070/forgot-password",newEmail).then(()=>{
-            alert("Email sent")
-        }).catch((err)=>{
-            alert(err)
-        })
-    }
 
     return (
         <div className={styles.FPwContainer}>
