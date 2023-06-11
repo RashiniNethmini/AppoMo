@@ -7,3 +7,19 @@
 .edashPaper{
     border-radius: 5px; 
  }
+
+ .buttonadd {
+    display: flex;
+    justify-content: left;
+    margin: 20px;
+
+
+}
+.DialogTitle{
+    display: flex;
+    justify-content: center;
+    margin-left: 5px;
+    padding-left: 10px;
+    padding-top: 5px;
+
+}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { NativeRouter, Link, Route, Routes, useNavigate } from 'react-router-native';
 import { Provider, Appbar, Searchbar } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -30,34 +30,22 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-
+    <NativeRouter>
     <View style={styles.container}>
-      <Provider>
-      
-        <SplashScreen/>
-
-        {/* <IssueSubmission></IssueSubmission> */}
-        {/* <Login/> */}
-        {/* <UserRegistr/> */}
-        {/* <ForgotPW/> */}
-        {/* <CompanyDetails/> */}
-        {/* <ComBranchDetails/> */}
-        {/* <SelectServiceCenter/> */}
-        {/* <IssueSubmission/> */}
-        {/* <AdvPayment/> */}
-        {/* <EditProfile/> */}
-        {/* <ResetPassword/> */}
-        {/* <CustomerProfile/> */}
-
-      </Provider>
- {/* <CompanyOrServiceCenter/> */}
-  {/* <ServiceCenter/> */}
-      <StatusBar style="auto" />
-     
-     
+    <Provider>
+     {/* <Routes>
+      <Route path="/" element={<CompanyOrServiceCenter/>} />
+      <Route path="/CompanyDetails" element={<CompanyDetails/>} />
+      <Route path="/SelectServiceCenter" element={<SelectServiceCenter/>} />
+      <Route path="/ServiceCenter" element={<ServiceCenter/>} />
+      <Route path="/IssueSubmission" element={<IssueSubmission/>} /> 
+    </Routes>  */}
+    <SelectServiceCenter/>
+    </Provider>
     </View>
-    
+  </NativeRouter>
 
+    
   );
 }
 

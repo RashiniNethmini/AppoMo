@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react';
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import {StyleSheet, Pressable, Image, View, Alert,Text,TouchableOpacity,ScrollView} from 'react-native';
 import { SearchBar } from "react-native-elements";
 // import { useNavigation } from '@react-navigation/native';
@@ -6,6 +7,11 @@ import ServiceCenter from './ServiceCenter';
 
 
 function SelectServiceCenter() {
+  const navigate = useNavigate();
+
+  const handlePress = () => {
+    navigate('/ServiceCenter');
+  };
   // const navigation = useNavigation();
   const [data, setData] = useState([]);
 
@@ -52,7 +58,7 @@ function SelectServiceCenter() {
             {data.map(item => (
                 <View style={styles.item}>
                 
-                  <TouchableOpacity style={styles.imagesStyle}
+                  <TouchableOpacity style={styles.imagesStyle} onPressOut={handlePress}
                   //  onPress={()=>navigation.navigate("serviceCenter")}
                   // onPress={() => navigation.navigate('serviceCenter')}
                   >
