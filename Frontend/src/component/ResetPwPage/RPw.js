@@ -1,10 +1,9 @@
 import React,{useState,useRef,useEffect} from 'react';
-import axios from 'axios';
-import './resetPassword.css';
+import './RPw.module.css';
 import {IconButton,OutlinedInput,InputAdornment,Stack, Button,Paper} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
+import axios from 'axios';
 
 
 
@@ -12,7 +11,7 @@ export default function ResetPassword() {
 
   
   const [showPassword, setShowPassword] = React.useState(false);
-  const [passwordError0, setPasswordErr0] = useState("");
+  // const [passwordError0, setPasswordErr0] = useState("");
   const [passwordError1, setPasswordErr1] = useState("");
   const [passwordError2, setPasswordErr2] = useState("");
   const [currentPass, setCurrent] = useState('');
@@ -27,7 +26,7 @@ export default function ResetPassword() {
   };
 
   const [data,setData]=useState("");
-  const Sname = 'ABC';
+  const SEmail = 'abc@gmai.com';
   
   useEffect(() => {
     fetchdata();
@@ -37,7 +36,7 @@ export default function ResetPassword() {
     const up = {
       password
     };
-    const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Sname}`,up);
+    const data=await axios.get(`http://localhost:8070/serviceprovider/search/${SEmail}`,up);
     setData(data);
     const response = data.data[0].password;
     setCP(response);
@@ -49,15 +48,15 @@ export default function ResetPassword() {
       const updateFields = {
         password
       };
-      await axios.put(`http://localhost:8070/serviceprovider/update/${Sname}`,updateFields);
+      await axios.put(`http://localhost:8070/serviceprovider/update/${SEmail}`,updateFields);
       
       setIP(false);
       setCurrent("");
       setPassword("");
       setConfirm("");
-      setPasswordErr0("");
-      setPasswordErr0("");
-      setPasswordErr0("");
+      // setPasswordErr0("");
+      // setPasswordErr0("");
+      // setPasswordErr0("");
       alert('Password updated successfully');
 
     } catch (error) {
@@ -65,29 +64,29 @@ export default function ResetPassword() {
     }
   };
 
-const CurrentPass=(evnt)=>{
-  const currentPasswordInputValue = evnt.target.value.trim();
-  setIP(false);
-  if(currentPasswordInputValue===cPass){
-    setIP(true);
-    if(currentPasswordInputValue===''){
-      setPasswordErr0("**required");
+// const CurrentPass=(evnt)=>{
+//   const currentPasswordInputValue = evnt.target.value.trim();
+//   setIP(false);
+//   if(currentPasswordInputValue===cPass){
+//     setIP(true);
+//     if(currentPasswordInputValue===''){
+//       setPasswordErr0("**required");
      
-    }
-    setPasswordErr0("");
+//     }
+//     setPasswordErr0("");
 
-  }
- else {
-    // alert(currentPasswordInputValue);
-    setPasswordErr0("Incorrect");
-    setIP(false);
-    if(currentPasswordInputValue===''){
-      setPasswordErr0("**required");
+//   }
+//  else {
+//     // alert(currentPasswordInputValue);
+//     setPasswordErr0("Incorrect");
+//     setIP(false);
+//     if(currentPasswordInputValue===''){
+//       setPasswordErr0("**required");
      
-    }
-  }
+//     }
+//   }
   
-}  
+// }  
 
 
 const handleValidation= (evnt)=>{
@@ -152,9 +151,9 @@ const Cancel = () => {
   setCurrent("");
   setPassword("");
   setConfirm("");
-  setPasswordErr0("");
-  setPasswordErr0("");
-  setPasswordErr0("");
+  // setPasswordErr0("");
+  // setPasswordErr0("");
+  // setPasswordErr0("");
 
 };
 
@@ -172,34 +171,6 @@ const Cancel = () => {
       data && data?.data.map((a)=>( 
         <text onMouseDown={event=>setCP(a.password)}></text>
        ))} */}
-          <div className='resetElement'>
-            <label>Enter Current Password &nbsp;</label>
-            <OutlinedInput 
-                id="outlined-adornment-password"
-                type={showPassword ? 'text' : 'password'}
-                name='currentPass'
-                value={currentPass}
-              onChange={event => setCurrent(event.target.value)}
-                onKeyUp={CurrentPass}
-               
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-            />
-              <p className="text-danger">{passwordError0}</p>        
-          </div>
-    
-          <br/>
-
 
           <div>
             <label>Enter New Password &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -230,7 +201,7 @@ const Cancel = () => {
 
 
           <div>
-            <label>Re-enter New Password &nbsp;</label>
+            <label>Confirm Password &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
             <OutlinedInput disabled={passwordError1===""?false:true}
               id="outlined-adornment-password"
               type={showPassword ? 'text' : 'password'}
@@ -260,8 +231,9 @@ const Cancel = () => {
             <div>
               
               <Stack spacing={2} direction="row">
-                  <Button variant="contained" disabled={!(iPass && currentPass && confirmPassword && password && match)}  onClick={handleUpdate}>CHANGE PASSWORD</Button>
                   <Button  onClick={Cancel} variant="contained">CANCEL</Button>
+                  <Button variant="contained" disabled={!(iPass && confirmPassword && password && match)}  onClick={handleUpdate}>CHANGE PASSWORD</Button>
+                  
               </Stack>
             </div>
           

@@ -44,6 +44,7 @@ router.route("/").get((req,res)=>{
 router.route("/get/:id").get(async(req,res)=>{
     console.log(req.params.id);   
 
+    
     let data=await Appointment.find(
         {
             "$or":[
@@ -62,5 +63,81 @@ router.route("/get/:id").get(async(req,res)=>{
     res.status(500).send({status:"Error with get Appointment"});
     })
 })
+
+router.route('/groupedData').get(async (req, res) => {
+   
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const groupedData = await Appointment.aggregate([
+            {
+                $match: {
+                    AptmntStatus: true,
+                    ApntmntDate: { $gte: new Date(today) }
+                }
+              },
+              {
+                $sort: {
+                  ApntmntDate: 1,
+                  Time:1 // Sort by ascending order of ApntmntDate field
+                }
+              },
+          {
+            $group: {
+              _id: {
+                $dateToString: {
+                  format: '%Y-%m-%d',
+                  date: '$ApntmntDate'
+                }
+              },
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', IssueInBrief: '$IssueInBrief', Time: '$Time', }},
+            },
+          },
+        ]);
+    
+        res.json(groupedData);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+      }
+  })
+
+  router.route('/groupedData1').get(async (req, res) => {
+   
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const groupedData = await Appointment.aggregate([
+            {
+                $match: {
+                    AptmntStatus: true,
+                    ApntmntDate: { $lt: new Date(today) }
+                }
+              },
+              {
+                $sort: {
+                  ApntmntDate: -1,
+                  Time:1 // Sort by ascending order of ApntmntDate field
+                }
+              },
+          {
+            $group: {
+              _id: {
+            $dateToString: {
+              format: '%Y-%m-%d',
+              date: '$ApntmntDate'
+            }
+          },
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', IssueInBrief: '$IssueInBrief', Time: '$Time', }},
+            },
+          },
+        ]);
+    
+        res.json(groupedData);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+      }
+  })
+
+
 
 module.exports = router;

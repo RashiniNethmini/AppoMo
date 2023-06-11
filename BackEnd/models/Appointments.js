@@ -1,7 +1,15 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
+const CounterSchemaa = new Schema({
+    _id: { type: String, required: true },
+    seq: { type: Number, default: 0 },
+  });
+  const Counterr = mongoose.model('Counterr', CounterSchemaa);
 const appntmntSchema = new Schema({
+    AptNumber: {
+        type: Number,
+      },
     Name: {
         type: String,
         required: true,
@@ -23,7 +31,7 @@ const appntmntSchema = new Schema({
         required: true,
     },
     ApntmntDate: {
-        type: String,
+        type: Date,
         required: true,
     },
     Time: {
@@ -37,6 +45,22 @@ const appntmntSchema = new Schema({
 
 
 })
+
+appntmntSchema.pre('save', function (next) {
+    const doc = this;
+    Counterr.findByIdAndUpdate(
+      { _id: 'AptNumber' },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    )
+      .then((counter) => {
+        doc.AptNumber = counter.seq;
+        next();
+      })
+      .catch((error) => {
+        next(error);
+      });
+  });
 
 const Appointment = mongoose.model('Appointment', appntmntSchema);
 module.exports = Appointment;

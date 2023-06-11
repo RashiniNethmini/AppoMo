@@ -5,6 +5,44 @@ import { maxWidth } from "@mui/system";
 import {Visibility, VisibilityOff} from '@mui/icons-material';
 
 
+function validateUsername(username){
+    
+    const lengthURegex = /^.{3,16}$/; // ensure that the username is between 3 and 16 characters long.
+    const contentRegex = /^[a-zA-Z0-9_-]*$/; // ensure that the username contains only letters, numbers, underscores, or hyphens.
+    
+    if(username.trim()===""){
+        return "Username is required.";
+    }else if (!lengthURegex.test(username)){
+        return "Username must be in between 3 and 16 characters long.";
+    } else if (!contentRegex.test(username)){
+        return "Username must contain only letters, numbers, underscores, or hyphens.";
+    }
+};
+function validatePassword(password) { 
+    
+   
+    const lengthPRegex = /^.{8,}$/; // ensure that the password is at least 8 characters long.
+    const uppercaseRegex = /^(?=.*[A-Z])/; // ensure that the password contains at least one uppercase letter.
+    const lowercaseRegex = /^(?=.*[a-z])/; // ensure that the password contains at least one lowercase letter.
+    const numberRegex = /^(?=.*\d)/; // ensure that the password contains at least one number.
+    const specialCharRegex = /^(?=.*[!@#$%&+*^()_])/; // ensure that the password contains at least one of the following symbols: !@#$%&+*^()_.
+    
+    if(password.trim()===""){
+        return "Password is required.";
+    }else if (!lengthPRegex.test(password)){
+        return "Password must be at least 8 characters long.";
+    } else if (!uppercaseRegex.test(password)){
+        return "Password must contain at least one uppercase letter.";
+    } else if (!lowercaseRegex.test(password)){
+        return "Password must contain at least one lowercase letter.";
+    } else if (!numberRegex.test(password)){
+        return "Password must contain at least one number.";
+    } else if (!specialCharRegex.test(password)){
+        return "Password must contain at least one of the following symbols: !@#$%&+*^()_.";
+    }
+    
+};
+
 export const Signin = (props) => {
    
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -12,7 +50,7 @@ export const Signin = (props) => {
     function handleCallbackResponse(response){
         console.log("Encoded JWT ID token: " + response.credential);
    } 
-   useEffect(() => {
+   useEffect(() => {            //Google button.
     if(window.google){
         window.google.accounts.id.initialize({
             client_id: "305172675804-madk45o2f4tr9937pbs05pvpvg8rpii5.apps.googleusercontent.com",
@@ -24,13 +62,28 @@ export const Signin = (props) => {
     }
    }, []);
    
-   
+    const [username, setUsername] =useState("");
+    const [usernameError, setUsernameError] = useState(null);
+    const handleUsernameChange = (event) => {
+        const value = event.target.value;
+        setUsername(value);
+        setUsernameError(validateUsername(value));
+    };
+    const [password, setPassword] =useState("");
+    const [passwordError, setPasswordError] = useState(null);
+    const handlePasswordChange = (event) => {
+      const value = event.target.value;
+      setPassword(value);
+      setPasswordError(validatePassword(value));
+    };
+
    const [showPassword, setShowPassword] = React.useState(false);
    const handleClickShowPassword = () => setShowPassword((show) => !show);
    const handleMouseDownPassword = (event) => {
        event.preventDefault();
    };
 
+   
 
     return(
         <div className={styles.signContainer}>
@@ -41,23 +94,27 @@ export const Signin = (props) => {
             <div>
                 <div className={styles.signDiv}>
                     <div className={styles.signBodyText}>
-                        <TextField required id="outlined-required" label="Username" variant="outlined" sx={{ width: '100vw' }} />
+                        <TextField required ="outlined-required" label="Username" variant="outlined" sx={{ width: '100vw' }} id="username"
+                            onChange={handleUsernameChange} error={Boolean(usernameError)}
+                            helperText={usernameError} />
                     </div>
                     <div className={styles.signBodyText}>
-                        <TextField required id="outlined-required" label="Password" variant="outlined" type={showPassword ? 'text' : 'password'} sx={{ width: '100vw' }}
-                        InputProps={{
-                            endAdornment:(
-                                <InputAdornment position="end">
-                                    <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                              >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                              </IconButton>
-                                </InputAdornment>
-                            ),
+                        <TextField required ="outlined-required" label="Password" variant="outlined" type={showPassword ? 'text' : 'password'} sx={{ width: '100vw' }} id="password"
+                            onChange={handlePasswordChange} error={Boolean(passwordError)}
+                            helperText={passwordError}
+                            InputProps={{
+                                endAdornment:(
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                                    </InputAdornment>
+                                ),
                           }} />
                     </div> 
                     <div className={styles.signButton}>

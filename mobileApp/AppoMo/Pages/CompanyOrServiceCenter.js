@@ -4,23 +4,34 @@ import { StyleSheet, Text, View,Button,TouchableOpacity,SafeAreaView,
     Animated } from 'react-native';
 import {Table,Row,Rows} from 'react-native-table-component';
 import { MaterialIcons } from '@expo/vector-icons';
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 
-function CompanyOrServiceCenter() {
+
+  function CompanyOrServiceCenter() {
+
+    const navigate = useNavigate();
+
+  const handlePress = () => {
+    navigate('/CompanyDetails');
+
+  };
+  const handlePress1 = () => {
+    navigate('/SelectServiceCenter');
+
+  };
   return (
 
     <View 
-    style={{flex:2,flexDirection:'column'}}
+    style={{flex:2,flexDirection:'column',marginTop:200}}
     >
       <View>
-      <TouchableOpacity 
-      // onPress={onPress} 
+      <TouchableOpacity onPressOut={handlePress}
       style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>Company</Text>
   </TouchableOpacity>
       </View>
       <View>
-      <TouchableOpacity 
-      // onPress={onPress} 
+      <TouchableOpacity onPressOut={handlePress1}
       style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>Service Center</Text>
   </TouchableOpacity>

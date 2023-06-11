@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { NativeRouter, Link, Route, Routes, useNavigate } from 'react-router-native';
 import { Provider, Appbar, Searchbar } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -32,7 +32,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-
+    <NativeRouter>
     <View style={styles.container}>
       <Provider>
         {/* 
@@ -67,8 +67,9 @@ export default function App() {
      
      
     </View>
-    
+  </NativeRouter>
 
+    
   );
 }
 

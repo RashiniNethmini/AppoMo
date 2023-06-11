@@ -5,18 +5,67 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import axios from 'axios';
+
+function validateEmail(email){  //ensure that the email address is in a valid format.
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(email.trim()===""){
+        return "Email is required.";
+    }else if (!emailRegex.test(email)){
+        return "Invalid email.";
+    }
+};
+function validateOtp(otp){  // checks if the otp per day field is not empty after removing any leading or trailing whitespace.
+    const numbersRegex = /^[0-9]*$/; //ensure that the otp contain only numbers.
+    if(otp.trim()===""){
+        return "Otp is required.";
+    }else if(!numbersRegex.test(otp)){
+        return "Otp per day is invalid.";
+    }
+};
 
 export default function Fpw() {
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false); //Opening and closing popup messaages.
     const handleClickOpen = () => {setOpen(true);};
     const handleClose = () => {setOpen(false);};
     
-    const [open1, setOpen1] = React.useState(false);
+    const [open1, setOpen1] = React.useState(false); //Opening and closing popup messaages.
     const handleClickOpen1 = () => {setOpen1(true);};
     const handleClose1 = () => {setOpen1(false);};
 
+    const [email, setEmail] =useState("");
+    const [emailError, setEmailError] = useState(null);
+    const handleEmailChange = (event) => {
+        const value = event.target.value;
+        setEmail(value);
+        setEmailError(validateEmail(value));
+    };
 
+    const [otp, setOtp] = useState("");
+    const [otpError, setOtpError] = useState(null);
+    const handleOtpChange = (event) => {
+        const value = event.target.value;
+        setOtp(value);
+        setOtpError(validateOtp(value));
+    };
+
+    function sendEmail(e){
+        e.preventDefault();
+        
+        
+        const newEmail={  
+            email,
+           
+        }
+        
+       
+        axios.post("http://localhost:8070/forgot-password",newEmail).then(()=>{
+            alert("Email sent")
+        }).catch((err)=>{
+            alert(err)
+        })
+    }
 
     return (
         <div className={styles.FPwContainer}>
@@ -25,12 +74,12 @@ export default function Fpw() {
                     <h1>Forgot your password?</h1>
                 </div>
                 <div>
-                    {/* <div>
-                        <p>Enter your email and we'll send you a link to reset your password</p>
-                    </div> */}
+                    
                     <div className={styles.Femail}>
                         <label>Email &nbsp;</label>
-                        <TextField required id="outlined-required" label="Enter your email"  type="email" variant="outlined" sx={{ width: '45vw' }} />
+                        <TextField required ="outlined-required" label=" Your email"  type="email" variant="outlined" sx={{ width: '45vw' }}  id="email"
+                            onChange={handleEmailChange} error={Boolean(emailError)}
+                            helperText={emailError} />
                        
                     </div>
                     <div className={styles.sendB}>
@@ -47,12 +96,20 @@ export default function Fpw() {
                             </DialogActions>
                         </Dialog>
                     </div>
-                    <div className={styles.Fcode}>
+                    <div className={styles.Fcode} >
                     <label>OTP Code &nbsp;</label>
-                        <OutlinedInput  className={styles.codeB}></OutlinedInput>
-                        <OutlinedInput  className={styles.codeB}></OutlinedInput>
-                        <OutlinedInput className={styles.codeB}></OutlinedInput>
-                        <OutlinedInput className={styles.codeB}></OutlinedInput>
+                        <TextField className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
+                        // helperText={otpError}
+                        />
+                        <TextField  className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
+                        // helperText={otpError}
+                        />
+                        <TextField className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
+                        // helperText={otpError}
+                        />
+                        <TextField className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
+                        // helperText={otpError}
+                        />
                         
                         
                         
