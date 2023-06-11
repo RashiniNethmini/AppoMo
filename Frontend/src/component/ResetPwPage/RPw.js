@@ -26,21 +26,21 @@ export default function ResetPassword() {
   };
 
   const [data,setData]=useState("");
-  const SEmail = 'abc@gmai.com';
+  const Sname = 'ABC';
   
-  useEffect(() => {
-    fetchdata();
-  }, []);
+  // useEffect(() => {
+  //   fetchdata();
+  // }, []);
 
-  const fetchdata= async ()=>{
-    const up = {
-      password
-    };
-    const data=await axios.get(`http://localhost:8070/serviceprovider/search/${SEmail}`,up);
-    setData(data);
-    const response = data.data[0].password;
-    setCP(response);
-  };
+  // const fetchdata= async ()=>{
+  //   const up = {
+  //     password
+  //   };
+  //   const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Sname}`,up);
+  //   setData(data);
+  //   const response = data.data[0].password;
+  //   setCP(response);
+  // };
 
 
   const handleUpdate = async () => {
@@ -48,7 +48,7 @@ export default function ResetPassword() {
       const updateFields = {
         password
       };
-      await axios.put(`http://localhost:8070/serviceprovider/update/${SEmail}`,updateFields);
+      await axios.put(`http://localhost:8070/serviceprovider/update/${Sname}`,updateFields);
       
       setIP(false);
       setCurrent("");

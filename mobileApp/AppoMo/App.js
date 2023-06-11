@@ -34,17 +34,49 @@ export default function App() {
   return (
     <NativeRouter>
     <View style={styles.container}>
-    <Provider>
+    {/* <Provider>
      <Routes>
       {/* <Route path="/" element={<CompanyOrServiceCenter/>} /> */}
       {/* <Route path="/CompanyDetails" element={<CompanyDetails/>} /> */}
-      <Route path="/" element={<SelectServiceCenter/>} />
+      {/* <Route path="/" element={<SelectServiceCenter/>} />
       <Route path="/ServiceCenter/:serviceProviderName" element={<ServiceCenter/>} />
       <Route path="/IssueSubmission/:_id" element={<IssueSubmission/>} /> 
       <Route path="/IssueSubmitMsg" element={<IssueSubmitMsg/>} /> 
-    </Routes> 
+    </Routes>  */} 
     {/* <SelectServiceCenter/> */}
-    </Provider>
+    {/* </Provider> */}
+      <Provider>
+        {/* 
+        <NavigationContainer>
+          <Stack.Navigator>
+
+            <Stack.Screen name="login" component={Login} />
+            <Stack.Screen name=" userRegistr" component={UserRegistr} />
+          </Stack.Navigator>
+
+        </NavigationContainer> */}
+        {/*<SplashScreen/>*/}
+        {/*<IssueSubmitMsg/>*/}
+
+         {/* <IssueSubmission/> */}
+        {/* <Login/> */}
+        {/* <UserRegistr/> */}
+        {/* <ForgotPW/> */}
+        {/* <CompanyDetails/> */}
+        <ComBranchDetails/>
+        {/* <SelectServiceCenter/> */}
+        {/* <IssueSubmission/> */}
+        {/* <AdvPayment/> */}
+        {/* <EditProfile/> */}
+        {/* <ResetPassword/> */}
+        {/* <CustomerProfile/> */}
+
+      </Provider>
+ {/* <CompanyOrServiceCenter/> */}
+  {/* <ServiceCenter/> */}
+      <StatusBar style="auto" />
+     
+     
     </View>
   </NativeRouter>
 
