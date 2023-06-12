@@ -48,7 +48,8 @@ function App() {
         <Dashboard/>
          <EditProfile/>
         <AppointmentConfirm />
-        <BrUpdate/> 
+        <BrUpdate/>
+        
        
         {/* <Termination/> */}
         

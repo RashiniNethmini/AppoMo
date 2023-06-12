@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -24,17 +24,23 @@ const style = {
 export default function AppointmentPopup({ appointment, onAccept, onReject }) {
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState('');
+  const [voiceRecording, setVoiceRecording] = useState(appointment.AudioUri);
+
+// Add this handler to update the voiceRecording state
+const handleVoiceRecordingChange = (event) => {
+  setVoiceRecording(event.target.value);
+};
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleAcceptClick = () => {
-    onAccept(appointment._id);
+    onAccept(appointment._id, appointment.issueNumber);
     handleClose();
   };
-
+  
   const handleRejectClick = () => {
-    onReject(appointment._id, comment);
+    onReject(appointment._id, appointment.issueNumber, comment);
     handleClose();
   };
 
@@ -42,11 +48,15 @@ export default function AppointmentPopup({ appointment, onAccept, onReject }) {
     setComment(event.target.value);
   };
 
+ 
+  
+  
+
   
 
   return (
     <div>
-      <Button onClick={handleOpen} variant='contained'><span>Appointment {appointment.issueNumber}</span></Button>
+      <Button onClick={handleOpen} variant='contained'><span>Issue No  {appointment.issueNumber}</span></Button>
       <Modal
         open={open}
         aria-labelledby="modal-modal-title"
@@ -74,7 +84,8 @@ export default function AppointmentPopup({ appointment, onAccept, onReject }) {
                 : {appointment.InvoiceNo}<br />
                 : {appointment.Product}<br />
                 : {appointment.IssueInBrief}<br />
-                <div className={styles.audioOuter}><audio src={appointment.voiceSrc} className={styles.audio} controls /></div>
+                <div className={styles.audioOuter}><audio src={voiceRecording} className={styles.audio} controls />
+</div>
               </Typography>
             </div>
           </div>

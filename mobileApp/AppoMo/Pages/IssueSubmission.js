@@ -36,11 +36,11 @@ export default function IssueSubmission() {
     } else if (text.length > 10) {  // If the input is more than 10 characters, display an error message and set the input value
       setError('Contact number must not exceed 10 characters.');
       setTextcontactNo(text);
-    } else if (/^\d{10}$/.test(text)) {  // If the input is exactly 10 digits, set the input value and clear the error message
+  } else if (/^\d{10}$/.test(text)) {  // If the input is exactly 10 digits, set the input value and clear the error message
       setTextcontactNo(text);
       setError('');
     } else {  // If the input contains non-digit characters, display an error message and clear the input value
-      setError('Contact number can only contain digits.');
+     setError('Contact number can only contain digits.');
       setTextcontactNo('');
     }
   };
@@ -74,9 +74,9 @@ const stopRecording = async () => {
     if (recording) {
       // Stop recording
       await recording.stopAndUnloadAsync();
-      const uri = recording.getURI(); // Modify this line
+      const uri = recording.getURI(); 
       setAudioUri(uri);
-      console.log('Audio URI:', uri); // Log the audio URI
+      console.log('Audio URI:', uri); 
     } else {
       console.log('No recording found.');
     }
@@ -123,7 +123,7 @@ const handleMicPress = async () => {
       InvoiceNo: invoice,
       Product: product,
       IssueInBrief: issueInBrief,
-      AudioUri: audioUri, // Add the audio URI field
+      AudioUri: audioUri, 
     };
   
     try {
@@ -215,6 +215,7 @@ const handleMicPress = async () => {
                       <TextInput type="outlined" value={contactNo} onChangeText={text => handleInputChange(text)} keyboardType="numeric" style={styles.input} activeUnderlineColor='#388F82'  />
                       {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
                     </View>
+
 
 
                     <View>
