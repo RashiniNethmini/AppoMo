@@ -4,12 +4,13 @@ import { Card, Button, Text, TextInput, IconButton, Dialog, Paragraph, Portal, c
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as Animatable from 'react-native-animatable';
 import Feather from 'react-native-vector-icons/Feather';
-
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const MAX_HEIGHT = 500;
 
 export default function UserRegistr() {
+  const navigate = useNavigate();
   const [username, setTextusername] = useState("");
   const [password, setTextpassword] = useState("");
   const [confirmPassword, setTextconfirmpassword] = useState("");
@@ -27,6 +28,21 @@ export default function UserRegistr() {
   const [contactNoError, setContactNoError] = useState("");
   const [nicError, setNicError] = useState("");
 
+  // const handleUsernameChange = (text) => {
+  //   if (text.length < 1) {
+  //     setUsernameError("");
+  //     setTextusername(text);
+  //   } else if (text.length < 5) {
+  //     setUsernameError("Username must be at least 5 characters long.");
+  //     setTextusername(text);
+  //   } else {
+  //     setTextusername(text);
+  //     setUsernameError("");
+  // const validateUsername = (username) => {     // Validate username
+  //   if (!username) {
+  //     return "*Username is required";
+  //   }
+  // }};
   const handleUsernameChange = (text) => {
     if (text.length < 1) {
       setUsernameError("");
@@ -189,6 +205,7 @@ export default function UserRegistr() {
 
     // Check the input fields
     checkInputs();
+    navigate('/CompanyOrServiceCenter');
   };
 
   React.useEffect(() => {

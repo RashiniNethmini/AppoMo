@@ -27,8 +27,8 @@ connection.once("open", () => {
 })
 
 
-const ForgotPwRouter = require('./routes/ForgotPW.js');
-app.use(bodyParser.json());
+// const ForgotPwRouter = require('./routes/ForgotPW.js');
+// app.use(bodyParser.json());
 
 
 // const loginRouter = require("./routes/Login.js");

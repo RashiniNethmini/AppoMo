@@ -41,12 +41,8 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
        
-         <Signin/>
-        {/* <Reg/>
-        <FPw/>
-        <ResetPassword />  */ }
-        {/* <Dashboard/> */}
-        {/* <Reg/> */}
+        {/* <Signin/> */}
+        <Reg/>
         {/* <FPw/>
         <ResetPassword />  */}
         <Dashboard/>

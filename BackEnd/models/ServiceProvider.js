@@ -51,6 +51,10 @@ const serviceproviderSchema = new Schema({
         type : String,
         required: true
     },
+    starRating: {
+        type: Number,
+        // required: true,
+      },
     
     
 

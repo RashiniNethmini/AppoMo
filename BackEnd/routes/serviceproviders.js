@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+// const bcrypt = require('bcrypt');
+// const jwt = require('jsonwebtoken');
 let ServiceProvider = require("../models/ServiceProvider");
 
 
@@ -122,7 +122,7 @@ router.route("/update/:id").put (async (req,res)=>{
         logo,
         workingDates,
         workingHours,
-        noOfAppoinments
+        noOfAppoinments,
     }
 
     const update=await ServiceProvider.findOneAndUpdate(
@@ -137,6 +137,48 @@ router.route("/update/:id").put (async (req,res)=>{
         , updateServiceprovider)
     .then(()=>{
     res.status(200).send({status:"Service Provider updated"})
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with updating data"});
+    })
+
+})
+
+router.route("/updater/:id").put (async (req,res)=>{
+    let serviceProviderId=req.params.id;
+    const{ type,
+        username,
+        password,
+        serviceProviderName,
+        address,
+        email,
+        ceoName,
+        regNo,
+        logo,
+        workingDates,
+        workingHours,
+        noOfAppoinments
+    ,starRating}=req.body;
+
+    const updateServiceprovider={
+        type,
+        username,
+        password,
+        serviceProviderName,
+        address,
+        email,
+        ceoName,
+        regNo,
+        logo,
+        workingDates,
+        workingHours,
+        noOfAppoinments,
+        starRating
+    }
+
+    const update=await ServiceProvider.findByIdAndUpdate(serviceProviderId, updateServiceprovider)
+    .then(()=>{
+    res.status(200).send({status:" updated"})
     }).catch((err)=>{
     console.log(err);
     res.status(500).send({status:"Error with updating data"});
@@ -164,7 +206,8 @@ router.route("/get/:id").get(async(req,res)=>{
         {
             "$or":[
                 {
-                   "serviceProviderName":{$regex:req.params.id}
+                    "providerType":{$regex:'Service Center'},
+                   "address":{$regex:req.params.id}
                 }
             ]
         }
@@ -201,7 +244,48 @@ router.route("/search/:id").get(async(req,res)=>{
     res.status(500).send({status:"Error with get Appointment"});
     })
 })
+router.route("/getSC").get(async(req,res)=>{
+    console.log(req.params.id);   
 
+    let SC=await ServiceProvider.aggregate([
+        {
+            $match: {
+                providerType:'Service Center'
+            }
+          },
+          {
+            $sort: {
+              starRating:-1
+            }
+          },
+        // {
+        //     "$or":[
+        //         {
+        //            "providerType":{$regex:'Service Center'}
+        //         }
+        //     ]
+        // }
+        ])
+    // res.send(data);
+    .then((SC)=>{
+    res.send(SC)
+   
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get Appointment"});
+    })
+})
 
+router.route("/getr/:id").get(async(req,res)=>{
+        let serviceProviderId=req.params.id;   
+       
+        const select=await ServiceProvider.findById(serviceProviderId)
+        .then((serviceprovider)=>{
+        res.status(200).send({status:"Service Provider fetched",serviceprovider})
+    }).catch((err)=>{
+            console.log(err);
+            res.status(500).send({status:"Error with get service provider"});
+            })
+        })
 
 module.exports = router;

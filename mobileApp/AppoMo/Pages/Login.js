@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import {
     StyleSheet,
     Text,
@@ -23,6 +24,40 @@ import Feather from 'react-native-vector-icons/Feather';
 
 // const navigation = useNavigation();
 function Login() {
+    const navigate = useNavigate();
+
+    const handlePress = () => {
+      navigate('/UserRegistr');
+    };
+
+    // const navigation = useNavigation();
+
+    const handlePressReg = () => {
+        // navigation.navigate('UserReg');
+    };
+
+    // backend
+    // const handleLogin = async () => {
+    //     const response = await fetch('https://loccalhost:8070/api/login', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             username: enteredUsername,
+    //             password: enteredPassword
+    //         })
+    //     });
+    //     const data = await response.json();
+
+    //     if (data.success) {
+    //         // Login successful, navigate to the home screen
+    //     } else {
+    //         // Login failed, show error message to the user
+    //     }
+    // };
+
+
     const [data, setData] = React.useState({
         username: '',
         password: '',
@@ -308,10 +343,11 @@ function Login() {
 
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "center", marginTop: 10 }}>
                     <Text style={{ fontSize: 16, }}>Don't have an account ? </Text>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("")}>
-                        <Text style={{ color: "#084C4F", fontWeight: 'bold', fontSize: 16, textDecorationLine: 'underline' }}>Signup</Text>
-                        {/* <div className={styles.GButton} id="signInDiv"></div>  */}
-                    </TouchableOpacity>
+                    <Link to={`/UserRegistr`} component={TouchableOpacity} 
+                    // onPress={() => props.navigation.navigate("UserRegistr")}
+                    >
+                        <Text style={{ color: "#084C4F", fontWeight: 'bold', fontSize: 16,textDecorationLine:'underline' }}>Signup</Text>
+                    </Link>
                 </View>
             </Animatable.View>
         </View>

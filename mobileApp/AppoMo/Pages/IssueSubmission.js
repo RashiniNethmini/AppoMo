@@ -116,7 +116,7 @@ const handleMicPress = async () => {
   const handleSubmit = async () => {
     console.log('Submit button pressed');
     console.log(name, contactNo);
-    navigate('/IssueSubmitMsg');
+    
     // Make an API request to send the data to the backend
     const requestBody = {
       Name: name,
@@ -127,44 +127,40 @@ const handleMicPress = async () => {
       AudioUri: audioUri, // Add the audio URI field
     };
   
-// Make an API request to send the data to the backend
-fetch("http://10.0.2.2:8070/Issues/add", {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    "Name": name,
-    "ContactNo": contactNo,
-    "InvoiceNo": invoice,
-    "Product": product,
-    "IssueInBrief": issueInBrief
-  })
-})
-  .then(res => res.json())
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => {
-    console.log(error);
-  });
-
-  
-    // Clear the input fields
-    setTextname('');
-    setTextcontactNo('');
-    setTextinvoice('');
-    setTextproduct('');
-    setTextissue('');
-  
-    // Set the visibility state
-    setVisible(true);
-  
-    // Disable the submit button
-    setDisableSubmit(true);
-  
-    // Check the input fields
-    checkInputs();
+    try {
+      // Make an API request to send the data to the backend
+      const response = await fetch("http://10.0.2.2:8070/Issues/add", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+    
+      const data = await response.json();
+      console.log(data);
+    
+      // Clear the input fields
+      setTextname('');
+      setTextcontactNo('');
+      setTextinvoice('');
+      setTextproduct('');
+      setTextissue('');
+      setAudioUri(null);
+    
+      // Set the visibility state
+      setVisible(true);
+    
+      // Disable the submit button
+      setDisableSubmit(true);
+    
+      // Check the input fields
+      checkInputs();
+    } catch (error) {
+      console.log(error);
+    }
+    navigate('/IssueSubmitMsg');
+   
   };
   
   

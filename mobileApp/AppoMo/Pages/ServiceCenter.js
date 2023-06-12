@@ -15,7 +15,7 @@ import { useParams } from 'react-router-native';
 
     // const route = useRoute();
     // const { serviceProviderName } = route.params;
-    const { serviceProviderName } = useParams();
+    const { serviceProviderName, _id } = useParams();
 
     // const route =Route();
     // const { componentId } = route.params;
@@ -70,7 +70,42 @@ import { useParams } from 'react-router-native';
     }
   };
 
+  useEffect(() => {
+    if (starRating !== null) {
+      updateStarRating();
+    }
+  }, [starRating]);
   
+  const updateStarRating = async () => {
+    try {
+      const responsed = await fetch(`http://10.0.2.2:8070/serviceprovider/getr/${_id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+   
+    const resultt = await responsed.json();
+    // console.log(resultt);
+    const currentRating = resultt.serviceprovider.starRating || 0; // Default to 0 if no rating exists
+    const updatedRating = currentRating + starRating;
+
+
+      const updateresponse = await fetch(`http://10.0.2.2:8070/serviceprovider/updater/${_id}`,
+       {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ starRating: updatedRating }),
+      });
+  
+      const result = await updateresponse.json();
+      console.log(result); // Optional: Handle the response from the server
+    } catch (error) {
+      console.error('Error updating rating:', error);
+    }
+  };
     
   return (
   <View>
