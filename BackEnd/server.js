@@ -34,8 +34,8 @@ connection.once("open", () => {
 // const loginRouter = require("./routes/Login.js");
 // app.use("/login", loginRouter);
 
-// const ConfApntmntsRouter = require("./routes/Appointments.js");
-//  app.use("/Appointments",ConfApntmntsRouter);
+const ConfApntmntsRouter = require("./routes/Appointments.js");
+ app.use("/Appointments",ConfApntmntsRouter);
 
 const BrDetailsRouter = require("./routes/BranchDetails.js");
  app.use("/BranchDetails", BrDetailsRouter);

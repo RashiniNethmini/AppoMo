@@ -244,6 +244,29 @@ router.route("/search/:id").get(async(req,res)=>{
     res.status(500).send({status:"Error with get Appointment"});
     })
 })
+
+router.route("/searchE/:id").get(async(req,res)=>{
+    console.log(req.params.id);  
+    
+    let SPP=await ServiceProvider.find(
+        {
+            "$or":[
+                {
+                   "serviceProviderName":{$regex:req.params.id}
+                }
+            ]
+        },
+    )
+    // res.send(data);
+    .then((SPP)=>{
+    res.send(SPP);
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get Appointment"});
+    })
+})
+
+
 router.route("/getSC").get(async(req,res)=>{
     console.log(req.params.id);   
 
