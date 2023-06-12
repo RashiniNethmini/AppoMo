@@ -27,17 +27,22 @@ connection.once("open", () => {
 })
 
 
-const ConfApntmntsRouter = require("./routes/Appointments.js");
- app.use("/Appointments",ConfApntmntsRouter);
+const ForgotPwRouter = require('./routes/ForgotPW.js');
+app.use(bodyParser.json());
 
-//  app.listen(PORT, () => {
-//     console.log('Server is running on port ' + PORT);
-// })
+
+// const loginRouter = require("./routes/Login.js");
+// app.use("/login", loginRouter);
+
+// const ConfApntmntsRouter = require("./routes/Appointments.js");
+//  app.use("/Appointments",ConfApntmntsRouter);
 
 // const BrDetailsRouter = require("./routes/BranchDetails.js");
 //  app.use("/BranchDetails", BrDetailsRouter);
-const IssueRouter = require("./routes/Issues.js");
-app.use("/Issues", IssueRouter);
+
+// const IssueRouter = require("./routes/Issues.js");
+// app.use("/Issues", IssueRouter);
+
 // const smsRouter = require("./APIs/sms.js");
 // app.use('/sms', smsRouter);
 
@@ -45,13 +50,10 @@ app.use("/Issues", IssueRouter);
 // const UserDetailsRouter = require("./routes/UserDetails.js");
 // app.use("/UserDetails", UserDetailsRouter);
 
-// app.listen(PORT, () => {
-//     console.log('Server is running on port ' + PORT);
-// })
 
 
-const serviceproviderRouter = require ("./routes/serviceproviders.js");
-app.use("/serviceprovider", serviceproviderRouter);
+// const serviceproviderRouter = require ("./routes/serviceproviders.js");
+// app.use("/serviceprovider", serviceproviderRouter);
 
 
 app.listen(PORT,() =>{

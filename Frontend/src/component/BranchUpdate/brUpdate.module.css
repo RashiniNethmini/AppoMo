@@ -3,7 +3,7 @@
     max-width: 1000px;
     border-radius: 25px !important;
     width: 100vw;
-    margin: 10vw;
+    margin: 15vw;
     padding: 10px;
 
   
@@ -12,10 +12,11 @@
 .mainContainer {
     display: flex;
     justify-content: center;
-    max-width: 800px;
-    padding-left: 35vw;
-    padding-right: 35vw;
-    margin:  10vw;
+    max-width: 1000px;
+    padding-left: 30vw;
+    padding-right: 30vw;
+    margin:  15vw;
+    
 
  
 }

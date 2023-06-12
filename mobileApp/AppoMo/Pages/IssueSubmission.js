@@ -93,7 +93,7 @@ export default function IssueSubmission() {
    
   
 // Make an API request to send the data to the backend
-fetch("http://192.168.1.226:8070/Issues/add", {
+fetch("http://10.0.2.2:8070/Issues/add", {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'

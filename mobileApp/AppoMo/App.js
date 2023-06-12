@@ -34,12 +34,11 @@ export default function App() {
     <View style={styles.container}>
       <Provider>
       
-        <SplashScreen/>
-
-        {/* <IssueSubmission></IssueSubmission> */}
+        {/* <SplashScreen/> */}
+{/* <IssueSubmission/> */}
         {/* <Login/> */}
         {/* <UserRegistr/> */}
-        {/* <ForgotPW/> */}
+         <ForgotPW/> 
         {/* <CompanyDetails/> */}
         {/* <ComBranchDetails/> */}
         {/* <SelectServiceCenter/> */}
