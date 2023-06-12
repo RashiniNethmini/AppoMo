@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import {
     StyleSheet,
     Text,
     View,
     TextInput,
+    Alert,
     StatusBar,
     TouchableOpacity,
 } from "react-native";
@@ -17,10 +19,16 @@ import { useTheme } from '@react-navigation/native';
 import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+//import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 
 
-
+// const navigation = useNavigation();
 function Login() {
+    const navigate = useNavigate();
+
+    const handlePress = () => {
+      navigate('/UserRegistr');
+    };
 
     // const navigation = useNavigation();
 
@@ -49,6 +57,7 @@ function Login() {
     //     }
     // };
 
+
     const [data, setData] = React.useState({
         username: '',
         password: '',
@@ -63,7 +72,7 @@ function Login() {
     // const { signIn } = React.useContext(AuthContext);
 
     const textInputChange = (val) => {
-        if (val.trim().length >= 4) {
+        if (val.trim().length >= 5) {
             setData({
                 ...data,
                 username: val,
@@ -117,27 +126,82 @@ function Login() {
         }
     }
 
-    const loginHandle = (userName, password) => {
+    const handleLogin =(username, password) => {
 
-        const foundUser = Users.filter(item => {
-            return userName == item.username && password == item.password;
-        });
-
-        if (data.username.length == 0 || data.password.length == 0) {
-            Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
-                { text: 'Okay' }
-            ]);
+        
+        if ( data.username.length == 0 || data.password.length == 0 ) {
+            Alert.alert('Invalid User!', 'Username or password is incorrect.', [{ text: 'Okay' }]);
+            console.log('Submit button pressed');
             return;
         }
 
-        if (foundUser.length == 0) {
-            Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-                { text: 'Okay' }
-            ]);
-            return;
-        }
-        Login(foundUser);
-    }
+        console.log('Submit button pressed');
+      
+    
+    
+        // Make an API request to send the data to the backend
+        fetch("http://10.0.2.2:8070/Login/login", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "username": username,
+            "password": password,
+            
+          })
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    
+    };
+    // React.useEffect(() => {
+    //     GoogleSignin.configure({
+    //         webClientId: '<YOUR_WEB_CLIENT_ID>',
+    //         offlineAccess: true,
+    //         forceCodeForRefreshToken: true,
+    //     });
+    // }, []);
+
+    // const handleGoogleSignIn = async () => {
+    //     try {
+    //         await GoogleSignin.hasPlayServices();
+    //         const userInfo = await GoogleSignin.signIn();
+    //         // Access the user's ID token, email, name, etc. from the `userInfo` object
+    
+    //         // Make API requests or handle the sign-in process as needed
+    //     } catch (error) {
+    //         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+    //             // User cancelled the sign-in process
+    //             console.log('Google sign-in cancelled');
+    //         } else if (error.code === statusCodes.IN_PROGRESS) {
+    //             // Another sign-in process is already in progress
+    //             console.log('Google sign-in in progress');
+    //         } else {
+    //             // Handle other errors
+    //             console.log('Error in Google sign-in', error);
+    //         }
+    //     }
+    // };
+//     function handleCallbackResponse(response){
+//         console.log("Encoded JWT ID token: " + response.credential);
+//    } 
+//    useEffect(() => {
+//     if(window.google){
+//         window.google.accounts.id.initialize({
+//            // client_id: "305172675804-madk45o2f4tr9937pbs05pvpvg8rpii5.apps.googleusercontent.com",
+//             callback: handleCallbackResponse
+//         });
+    
+//         window.google.accounts.id.renderButton(document.getElementById("signInDiv"), 
+//             {theme:"outline", size: "large"}); 
+//     }
+//    }, []);
 
     return (
         <View style={styles.container}>
@@ -243,7 +307,7 @@ function Login() {
                 <View style={styles.button}>
 
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('SignUpScreen')}
+
                         style={[styles.signIn, {
                             borderColor: '#009387',
                             borderWidth: 1,
@@ -255,31 +319,35 @@ function Login() {
                         <Text style={[styles.textSign, {
                             color: '#009387'
                         }]}
-                            onPress={() => { loginHandle(data.username, data.password) }}
+                            onPress={() => {handleLogin( data.username, data.password )}}
 
                         >Sign In</Text>
                     </TouchableOpacity>
 
 
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('')}
+                        // onPress={() => navigation.navigate('')}
                         style={[styles.signIn, {
                             borderColor: '#009387',
                             borderWidth: 1,
                             marginTop: 15,
                             marginVertical: 0
                         }]}
+                        onPress={()=>{}}
                     >
                         <Text style={[styles.textSign, {
                             color: '#009387'
                         }]}>Sign in with Google</Text>
                     </TouchableOpacity>
                 </View>
+
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "center", marginTop: 10 }}>
                     <Text style={{ fontSize: 16, }}>Don't have an account ? </Text>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("UserRegistr")}>
+                    <Link to={`/UserRegistr`} component={TouchableOpacity} 
+                    // onPress={() => props.navigation.navigate("UserRegistr")}
+                    >
                         <Text style={{ color: "#084C4F", fontWeight: 'bold', fontSize: 16,textDecorationLine:'underline' }}>Signup</Text>
-                    </TouchableOpacity>
+                    </Link>
                 </View>
             </Animatable.View>
         </View>

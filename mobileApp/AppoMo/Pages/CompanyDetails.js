@@ -2,10 +2,6 @@ import  React, { useState, useEffect }  from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,Image, TouchableOpacity,ScrollView } from 'react-native';
 import { Searchbar, Avatar } from 'react-native-paper';
-import axios from 'axios';
-
-
-
 
 
 
@@ -14,21 +10,22 @@ function CompanyDetails() {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = (query) => setSearchQuery(query);
   
-  const [serviceProviders, setServiceProviders] = React.useState('');
+  const [companies, setCompanies] = useState([]);
 
-  const fetchServiceProviders = async () => {
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
+
+  const fetchCompanies = async () => {
     try {
-      const response = await axios.get("http://localhost:8070/serviceprovider/get/serviceProviders" );
-      setServiceProviders(response.data);
+      const response = await fetch("http://10.0.2.2:8070/serviceprovider/");
+      const jsonCompanies = await response.json();
+      setCompanies(jsonCompanies);
     } catch (error) {
-      console.error('Error fetching service providers:', error);
+      console.error('Error fetching companies:', error);
     }
   };
 
-  useEffect(() => {
-    
-    fetchServiceProviders();
-  }, []);
 
 
   return (
@@ -41,56 +38,28 @@ function CompanyDetails() {
       
       <ScrollView>
       <View style={styles.container}>
-        
-          <View style={styles.cardContainer}>
+
+        {companies.map((company, index) =>(
+          <View style={styles.cardContainer} key={index}>
             <TouchableOpacity>
             <View style={styles.card} >
-              <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/abans.jpg')}/> 
+            {company.logo ? (
+                    <Image style={styles.coverImage} resizeMode="contain" source={{ uri: company.logo }} /> // Use valid image source
+                  ) : (
+                    <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/avatar.jpg')}
+              // source={company.logo}
+              />
+                  )}
+              {/* <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/avatar.jpg')}
+              // source={company.logo}
+              />  */}
             </View>    
-            
-              
-            
-              <Text style={styles.tStyle}>ABANS</Text>
-              </TouchableOpacity>
-          </View>
-          
-          <View style={styles.cardContainer}>
-            <TouchableOpacity>
-            <View  style={styles.card} >
-              <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/sinhagiri.png')}/>
-            </View >
-            
-            
-              <Text style={styles.tStyle}>SINHAGIRI</Text>
-              </TouchableOpacity>
-          </View> 
-        
-        
-        
-          <View style={styles.cardContainer}>
-            <TouchableOpacity>
-            <View  style={styles.card} >
-              <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/Singer-logo.jpg')}/>
-            </View >
-            
-            
-              <Text style={styles.tStyle}>SINGER</Text>
+            <Text style={styles.tStyle}>{company.serviceProviderName}</Text>
             </TouchableOpacity>
-          </View>
+          </View> 
+          ))}
           
-          
-          <View style={styles.cardContainer}>
-          <TouchableOpacity>
-            <View  style={styles.card} >
-              <Image style={styles.coverImage} resizeMode="contain" source={require('../assets/damro.png')}/>
-            </View >
-            
-            
-              <Text style={styles.tStyle}>DAMRO</Text>
-          </TouchableOpacity>
-          </View>
-          
-        
+
       </View>
       </ScrollView>    
 
@@ -106,11 +75,10 @@ function CompanyDetails() {
 const styles =StyleSheet.create({
   mainContainer: {
     flex: 1,
-
     alignItems: 'center', 
     justifyContent: 'center',
     width: 350,
-    maxheight: 1500,
+    maxHeight: 1500,
     marginTop: 50,
     marginLeft: 5,
     marginRight: 5,
@@ -203,13 +171,3 @@ const styles =StyleSheet.create({
 export default CompanyDetails;
   
 
-// return (
-//   <View style={styles.container}>
-//     {companies.map((company) => (
-//       <View key={company._id}>
-//         <Text>{company.name}</Text>
-//         {/* Display other company details */}
-//       </View>
-//     ))}
-//   </View>
-// );

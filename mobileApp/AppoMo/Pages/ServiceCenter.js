@@ -6,18 +6,24 @@ import { StyleSheet, Text, View,TouchableOpacity,
     ScrollView } from 'react-native';
 import {Table,Row,Rows} from 'react-native-table-component';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useParams } from 'react-router-native';
 
 
 
 
   function ServiceCenter() {
 
+    // const route = useRoute();
+    // const { serviceProviderName } = route.params;
+    const { serviceProviderName, _id } = useParams();
+
+    // const route =Route();
+    // const { componentId } = route.params;
+    const [s, setS] = useState(null);
+   
     const navigate = useNavigate();
 
-  const handlePress = () => {
-    navigate('/IssueSubmission');
-  };
-
+  
     const starRatingOptions = [1, 2, 3, 4, 5];
 
     const [starRating, setStarRating] = useState(null);
@@ -52,6 +58,8 @@ import { MaterialIcons } from '@expo/vector-icons';
     fetchData();
   }, []);
 
+
+
   const fetchData = async () => {
     try {
       const response = await fetch("http://10.0.2.2:8070/BranchDetails/");
@@ -62,65 +70,94 @@ import { MaterialIcons } from '@expo/vector-icons';
     }
   };
 
+  useEffect(() => {
+    if (starRating !== null) {
+      updateStarRating();
+    }
+  }, [starRating]);
   
+  const updateStarRating = async () => {
+    try {
+      const responsed = await fetch(`http://10.0.2.2:8070/serviceprovider/getr/${_id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+   
+    const resultt = await responsed.json();
+    // console.log(resultt);
+    const currentRating = resultt.serviceprovider.starRating || 0; // Default to 0 if no rating exists
+    const updatedRating = currentRating + starRating;
+
+
+      const updateresponse = await fetch(`http://10.0.2.2:8070/serviceprovider/updater/${_id}`,
+       {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ starRating: updatedRating }),
+      });
+  
+      const result = await updateresponse.json();
+      console.log(result); // Optional: Handle the response from the server
+    } catch (error) {
+      console.error('Error updating rating:', error);
+    }
+  };
     
   return (
-    <View>
+  <View>
     <View style={{marginTop:200}}>
       <View>
-        <Text style={styles.serviceCenterText}>Service Center A</Text>
+        <Text style={styles.serviceCenterText}>
+        {serviceProviderName}
+        </Text>
       </View>
       
 
           <ScrollView style={{ flexGrow: 0.75,height:400 }}>
           <View style={{width:380 }}>
               {data.map(item => (
-                
-                <TouchableOpacity onPressOut={handlePress} style={styles.appButtonContainer}>
-                        <Text style={styles.appButtonText1}>{item.branchName}</Text>
+               
+                <Link to={`/IssueSubmission/${item._id}`} component={TouchableOpacity} style={styles.appButtonContainer} key={item._id}>
+                        <View><Text style={styles.appButtonText1}>{item.branchName}</Text>
                         <Text style={styles.appButtonText}>{item.contactNo}</Text>
-                        <Text style={styles.appButtonText}>{item.address}</Text>
-                </TouchableOpacity>
+                        <Text style={styles.appButtonText}>{item.address}</Text></View>
+                </Link>
+                
              
                ))}
                </View>
           </ScrollView>
     
 
-        <View style={{marginTop:30}}>
+      <View style={{marginTop:30}}>
        
-        <Text style={styles.heading}>Tap to rate</Text>
-       
-          <View style={styles.stars}>
-              {starRatingOptions.map((option) => (
-                <TouchableWithoutFeedback
-                  onPressIn={() => handlePressIn(option)}
-                  onPressOut={() => handlePressOut(option)}
-                  onPress={() => setStarRating(option)}
-                  key={option}
-                >
-                  <Animated.View style={animatedScaleStyle}>
-                    <MaterialIcons
-                        name={starRating >= option ? 'star' : 'star-border'}
-                        size={32}
-                        style={starRating >= option ? styles.starSelected : styles.starUnselected}
-                      />
-                  </Animated.View>
-                </TouchableWithoutFeedback>
-              ))}
-            </View>
-          </View>
-         </View> 
-        {/* <View 
-        // style={{flex:1,justifyContent: 'flex-end'}}
-        >
-            <TouchableOpacity 
-              // onPress={onPress} 
-            style={styles. serviceIssueButton}>
-              <Text style={styles.serviceIssueButtonText}>Submit your issue</Text>
-            </TouchableOpacity>
-        </View> */}
-    </View>
+          <Text style={styles.heading}>Tap to rate</Text>
+        
+            <View style={styles.stars}>
+                {starRatingOptions.map((option) => (
+                  <TouchableWithoutFeedback
+                    onPressIn={() => handlePressIn(option)}
+                    onPressOut={() => handlePressOut(option)}
+                    onPress={() => setStarRating(option)}
+                    key={option}
+                  >
+                    <Animated.View style={animatedScaleStyle}>
+                      <MaterialIcons
+                          name={starRating >= option ? 'star' : 'star-border'}
+                          size={32}
+                          style={starRating >= option ? styles.starSelected : styles.starUnselected}
+                        />
+                    </Animated.View>
+                  </TouchableWithoutFeedback>
+                ))}
+              </View>
+      </View>
+    </View> 
+  </View>
 
   );
 }

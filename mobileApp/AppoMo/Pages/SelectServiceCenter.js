@@ -1,17 +1,20 @@
 import React,{useEffect,useState} from 'react';
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import {StyleSheet, Pressable, Image, View, Alert,Text,TouchableOpacity,ScrollView} from 'react-native';
-import { SearchBar } from "react-native-elements";
+// import { SearchBar } from "react-native-elements";
+import { SearchBar } from "@rneui/base";
 // import { useNavigation } from '@react-navigation/native';
 import ServiceCenter from './ServiceCenter';
-
+// export { handlePress };
 
 function SelectServiceCenter() {
+
   const navigate = useNavigate();
 
-  const handlePress = () => {
-    navigate('/ServiceCenter');
+  const handlePress = (serviceProviderName) => {
+    navigate('/ServiceCenter', { serviceProviderName, _id});
   };
+
   // const navigation = useNavigation();
   const [data, setData] = useState([]);
 
@@ -21,44 +24,78 @@ function SelectServiceCenter() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://10.0.2.2:8070/serviceprovider/");
+      const response = await fetch("http://10.0.2.2:8070/serviceprovider/getSC");
       const jsonData = await response.json();
       setData(jsonData);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sdata, setsData] = useState([]);
+
+  useEffect(() => {
+    fetchSearchData();
+  }, [searchTerm]);
+
+ 
+
+  const fetchSearchData = async () => {
+     {
+      const responsee = await fetch(`http://10.0.2.2:8070/serviceprovider/get/${searchTerm}`);
+      const jsonData = await responsee.json();
+      setsData(jsonData);
+    }
+    //  catch (error) {
+    //   console.error('Error fetching data:', error);
+    // }
+    
+  };
+
+  const renderList = () => {
+    const items = searchTerm ? sdata : data;
+
+    return items.map(item => (
+      <View style={styles.item} key={item.serviceProviderName}>
+        <Link to={`/ServiceCenter/${item._id}/${item.serviceProviderName}`} component={TouchableOpacity} style={styles.imagesStyle}>
+          <Image source={require('../assets/a.jpg')} style={styles.imageStyle} />
+        </Link>
+        <Text style={styles.tStyle}>{item.serviceProviderName}</Text>
+      </View>
+    ));
+  };
 
   return (
     
     <View>
+    <View>
           <View style={styles.searchStyles}>
               <SearchBar
-                placeholder="Search Product Wise..."
-                lightTheme
-                round
-                style={{width:'100%'}}
-                containerStyle={{borderWidth: 0, borderTopWidth: 0, borderBottomWidth: 0, backgroundColor:'transparent'}}
-                autoCorrect={false}
-              />
-              
-              <SearchBar
-                placeholder="Search Location Wise..."
-                lightTheme
-                round
-                style={{width:'100%'}}
-                containerStyle={{borderWidth: 0, borderTopWidth: 0, borderBottomWidth: 0, backgroundColor:'transparent'}}
-                autoCorrect={false}
-              />
+      platform="default"
+      containerStyle={{}}
+      inputContainerStyle={{}}
+      inputStyle={{}}
+      leftIconContainerStyle={{}}
+      rightIconContainerStyle={{}}
+      loadingProps={{}}
+      onChangeText={newVal => setSearchTerm(newVal)}
+      onClearText={() => console.log(onClearText())}
+      placeholder="Search location wis..."
+      placeholderTextColor="#888"
+      cancelButtonTitle="Cancel"
+      cancelButtonProps={{}}
+      onCancel={() => console.log(onCancel())}
+      value={searchTerm}
+    />
           </View>
-        
-          <ScrollView style={{ flexGrow: 0.75 }}>     
+      </View>  
+          <ScrollView style={{ flexGrow: 0.75 ,height:500}}>     
     
             <View style={styles.list}>
-            {data.map(item => (
+            {/* {data.map(item => (
                 <View style={styles.item}>
                 
-                  <TouchableOpacity style={styles.imagesStyle} onPressOut={handlePress}
+                  <TouchableOpacity style={styles.imagesStyle} onPress={() => handlePress(item.serviceProviderName)}
                   //  onPress={()=>navigation.navigate("serviceCenter")}
                   // onPress={() => navigation.navigate('serviceCenter')}
                   >
@@ -72,7 +109,16 @@ function SelectServiceCenter() {
                   </Text>
                
                 </View>
-                ))}
+                ))} */}
+                {/* {data.map(item => (
+  <View style={styles.item} key={item.serviceProviderName}>
+    <Link to={`/ServiceCenter/${item._id}/${item.serviceProviderName}`} component={TouchableOpacity} style={styles.imagesStyle}>
+      <Image source={require('../assets/a.jpg')} style={styles.imageStyle} />
+    </Link>
+    <Text style={styles.tStyle}>{item.serviceProviderName}</Text>
+  </View>
+))} */}
+{renderList()}
             </View>
         
         </ScrollView> 
@@ -84,8 +130,9 @@ function SelectServiceCenter() {
 
 const styles = StyleSheet.create({
   searchStyles:{
-    marginVertical:50,
-    marginTop:200
+    // marginVertical:50,
+    marginTop:200,
+    width:350
   },
   list:{
     justifyContent: 'center',

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, StyleSheet, Card} from 'react-native';
-
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 
 
 

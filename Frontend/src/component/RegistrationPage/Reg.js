@@ -117,8 +117,12 @@ function validateNoOfAppoinments(noOfAppoinments){  // checks if the No of appoi
 export const Reg = (props) => {
 
     
-    const [radio, setradio] = useState(false);
-    const [radioError, setradioError] = useState(false);
+    const [providerType, setProviderType] = useState('');
+    const handleRadioChange = (event) => {
+        setProviderType(event.target.value);
+      };
+
+
     
     const [logo, setLogo] =useState("");
 
@@ -216,14 +220,13 @@ export const Reg = (props) => {
     //     sendRegDetails();
     // };
     
-
-
+    
     function sendRegDetails(e){
         e.preventDefault();
         
         
         const newServiceProvider={  //To parsing data to backend.
-            // providerType,
+            providerType,
             logo,
             username,
             password,
@@ -262,18 +265,24 @@ export const Reg = (props) => {
             </div>
             
             <div className={styles.combined}>
-                <div className={styles.regBodyRadioBox} required error={radioError}>
-                    <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group" required id="providerType" 
+                <div className={styles.regBodyRadioBox} 
+                // required error={radioError}
+                >
+                    <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" onChange={handleRadioChange} value={providerType} name="row-radio-buttons-group" required id="providerType" 
                     
                     >
-                        <FormControlLabel value="Company" control={<Radio required />} label="Company" 
+                        <FormControlLabel value="Company" 
+                        //  onClick={setProviderType(true)} 
+                         control={<Radio required />} label="Company" 
                         
                         />
-                        <FormControlLabel value="Service Center" control={<Radio required />} label="Service Center" 
+                        <FormControlLabel value="Service Center" 
+                        //  onClick={setProviderType(false)}
+                          control={<Radio required />} label="Service Center" 
                         
                         />
                     </RadioGroup>
-                    {radioError && <FormHelperText>Please select an option</FormHelperText>}
+                    {/* {radioError && <FormHelperText>Please select an option</FormHelperText>} */}
                 </div>
 
 
@@ -417,3 +426,5 @@ export const Reg = (props) => {
 
 )
 }
+
+

@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const serviceproviderSchema = new Schema({
     providerType :{
-        type : Boolean,
-        // required: true
+        type : String,
+        required: true
     },
     logo :{
         type : String,
@@ -28,7 +28,8 @@ const serviceproviderSchema = new Schema({
     },
     email : {
         type : String,
-        required: true
+        required: true,
+        unique: true
     },
     ceoName : {
         type : String,
@@ -50,6 +51,10 @@ const serviceproviderSchema = new Schema({
         type : String,
         required: true
     },
+    starRating: {
+        type: Number,
+        // required: true,
+      },
     
     
 

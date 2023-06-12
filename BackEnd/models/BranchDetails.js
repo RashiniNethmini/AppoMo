@@ -23,8 +23,25 @@ const brdetailsSchema = new Schema({
     email: {
         type: String,
         required: true,
+    },
+    contactNo: {
+        type: Number,
+        required: true,
+    },
+    
+    nofappnmntsPerHr: {
+        type: Number,
+        required: true,
+    },
+    nofworkinghrsPerDay: {
+        type: Number,
+        required: true,
+    }, 
+    daysopen: {
+        type: String,
+        required: true,
     }
-  
+    
   
 })
 const BranchDetails = mongoose.model('BranchDetails', brdetailsSchema);

@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState, useEffect } from "react";
 import styleset from './brUpdate.module.css';
 import { Button, IconButton, Paper, TextField, Tooltip } from "@mui/material";
 import Table from '@mui/material/Table';
@@ -13,7 +13,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditIcon from '@mui/icons-material/Edit';
-import data from './mock-data.json';
+// import data from './mock-data.json';
+import axios from 'axios';
+
 
 
 
@@ -22,55 +24,86 @@ export default function BranchForm() {
 
   const validateBrName = (brName) => {
     const regex = /^[a-zA-Z\s]*$/;
-    return regex.test(brName);
+    return brName.trim() !== '' && regex.test(brName);
   }
 
-  
+
   const validateManName = (manName) => {
-    const regex = /^[a-zA-Z\s]*$/;
-    return regex.test(manName);
+    const regex = /^[a-zA-Z\s.]+$/;
+    return manName.trim() !== '' && regex.test(manName);
   }
-  
+
   const validateAddress = (address) => {
-    // Address should not be empty and should contain only letters, digits, spaces, and commas
-    const regex = /^[a-zA-Z0-9\s,]+$/;
+    const regex = /^[a-zA-Z0-9\s./,]+$/;
     return address.trim() !== '' && regex.test(address);
   };
 
   const validateContactNumber = (contactNumber) => {
-    const regex = /^\d{10}$/;
-    return regex.test(contactNumber);
+    const regex = /^[0-9]{10}$/;
+    return contactNumber.trim() !== '' && regex.test(contactNumber);
   }
   const validateAptmntHrs = (hrs) => {
     const regex = /^\d{2}$/;
-    return regex.test(hrs);
+    return hrs.trim() !== '' && regex.test(hrs);
   }
+  const validateWorkingHrs = (whrs) => {
+    const regex = /^\d{2}$/;
+    return whrs.trim() !== '' && regex.test(whrs);
+  }
+
+  const validateOpenDays = (opdays) => {
+    // Address should not be empty and should contain only letters, digits, spaces, and commas
+    const regex = /^[a-zA-Z0-9\s.,]+$/;
+    return opdays.trim() !== '' && regex.test(opdays);
+  };
 
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
+    return email.trim() !== '' && regex.test(email);
   }
-  
 
 
 
-  const [tableData, setTableData] = useState(data);
-  const [addFormData, setAddFormData] = useState({});
 
+  const [tableData, setTableData] = useState(() => {
+    const storedData = localStorage.getItem('tableData');
+    return storedData ? JSON.parse(storedData) : [];
+  });
+
+  const [editIndex, setEditIndex] = useState(-1);
+  const [formData, setFormData] = useState({
+    BrName: "",
+    ManName: "",
+    Cntct: "",
+    Addrs: "",
+    Email: "",
+    ApptmntsPerHr: "",
+    WHrsPerDay: "",
+    DaysOpen: ""
+  });
 
   const [brName, setBrName] = useState('');
   const [manName, setManName] = useState('');
-  const [address, setAddress] = useState('');
   const [contactNumber, setContactNumber] = useState('');
-  const [hrs, setHrs] = useState('');
+  const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
+  const [hrs, setHrs] = useState('');
+  const [whrs, setWHrs] = useState('');
+  const [opdays, setOpdays] = useState('');
+
+
+
+
   const [brNameError, setBrNameError] = useState('');
   const [manNameError, setManNameError] = useState('');
   const [addressError, setAddressError] = useState('');
   const [contactNumberError, setContactNumberError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [hrsError, setHrsError] = useState('');
- 
+  const [whrsError, setWHrsError] = useState('');
+  const [opdaysError, setOpdaysError] = useState('');
+
+
 
 
   const handleBrNameChange = (event) => {
@@ -79,46 +112,74 @@ export default function BranchForm() {
       setBrNameError('*Name should contain only alphabets and spaces');
     } else {
       setBrNameError('');
+      
+        // const updatedTableData = [...tableData];
+        // updatedTableData[editIndex].BrName = event.target.value;
+        // setTableData(updatedTableData);
+      
+      
     }
   };
 
-  
+
   const handleManNameChange = (event) => {
     setManName(event.target.value);
     if (!validateBrName(event.target.value)) {
-      setManNameError('*Name should contain only alphabets and spaces');
+      setManNameError('*Name should contain alphabets ,spaces and fullstops only');
     } else {
       setManNameError('');
+      // const updatedTableData = [...tableData];
+      // updatedTableData[editIndex].BrName = event.target.value;
+      // setTableData(updatedTableData);
     }
   };
-  
+
   const handleAddressChange = (event) => {
     setAddress(event.target.value);
-    if (!validateManName(event.target.value)) {
-      setAddressError('*Name should contain only alphabets and spaces');
+    if (!validateAddress(event.target.value)) {
+      setAddressError('*Address should contain  alphabets,digits,spaces, commas and fullstops only');
     } else {
       setAddressError('');
+      const updatedTableData = [...tableData];
+      updatedTableData[editIndex].BrName = event.target.value;
+      setTableData(updatedTableData);
     }
   };
 
   const handleContactNumberChange = (event) => {
-    
+
     setContactNumber(event.target.value);
-   
+
     if (!validateContactNumber(event.target.value)) {
-      setContactNumberError('*Contact number should contain only  digits');
+      setContactNumberError('*Contact number should contain only 10 digits');
     } else {
       setContactNumberError('');
     }
-  
+
   };
-  
+
   const handleAptmntHrsChange = (event) => {
     setHrs(event.target.value);
     if (!validateAptmntHrs(event.target.value)) {
       setHrsError('*Enter hours in two digits');
     } else {
       setHrsError('');
+    }
+  };
+  const handleWorkingHrsChange = (event) => {
+    setWHrs(event.target.value);
+    if (!validateWorkingHrs(event.target.value)) {
+      setWHrsError('*Enter hours in two digits');
+    } else {
+      setWHrsError('');
+    }
+  };
+  const handleOpenDaysChange = (event) => {
+    setOpdays(event.target.value);
+    if (!validateOpenDays(event.target.value)) {
+      setOpdaysError('*Address should contain  alphabets,digits,spaces, commas and fullstops only');
+    } else {
+      setOpdaysError('');
     }
   };
 
@@ -131,9 +192,12 @@ export default function BranchForm() {
     }
   };
   const handleCreateNewRow = (values) => {
-    tableData.params(values);
-    setTableData([...tableData]);
-
+    const newRow = { ...values };
+    setTableData((prevData) => {
+      const updatedData = [...prevData, newRow];
+      localStorage.setItem('tableData', JSON.stringify(updatedData));
+      return updatedData;
+    });
   };
 
 
@@ -141,6 +205,7 @@ export default function BranchForm() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
+    // setEditIndex(index);
     setOpen(true);
   };
 
@@ -148,24 +213,51 @@ export default function BranchForm() {
     setOpen(false);
   };
 
-  //delete row
-  const handleOnDelete =
-    (index) => {
-      if (
-        !window.confirm(`Are you sure you want to delete this row?`)
-      ) {
-        //eslint-disable-line
-        this.props.handleOnDelete(tableData);
-      }
-
-      tableData.splice(index, 1);
-      setTableData([...tableData]);
+  //delete a row
+  const handleOnDelete = (index) => {
+    if (!window.confirm(`Are you sure you want to delete this row?`)) {
+      return;
     }
+    const branchToDelete = tableData[index];
+    const updatedTableData = tableData.filter((_, i) => i !== index);
+    localStorage.setItem('tableData', JSON.stringify(updatedTableData));  // Update local storage with the updated table data
+    setTableData(updatedTableData);
 
-//edit row
-   const handleOnEdit = (i) => {
-   //setTableData(addFormData[i])
-   };
+
+    // Make an API request to delete the document from the MongoDB database
+    fetch(`http://localhost:8070/BranchDetails/delete/${branchToDelete}`, {
+      method: 'DELETE',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        // Update the state to remove the deleted document from the tableData
+        const updatedTableData = [...tableData];
+        updatedTableData.splice(index, 1);
+        setTableData(updatedTableData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  //edit row
+ const handleOnEdit = (index) => {
+  setEditIndex(index);
+  const rowData = tableData[index];
+  setFormData({
+    BrName: rowData.BrName,
+    ManName: rowData.ManName,
+    Cntct: rowData.Cntct,
+    Addrs: rowData.Addrs,
+    Email: rowData.Email,
+    ApptmntsPerHr: rowData.ApptmntsPerHr,
+    WHrsPerDay: rowData.WHrsPerDay,
+    DaysOpen: rowData.DaysOpen
+  });
+  handleClickOpen();
+};
+  
 
   // const handleUpdate =()=>{
   //  addFormData.splice(editIndex,1,tableData)
@@ -179,50 +271,126 @@ export default function BranchForm() {
     { id: 'Addrs', label: 'Address', Width: 300, align: 'center' },
     { id: 'Email', label: 'Email', Width: 300, align: 'center' },
     { id: 'ApptmntsPerHr', label: 'No. of Appointments Per Hour', Width: 300, align: 'center' },
-  
+    { id: 'WHrsPerDay', label: 'No. of Working Hours Per Day', Width: 300, align: 'center' },
+    { id: 'DaysOpen', label: 'Days Open ', Width: 300, align: 'center' },
+
+
+
 
   ];
 
-   const handleAddFormChange = (event) => {
-     event.preventDefault();
-
-    const fieldName = event.target.getAttribute("id");
-     const fieldValue = event.target.value;
-
-    const newFormData = { ...addFormData };
-     newFormData[fieldName] = fieldValue;
-
-     setAddFormData(newFormData);
-  };
 
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
-    if (validateBrName(brName) && validateManName(manName) && validateAddress(address) && validateContactNumber(contactNumber) && validateEmail(email)) {
-    const newBranch = {
-    
-      BrName: addFormData.BrName,
-      ManName: addFormData.ManName,
-      Cntct: addFormData.Cntct,
-      Addrs: addFormData.Addrs,
-      Email: addFormData.Email,
-      ApptmntsPerHr: addFormData.ApptmntsPerHr
-    };
-    const newBranches = [...tableData, newBranch];
-    setTableData(newBranches);
-    handleOnClose();
 
-    const fieldName = event.target.getAttribute("id");
-    const fieldValue = event.target.value;
+     if (editIndex === -1) {
+    if (validateBrName(brName) && validateManName(manName) && validateAddress(address) && validateContactNumber(contactNumber) && validateAptmntHrs(hrs) && validateWorkingHrs(whrs) && validateOpenDays(opdays)) {
+      const newBranch = {
 
-    const newFormData = { ...addFormData };
-    newFormData[fieldName] = fieldValue;
+        BrName: brName,
+        ManName: manName,
+        Cntct: contactNumber,
+        Addrs: address,
+        Email: email,
+        ApptmntsPerHr: hrs,
+        WHrsPerDay: whrs,
+        DaysOpen: opdays
 
-     setAddFormData(newFormData);
+      };
+      console.log('Submit button pressed');
+      console.log(brName, contactNumber);
+
+      // Make an API request to send the data to the backend
+      fetch("http://localhost:8070/BranchDetails/add", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "branchName": brName,
+          "managerName": manName,
+          "contactNo": contactNumber,
+          "address": address,
+          "email": email,
+          "nofappnmntsPerHr": hrs,
+          "nofworkinghrsPerDay": whrs,
+          "daysopen": opdays
+
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          handleOnClose();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+        if (editIndex !== -1) {
+          // If in edit mode, update the existing branch
+          const updatedTableData = [...tableData];
+          updatedTableData[editIndex] = newBranch;
+          localStorage.setItem("tableData", JSON.stringify(updatedTableData));
+          setTableData(updatedTableData);
+        } else {
+        
+      //   const newBranches = [...tableData, newBranch];
+      // setTableData(newBranches);
+     handleCreateNewRow(newBranch);}
+      // const updatedTableData = [...tableData, newBranch];
+      // setTableData(updatedTableData);
+      handleOnClose();
+    }
+   else {
+
+      alert('Please fill in all fields correctly');
+    }
+
   }
-  else {
-    alert('Please fill in all fields correctly');
-  }
-};
+  };
+
+  const handleEditFormSubmit = (event) => {
+    event.preventDefault();
+
+    // Validate the form data
+
+    if (validateBrName(brName) && validateManName(manName) && validateAddress(address) && validateContactNumber(contactNumber) && validateAptmntHrs(hrs) && validateWorkingHrs(whrs) && validateOpenDays(opdays)) {
+      const updatedRow = {
+        BrName: brName,
+        ManName: manName,
+        Cntct: contactNumber,
+        Addrs: address,
+        Email: email,
+        ApptmntsPerHr: hrs,
+        WHrsPerDay: whrs,
+        DaysOpen: opdays
+      };
+
+     // Update the tableData state with the edited row
+      const updatedTableData = [...tableData];
+      updatedTableData[editIndex] = updatedRow;
+      setTableData(updatedTableData);
+
+      // Close the form
+      handleOnClose();
+    } else {
+      alert('Please fill in all fields correctly');
+    }
+  };
+
+
+  // Step 1: Retrieve table data from local storage on page load
+  useEffect(() => {
+    const storedData = localStorage.getItem('tableData');
+    if (storedData) {
+      setTableData(JSON.parse(storedData));
+    }
+  }, []);
+
+  // Step 2: Update local storage whenever tableData changes
+  useEffect(() => {
+    localStorage.setItem('tableData', JSON.stringify(tableData));
+  }, [tableData]);
 
   return (
     <div className={styleset.mainContainer}>
@@ -251,66 +419,98 @@ export default function BranchForm() {
               <DialogContent>
                 <div className={styleset.bodyTextbox}>
                   <TextField
-                    required id="outlined-basic"
+                    required
+                    id="BrName"
                     label="Branch Name "
                     variant="outlined"
                     sx={{ width: '100vw' }}
+                     value={editIndex !== -1 ? tableData[editIndex].BrName : ''}
                     onChange={handleBrNameChange} />
-                     {brNameError && <span style={{ color: 'red' }}>{brNameError}</span>}
+                  {brNameError && <span style={{ color: 'red', fontSize: 12 }}>{brNameError}</span>}
                 </div>
 
                 <div className={styleset.bodyTextbox}>
                   <TextField
-                    required id="outlined-basic"
+                    required
+                    id="ManName"
                     label="Name of Manager"
                     variant="outlined"
                     sx={{ width: '100vw' }}
+                    value={editIndex !== -1 ? tableData[editIndex].ManName : ''}
                     onChange={handleManNameChange} />
-                     {manNameError && <span style={{ color: 'red' }}>{manNameError}</span>}
+                  {manNameError && <span style={{ color: 'red', fontSize: 12 }}>{manNameError}</span>}
                 </div>
 
                 <div className={styleset.bodyTextbox}>
                   <TextField
-                    required id="outlined-basic"
+                    required
+                    id="Cntct"
                     label="Contact No"
                     variant="outlined"
                     sx={{ width: '100vw' }}
+                     value={editIndex !== -1 ? tableData[editIndex].Cntct : ''}
                     onChange={handleContactNumberChange} />
-                   {contactNumberError && <span style={{ color: 'red' }}>{contactNumberError}</span>}
+                  {contactNumberError && <span style={{ color: 'red', fontSize: 12 }}>{contactNumberError}</span>}
                 </div>
 
                 <div className={styleset.bodyTextbox}>
                   <TextField
-                    required id="outlined-basic"
+                    required id="Addrs"
                     label="Address"
                     variant="outlined"
                     sx={{ width: '100vw' }}
+                     value={editIndex !== -1 ? tableData[editIndex].Addrs : ''}
                     onChange={handleAddressChange} />
-                     {addressError && <span style={{ color: 'red' }}>{addressError}</span>}
-                   
+                  {addressError && <span style={{ color: 'red', fontSize: 12 }}>{addressError}</span>}
+
                 </div>
 
                 <div className={styleset.bodyTextbox}>
                   <TextField
-                    required id="outlined-basic"
+                    required id="Email"
                     label="Email"
                     variant="outlined"
                     sx={{ width: '100vw' }}
+                     value={editIndex !== -1 ? tableData[editIndex].Email : ''}
                     onChange={handleEmailChange} />
-                      {emailError && <span style={{ color: 'red' }}>{emailError}</span>}
+                  {emailError && <span style={{ color: 'red', fontSize: 12 }}>{emailError}</span>}
                 </div>
 
                 <div className={styleset.bodyTextbox}>
                   <TextField
-                    required id="outlined-basic"
+                    required id="ApptmntsPerHr
+                  };"
                     label="No. of Appointments Per Hour"
                     variant="outlined"
                     sx={{ width: '100vw' }}
+                     value={editIndex !== -1 ? tableData[editIndex].ApptmntsPerHr : ''}
                     onChange={handleAptmntHrsChange} />
                 </div>
-                {hrsError && <span style={{ color: 'red' }}>{hrsError}</span>}
+                {hrsError && <span style={{ color: 'red', fontSize: 12 }}>{hrsError}</span>}
 
-              
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="WHrsPerDay
+                  };"
+                    label="No. of Working Hours Per Day"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                     value={editIndex !== -1 ? tableData[editIndex].ApptmntsPerHr : ''}
+                    onChange={handleWorkingHrsChange} />
+                </div>
+                {whrsError && <span style={{ color: 'red', fontSize: 12 }}>{whrsError}</span>}
+
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="Days Open"
+                    label="Days Open "
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                     value={editIndex !== -1 ? tableData[editIndex].Addrs : ''}
+                    onChange={handleOpenDaysChange} />
+                  {opdaysError && <span style={{ color: 'red', fontSize: 12 }}>{opdaysError}</span>}
+
+                </div>
 
               </DialogContent>
 
@@ -340,13 +540,13 @@ export default function BranchForm() {
               </TableHead>
               <TableBody>
 
-                {tableData.map((tableData, i) => {
+                {tableData.map((row, i) => {
                   return (
 
-                    <TableRow hover role="checkbox" tabIndex={-1} key={tableData.code}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
 
                       {columns.map((column) => {
-                        const value = tableData[column.id];
+                        const value = row[column.id];
                         return (
                           <TableCell key={column.id} align={column.align} >
                             {column.format && typeof value === 'number'

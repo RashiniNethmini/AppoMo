@@ -11,7 +11,7 @@ import * as Animatable from 'react-native-animatable';
 import { Button } from "react-native-paper";
 
 
-function ForgotPW() {
+export default function ForgotPW() {
     const [email, setEmail] = useState('');
     const [error, setError] = useState({});
 
@@ -39,12 +39,37 @@ function ForgotPW() {
         }
         else {
         // Implement the logic to reset the password using the entered email address
-        Alert.alert('Reset Password', `An email has been sent to ${email} with instructions to reset your password.`);
-        setEmail('');
-        setError('');
-         }
-    };
+        fetch('http://10.0.2.2:8070/ForgotPW/resetPw', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email}),
+          })
+        
+          .then(response => {
 
+            if (response.ok) {
+              Alert.alert('Success', 'Password reset email sent successfully');
+              console.log('Success ')
+            } else {
+              Alert.alert('Error', 'Failed sending password reset email');
+              console.log('Failed ')
+            }
+            
+          
+          })
+          .catch(error => {
+            console.error(error);
+            Alert.alert('Error', 'An error occurred. Please try again later.');
+          });
+
+    
+        setEmail('');
+      
+    };
+  }
+  
     const handleCancel = () => {
         // Implement the logic to navigate back to the login screen
         Alert.alert('Cancel ?', 'Are you sure you want to cancel resetting your password?', [
@@ -83,7 +108,7 @@ function ForgotPW() {
 
 
             <TouchableOpacity onPress={ handleResetPw } style={styles.resetCancelBtn}>
-                <Text style={styles.resetCancelText}>Send code</Text>
+                <Text style={styles.resetCancelText}>Send link</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleCancel } style={styles.resetCancelBtn}>
                 <Text style={styles.resetCancelText}>Cancel</Text>
@@ -187,11 +212,9 @@ const styles = StyleSheet.create({
     resetCancelText: {
         color: '#fff',
         fontSize: 18,
-    },
+    }
 
 
 
 
-});
-
-export default ForgotPW;
+  });

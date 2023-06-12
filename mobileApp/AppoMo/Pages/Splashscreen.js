@@ -1,4 +1,5 @@
 import React from 'react';
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import { 
     View, 
     Text, 
@@ -15,6 +16,11 @@ import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
 
 const SplashScreen = ({navigation}) => {
     const { colors } = useTheme();
+    const navigate = useNavigate();
+
+  const handlePress = () => {
+    navigate('/Login');
+  };
 
     return (
       <View style={styles.container}>
@@ -39,7 +45,9 @@ const SplashScreen = ({navigation}) => {
             }]}>Welcome to AppoMo!</Text>
             <Text style={styles.text}>Sign in with an account</Text>
             <View style={styles.button}>
-            <TouchableOpacity onPress={()=>navigation.navigate('SignInScreen')}>
+            <Link to={`/Login`} component={TouchableOpacity}
+            // onPress={()=>navigation.navigate('SignInScreen')}
+            >
                     
                     <Text style={styles.textSign}>Get Started 
                     <View style={marginLeft=10}>
@@ -51,7 +59,7 @@ const SplashScreen = ({navigation}) => {
                     </View>
                 </Text>
                
-            </TouchableOpacity>
+            </Link>
             </View>
         </Animatable.View>
       </View>

@@ -12,7 +12,10 @@ router.route("/add").post((req, res) => {
     const contactNo = Number(req.body.contactNo);
     const address = req.body.address;
     const email = req.body.email;
-
+    const nofappnmntsPerHr = Number(req.body.nofappnmntsPerHr);
+    const nofworkinghrsPerDay = Number(req.body.nofworkinghrsPerDay);
+    const daysopen = req.body.daysopen;
+    
 
     const newBranch = new Branch({
         branchName,
@@ -20,6 +23,9 @@ router.route("/add").post((req, res) => {
         contactNo,
         address,
         email,
+        nofappnmntsPerHr,
+        nofworkinghrsPerDay,
+        daysopen
        
     })
 
@@ -56,7 +62,7 @@ router.route("/get/:id").get(async(req,res)=>{
 //update existing Branch
 router.route("/update/:id").put(async (req, res) => {
     let branchid = req.params.id;
-    const { branchName, managerName, contactNo, address, email} = req.body;
+    const { branchName, managerName, contactNo, address, email,nofappnmntsPerHr} = req.body;
 
     const updateBranch = {
         branchName,
@@ -64,6 +70,10 @@ router.route("/update/:id").put(async (req, res) => {
         contactNo,
         address,
         email,
+        nofappnmntsPerHr,
+        nofworkinghrsPerDay,
+        daysopen
+
  
     }
 

@@ -26,7 +26,8 @@ router.route("/add").post((req, res) => {
     newUser.save().then(() => {
         res.json("User Added")
     }).catch((err) => {
-        res.statusMessage(500).send({ status: "Error with adding data" });
+        res.status(500).send({ status: "Error with adding data" });
+
     })
 }) 
 
