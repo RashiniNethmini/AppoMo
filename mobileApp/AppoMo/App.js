@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { NativeRouter, Link, Route, Routes, useNavigate } from 'react-router-native';
 import { Provider, Appbar, Searchbar } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -24,23 +24,48 @@ import EditProfile from './Pages/EditProfile';
 import ResetPwd from './Pages/ResetPwd';
 import CustomerProfile from './Pages/CustomerProfile';
 import SplashScreen from './Pages/Splashscreen';
+import IssueSubmitMsg from './Pages/IssueSubmitMsg';
+
 
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-
+    <NativeRouter>
     <View style={styles.container}>
+    {/* <Provider>
+     <Routes>
+      {/* <Route path="/" element={<CompanyOrServiceCenter/>} /> */}
+      {/* <Route path="/CompanyDetails" element={<CompanyDetails/>} /> */}
+      {/* <Route path="/" element={<SelectServiceCenter/>} />
+      <Route path="/ServiceCenter/:serviceProviderName" element={<ServiceCenter/>} />
+      <Route path="/IssueSubmission/:_id" element={<IssueSubmission/>} /> 
+      <Route path="/IssueSubmitMsg" element={<IssueSubmitMsg/>} /> 
+    </Routes>  */} 
+    {/* <SelectServiceCenter/> */}
+    {/* </Provider> */}
       <Provider>
       
-        {/* <SplashScreen/> */}
-{/* <IssueSubmission/> */}
+
+        {/* 
+        <NavigationContainer>
+          <Stack.Navigator>
+
+            <Stack.Screen name="login" component={Login} />
+            <Stack.Screen name=" userRegistr" component={UserRegistr} />
+          </Stack.Navigator>
+
+        </NavigationContainer> */}
+        {/*<SplashScreen/>*/}
+        {/*<IssueSubmitMsg/>*/}
+
+         {/* <IssueSubmission/> */}
         {/* <Login/> */}
         {/* <UserRegistr/> */}
          <ForgotPW/> 
         {/* <CompanyDetails/> */}
-        {/* <ComBranchDetails/> */}
+        <ComBranchDetails/>
         {/* <SelectServiceCenter/> */}
         {/* <IssueSubmission/> */}
         {/* <AdvPayment/> */}
@@ -55,8 +80,9 @@ export default function App() {
      
      
     </View>
-    
+  </NativeRouter>
 
+    
   );
 }
 

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const serviceproviderSchema = new Schema({
     providerType :{
-        type : Boolean,
+        type : String,
         required: true
     },
     logo :{
@@ -28,16 +28,30 @@ const serviceproviderSchema = new Schema({
     },
     email : {
         type : String,
-        required: true
+        required: true,
+        unique: true
     },
     ceoName : {
         type : String,
-        required: true
+        // required: true
     },
     regNo : {
         type : String,
         required: true
     },
+    workingDates : {
+        type : String,
+        required: true
+    },
+    workingHours : {
+        type : String,
+        required: true
+    },
+    noOfAppoinments : {
+        type : String,
+        required: true
+    },
+    
     
 
 })

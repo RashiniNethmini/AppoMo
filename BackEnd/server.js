@@ -37,15 +37,16 @@ app.use(bodyParser.json());
 // const ConfApntmntsRouter = require("./routes/Appointments.js");
 //  app.use("/Appointments",ConfApntmntsRouter);
 
-// const BrDetailsRouter = require("./routes/BranchDetails.js");
-//  app.use("/BranchDetails", BrDetailsRouter);
-
-// const IssueRouter = require("./routes/Issues.js");
-// app.use("/Issues", IssueRouter);
-
+const BrDetailsRouter = require("./routes/BranchDetails.js");
+ app.use("/BranchDetails", BrDetailsRouter);
+ 
+const IssueRouter = require("./routes/Issues.js");
+app.use("/Issues", IssueRouter);
 // const smsRouter = require("./APIs/sms.js");
 // app.use('/sms', smsRouter);
 
+const serviceproviderRouter = require ("./routes/serviceproviders.js");
+app.use("/serviceprovider", serviceproviderRouter);
 
 // const UserDetailsRouter = require("./routes/UserDetails.js");
 // app.use("/UserDetails", UserDetailsRouter);

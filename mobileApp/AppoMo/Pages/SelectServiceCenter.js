@@ -1,11 +1,18 @@
 import React,{useEffect,useState} from 'react';
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import {StyleSheet, Pressable, Image, View, Alert,Text,TouchableOpacity,ScrollView} from 'react-native';
 import { SearchBar } from "react-native-elements";
 // import { useNavigation } from '@react-navigation/native';
 import ServiceCenter from './ServiceCenter';
-
+// export { handlePress };
 
 function SelectServiceCenter() {
+  const navigate = useNavigate();
+
+  const handlePress = (serviceProviderName) => {
+    navigate('/ServiceCenter', { serviceProviderName});
+  };
+
   // const navigation = useNavigation();
   const [data, setData] = useState([]);
 
@@ -49,10 +56,10 @@ function SelectServiceCenter() {
           <ScrollView style={{ flexGrow: 0.75 }}>     
     
             <View style={styles.list}>
-            {data.map(item => (
+            {/* {data.map(item => (
                 <View style={styles.item}>
                 
-                  <TouchableOpacity style={styles.imagesStyle}
+                  <TouchableOpacity style={styles.imagesStyle} onPress={() => handlePress(item.serviceProviderName)}
                   //  onPress={()=>navigation.navigate("serviceCenter")}
                   // onPress={() => navigation.navigate('serviceCenter')}
                   >
@@ -66,7 +73,15 @@ function SelectServiceCenter() {
                   </Text>
                
                 </View>
-                ))}
+                ))} */}
+                {data.map(item => (
+  <View style={styles.item} key={item.serviceProviderName}>
+    <Link to={`/ServiceCenter/${item.serviceProviderName}`} component={TouchableOpacity} style={styles.imagesStyle}>
+      <Image source={require('../assets/a.jpg')} style={styles.imageStyle} />
+    </Link>
+    <Text style={styles.tStyle}>{item.serviceProviderName}</Text>
+  </View>
+))}
             </View>
         
         </ScrollView> 

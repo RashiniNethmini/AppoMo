@@ -41,7 +41,11 @@ const appntmntSchema = new Schema({
     AptmntStatus:{
         type: Boolean,
         required: true,
-    }
+    },
+    Completed:{
+      type: Boolean,
+      required: true,
+  }
 
 
 })

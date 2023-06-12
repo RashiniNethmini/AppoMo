@@ -1,9 +1,13 @@
 const router = require("express").Router();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 let ServiceProvider = require("../models/ServiceProvider");
+
+
 
 router.route("/add").post ((req,res) => {
 
-    const providerType = req.body.type;
+    const providerType = req.body.providerType;
     const logo = req.body.logo;
     const username = req.body.username;
     const  password = req.body.password;
@@ -12,7 +16,16 @@ router.route("/add").post ((req,res) => {
     const email = req.body.email;
     const ceoName = req.body.ceoName;
     const regNo = req.body.regNo;
+    const workingDates = req.body.workingDates;
+    const workingHours = req.body.workingHours;
+    const noOfAppoinments = req.body.noOfAppoinments;
     
+    // const existingUser = ServiceProvider.findOne({ email });
+    // if (existingUser) {
+    //   return res.status(400).json({ message: 'User already exists' });
+    // }
+
+    // const hashedPassword = bcrypt.hash(password, 10);
 
     const newServiceProvider = new ServiceProvider({
         providerType,
@@ -24,17 +37,54 @@ router.route("/add").post ((req,res) => {
         email,
         ceoName,
         regNo,
+        workingDates,
+        workingHours,
+        noOfAppoinments,
+            
         
 
     })
     newServiceProvider.save().then(()=>{
+        // const oldUser = newServiceProvider.findOne((email));
+        // if(oldUser){
+        //    return res.json({error: "User "});
+        // }
         res.json("Service Provider Added")
     }).catch((err)=>{
         console.log(err);
     })
-
-
 })
+
+// router.route("/login").post (async (req,res) => {
+//     try {
+//         const { email, password } = req.body;
+//     const user = await ServiceProvider.findOne({ email });
+//     if (!user) {
+//       return res.status(401).json({ message: 'Invalid credentials' });
+//     }
+
+//     const isPasswordValid = await bcrypt.compare(password, user.password);
+//     if (!isPasswordValid) {
+//       return res.status(401).json({ message: 'Invalid credentials' });
+//     }
+
+//     const token = jwt.sign({ userId: user._id }, 'secret-key');
+//     res.json({ token });
+//     }catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Server error' });
+//     }
+
+//     // const username = req.body.username;
+//     // const  password = req.body.password;
+//     // const user = newServiceProvider.findOne((username));
+//     // if(!user){
+//     //     return res.json({error : ""});
+//     // }
+
+// })
+
+
 
 router.route("/").get((req,res)=>{
     ServiceProvider.find().then((serviceproviders)=>{
@@ -55,7 +105,10 @@ router.route("/update/:id").put (async (req,res)=>{
         email,
         ceoName,
         regNo,
-        logo}=req.body;
+        logo,
+        workingDates,
+        workingHours,
+        noOfAppoinments}=req.body;
 
     const updateServiceprovider={
         type,
@@ -66,7 +119,10 @@ router.route("/update/:id").put (async (req,res)=>{
         email,
         ceoName,
         regNo,
-        logo
+        logo,
+        workingDates,
+        workingHours,
+        noOfAppoinments
     }
 
     const update=await ServiceProvider.findOneAndUpdate(

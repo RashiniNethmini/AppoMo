@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Audio } from 'expo-av';
 
+import { useParams } from 'react-router-native';
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const MAX_HEIGHT = 500;
@@ -15,6 +17,12 @@ export default function IssueSubmission() {
   const [invoice, setTextinvoice] = useState("");
   const [product, setTextproduct] = useState("");
   const [issueInBrief, setTextissue] = useState("");
+  const [recording, setRecording] = useState(null);
+  const [audioUri, setAudioUri] = useState(null);
+  
+  const { _id } = useParams();
+
+  const navigate = useNavigate();
 
   const [error, setError] = useState('');  // set restriction to add only 10 numbers to contact number.
   const handleInputChange = (text) => {
@@ -42,37 +50,55 @@ export default function IssueSubmission() {
 
 
 
-  const [recording, setRecording] = useState();
-  const startRecording = async () => {
-    try {
-      console.log('Requesting recording permission');
-      await Audio.requestPermissionsAsync();
-      console.log('Starting recording...');
-      const recording = new Audio.Recording();
-      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
-      await recording.startAsync();
-      setRecording(recording);
-    } catch (err) {
-      console.error('Failed to start recording', err);
-    }
-  };
-  const stopRecording = async () => {
-    console.log('Stopping recording...');
-    try {
-      await recording.stopAndUnloadAsync();
-    } catch (err) {
-      console.error('Failed to stop recording', err);
-    }
-    setRecording(undefined);
-  };
 
-  const handleMicPress = () => {
+
+const startRecording = async () => {
+  try {
+    // Request recording permission
+    console.log('Requesting recording permission');
+    await Audio.requestPermissionsAsync();
+
+    // Start recording
+    console.log('Starting recording...');
+    const recording = new Audio.Recording();
+    await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+    await recording.startAsync();
+    setRecording(recording);
+  } catch (error) {
+    console.error('Failed to start recording', error);
+  }
+};
+
+const stopRecording = async () => {
+  console.log('Stopping recording...');
+  try {
     if (recording) {
-      stopRecording();
+      // Stop recording
+      await recording.stopAndUnloadAsync();
+      const uri = recording.getURI(); // Modify this line
+      setAudioUri(uri);
+      console.log('Audio URI:', uri); // Log the audio URI
     } else {
-      startRecording();
+      console.log('No recording found.');
     }
-  };
+  } catch (error) {
+    console.error('Failed to stop recording', error);
+  }
+  setRecording(null);
+};
+
+
+
+
+
+const handleMicPress = async () => {
+  if (recording) {
+    await stopRecording();
+  } else {
+    await startRecording();
+  }
+};
+
 
 
 
@@ -87,10 +113,19 @@ export default function IssueSubmission() {
   };
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('Submit button pressed');
-    console.log(name,contactNo);
-   
+    console.log(name, contactNo);
+    navigate('/IssueSubmitMsg');
+    // Make an API request to send the data to the backend
+    const requestBody = {
+      Name: name,
+      ContactNo: contactNo,
+      InvoiceNo: invoice,
+      Product: product,
+      IssueInBrief: issueInBrief,
+      AudioUri: audioUri, // Add the audio URI field
+    };
   
 // Make an API request to send the data to the backend
 fetch("http://10.0.2.2:8070/Issues/add", {
@@ -131,6 +166,7 @@ fetch("http://10.0.2.2:8070/Issues/add", {
     // Check the input fields
     checkInputs();
   };
+  
   
   React.useEffect(() => {
     checkInputs();
@@ -213,22 +249,13 @@ fetch("http://10.0.2.2:8070/Issues/add", {
                       />
 
                     </View>
-
+                    
                     <View>
+                    
                       <Button mode="contained" onPress={()=>handleSubmit()} style={{ backgroundColor: disableSubmit ? "#ccc" : '#388F82', }} disabled={disableSubmit}>
                         Submit
                       </Button>
-                      <Portal>
-                        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
-
-                          <Dialog.Content>
-                            <Paragraph>Please wait till we look into your issue.</Paragraph>
-                          </Dialog.Content>
-                          <Dialog.Actions>
-                            <Button onPress={() => setVisible(false)}>Ok</Button>
-                          </Dialog.Actions>
-                        </Dialog>
-                      </Portal>
+                   
                     </View>
 
 

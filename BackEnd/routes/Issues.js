@@ -2,27 +2,28 @@ const router = require('express').Router();
 let Issue = require('../models/Issues');
 
 router.route("/add").post((req, res) => {
-    const Name = req.body.Name;
-    const ContactNo = Number(req.body.ContactNo);
-    const InvoiceNo = req.body.InvoiceNo;
-    const Product = req.body.Product;
-    const IssueInBrief = req.body.IssueInBrief;
+  const { Name, ContactNo, InvoiceNo, Product, IssueInBrief, AudioUri } = req.body;
 
-    const newIssue = new Issue({
-        Name,
-        ContactNo,
-        InvoiceNo,
-        Product,
-        IssueInBrief
-    })
-    //pass the object to the database.
-    newIssue.save().then(() => {
-        res.json("Issue Added")
-    }).catch((err) => {
-        console.log(err);
-    })
+  // Save the audio URI to the database
+  // Perform any necessary processing or validation
 
-})
+  const newIssue = new Issue({
+    Name,
+    ContactNo,
+    InvoiceNo,
+    Product,
+    IssueInBrief,
+    AudioUri
+  });
+
+  // Save the new issue to the database
+  newIssue.save().then(() => {
+    res.json("Issue Added");
+  }).catch((err) => {
+    console.log(err);
+  });
+});
+
 
 router.route("/").get((req, res) => {
     Issue.find().then((Issue) => {

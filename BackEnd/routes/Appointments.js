@@ -10,7 +10,7 @@ router.route("/add").post((req, res) => {
     const ApntmntDate=  req.body.ApntmntDate;
     const Time =  req.body.Time;
     const AptmntStatus = Boolean(req.body.AptmntStatus);
-
+    const Completed = Boolean(req.body.Completed);
 
 
     const newAppointment = new Appointment({
@@ -21,7 +21,8 @@ router.route("/add").post((req, res) => {
         IssueInBrief,
         ApntmntDate,
         Time,
-        AptmntStatus
+        AptmntStatus,
+        Completed
         
     })
     //pass the object to the database.
@@ -67,11 +68,13 @@ router.route("/get/:id").get(async(req,res)=>{
 router.route('/groupedData').get(async (req, res) => {
    
     try {
-        
+        const today = new Date().toISOString().split('T')[0];
         const groupedData = await Appointment.aggregate([
             {
                 $match: {
-                    AptmntStatus: true
+                    AptmntStatus: true,
+                    Completed:false,
+                    ApntmntDate: { $gte: today }
                 }
               },
               {
@@ -82,7 +85,13 @@ router.route('/groupedData').get(async (req, res) => {
               },
           {
             $group: {
-              _id: `$ApntmntDate`,
+              _id: '$ApntmntDate',
+              // {
+              //   $dateToString: {
+              //     format: '%Y-%m-%d',
+              //     date: '$ApntmntDate'
+              //   }
+              // },
               details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', IssueInBrief: '$IssueInBrief', Time: '$Time', }},
             },
           },
@@ -94,6 +103,46 @@ router.route('/groupedData').get(async (req, res) => {
         res.status(500).json({ message: 'Server Error' });
       }
   })
+
+  router.route('/groupedData1').get(async (req, res) => {
+   
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const groupedData = await Appointment.aggregate([
+            {
+                $match: {
+                    AptmntStatus: true,
+                    Completed: false,
+                    ApntmntDate: { $lt: today }
+                }
+              },
+              {
+                $sort: {
+                  ApntmntDate: -1,
+                  Time:-1 // Sort by ascending order of ApntmntDate field
+                }
+              },
+          {
+            $group: {
+              _id: '$ApntmntDate',
+          //     {
+          //   $dateToString: {
+          //     format: '%Y-%m-%d',
+          //     date: '$ApntmntDate'
+          //   }
+          // },
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', IssueInBrief: '$IssueInBrief', Time: '$Time', }},
+            },
+          },
+        ]);
+    
+        res.json(groupedData);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+      }
+  })
+
 
 
 module.exports = router;
