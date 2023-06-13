@@ -7,7 +7,8 @@ const serviceproviderSchema = new Schema({
         required: true
     },
     logo :{
-        type : String,
+        data: Buffer,
+        contentType: String,
     
     },
     username : {

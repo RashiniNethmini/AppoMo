@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from "react";
 import styles from './Signin.module.css';
 import { Paper, TextField, Button, Link,InputAdornment, IconButton} from "@mui/material";
-import { maxWidth } from "@mui/system";
 import {Visibility, VisibilityOff} from '@mui/icons-material';
-
+import axios from 'axios';
 
 function validateUsername(username){
     
@@ -49,12 +48,15 @@ export const Signin = (props) => {
 
     function handleCallbackResponse(response){
         console.log("Encoded JWT ID token: " + response.credential);
+        alert("Google Login Successful")
    } 
+
    useEffect(() => {            //Google button.
     if(window.google){
         window.google.accounts.id.initialize({
             client_id: "305172675804-madk45o2f4tr9937pbs05pvpvg8rpii5.apps.googleusercontent.com",
             callback: handleCallbackResponse
+            
         });
     
         window.google.accounts.id.renderButton(document.getElementById("signInDiv"), 
@@ -83,7 +85,40 @@ export const Signin = (props) => {
        event.preventDefault();
    };
 
-   
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+
+    fetch("http://localhost:8070/serviceprovider/login", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "username": username,
+        "password": password
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        alert("Login Successful")
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const handleGoogleLoginSuccess = (response) => {
+    const { tokenId } = response;
+    console.log("Encoded JWT ID token: " + tokenId);
+    alert("Google Login Successful")
+    // Send the tokenId to the server for verification and further processing
+  };
+
+  const handleGoogleLoginFailure = (error) => {
+    console.log("Google login failed:", error);
+  };
 
     return(
         <div className={styles.signContainer}>
@@ -118,7 +153,7 @@ export const Signin = (props) => {
                           }} />
                     </div> 
                     <div className={styles.signButton}>
-                        <Button variant="contained" sx={{mr:'10px'}}>Sign in</Button>
+                        <Button variant="contained" sx={{mr:'10px'}} onClick={handleSubmit}>Sign in</Button>
                     </div>
                     <div className={styles.signFPw}>
                         <Link href="#" color="inherit">Forgot Password?</Link>
@@ -133,7 +168,11 @@ export const Signin = (props) => {
                         <Link href="#">Register Now</Link>
                         
                      </div> 
-                    <div className={styles.GButton} id="signInDiv"></div> 
+                    <div className={styles.GButton} 
+                    onSuccess={handleGoogleLoginSuccess}
+                    onFailure={handleGoogleLoginFailure}
+                    cookiePolicy={"single_host_origin"}
+                    id="signInDiv"></div> 
                     
                 </div>
             </div>
