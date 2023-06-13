@@ -41,89 +41,33 @@ export default function Fpw() {
         setEmail(value);
         setEmailError(validateEmail(value));
     };
-    
-    const [password, setPassword] =useState("");
-    const [data, setData]=useState("");
-    // const Semail = 'abc@gmail.com';
 
-    // useEffect(() => {
-    //     fetchdata();
-    //   }, []);
+    const [data,setData]=useState("");
+    const Sname = 'ABC';
+
+    useEffect(() => {
+        fetchdata();
+      }, []);
     
-    //   const fetchdata= async ()=>{
-    //     const get = {
-    //       password
-    //     };
-    //     const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Semail}`,get
-    //     );
-    //     setData(data);
-    //     const response = data.data[0].password;
-        
-    //   };
+      const fetchdata= async ()=>{
+        // const up = {
+        //   password
+        // };
+        const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Sname}`
+        // ,up
+        );
+        setData(data);
+        // const response = data.data[0].password;
+        // setCP(response);
+      };
 
     const [otp, setOtp] = useState("");
     const [otpError, setOtpError] = useState(null);
     const handleOtpChange = (event) => {
         const value = event.target.value;
-        const otp1=document.getElementById("otp1").value;
-        const otp2=document.getElementById("otp2").value;
-        const otp3=document.getElementById("otp3").value;
-        const otp4=document.getElementById("otp4").value;
-        setOtp(otp1+otp2+otp4+otp4);
+        setOtp(value);
         setOtpError(validateOtp(value));
     };
-
-    const handleSendCode = () => {
-        // Function to handle sending the OTP code to the user's email
-        if (!emailError) {
-           
-          // Make an API call to send the OTP code to the user's email
-          axios.post("http://localhost:8070/serviceprovider/send-otp", { email: email  })
-            .then((response) => {
-                console.log(response);
-                alert("Otp send")
-              handleClickOpen();
-            })
-            .catch((error) => {
-              // Show an error message to the user
-              console.log(error);
-            });
-        }
-      };
-    
-      const handleVerifyAccount = () => {
-        // Function to handle verifying the account with the entered OTP code
-        if (!otpError) {
-          // Make an API call to verify the account with the OTP code
-          axios.post("http://localhost:8070/serviceprovider/verify-account", { otp: otp })
-            .then((response) => {
-                console.log(response);
-                alert("Verify Account")
-              // Show a success message to the user
-              handleClickOpen1();
-            })
-            .catch((error) => {
-              // Show an error message to the user
-              console.log(error);
-            });
-        }
-      };
-    
-      const handleResendOTP = () => {
-        // Function to handle resending the OTP code to the user's email
-        if (emailError === null) {
-          // Make an API call to resend the OTP code to the user's email
-          axios.post("/resend-otp", { email: email })
-            .then((response) => {
-              // Show a success message to the user
-              handleClickOpen();
-            })
-            .catch((error) => {
-              // Show an error message to the user
-              console.log(error);
-            });
-        }
-      };
 
     return (
         <div className={styles.FPwContainer}>
@@ -136,13 +80,12 @@ export default function Fpw() {
                     <div className={styles.Femail}>
                         <label>Email &nbsp;</label>
                         <TextField required ="outlined-required" label=" Your email"  type="email" variant="outlined" sx={{ width: '45vw' }}  id="email"
-                            onChange={handleEmailChange} 
-                            error={Boolean(emailError)}
+                            onChange={handleEmailChange} error={Boolean(emailError)}
                             helperText={emailError} />
                        
                     </div>
                     <div className={styles.sendB}>
-                    <Button variant="contained" onClick={handleSendCode} sx={{mr:'20px'}} disabled={Boolean(emailError)} >Send code </Button>
+                    <Button variant="contained" onClick={handleClickOpen} sx={{mr:'20px'}} >Send code </Button>
                          <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         
                             <DialogContent>
@@ -157,16 +100,16 @@ export default function Fpw() {
                     </div>
                     <div className={styles.Fcode} >
                     <label>OTP Code &nbsp;</label>
-                        <TextField className={styles.codeB} id="otp1" onChange={handleOtpChange} error={Boolean(otpError)}
+                        <TextField className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
                         // helperText={otpError}
                         />
-                        <TextField  className={styles.codeB} id="otp2" onChange={handleOtpChange} error={Boolean(otpError)}
+                        <TextField  className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
                         // helperText={otpError}
                         />
-                        <TextField className={styles.codeB} id="otp3" onChange={handleOtpChange} error={Boolean(otpError)}
+                        <TextField className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
                         // helperText={otpError}
                         />
-                        <TextField className={styles.codeB} id="otp4" onChange={handleOtpChange} error={Boolean(otpError)}
+                        <TextField className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
                         // helperText={otpError}
                         />
                         
@@ -174,7 +117,7 @@ export default function Fpw() {
                         
                     </div>
                     <div className={styles.verifyB}>
-                        <Button variant="contained" onClick={handleVerifyAccount} sx={{mr:'10px'}} disabled={Boolean(otpError)}>Verify Account</Button>
+                        <Button variant="contained" onClick={handleClickOpen1} sx={{mr:'10px'}}>Verify Account</Button>
                         <Dialog open={open1} onClose={handleClose1} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         
                             <DialogContent>
@@ -190,7 +133,7 @@ export default function Fpw() {
                     </div>
                     <div className={styles.resendB}>
                         <p>Didn't recieve code? &nbsp;</p> 
-                        <Link href="#" onClick={handleResendOTP}> Resend OTP</Link>
+                        <Link href="#"> Resend OTP</Link>
                         
                     </div>
                 </div>

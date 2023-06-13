@@ -11,6 +11,7 @@ export default function ResetPassword() {
 
   
   const [showPassword, setShowPassword] = React.useState(false);
+  // const [passwordError0, setPasswordErr0] = useState("");
   const [passwordError1, setPasswordErr1] = useState("");
   const [passwordError2, setPasswordErr2] = useState("");
   const [currentPass, setCurrent] = useState('');
@@ -24,26 +25,68 @@ export default function ResetPassword() {
     event.preventDefault();
   };
 
-  const Semail = 'abc@gmail.com';
+  const [data,setData]=useState("");
+  const Sname = 'ABC';
+  
+  // useEffect(() => {
+  //   fetchdata();
+  // }, []);
 
-
-  // const handleUpdate = async () => {
-  //   try {
-  //     const updateFields = {
-  //       password
-  //     };
-  //     await axios.put(`http://localhost:8070/serviceprovider/update/${Semail}`,updateFields);
-      
-  //     setIP(false);
-  //     setPassword("");
-  //     setConfirm("");
-  //     alert('Password updated successfully');
-
-  //   } catch (error) {
-  //     console.error('Error updating item:', error);
-  //   }
+  // const fetchdata= async ()=>{
+  //   const up = {
+  //     password
+  //   };
+  //   const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Sname}`,up);
+  //   setData(data);
+  //   const response = data.data[0].password;
+  //   setCP(response);
   // };
 
+
+  const handleUpdate = async () => {
+    try {
+      const updateFields = {
+        password
+      };
+      await axios.put(`http://localhost:8070/serviceprovider/update/${Sname}`,updateFields);
+      
+      setIP(false);
+      setCurrent("");
+      setPassword("");
+      setConfirm("");
+      // setPasswordErr0("");
+      // setPasswordErr0("");
+      // setPasswordErr0("");
+      alert('Password updated successfully');
+
+    } catch (error) {
+      console.error('Error updating item:', error);
+    }
+  };
+
+// const CurrentPass=(evnt)=>{
+//   const currentPasswordInputValue = evnt.target.value.trim();
+//   setIP(false);
+//   if(currentPasswordInputValue===cPass){
+//     setIP(true);
+//     if(currentPasswordInputValue===''){
+//       setPasswordErr0("**required");
+     
+//     }
+//     setPasswordErr0("");
+
+//   }
+//  else {
+//     // alert(currentPasswordInputValue);
+//     setPasswordErr0("Incorrect");
+//     setIP(false);
+//     if(currentPasswordInputValue===''){
+//       setPasswordErr0("**required");
+     
+//     }
+//   }
+  
+// }  
 
 
 const handleValidation= (evnt)=>{
@@ -108,7 +151,9 @@ const Cancel = () => {
   setCurrent("");
   setPassword("");
   setConfirm("");
-  
+  // setPasswordErr0("");
+  // setPasswordErr0("");
+  // setPasswordErr0("");
 
 };
 
@@ -187,9 +232,7 @@ const Cancel = () => {
               
               <Stack spacing={2} direction="row">
                   <Button  onClick={Cancel} variant="contained">CANCEL</Button>
-                  <Button variant="contained" disabled={!(iPass && confirmPassword && password && match)}  
-                  // onClick={handleUpdate}
-                  >CHANGE PASSWORD</Button>
+                  <Button variant="contained" disabled={!(iPass && confirmPassword && password && match)}  onClick={handleUpdate}>CHANGE PASSWORD</Button>
                   
               </Stack>
             </div>

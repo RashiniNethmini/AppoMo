@@ -372,7 +372,7 @@ import { MaterialIcons } from '@expo/vector-icons';
     <View style={{marginTop:200}}>
       <View>
         <Text style={styles.serviceCenterText}>
-        {coName}
+        companyName
         </Text>
       </View>
       

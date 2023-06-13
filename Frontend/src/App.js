@@ -50,15 +50,6 @@ function App() {
         <AppointmentConfirm />
         <BrUpdate/>
         
-        {/* <Signin/>
-        <Reg/> */}
-        <FPw/>
-        <RPw/>
-        {/* <ResetPassword /> 
-        // <Dashboard/>
-        //  <EditProfile/> */}
-        {/* <AppointmentConfirm /> */}
-        {/* <BrUpdate/>  */}
        
         {/* <Termination/> */}
         
