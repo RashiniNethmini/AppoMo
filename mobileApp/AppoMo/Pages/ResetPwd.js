@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput, Alert} from 'react-native';
+import axios from 'axios';
 
 const ResetPwd = props => {
 
@@ -35,17 +36,34 @@ const ResetPwd = props => {
     return null; 
   };
 
+  const [fetchedPassword, setFetchedPassword] = useState('');
   const [currentpassword, setCurrentPassword] = useState('');
   const [newpassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const Cname = "username";
 
-  const handleSubmit = () => {
+  useEffect(() => {
+  const fetchdata = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8070/UserDetails/get/${Cname}`);
+      const data = response.data;
+      if (data && data.password) {
+        setFetchedPassword(data.password);
+      }
+    } catch (error) {
+      console.error('Error fetching password:', error);
+    }
+  };
+  fetchdata();
+}, []);
+
+
+  const handleSubmit = async () => {
     const currentpasswordError = validateCurrentPassword(currentpassword);
     const newpasswordError = validateNewPassword(newpassword);
     const confirmPasswordError = validateConfirmPassword(newpassword, confirmPassword);
     
-
     if (currentpasswordError || newpasswordError || confirmPasswordError) {
       setErrors({
         currentpassword: currentpasswordError,
@@ -53,22 +71,38 @@ const ResetPwd = props => {
         confirmPassword: confirmPasswordError
       });
     }
-    else {
-      Alert.alert('Confirmation','Are you sure you want to change the password?',
-      [
-        {
-          text: 'No',
-          onPress: () => console.log('canceled'),
-          style: 'cancel',
-        },
-        {
-          text: 'Yes',
-          onPress: () => console.log('confirmed'),
-        },
-      ],
-      { cancelable: false }, //set to false to prevent the user from dismissing the alert by tapping outside of it or pressing the back button on Android devices.
-    );
+    else if (currentpassword !== fetchedPassword) {
+      setErrors({
+      ...errors,
+      currentpassword: "*Current Password is incorrect."
+      });
+      return;
     }
+    else {
+      Alert.alert('Information', 'Your password has been updated.',
+      [
+        {text: 'OK', 
+        onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: false },);
+      
+      try {
+        const updateFields = {
+          password
+        };
+        await axios.put(`http://localhost:8070/UserDetails/update/${Cname}`,updateFields);
+        alert('Details updated successfully');
+      } catch (error) {
+          console.error('Error updating user:', error);
+      }
+    }
+  };
+
+  const handleCancel = () => {
+    setCurrentPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+    setErrors({});
   };
 
   return (
@@ -110,7 +144,8 @@ const ResetPwd = props => {
             <Text style={styles.btnText}>Change Password</Text>       
           </TouchableOpacity>
 
-          <TouchableOpacity  style={styles.btnContainer} >
+          <TouchableOpacity  style={styles.btnContainer}
+            onPress={handleCancel}>
             <Text style={styles.btnText}>Cancel</Text>
           </TouchableOpacity>
         </View>   
@@ -125,8 +160,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#084C4F',
     alignItems: "center",
-    justifyContent: 'center'
-    //width: 360
+    justifyContent: 'center',
+    width: 360,
   },
 
   scrollContainer: {
