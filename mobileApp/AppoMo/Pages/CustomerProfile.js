@@ -88,6 +88,15 @@ const ProfileScreen = () => {
           </View>
         </TouchableWithoutFeedback>
 
+        //delete account
+        <TouchableWithoutFeedback>
+          <View style={styles.menuItem}>
+            <Icon name="key" color="#FFFFFF" size={25}/>
+            <Text style={styles.menuItemText}>Delete Account</Text>
+            <Icon name="arrow-right-circle" color="#FFFFFF" size={25}/>
+          </View>
+        </TouchableWithoutFeedback>
+
         <TouchableWithoutFeedback>
           <View style={styles.menuItem}>
             <Icon name="logout" color="#FFFFFF" size={25}/>

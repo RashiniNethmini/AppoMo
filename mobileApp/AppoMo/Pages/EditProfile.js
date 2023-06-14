@@ -210,8 +210,7 @@ const styles = StyleSheet.create({
 
   btnContainer:{
     backgroundColor: '#084C4F',
-    borderRadius: 10,
-    
+    borderRadius: 10,   
     alignItems: 'center',
     width: 200,
     height: 40,
