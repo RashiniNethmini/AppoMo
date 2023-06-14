@@ -7,7 +7,8 @@ const serviceproviderSchema = new Schema({
         required: true
     },
     logo :{
-        type : String,
+        data: Buffer,
+        contentType: String,
     
     },
     username : {
@@ -51,6 +52,10 @@ const serviceproviderSchema = new Schema({
         type : String,
         required: true
     },
+    starRating: {
+        type: Number,
+        // required: true,
+      },
     
     
 

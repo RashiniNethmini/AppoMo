@@ -9,7 +9,7 @@ export default function EditProfile() {
   const [Error0, setErr0] = useState("");
   const [Error1, setErr1] = useState("");
   const [Error2, setErr2] = useState("");
-  const [name, setName] = useState('');
+  const [serviceProviderName, setName] = useState('');
   const [address, setAddress] = useState('');
   const [email, setemail] = useState('');
   const [valid, validity] = useState('');
@@ -47,6 +47,7 @@ const Sname = 'ABC';
   const handleUpdate = async () => {
     try {
       const updateFields = {
+        serviceProviderName,
         address,
         email,
         ceoName
@@ -162,10 +163,10 @@ const validateEmail = (e) => {
               </div>
                 
               <br/>
-              <div  className='editdetails'>
+              {/* <div  className='editdetails'>
                 
                 <label>Working Hours Per Day&nbsp;</label><TextField size='small' />
-              </div><br/>
+              </div><br/> */}
               
               </div>
       ))
@@ -176,7 +177,7 @@ const validateEmail = (e) => {
               <div  className='editdetailsButton'>
                 <Stack spacing={2} direction="row">
                       <Button variant="contained" 
-                      disabled={!((name || address || email) && valid)} 
+                      disabled={!((serviceProviderName || address || email || ceoName) && valid)} 
                       onClick={handleUpdate}
                       >SAVE CHANGES</Button>
                       <Button variant="contained" onClick={reset}>CANCEL</Button>

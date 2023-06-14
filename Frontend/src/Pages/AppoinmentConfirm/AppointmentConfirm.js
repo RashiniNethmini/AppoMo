@@ -2,7 +2,6 @@ import React, { useState,useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import { Container } from '@mui/system';
 import AppointmentPopup from '../../Popups/AppointmentPopup';
-//import { AppointmentList } from '../../AppointmentList';
 import styles from './AppointmentConfirm.module.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,7 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 
 export default function AppointmentConfirm() {
-  //const [appointments, setAppointments] = useState(AppointmentList);
+ 
   const [rejectedAppointments, setRejectedAppointments] = useState([]);
   const [showRejectedAppointmentDetails, setShowRejectedAppointmentDetails] = useState(false);
   const [deleteAllRejectedAppointments, setDeleteAllRejectedAppointments] = useState(false);
@@ -39,32 +38,46 @@ export default function AppointmentConfirm() {
     }getAppointments();
   }, []);
 
-  
-  const handleAcceptAppointment = (appointmentId) => {
-    // Update the status of the appointment in the database
+
+  const sendSms = (message, issueNumber, comment) => {
     axios
-      .patch(`http://localhost:8070/Issues/update/${appointmentId}`, { status: 'accepted' })
-      .then((response) => {
-        // Handle successful response if needed
-        console.log(response.data);
-        // Remove the accepted appointment from the appointments list
-        setAppointments((prevAppointments) =>
-          prevAppointments.filter((appointment) => appointment._id !== appointmentId)
-        );
+      .post('http://localhost:8070/sms/send', { message, issueNumber, comment })
+      .then((res) => {
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
   
-  const handleRejectAppointment = (appointmentId, comment) => {
+
+  const handleAcceptAppointment = (appointmentId, issueNumber) => {
+    // Update the status of the appointment in the database
+    axios
+      .patch(`http://localhost:8070/Issues/update/${appointmentId}`, { status: 'accepted' })
+      .then((response) => {
+       
+        console.log(response.data);
+        // Remove the accepted appointment from the appointments list
+        setAppointments((prevAppointments) =>
+          prevAppointments.filter((appointment) => appointment._id !== appointmentId)
+        );
+        sendSms('Your issue has been accepted.', issueNumber, ''); // Send SMS notification
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  
+  
+  const handleRejectAppointment = (appointmentId, issueNumber, comment) => {
     const rejectedAppointment = appointments.find((appointment) => appointment._id === appointmentId);
-    rejectedAppointment.status = "rejected"; // Change the status to "rejected"
+    rejectedAppointment.status = 'rejected'; 
     rejectedAppointment.comment = comment; // Add the comment to the rejected appointment object
   
     // Send the updated appointment to the backend
     axios
-      .patch(`http://localhost:8070/Issues/update/${appointmentId}`, { status: "rejected", comment })
+      .patch(`http://localhost:8070/Issues/update/${appointmentId}`, { status: 'rejected', comment })
       .then((response) => {
         // Handle successful response if needed
         console.log(response.data);
@@ -72,11 +85,13 @@ export default function AppointmentConfirm() {
         setAppointments((prevAppointments) =>
           prevAppointments.filter((appointment) => appointment._id !== appointmentId)
         );
+        sendSms('Your issue has been rejected.', issueNumber, comment);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+  
   
 
 
@@ -86,7 +101,7 @@ export default function AppointmentConfirm() {
       axios
         .delete(`http://localhost:8070/Issues/deleteAllRejected`)
         .then((response) => {
-          // Handle successful response if needed
+          
           console.log(response.data);
           setRejectedAppointments([]);
         })
@@ -111,8 +126,6 @@ export default function AppointmentConfirm() {
   };
   
   
-  
-
   const handleToggleRejectedAppointmentDetails = () => {
     setShowRejectedAppointmentDetails((prevShowRejectedAppointmentDetails) => !prevShowRejectedAppointmentDetails);
   };
@@ -144,6 +157,7 @@ export default function AppointmentConfirm() {
     <AppointmentPopup
       className={styles.popup}
       appointment={appointment}
+      //voiceRecording={appointment.voiceRecording}
       onAccept={handleAcceptAppointment}
       onReject={handleRejectAppointment}
     />
@@ -162,53 +176,46 @@ export default function AppointmentConfirm() {
         
 
         {showRejectedAppointmentDetails && (
-          <Container className={`${styles.rejectAppointmentList} ${styles.border}`}>
+        <Container className={`${styles.rejectAppointmentList} ${styles.border}`}>
           <div className={styles.searchContainer}>
-    <TextField
-      size="small"
-      label="Search"
-      value={searchQuery}
-      onChange={handleSearch}
-      sx={{ mr:0 }} // Add margin to create space between the search field and icon
-    />
-    <SearchIcon sx={{ fontSize:30 }} /> {/* Adjust the fontSize to match the size of the search field */}
-  </div>
+            <TextField
+            size="small" label="Search" value={searchQuery} onChange={handleSearch} sx={{ mr:0 }} // Add margin to create space between the search field and icon
+            />
+            <SearchIcon sx={{ fontSize:30 }} /> {/* Adjust the fontSize to match the size of the search field */}
+          </div>
 
 
-          
+          {filteredRejectedAppointments.map((appointment) => (
+          <div key={appointment._id}>
+            <p>
+              <u>Appointment: {appointment.issueNumber}</u>
+              <br />
+              <b>Name:</b> {appointment.Name}
+              <br />
+              <b>Issue:</b> {appointment.IssueInBrief}
+              <br />
+              <b>Comment:</b> {appointment.comment}
+              <br/>
+              <b>Product:</b> {appointment.Product}
+              <br/>
+              {deleteAllRejectedAppointments ? null : (
+              <IconButton aria-label="delete" onClick={() => handleDeleteRejectedAppointment(appointment._id)}>
+                <DeleteIcon />
+                </IconButton>
+                )}
+            </p>
+          </div>
+        ))}
 
 
-  {filteredRejectedAppointments.map((appointment) => (
-  <div key={appointment._id}>
-    <p>
-      <u>Appointment: {appointment.issueNumber}</u>
-      <br />
-      <b>Name:</b> {appointment.Name}
-      <br />
-      <b>Issue:</b> {appointment.IssueInBrief}
-      <br />
-      <b>Comment:</b> {appointment.comment}
-      <br/>
-      <b>Product:</b> {appointment.Product}
-      <br/>
-      {deleteAllRejectedAppointments ? null : (
-        <IconButton aria-label="delete" onClick={() => handleDeleteRejectedAppointment(appointment._id)}>
-          <DeleteIcon />
-        </IconButton>
-      )}
-    </p>
-  </div>
-))}
-
-
-            <Container>
-              <br></br>
+        <Container>
+          <br></br>
               <Tooltip title="Delete all rejected appointments">
                 <Button className="deleteallButton"variant="outlined" startIcon={<DeleteIcon />}onClick={() => handleDeleteRejectedAppointment('all')}disabled={rejectedAppointments.length === 0}>
                   Delete All
                 </Button>
               </Tooltip>
-            </Container>
+        </Container>
 
           </Container>
           

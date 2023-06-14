@@ -37,11 +37,11 @@ export default function IssueSubmission() {
     } else if (text.length > 10) {  // If the input is more than 10 characters, display an error message and set the input value
       setError('Contact number must not exceed 10 characters.');
       setTextcontactNo(text);
-    } else if (/^\d{10}$/.test(text)) {  // If the input is exactly 10 digits, set the input value and clear the error message
+  } else if (/^\d{10}$/.test(text)) {  // If the input is exactly 10 digits, set the input value and clear the error message
       setTextcontactNo(text);
       setError('');
     } else {  // If the input contains non-digit characters, display an error message and clear the input value
-      setError('Contact number can only contain digits.');
+     setError('Contact number can only contain digits.');
       setTextcontactNo('');
     }
   };
@@ -75,9 +75,9 @@ const stopRecording = async () => {
     if (recording) {
       // Stop recording
       await recording.stopAndUnloadAsync();
-      const uri = recording.getURI(); // Modify this line
+      const uri = recording.getURI(); 
       setAudioUri(uri);
-      console.log('Audio URI:', uri); // Log the audio URI
+      console.log('Audio URI:', uri); 
     } else {
       console.log('No recording found.');
     }
@@ -116,7 +116,7 @@ const handleMicPress = async () => {
   const handleSubmit = async () => {
     console.log('Submit button pressed');
     console.log(name, contactNo);
-    navigate('/IssueSubmitMsg');
+    
     // Make an API request to send the data to the backend
     const requestBody = {
       Name: name,
@@ -124,47 +124,43 @@ const handleMicPress = async () => {
       InvoiceNo: invoice,
       Product: product,
       IssueInBrief: issueInBrief,
-      AudioUri: audioUri, // Add the audio URI field
+      AudioUri: audioUri, 
     };
   
-// Make an API request to send the data to the backend
-fetch("http://10.0.2.2:8070/Issues/add", {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    "Name": name,
-    "ContactNo": contactNo,
-    "InvoiceNo": invoice,
-    "Product": product,
-    "IssueInBrief": issueInBrief
-  })
-})
-  .then(res => res.json())
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => {
-    console.log(error);
-  });
-
-  
-    // Clear the input fields
-    setTextname('');
-    setTextcontactNo('');
-    setTextinvoice('');
-    setTextproduct('');
-    setTextissue('');
-  
-    // Set the visibility state
-    setVisible(true);
-  
-    // Disable the submit button
-    setDisableSubmit(true);
-  
-    // Check the input fields
-    checkInputs();
+    try {
+      // Make an API request to send the data to the backend
+      const response = await fetch("http://10.0.2.2:8070/Issues/add", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+    
+      const data = await response.json();
+      console.log(data);
+    
+      // Clear the input fields
+      setTextname('');
+      setTextcontactNo('');
+      setTextinvoice('');
+      setTextproduct('');
+      setTextissue('');
+      setAudioUri(null);
+    
+      // Set the visibility state
+      setVisible(true);
+    
+      // Disable the submit button
+      setDisableSubmit(true);
+    
+      // Check the input fields
+      checkInputs();
+    } catch (error) {
+      console.log(error);
+    }
+    navigate('/IssueSubmitMsg');
+   
   };
   
   
@@ -222,6 +218,7 @@ fetch("http://10.0.2.2:8070/Issues/add", {
                       <TextInput type="outlined" value={contactNo} onChangeText={text => handleInputChange(text)} keyboardType="numeric" style={styles.input} activeUnderlineColor='#388F82'  />
                       {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
                     </View>
+
 
 
                     <View>
