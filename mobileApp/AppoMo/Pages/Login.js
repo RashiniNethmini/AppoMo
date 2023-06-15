@@ -10,11 +10,8 @@ import {
     TouchableOpacity,
 } from "react-native";
 
-import { Button } from '@rneui/themed';
-import GoogleSVG from '../assets/googlelogo.svg';
 //import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useTheme } from '@react-navigation/native';
 import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -154,64 +151,23 @@ function Login() {
           .then(res => res.json())
           .then(data => {
             console.log(data);
+           
           })
           .catch(error => {
             console.log(error);
           });
-    
+          navigate('/CompanyOrServiceCenter');
     };
-    // React.useEffect(() => {
-    //     GoogleSignin.configure({
-    //         webClientId: '<YOUR_WEB_CLIENT_ID>',
-    //         offlineAccess: true,
-    //         forceCodeForRefreshToken: true,
-    //     });
-    // }, []);
-
-    // const handleGoogleSignIn = async () => {
-    //     try {
-    //         await GoogleSignin.hasPlayServices();
-    //         const userInfo = await GoogleSignin.signIn();
-    //         // Access the user's ID token, email, name, etc. from the `userInfo` object
-    
-    //         // Make API requests or handle the sign-in process as needed
-    //     } catch (error) {
-    //         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-    //             // User cancelled the sign-in process
-    //             console.log('Google sign-in cancelled');
-    //         } else if (error.code === statusCodes.IN_PROGRESS) {
-    //             // Another sign-in process is already in progress
-    //             console.log('Google sign-in in progress');
-    //         } else {
-    //             // Handle other errors
-    //             console.log('Error in Google sign-in', error);
-    //         }
-    //     }
-    // };
-//     function handleCallbackResponse(response){
-//         console.log("Encoded JWT ID token: " + response.credential);
-//    } 
-//    useEffect(() => {
-//     if(window.google){
-//         window.google.accounts.id.initialize({
-//            // client_id: "305172675804-madk45o2f4tr9937pbs05pvpvg8rpii5.apps.googleusercontent.com",
-//             callback: handleCallbackResponse
-//         });
-    
-//         window.google.accounts.id.renderButton(document.getElementById("signInDiv"), 
-//             {theme:"outline", size: "large"}); 
-//     }
-//    }, []);
 
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
-            <Animatable.View
-                animation="slideInLeft"
+            <View
+                // animation="slideInLeft"
                 style={styles.header}>
                 <Text style={styles.text_header}>Login</Text>
 
-            </Animatable.View>
+            </View>
             <Animatable.View
                 animation="fadeInUpBig"
                 style={[styles.footer, {
@@ -235,6 +191,7 @@ function Login() {
                         }]}
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange(val)}
+                        
                         onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                     />
                     {data.check_textInputChange ?
@@ -250,9 +207,11 @@ function Login() {
                         : null}
                 </View>
                 {data.isValidUser ? null :
-                    <Animatable.View animation="fadeInLeft" duration={500}>
+                    // <Animatable.View animation="fadeInLeft" duration={500}>
+                    <View>
                         <Text style={styles.errorMsg}>Username must be at least 5 characters long.</Text>
-                    </Animatable.View>
+                    
+                        </View>// </Animatable.View>
                 }
 
 
@@ -295,13 +254,16 @@ function Login() {
                     </TouchableOpacity>
                 </View>
                 {data.isValidPassword ? null :
-                    <Animatable.View animation="fadeInLeft" duration={500}>
+                    // <Animatable.View animation="fadeInLeft" duration={500}>
+                    <View>
                         <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
-                    </Animatable.View>
+                        </View>
+                    // </Animatable.View>
                 }
 
 
                 <TouchableOpacity>
+                    
                     <Text style={{ color: '#009387', marginTop: 15 }}>Forgot password?</Text>
                 </TouchableOpacity>
                 <View style={styles.button}>
@@ -316,12 +278,10 @@ function Login() {
                         }]}
 
                     >
-                        <Text style={[styles.textSign, {
-                            color: '#009387'
-                        }]}
+                        <Text style={[styles.textSign, {color: '#009387' }]}
                             onPress={() => {handleLogin( data.username, data.password )}}
 
-                        >Sign In</Text>
+                            >Sign In</Text>
                     </TouchableOpacity>
 
 

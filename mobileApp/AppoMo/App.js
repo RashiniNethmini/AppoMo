@@ -34,7 +34,7 @@ export default function App() {
   return (
     <NativeRouter>
     <View style={styles.container}>
-    <Provider>
+    {/* <Provider>
      <Routes>
      
       <Route path="/" element={<SplashScreen/>} />
@@ -48,8 +48,8 @@ export default function App() {
       <Route path="/IssueSubmitMsg" element={<IssueSubmitMsg/>} /> 
     </Routes>  
     {/* <SelectServiceCenter/> */}
-    </Provider>
-      {/* <Provider>
+    {/* </Provider> */}
+     <Provider> 
         {/* 
         <NavigationContainer>
           <Stack.Navigator>
@@ -59,13 +59,13 @@ export default function App() {
           </Stack.Navigator>
 
         </NavigationContainer> */}
-        {/*<SplashScreen/>*/}
+        {/* <SplashScreen/> */}
         {/*<IssueSubmitMsg/>*/}
 
          {/* <IssueSubmission/> */}
         {/* <Login/> */}
         {/* <UserRegistr/> */}
-         {/* <ForgotPW/>  */}
+         <ForgotPW/> 
         {/* <CompanyDetails/> */}
         {/* <ComBranchDetails/> */}
         {/* <SelectServiceCenter/> */}
@@ -75,7 +75,7 @@ export default function App() {
         {/* <ResetPassword/> */}
         {/* <CustomerProfile/> */}
 
-      {/* </Provider> */}
+      </Provider>
  {/* <CompanyOrServiceCenter/> */}
   {/* <ServiceCenter/> */}
       <StatusBar style="auto" />

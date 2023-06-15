@@ -2,31 +2,32 @@ const router = require('express').Router();
 const nodemailer = require('nodemailer');
 
 
-// Generate a unique password reset token
-function generateResetToken() {
-    // Replace with your token generation logic (e.g., using a library like `crypto-random-string`)
-    const cryptoRandomString = require('crypto-random-string');
-    const token = cryptoRandomString({ length: 32, type: 'url-safe' });
-    return token;
-  }
+
+// // Generate a unique password reset token
+// function generateResetToken() {
+//     // Replace with your token generation logic (e.g., using a library like `crypto-random-string`)
+//     const cryptoRandomString = require('crypto-random-string');
+//     const token = cryptoRandomString({ length: 32, type: 'url-safe' });
+//     return token;
+//   }
 
 // Send password reset email
-const sendPasswordResetEmail = (email, resetLink,res) => {
+const sendPasswordResetEmail = (email) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: 'disaranu9@gmail.com',
         pass: 'zxykocfcqbncvqoo',
-      },
-      host: 'smtp.gmail.com',
-      port: 587,
-    });
+       }
+    //   host: 'smtp.gmail.com',
+    //   port: 587,
+     });
   
     const mailOptions = {
       from: 'disaranu9@gmail.com',
       to: email,
       subject: 'Password Reset',
-      text: `Click the link below to reset your password:\n\n${resetLink}`,
+      text: 'Click the link below to reset your password:',
     };
   
     transporter.sendMail(mailOptions, (error, info) => {
@@ -41,15 +42,15 @@ const sendPasswordResetEmail = (email, resetLink,res) => {
   };
 
 // Route to handle password reset
-router.post('/resetPw', async (req, res) => {
+router.post('/forgotPw', async (req, res) => {
   const { email } = req.body;
 
   // Generate a unique token for password reset
-  const resetToken = await generateResetToken();
+  // const resetToken = await generateResetToken();
 
   // Send password reset email
-  const resetLink = `http://AppoMo/ResetPwd/${resetToken}`;
-  sendPasswordResetEmail(email, resetLink);
+  // const resetLink = `http://AppoMo/ResetPwd/${resetToken}`;
+  sendPasswordResetEmail(email);
 
   res.json({ success: true, message: 'Password reset email sent' });
 });

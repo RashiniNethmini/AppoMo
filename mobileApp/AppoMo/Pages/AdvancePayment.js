@@ -1,9 +1,8 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import {
     StyleSheet,
     Text,
     View,
-    Image,
     TextInput,
   Alert,
     TouchableOpacity,
@@ -14,28 +13,64 @@ import {
 
 function AdvPayment() {
  // const navigation = useNavigation();
-   const [contactNumber, setContactNumber] = useState('');
-   const [isNumberValid, setIsNumberValid] = useState(true);
+ const [mobileNumber, setMobileNumber] = useState("");
+ const [isNumberValid, setIsNumberValid] = useState(true);
 
-
-  const handleConfirmPress = () => {   // Code to handle payment confirmation
+  const handleConfirmPress = () => {
+    if (mobileNumber) {
     Alert.alert(
-      'Payment Confirmation',
-      'Are you sure you want to pay?',
+      "Payment Confirmation",
+      "Are you sure you want to pay?",
       [
         {
-          text: 'No',
-          onPress: () => console.log('Payment canceled'),
-          style: 'cancel',
+          text: "No",
+          onPress: () => console.log("Payment canceled"),
+          style: "cancel",
         },
         {
-          text: 'Yes',
-          onPress: () => console.log('Payment confirmed'),
+          text: "Yes",
+          onPress: () => {
+            console.log("Payment confirmed");
+            // Perform payment deduction and send SMS using API
+            performPaymentAndSendSMS();
+          },
         },
       ],
-      { cancelable: false }, //set to false to prevent the user from dismissing the alert by tapping outside of it or pressing the back button on Android devices.
+      { cancelable: false }
     );
-  };
+  } else {
+    Alert.alert("Error", "Please enter mobile number and amount.");
+  }
+};
+
+
+  const performPaymentAndSendSMS = () => {
+ 
+      // Use the mobileNumber state variable as the mobile number to send the SMS to
+      console.log("Performing payment deduction and sending SMS...");
+    
+    
+      // Make the fetch request to update appointment status and send SMS
+      fetch('http://10.0.2.2:8070/Advpayment/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( {" contactNo": mobileNumber})
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Appointment status updated  and message sent successfully');
+         
+        })
+        .catch(error => {
+          console.error('Error updating appointment status and message sending :', error);
+          // Handle error case
+        });
+    };
+    
+
+
   
   const handleCancel = () => {
     
@@ -50,7 +85,7 @@ function AdvPayment() {
         },
         {
           text: 'Yes',
-          onPress: () =>console.log('Return'),
+          onPress: () =>console.log('Payment cancelled'),
         },
       ],
       { cancelable: false }
@@ -62,9 +97,9 @@ function AdvPayment() {
     return reg.test(input);
    }
    const handleNumberChange = (input) => {
-     setContactNumber(input);
+    setMobileNumber(input);
     setIsNumberValid(isNumeric(input));
-   };
+  };
 
   return (
     <View style={styles.container}>
@@ -73,21 +108,23 @@ function AdvPayment() {
         <TextInput
           style={styles.inputs}
           placeholder="Advance "
-          value="Advance  amount -   Rs.300"
+          value="Advance  amount -   Rs.100"
           underlineColorAndroid="transparent"
           editable={false}
           selectTextOnFocus={false}
         />
+        
       </View>
 
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.inputs}
-          placeholder="Mobile No."
+           placeholder="Mobile No."
           underlineColorAndroid="transparent"
-          value={contactNumber}
-          onChangeText={handleNumberChange}
+          value={mobileNumber}
           keyboardType="numeric"
+           onChangeText={handleNumberChange}
+          
         />
         {!isNumberValid && <Text style={{color:'white'}}>* Enter your mobile number.</Text>}
       </View>

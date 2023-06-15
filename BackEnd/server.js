@@ -27,12 +27,15 @@ connection.once("open", () => {
 })
 
 
-// const ForgotPwRouter = require('./routes/ForgotPW.js');
-// app.use(bodyParser.json());
+const ForgotPwRouter = require('./routes/ForgotPW.js');
+app.use("/forgotPw", ForgotPwRouter);
+
+// const advancePaymentRouter = require("./routes/Advpayment.js");
+// app.use("/advpayment", advancePaymentRouter);
 
 
-// const loginRouter = require("./routes/Login.js");
-// app.use("/login", loginRouter);
+const loginRouter = require("./routes/Login.js");
+app.use("/login", loginRouter);
 
 const ConfApntmntsRouter = require("./routes/Appointments.js");
  app.use("/Appointments",ConfApntmntsRouter);
@@ -48,8 +51,8 @@ app.use("/Issues", IssueRouter);
 const serviceproviderRouter = require ("./routes/serviceproviders.js");
 app.use("/serviceprovider", serviceproviderRouter);
 
-// const UserDetailsRouter = require("./routes/UserDetails.js");
-// app.use("/UserDetails", UserDetailsRouter);
+const UserDetailsRouter = require("./routes/UserDetails.js");
+app.use("/UserDetails", UserDetailsRouter);
 
 
 
