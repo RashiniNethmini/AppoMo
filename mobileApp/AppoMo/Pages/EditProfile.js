@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput, Alert} from 'react-native';
+import axios from 'axios';
 
 const EditProfile = props => {
 
-  const validateFirstname = (firstname) => {    
-    if (!firstname) {
-      return "*First name is required.";
+  const validateUsername = (username) => {    
+    if (!username) {
+      return "*Username is required.";
     }
-    return null; 
-  };
-
-  const validateLastname = (lastname) => {    
-    if (!lastname) {
-      return "*Last name is required.";
+    if (username.length < 5){
+      return "*Username must have at least 5 characters.";
     }
     return null; 
   };
@@ -63,26 +60,26 @@ const EditProfile = props => {
     return null; 
   };
 
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
+  const [username, setUsername] = useState('');
   const [address, setAddress] = useState('');
   const [contactNo, setContact] = useState('');
   const [email, setEmail] = useState('');
   const [nic, setNIC] = useState('');
   const [errors, setErrors] = useState({});
+  const Cname = "AnudhiDisra";
 
-  const handleSubmit = () => {
-    const firstnameError = validateFirstname(firstname);
-    const lastnameError = validateLastname(lastname);
+  
+
+  const handleSubmit = async () => {
+    const usernameError = validateUsername(username);
     const addressError = validateAddress(address);
     const contactNoError =validateContactNo(contactNo);
     const emailError = validateEmail(email);
     const nicError = validateNIC(nic);
 
-    if (firstnameError || lastnameError || addressError || contactNoError ||emailError || nicError) {
+    if (usernameError || addressError || contactNoError ||emailError || nicError) {
       setErrors({
-        firstname: firstnameError,
-        lastname: lastnameError,
+        username: usernameError,
         address: addressError,
         contactNo:contactNoError,
         email: emailError,
@@ -96,6 +93,20 @@ const EditProfile = props => {
         onPress: () => console.log('OK Pressed')},
       ],
       { cancelable: false },);
+
+      try {
+        const updateFields = {
+          username,
+          email,
+          contactNo,
+          address,
+          nic
+        };
+        await axios.put(`http://localhost:8070/serviceprovider/update/${Cname}`,updateFields);
+        alert('Details updated successfully');
+      } catch (error) {
+        console.error('Error updating user:', error);
+      }
     }   
   };
 
@@ -107,16 +118,10 @@ const EditProfile = props => {
         <View style={styles.inputContainer}>
       
           <TextInput style={styles.inputField}
-            placeholder="First Name"
-            value={firstname}
-            onChangeText={setFirstname}/>
-            {errors.firstname && <Text style={styles.errorText}>{errors.firstname}</Text>}
-
-          <TextInput style={styles.inputField}
-            placeholder="Last Name"
-            value={lastname}
-            onChangeText={setLastname}/>
-            {errors.lastname && <Text style={styles.errorText}>{errors.lastname}</Text>}
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}/>
+            {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
 
           <TextInput style={styles.inputField}
             placeholder="Address"
@@ -205,8 +210,7 @@ const styles = StyleSheet.create({
 
   btnContainer:{
     backgroundColor: '#084C4F',
-    borderRadius: 10,
-    
+    borderRadius: 10,   
     alignItems: 'center',
     width: 200,
     height: 40,

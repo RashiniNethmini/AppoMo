@@ -143,6 +143,42 @@ router.route('/groupedData').get(async (req, res) => {
       }
   })
 
+  router.route("/update/:id").put (async (req,res)=>{
+    let uId=req.params.id;
+    const{ 
+      username,
+      password,
+      email,
+      contactNo,
+      address,
+      nic}=req.body;
 
+    const updateUser={
+      username,
+      password,
+      email,
+      contactNo,
+      address,
+      nic,
+    }
+  /*router.route("/update/:id").put (async (req,res)=>{
+    let AppointmentId=req.params.id;
+    const{ ApntmntDate,
+      Time}=req.body;
+
+    const updateAppointment={
+      ApntmntDate,
+      Time
+    }
+
+    const update=await Appointments.findByIdAndUpdate(AppointmentId, updateAppointment)
+    .then(()=>{
+    res.status(200).send({status:"Appointment scheduled successfully."})
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error scheduling appointment."});
+    })
+
+})*/
 
 module.exports = router;

@@ -42,9 +42,18 @@ const ConfApntmntsRouter = require("./routes/Appointments.js");
 
 const BrDetailsRouter = require("./routes/BranchDetails.js");
  app.use("/BranchDetails", BrDetailsRouter);
+// const ConfApntmntsRouter = require("./routes/Appointments.js");
+//  app.use("/Appointments",ConfApntmntsRouter);
+
+// //  app.listen(PORT, () => {
+// //     console.log('Server is running on port ' + PORT);
+// // })
+
+// const BrDetailsRouter = require ("./routes/BranchDetails.js");
+//  app.use("/BranchDetails", BrDetailsRouter);
  
-const IssueRouter = require("./routes/Issues.js");
-app.use("/Issues", IssueRouter);
+// const IssueRouter = require("./routes/Issues.js");
+// app.use("/Issues", IssueRouter);
 // const smsRouter = require("./APIs/sms.js");
 // app.use('/sms', smsRouter);
 

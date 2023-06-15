@@ -7,7 +7,8 @@ const serviceproviderSchema = new Schema({
         required: true
     },
     logo :{
-        type : String,
+        data: Buffer,
+        contentType: String,
     
     },
     username : {
@@ -62,3 +63,24 @@ const serviceproviderSchema = new Schema({
 
 const ServiceProvider = mongoose.model("ServiceProvider", serviceproviderSchema);
 module.exports = ServiceProvider;
+
+// AppointmentSchedule Schema
+const appointmentSchema = new Schema({
+    timeSlot: {
+      type: Date,
+      required: true,
+    },
+    serviceCenterId: {
+      type: Schema.Types.ObjectId,
+      ref: 'ServiceProvider',
+      required: true,
+    },
+    appointmentCount: {
+      type: Number,
+      default: 0,
+    },
+  });
+  
+  
+  const AppointmentSchedule = mongoose.model('AppointmentSchedule', appointmentSchema);
+  module.exports = AppointmentSchedule;
