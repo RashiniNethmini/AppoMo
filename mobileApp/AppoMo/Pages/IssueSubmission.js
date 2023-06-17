@@ -127,7 +127,7 @@ const handleMicPress = async () => {
   
     try {
       // Make an API request to send the data to the backend
-      const response = await fetch("http:// 192.168.43.100:8070/Issues/add", {
+      const response = await fetch("http://192.168.1.226:8070/Issues/add", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

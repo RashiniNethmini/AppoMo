@@ -62,7 +62,7 @@ import { useParams } from 'react-router-native';
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://10.0.2.2:8070/BranchDetails/");
+      const response = await fetch("http://192.168.1.226:8070/BranchDetails/");
       const jsonData = await response.json();
       setData(jsonData);
     } catch (error) {
@@ -78,7 +78,7 @@ import { useParams } from 'react-router-native';
   
   const updateStarRating = async () => {
     try {
-      const responsed = await fetch(`http://10.0.2.2:8070/serviceprovider/getr/${_id}`, {
+      const responsed = await fetch(`http://192.168.1.226:8070/serviceprovider/getr/${_id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ import { useParams } from 'react-router-native';
     const updatedRating = currentRating + starRating;
 
 
-      const updateresponse = await fetch(`http://10.0.2.2:8070/serviceprovider/updater/${_id}`,
+      const updateresponse = await fetch(`http://192.168.1.226:8070/serviceprovider/updater/${_id}`,
        {
         method: 'PUT',
         headers: {

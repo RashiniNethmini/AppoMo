@@ -24,7 +24,7 @@ function SelectServiceCenter() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://10.0.2.2:8070/serviceprovider/getSC");
+      const response = await fetch("http://192.168.1.226:8070/serviceprovider/getSC");
       const jsonData = await response.json();
       setData(jsonData);
     } catch (error) {
@@ -42,7 +42,7 @@ function SelectServiceCenter() {
 
   const fetchSearchData = async () => {
      {
-      const responsee = await fetch(`http://10.0.2.2:8070/serviceprovider/get/${searchTerm}`);
+      const responsee = await fetch(`http://192.168.1.226:8070/serviceprovider/get/${searchTerm}`);
       const jsonData = await responsee.json();
       setsData(jsonData);
     }
