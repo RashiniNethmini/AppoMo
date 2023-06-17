@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { View, StyleSheet, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
 import { Card, Button, Text, TextInput, IconButton, Dialog, Paragraph, Portal, colors } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -28,21 +28,6 @@ export default function UserRegistr() {
   const [contactNoError, setContactNoError] = useState("");
   const [nicError, setNicError] = useState("");
 
-  // const handleUsernameChange = (text) => {
-  //   if (text.length < 1) {
-  //     setUsernameError("");
-  //     setTextusername(text);
-  //   } else if (text.length < 5) {
-  //     setUsernameError("Username must be at least 5 characters long.");
-  //     setTextusername(text);
-  //   } else {
-  //     setTextusername(text);
-  //     setUsernameError("");
-  // const validateUsername = (username) => {     // Validate username
-  //   if (!username) {
-  //     return "*Username is required";
-  //   }
-  // }};
   const handleUsernameChange = (text) => {
     if (text.length < 1) {
       setUsernameError("");
@@ -254,13 +239,13 @@ export default function UserRegistr() {
                     </View>
                     <View>
                       <Text variant="bodyLarge">Password</Text>
-                      <TextInput type="outlined" value={password} onChangeText={text => handlePasswordChange(text)} style={styles.input} activeUnderlineColor='#388F82' />
+                      <TextInput type="outlined" value={password}    secureTextEntry={true} onChangeText={text => handlePasswordChange(text)} style={styles.input} activeUnderlineColor='#388F82' />
                       {passwordError ? <Text style={{ color: 'red' }}>{passwordError  }</Text> : null}
                     </View>
 
                     <View>
                       <Text variant="bodyLarge">Confirm Password</Text>
-                      <TextInput type="outlined" value={confirmPassword} onChangeText={text => handleConfirmPasswordChange(text)} style={styles.input} activeUnderlineColor='#388F82' />
+                      <TextInput type="outlined" value={confirmPassword}    secureTextEntry={true}  onChangeText={text => handleConfirmPasswordChange(text)} style={styles.input} activeUnderlineColor='#388F82' />
                       {confirmPasswordError ? <Text style={{ color: 'red' }}>{confirmPasswordError }</Text> : null}
                     </View>
 

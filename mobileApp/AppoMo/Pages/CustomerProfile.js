@@ -72,7 +72,7 @@ const ProfileScreen = () => {
           </View>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback onPress={() => props.navigation.navigate('EditProfile')}>
+        <TouchableWithoutFeedback onPress={() => props.navigation.navigate('/EditProfile')}>
           <View style={styles.menuItem}>
             <Icon name='pencil' color="#FFFFFF" size={25}/>
             <Text style={styles.menuItemText}>Edit Profile</Text>
@@ -80,10 +80,19 @@ const ProfileScreen = () => {
           </View>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback onPress={() => props.navigation.navigate('ResetPwd')}>
+        <TouchableWithoutFeedback onPress={() => props.navigation.navigate('/ResetPwd')}>
           <View style={styles.menuItem}>
             <Icon name="key" color="#FFFFFF" size={25}/>
             <Text style={styles.menuItemText}>Reset Password</Text>
+            <Icon name="arrow-right-circle" color="#FFFFFF" size={25}/>
+          </View>
+        </TouchableWithoutFeedback>
+
+        //delete account
+        <TouchableWithoutFeedback>
+          <View style={styles.menuItem}>
+            <Icon name="key" color="#FFFFFF" size={25}/>
+            <Text style={styles.menuItemText}>Delete Account</Text>
             <Icon name="arrow-right-circle" color="#FFFFFF" size={25}/>
           </View>
         </TouchableWithoutFeedback>

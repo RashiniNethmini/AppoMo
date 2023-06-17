@@ -25,7 +25,7 @@ function validatePassword(password) {
     const uppercaseRegex = /^(?=.*[A-Z])/; // ensure that the password contains at least one uppercase letter.
     const lowercaseRegex = /^(?=.*[a-z])/; // ensure that the password contains at least one lowercase letter.
     const numberRegex = /^(?=.*\d)/; // ensure that the password contains at least one number.
-    const specialCharRegex = /^(?=.*[!@#$%&+*^()_])/; // ensure that the password contains at least one of the following symbols: !@#$%&+*^()_.
+    const specialCharRegex = /^(?=.[!@#$%&+^()])/; // ensure that the password contains at least one of the following symbols: !@#$%&+*^().
     
     if(password.trim()===""){
         return "Password is required.";

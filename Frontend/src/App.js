@@ -48,7 +48,7 @@ function App() {
       
         
        
-        {/* <Termination/> */}
+        <Termination/>
         
       </ThemeProvider>
     </div>

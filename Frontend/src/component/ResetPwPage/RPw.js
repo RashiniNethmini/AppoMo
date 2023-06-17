@@ -97,7 +97,7 @@ if(passwordInputFieldName==='password'){
   const uppercaseRegExp   = /(?=.*?[A-Z])/;
   const lowercaseRegExp   = /(?=.*?[a-z])/;
   const digitsRegExp      = /(?=.*?[0-9])/;
-  const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+  const specialCharRegExp = /(?=.?[#?!@$%^&-])/;
   const minLengthRegExp   = /.{8,}/;
   const passwordLength =      passwordInputValue.length;
   const uppercasePassword =   uppercaseRegExp.test(passwordInputValue);
@@ -247,4 +247,3 @@ const Cancel = () => {
     </div>
   );
 }
-

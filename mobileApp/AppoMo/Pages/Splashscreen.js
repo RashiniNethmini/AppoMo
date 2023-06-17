@@ -46,7 +46,7 @@ const SplashScreen = ({navigation}) => {
             <Text style={styles.text}>Sign in with an account</Text>
             <View style={styles.button}>
             <Link to={`/Login`} component={TouchableOpacity}
-            // onPress={()=>navigation.navigate('SignInScreen')}
+    
             >
                     
                     <Text style={styles.textSign}>Get Started 

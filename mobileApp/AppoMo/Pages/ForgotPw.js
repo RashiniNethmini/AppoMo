@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import * as Animatable from 'react-native-animatable';
 import { Button } from "react-native-paper";
-
+import axios from 'axios';
 
 export default function ForgotPW() {
     const [email, setEmail] = useState('');
@@ -36,29 +36,16 @@ export default function ForgotPW() {
         const emailError = validateEmail(email);
         if (emailError){
          setError({email:emailError})
+         console.log("error")
         }
         else {
-        // Implement the logic to reset the password using the entered email address
-        fetch('http://10.0.2.2:8070/ForgotPW/resetPw', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email}),
-          })
-        
-          .then(response => {
-
-            if (response.ok) {
-              Alert.alert('Success', 'Password reset email sent successfully');
-              console.log('Success ')
-            } else {
-              Alert.alert('Error', 'Failed sending password reset email');
-              console.log('Failed ')
-            }
-            
-          
-          })
+        axios.post("http://10.0.2.2:8070/ForgotPw/forgotPw", { email: email  })
+        .then((response) => {
+          console.log(response);
+          alert("Email sent to"+ (" " + email))
+ 
+      })
+    
           .catch(error => {
             console.error(error);
             Alert.alert('Error', 'An error occurred. Please try again later.');

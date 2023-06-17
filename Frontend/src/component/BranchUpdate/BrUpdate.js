@@ -424,7 +424,7 @@ export default function BranchForm() {
                     label="Branch Name "
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                     value={editIndex !== -1 ? tableData[editIndex].BrName : ''}
+                    //  value={editIndex !== -1 ? tableData[editIndex].BrName : ''}
                     onChange={handleBrNameChange} />
                   {brNameError && <span style={{ color: 'red', fontSize: 12 }}>{brNameError}</span>}
                 </div>
@@ -436,7 +436,7 @@ export default function BranchForm() {
                     label="Name of Manager"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    value={editIndex !== -1 ? tableData[editIndex].ManName : ''}
+                    // value={editIndex !== -1 ? tableData[editIndex].ManName : ''}
                     onChange={handleManNameChange} />
                   {manNameError && <span style={{ color: 'red', fontSize: 12 }}>{manNameError}</span>}
                 </div>
@@ -448,7 +448,7 @@ export default function BranchForm() {
                     label="Contact No"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                     value={editIndex !== -1 ? tableData[editIndex].Cntct : ''}
+                    //  value={editIndex !== -1 ? tableData[editIndex].Cntct : ''}
                     onChange={handleContactNumberChange} />
                   {contactNumberError && <span style={{ color: 'red', fontSize: 12 }}>{contactNumberError}</span>}
                 </div>
@@ -459,7 +459,7 @@ export default function BranchForm() {
                     label="Address"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                     value={editIndex !== -1 ? tableData[editIndex].Addrs : ''}
+                    //  value={editIndex !== -1 ? tableData[editIndex].Addrs : ''}
                     onChange={handleAddressChange} />
                   {addressError && <span style={{ color: 'red', fontSize: 12 }}>{addressError}</span>}
 
@@ -471,7 +471,7 @@ export default function BranchForm() {
                     label="Email"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                     value={editIndex !== -1 ? tableData[editIndex].Email : ''}
+                    //  value={editIndex !== -1 ? tableData[editIndex].Email : ''}
                     onChange={handleEmailChange} />
                   {emailError && <span style={{ color: 'red', fontSize: 12 }}>{emailError}</span>}
                 </div>
@@ -483,7 +483,7 @@ export default function BranchForm() {
                     label="No. of Appointments Per Hour"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                     value={editIndex !== -1 ? tableData[editIndex].ApptmntsPerHr : ''}
+                    //  value={editIndex !== -1 ? tableData[editIndex].ApptmntsPerHr : ''}
                     onChange={handleAptmntHrsChange} />
                 </div>
                 {hrsError && <span style={{ color: 'red', fontSize: 12 }}>{hrsError}</span>}
@@ -495,7 +495,7 @@ export default function BranchForm() {
                     label="No. of Working Hours Per Day"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                     value={editIndex !== -1 ? tableData[editIndex].ApptmntsPerHr : ''}
+                    //  value={editIndex !== -1 ? tableData[editIndex].ApptmntsPerHr : ''}
                     onChange={handleWorkingHrsChange} />
                 </div>
                 {whrsError && <span style={{ color: 'red', fontSize: 12 }}>{whrsError}</span>}
@@ -506,7 +506,7 @@ export default function BranchForm() {
                     label="Days Open "
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                     value={editIndex !== -1 ? tableData[editIndex].Addrs : ''}
+                    //  value={editIndex !== -1 ? tableData[editIndex].Addrs : ''}
                     onChange={handleOpenDaysChange} />
                   {opdaysError && <span style={{ color: 'red', fontSize: 12 }}>{opdaysError}</span>}
 
@@ -516,6 +516,7 @@ export default function BranchForm() {
 
               <DialogActions>
                 <Button onClick={handleOnClose}>Cancel</Button>
+                
                 <Button onClick={handleAddFormSubmit}>Done</Button>
               </DialogActions>
             </Dialog>
