@@ -11,10 +11,10 @@ import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 const MAX_HEIGHT = 500;
 
-export default function IssueSubmission() {
+export default function SCIssueSubmission() {
   const [name, setTextname] = useState("");
   const [contactNo, setTextcontactNo] = useState("");
-  const [invoice, setTextinvoice] = useState("");
+ 
   const [issueInBrief, setTextissue] = useState("");
   const [recording, setRecording] = useState(null);
   const [audioUri, setAudioUri] = useState(null);
@@ -104,7 +104,7 @@ const handleMicPress = async () => {
 
   const [disableSubmit, setDisableSubmit] = useState(true); // disable the submit button at begining.
   const checkInputs = () => {
-    if (name && invoice && contactNo  && issueInBrief) {
+    if (name &&  contactNo && issueInBrief) {
       setDisableSubmit(false);
     } else {
       setDisableSubmit(true);
@@ -120,7 +120,6 @@ const handleMicPress = async () => {
     const requestBody = {
       Name: name,
       ContactNo: contactNo,
-      InvoiceNo: invoice,
       IssueInBrief: issueInBrief,
       AudioUri: audioUri, 
     };
@@ -141,7 +140,6 @@ const handleMicPress = async () => {
       // Clear the input fields
       setTextname('');
       setTextcontactNo('');
-      setTextinvoice('');
       setTextissue('');
       setAudioUri(null);
     
@@ -163,7 +161,7 @@ const handleMicPress = async () => {
   
   React.useEffect(() => {
     checkInputs();
-  }, [name, contactNo, invoice, issueInBrief]);
+  }, [name, contactNo, issueInBrief]);
 
   
   const [visible, setVisible] = useState(false);
@@ -217,13 +215,7 @@ const handleMicPress = async () => {
                     </View>
 
 
-
-                    <View>
-                      <Text variant="bodyLarge">Invoice No</Text>
-                      <TextInput type="outlined" value={invoice} onChangeText={text => setTextinvoice(text)} style={styles.input} activeUnderlineColor='#388F82'  />
-                    </View>
-
-                    
+                   
 
                     <View>
                       <Text variant="bodyLarge">Issue in brief</Text>

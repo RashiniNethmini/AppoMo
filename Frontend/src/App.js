@@ -41,14 +41,11 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
        
-        <Signin/>
-        <Reg/>
+        
         {/* <FPw/> */}
-        <EditProfile/>
-        <ResetPassword /> 
-        <Dashboard/>
+        
         <AppointmentConfirm />
-        <BrUpdate/>
+      
         
        
         {/* <Termination/> */}

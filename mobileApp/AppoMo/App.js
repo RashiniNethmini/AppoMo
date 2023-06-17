@@ -25,6 +25,8 @@ import ResetPwd from './Pages/ResetPwd';
 import CustomerProfile from './Pages/CustomerProfile';
 import SplashScreen from './Pages/Splashscreen';
 import IssueSubmitMsg from './Pages/IssueSubmitMsg';
+import ProductDetails from './Pages/ProductDEtails';
+import SCIssueSubmission from './Pages/SCIssueSubmission';
 
 
 
@@ -35,9 +37,9 @@ export default function App() {
     <NativeRouter>
     <View style={styles.container}>
     <Provider>
-     <Routes>
+    {/*} <Routes>*/}
      
-      <Route path="/" element={<SplashScreen/>} />
+      {/*<Route path="/" element={<SplashScreen/>} />
       <Route path="/Login" element={<Login/>} />
       <Route path="/UserRegistr" element={<UserRegistr/>} />
       <Route path="/CompanyOrServiceCenter" element={<CompanyOrServiceCenter/>} />
@@ -46,8 +48,11 @@ export default function App() {
       <Route path="/ServiceCenter/:_id/:serviceProviderName" element={<ServiceCenter/>} />
       <Route path="/IssueSubmission/:_id" element={<IssueSubmission/>} /> 
       <Route path="/IssueSubmitMsg" element={<IssueSubmitMsg/>} /> 
-    </Routes>  
+  </Routes>  */}
     {/* <SelectServiceCenter/> */}
+    <IssueSubmission/>
+    {/*<ProductDetails/>*/}
+
     </Provider>
       {/* <Provider>
         {/* 
@@ -62,7 +67,7 @@ export default function App() {
         {/*<SplashScreen/>*/}
         {/*<IssueSubmitMsg/>*/}
 
-         {/* <IssueSubmission/> */}
+       
         {/* <Login/> */}
         {/* <UserRegistr/> */}
          {/* <ForgotPW/>  */}
