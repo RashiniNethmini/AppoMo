@@ -27,6 +27,7 @@ import SplashScreen from './Pages/Splashscreen';
 import IssueSubmitMsg from './Pages/IssueSubmitMsg';
 import ProductDetails from './Pages/ProductDEtails';
 import SCIssueSubmission from './Pages/SCIssueSubmission';
+import VerifyOTP from './Pages/VerifyOTP';
 
 
 
@@ -67,12 +68,14 @@ export default function App() {
        
         {/* <Login/> */}
         {/* <UserRegistr/> */}
-         <ForgotPW/> 
+
         {/* <CompanyDetails/> */}
         {/*<ComBranchDetails/>*/}
         {/* <SelectServiceCenter/> */}
         {/* <IssueSubmission/> */}
         {/* <AdvPayment/> */}
+                 {/* <ForgotPW/>  */}
+        <VerifyOTP/>
         {/* <EditProfile/> */}
         {/* <ResetPassword/> */}
         {/* <CustomerProfile/> */}

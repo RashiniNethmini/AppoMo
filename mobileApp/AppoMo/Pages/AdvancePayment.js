@@ -56,7 +56,7 @@ function AdvPayment() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify( {" contactNo": mobileNumber})
+        body: JSON.stringify( { mobileNumber: mobileNumber})
       })
         .then(response => response.json())
         .then(data => {

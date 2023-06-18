@@ -24,7 +24,7 @@ function Login() {
     const navigate = useNavigate();
 
     const handlePress = () => {
-      navigate('/UserRegistr');
+        navigate('/UserRegistr');
     };
 
     // const navigation = useNavigation();
@@ -123,40 +123,40 @@ function Login() {
         }
     }
 
-    const handleLogin =(username, password) => {
+    const handleLogin = (username, password) => {
 
-        
-        if ( data.username.length == 0 || data.password.length == 0 ) {
+
+        if (data.username.length == 0 || data.password.length == 0) {
             Alert.alert('Invalid User!', 'Username or password is incorrect.', [{ text: 'Okay' }]);
             console.log('Submit button pressed');
             return;
         }
 
         console.log('Submit button pressed');
-      
-    
-    
+
+
+
         // Make an API request to send the data to the backend
         fetch("http://10.0.2.2:8070/Login/login", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            "username": username,
-            "password": password,
-            
-          })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "username": username,
+                "password": password,
+
+            })
         })
-          .then(res => res.json())
-          .then(data => {
-            console.log(data);
-           
-          })
-          .catch(error => {
-            console.log(error);
-          });
-          navigate('/CompanyOrServiceCenter');
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        navigate('/CompanyOrServiceCenter');
     };
 
     return (
@@ -191,7 +191,7 @@ function Login() {
                         }]}
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange(val)}
-                        
+
                         onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                     />
                     {data.check_textInputChange ?
@@ -207,11 +207,13 @@ function Login() {
                         : null}
                 </View>
                 {data.isValidUser ? null :
-                    // <Animatable.View animation="fadeInLeft" duration={500}>
-                    <View>
-                        <Text style={styles.errorMsg}>Username must be at least 5 characters long.</Text>
-                    
-                        </View>// </Animatable.View>
+                    <Animatable.View animation="fadeInLeft" duration={500}>
+                        <View>
+                            <Text style={styles.errorMsg}>Username must be at least 5 characters long.</Text>
+
+                        </View>
+
+                    </Animatable.View>
                 }
 
 
@@ -257,13 +259,13 @@ function Login() {
                     // <Animatable.View animation="fadeInLeft" duration={500}>
                     <View>
                         <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
-                        </View>
+                    </View>
                     // </Animatable.View>
                 }
 
 
                 <TouchableOpacity>
-                    
+
                     <Text style={{ color: '#009387', marginTop: 15 }}>Forgot password?</Text>
                 </TouchableOpacity>
                 <View style={styles.button}>
@@ -278,10 +280,10 @@ function Login() {
                         }]}
 
                     >
-                        <Text style={[styles.textSign, {color: '#009387' }]}
-                            onPress={() => {handleLogin( data.username, data.password )}}
+                        <Text style={[styles.textSign, { color: '#009387' }]}
+                            onPress={() => { handleLogin(data.username, data.password) }}
 
-                            >Sign In</Text>
+                        >Sign In</Text>
                     </TouchableOpacity>
 
 
@@ -293,7 +295,7 @@ function Login() {
                             marginTop: 15,
                             marginVertical: 0
                         }]}
-                        onPress={()=>{}}
+                        onPress={() => { }}
                     >
                         <Text style={[styles.textSign, {
                             color: '#009387'
@@ -303,10 +305,10 @@ function Login() {
 
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "center", marginTop: 10 }}>
                     <Text style={{ fontSize: 16, }}>Don't have an account ? </Text>
-                    <Link to={`/UserRegistr`} component={TouchableOpacity} 
+                    <Link to={`/UserRegistr`} component={TouchableOpacity}
                     // onPress={() => props.navigation.navigate("UserRegistr")}
                     >
-                        <Text style={{ color: "#084C4F", fontWeight: 'bold', fontSize: 16,textDecorationLine:'underline' }}>Signup</Text>
+                        <Text style={{ color: "#084C4F", fontWeight: 'bold', fontSize: 16, textDecorationLine: 'underline' }}>Signup</Text>
                     </Link>
                 </View>
             </Animatable.View>

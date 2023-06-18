@@ -30,6 +30,9 @@ connection.once("open", () => {
 const ForgotPwRouter = require('./routes/ForgotPW.js');
 app.use("/forgotPw", ForgotPwRouter);
 
+// const validateOTPRouter = require('./routes/ForgotPW.js');
+// app.use("/validateOTP", validateOTPRouter);
+
 // const advancePaymentRouter = require("./routes/Advpayment.js");
 // app.use("/advpayment", advancePaymentRouter);
 

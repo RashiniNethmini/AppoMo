@@ -177,8 +177,8 @@ router.route('/groupedData').get(async (req, res) => {
     }).catch((err)=>{
     console.log(err);
     res.status(500).send({status:"Error scheduling appointment."});
-    })
+    })*/
 
-})*/
+})
 
 module.exports = router;
