@@ -26,17 +26,14 @@ function validateUsername(username){
 };
 function validatePassword(password) { 
     
-    
-    const lengthPRegex = /^.{8,}$/; // ensure that the password is at least 8 characters long.
     const uppercaseRegex = /^(?=.*[A-Z])/; // ensure that the password contains at least one uppercase letter.
     const lowercaseRegex = /^(?=.*[a-z])/; // ensure that the password contains at least one lowercase letter.
     const numberRegex = /^(?=.*\d)/; // ensure that the password contains at least one number.
     const specialCharRegex = /^(?=.*[!@#$%&+*^()_])/; // ensure that the password contains at least one of the following symbols: !@#$%&+*^()_.
+    const lengthPRegex = /^.{8,}$/; // ensure that the password is at least 8 characters long.
     
     if(password.trim()===""){
         return "Password is required.";
-    }else if (!lengthPRegex.test(password)){
-        return "Password must be at least 8 characters long.";
     } else if (!uppercaseRegex.test(password)){
         return "Password must contain at least one uppercase letter.";
     } else if (!lowercaseRegex.test(password)){
@@ -45,6 +42,8 @@ function validatePassword(password) {
         return "Password must contain at least one number.";
     } else if (!specialCharRegex.test(password)){
         return "Password must contain at least one of the following symbols: !@#$%&+*^()_.";
+    }else if (!lengthPRegex.test(password)){
+        return "Password must be at least 8 characters long.";
     }
     
 };
@@ -87,30 +86,30 @@ function validateRegNo(regNo){  // checks if the Reg No field is not empty after
         return "Reg No is invalid."; 
     }
 };
-function validateWorkingDates(workingDates){  // checks if the Working Dates field is not empty after removing any leading or trailing whitespace.
-    const lettersWDRegex = /^[a-zA-Z, ]*$/; // ensure that the working dates contain only letters with commas.
-    if(workingDates.trim()===""){
-        return "Reg No is required.";
-    }else if(!lettersWDRegex.test(workingDates)){
-        return "Working Dates are invalid.";
-    }
-}; 
-function validateWorkingHours(workingHours){  // checks if the Working Hours field is not empty after removing any leading or trailing whitespace.
-    const lettersWHRegex = /^[0-9]*$/; //ensure that the no of appoinments contain only numbers.
-    if(workingHours.trim()===""){
-        return "Reg No is required.";
-    } else if(!lettersWHRegex.test(workingHours)){
-        return "Working Hours are invalid.";
-    }
-};
-function validateNoOfAppoinments(noOfAppoinments){  // checks if the No of appoinments per day field is not empty after removing any leading or trailing whitespace.
-    const numbersRegex = /^[0-9]*$/; //ensure that the no of appoinments contain only numbers.
-    if(noOfAppoinments.trim()===""){
-        return "Reg No is required.";
-    }else if(!numbersRegex.test(noOfAppoinments)){
-        return "No of appoinments per day is invalid.";
-    }
-};
+// function validateWorkingDates(workingDates){  // checks if the Working Dates field is not empty after removing any leading or trailing whitespace.
+//     const lettersWDRegex = /^[a-zA-Z, ]*$/; // ensure that the working dates contain only letters with commas.
+//     if(workingDates.trim()===""){
+//         return "Reg No is required.";
+//     }else if(!lettersWDRegex.test(workingDates)){
+//         return "Working Dates are invalid.";
+//     }
+// }; 
+// function validateWorkingHours(workingHours){  // checks if the Working Hours field is not empty after removing any leading or trailing whitespace.
+//     const lettersWHRegex = /^[0-9]*$/; //ensure that the no of appoinments contain only numbers.
+//     if(workingHours.trim()===""){
+//         return "Reg No is required.";
+//     } else if(!lettersWHRegex.test(workingHours)){
+//         return "Working Hours are invalid.";
+//     }
+// };
+// function validateNoOfAppoinments(noOfAppoinments){  // checks if the No of appoinments per day field is not empty after removing any leading or trailing whitespace.
+//     const numbersRegex = /^[0-9]*$/; //ensure that the no of appoinments contain only numbers.
+//     if(noOfAppoinments.trim()===""){
+//         return "Reg No is required.";
+//     }else if(!numbersRegex.test(noOfAppoinments)){
+//         return "No of appoinments per day is invalid.";
+//     }
+// };
 
 
 
@@ -125,6 +124,13 @@ export const Reg = (props) => {
 
     
     const [logo, setLogo] =useState("");
+    const handleLogoUpload = (event) => {
+        const logo = event.target.files[0];
+        setLogo (URL.createObjectURL(logo));
+    }
+    const handleClickLogo =() => {
+        document.getElementById('fileInput').click();
+    };
 
     const [username, setUsername] =useState("");
     const [usernameError, setUsernameError] = useState(null);
@@ -187,29 +193,29 @@ export const Reg = (props) => {
         setRegNoError(validateRegNo(value));
       };
 
-    const [workingDates, setWorkingDates] =useState("");
-    const [workingDatesError, setWorkingDatesError] = useState(null);
-    const handleWorkingDatesChange = (event) => {
-        const value = event.target.value;
-        setWorkingDates(value);
-        setWorkingDatesError(validateWorkingDates(value));
-      };
+    // const [workingDates, setWorkingDates] =useState("");
+    // const [workingDatesError, setWorkingDatesError] = useState(null);
+    // const handleWorkingDatesChange = (event) => {
+    //     const value = event.target.value;
+    //     setWorkingDates(value);
+    //     setWorkingDatesError(validateWorkingDates(value));
+    //   };
 
-    const [workingHours, setWorkingHours] = useState("");
-    const [workingHoursError, setWorkingHoursError] = useState(null);
-    const handleWorkingHoursChange = (event) => {
-        const value = event.target.value;
-        setWorkingHours(value);
-        setWorkingHoursError(validateWorkingHours(value));
-      };
+    // const [workingHours, setWorkingHours] = useState("");
+    // const [workingHoursError, setWorkingHoursError] = useState(null);
+    // const handleWorkingHoursChange = (event) => {
+    //     const value = event.target.value;
+    //     setWorkingHours(value);
+    //     setWorkingHoursError(validateWorkingHours(value));
+    //   };
 
-    const [noOfAppoinments, setNoOfAppoinments] = useState("");
-    const [noOfAppoinmentsError, setNoOfAppoinmentsError] = useState(null);
-    const handleNoOfAppoinmentsChange = (event) => {
-        const value = event.target.value;
-        setNoOfAppoinments(value);
-        setNoOfAppoinmentsError(validateNoOfAppoinments(value));
-    };
+    // const [noOfAppoinments, setNoOfAppoinments] = useState("");
+    // const [noOfAppoinmentsError, setNoOfAppoinmentsError] = useState(null);
+    // const handleNoOfAppoinmentsChange = (event) => {
+    //     const value = event.target.value;
+    //     setNoOfAppoinments(value);
+    //     setNoOfAppoinmentsError(validateNoOfAppoinments(value));
+    // };
 
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {setOpen(true);}; //Opening popup messages.
@@ -235,19 +241,20 @@ export const Reg = (props) => {
             email,
             ceoName,
             regNo,
-            workingDates,
-            workingHours,
-            noOfAppoinments,
+            // workingDates,
+            // workingHours,
+            // noOfAppoinments,
             
 
         }
+        
         
         // console.log(newServiceProvider);
         axios.post("http://localhost:8070/serviceprovider/add",newServiceProvider).then(()=>{
             alert("Service provider Added")
             handleClickOpen();
         }).catch((err)=>{
-            alert(err)
+            alert(err)  
         })
     }
 
@@ -288,21 +295,9 @@ export const Reg = (props) => {
 
                 <div className={styles.reglogoB}>
                 
-                    <Avatar src="./avatar.jpg" variant="contained" component="label" display="flex" justify-content="center" align="center"sx={{ width: 100, height: 100 }}
-                        id="logo" 
-                        onChange={(e)=>{
-                        setLogo(e.target.value);
-
-                    }}
-                    >
+                    <Avatar src={logo} type="file" variant="contained" onClick={handleClickLogo} component="label" display="flex" justify-content="center" align="center"sx={{ width: 100, height: 100 }} id="logo" >
                     <p className={styles.regUlogo}>Upload Logo</p>
-                    <input hidden accept="image/*" type="file" 
-                        onChange={(e)=>{
-                            setLogo(e.target.files[0]);
-
-                    }}
-                    />
-                    
+                    <input hidden accept="image/*" type="file" onChange={handleLogoUpload}/>
                     </Avatar>
                 
                 </div>
@@ -317,8 +312,7 @@ export const Reg = (props) => {
                     <div className={styles.regBodyTextbox}>
                         <TextField required="outlined-required" label="Username" sx={{ width: '100vw' }} id="username"
                             onChange={handleUsernameChange} error={Boolean(usernameError)}
-                            helperText={usernameError}
-                        />
+                            helperText={usernameError}/>
 
                     </div>
                     <div className={styles.regBodyTextbox}>
@@ -368,12 +362,12 @@ export const Reg = (props) => {
 
                     </div>
                     <div className={styles.regBodyTextbox}>
-                        <TextField required="outlined-required" label="Registration No" variant="outlined" sx={{ width: '100vw' }} id="regNo"
+                        <TextField required="outlined-required" label="Business Registration No" variant="outlined" sx={{ width: '100vw' }} id="regNo"
                         onChange={handleRegNoChange} error={Boolean(regNoError)}
                         helperText={regNoError}/>
 
                     </div>
-                    <div className={styles.regBodyTextbox}>
+                    {/* <div className={styles.regBodyTextbox}>
                         <TextField label="Working dates" required="outlined" sx={{ width: '100vw' }} id="workingDates"
                         onChange={handleWorkingDatesChange} error={Boolean(workingDatesError)}
                         helperText={workingDatesError}/>
@@ -390,7 +384,7 @@ export const Reg = (props) => {
                         onChange={handleNoOfAppoinmentsChange} error={Boolean(noOfAppoinmentsError)}
                         helperText={noOfAppoinmentsError}/>
 
-                    </div>
+                    </div> */}
 
                     <div className={styles.regButton}>
                         <Button variant="contained" sx={{mr:'10px'}} type="submit" >Cancel</Button>

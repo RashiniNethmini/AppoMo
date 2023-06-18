@@ -41,6 +41,10 @@ export default function Fpw() {
         setEmail(value);
         setEmailError(validateEmail(value));
     };
+    
+    // const [password, setPassword] =useState("");
+    // const [data, setData]=useState("");
+    // const Semail = 'abc@gmail.com';
 
     const [data,setData]=useState("");
     const Sname = 'ABC';
@@ -65,9 +69,53 @@ export default function Fpw() {
     const [otpError, setOtpError] = useState(null);
     const handleOtpChange = (event) => {
         const value = event.target.value;
-        setOtp(value);
+        const otp1=document.getElementById("otp1").value;
+        const otp2=document.getElementById("otp2").value;
+        const otp3=document.getElementById("otp3").value;
+        const otp4=document.getElementById("otp4").value;
+        setOtp(otp1+otp2+otp3+otp4);
         setOtpError(validateOtp(value));
     };
+
+    const handleSendCode = () => {
+        // Function to handle sending the OTP code to the user's email
+        if (!emailError) {
+           
+          // Make an API call to send the OTP code to the user's email
+          axios.post("http://localhost:8070/serviceprovider/send-otp", { email: email  })
+            .then((response) => {
+                console.log(response);
+                alert("Otp send")
+                handleClickOpen();
+            })
+            .catch((error) => {
+              // Show an error message to the user
+              console.log(error);
+            });
+        }
+      };
+       
+
+      const handleVerifyAccount = () => {
+        if (!otpError) {
+          // Make an API call to verify the account with the entered OTP code
+          axios
+            .post("http://localhost:8070/serviceprovider/verify-account", {
+              enteredOTP: otp, // Use the correct key name (enteredOTP) in the request body
+            })
+            .then((response) => {
+              console.log(response);
+              alert("Verified Account");
+              // Show a success message to the user
+              handleClickOpen1();
+            })
+            .catch((error) => {
+              // Show an error message to the user
+              console.log(error);
+            });
+        }
+      };
+    
 
     return (
         <div className={styles.FPwContainer}>
@@ -79,8 +127,9 @@ export default function Fpw() {
                     
                     <div className={styles.Femail}>
                         <label>Email &nbsp;</label>
-                        <TextField required ="outlined-required" label=" Your email"  type="email" variant="outlined" sx={{ width: '45vw' }}  id="email"
-                            onChange={handleEmailChange} error={Boolean(emailError)}
+                        <TextField required ="outlined-required" label=" Enter email"  type="email" variant="outlined" sx={{ width: '45vw' }}  id="email"
+                            onChange={handleEmailChange} 
+                            error={Boolean(emailError)}
                             helperText={emailError} />
                        
                     </div>
@@ -99,8 +148,8 @@ export default function Fpw() {
                         </Dialog>
                     </div>
                     <div className={styles.Fcode} >
-                    <label>OTP Code &nbsp;</label>
-                        <TextField className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
+                    <label>OTP Code &nbsp; </label>
+                        <TextField className={styles.codeB} id="otp1" onChange={handleOtpChange} error={Boolean(otpError)}
                         // helperText={otpError}
                         />
                         <TextField  className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
@@ -133,7 +182,7 @@ export default function Fpw() {
                     </div>
                     <div className={styles.resendB}>
                         <p>Didn't recieve code? &nbsp;</p> 
-                        <Link href="#"> Resend OTP</Link>
+                        <Link href="#" onClick={handleSendCode}> Resend OTP</Link>
                         
                     </div>
                 </div>

@@ -1,0 +1,59 @@
+.typeContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.pDiv {
+  max-width: 700px;
+  border-radius: 25px !important;
+  width: 75vw;
+  margin: 10vw;
+  padding: 10px;
+}
+
+.typeTitle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.typeList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 20px;
+}
+
+.typeItem {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.typeName {
+  margin-left: 10px;
+}
+
+.modelFields {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 30px;
+  margin-top: 5px;
+  width: 200px;
+}
+
+.modelField {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.addButton {
+  margin-left: 10px;
+}
+
+.removeButton {
+  margin-left: 10px;
+}

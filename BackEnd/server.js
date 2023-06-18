@@ -54,8 +54,11 @@ app.use("/Issues", IssueRouter);
 const serviceproviderRouter = require ("./routes/serviceproviders.js");
 app.use("/serviceprovider", serviceproviderRouter);
 
-const UserDetailsRouter = require("./routes/UserDetails.js");
-app.use("/UserDetails", UserDetailsRouter);
+const ProductRouter = require ("./routes/Products.js");
+app.use("/Product", ProductRouter);
+
+// const UserDetailsRouter = require("./routes/UserDetails.js");
+// app.use("/UserDetails", UserDetailsRouter);
 
 
 

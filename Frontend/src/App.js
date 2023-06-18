@@ -9,6 +9,7 @@ import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
 import RPw from "./component/ResetPwPage/RPw";
+import ProviderType from "./component/ProviderTypePage/ProviderType";
 // import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard/Dashboard"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -16,6 +17,7 @@ import NavBar from './component/NavBar/NavBar';
 import AppointmentConfirm from "./Pages/AppoinmentConfirm/AppointmentConfirm";
 import { deepmerge } from '@mui/utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 
 const theme = createTheme({
   palette: {
@@ -41,14 +43,25 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
        
+        {/* <Signin/> */}
         
+        {/* <Reg/> */}
         {/* <FPw/> */}
-        
+        {/* <RPw/> */}
+        <ProviderType/>
+
+        {/* <EditProfile/> */}
+        {/* <ResetPassword /> 
+        <Dashboard/>
         <AppointmentConfirm />
-      
-        
+        <BrUpdate/> */}
+        {/* <ResetPassword />  */}
+        {/* // <Dashboard/> */}
+        {/* <EditProfile/> */}
+        {/* <AppointmentConfirm /> */}
+        {/* <BrUpdate/>  */}
        
-        <Termination/>
+        {/* <Termination/> */}
         
       </ThemeProvider>
     </div>

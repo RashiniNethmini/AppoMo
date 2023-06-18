@@ -20,17 +20,14 @@ function validateUsername(username){
 };
 function validatePassword(password) { 
     
-   
-    const lengthPRegex = /^.{8,}$/; // ensure that the password is at least 8 characters long.
     const uppercaseRegex = /^(?=.*[A-Z])/; // ensure that the password contains at least one uppercase letter.
     const lowercaseRegex = /^(?=.*[a-z])/; // ensure that the password contains at least one lowercase letter.
     const numberRegex = /^(?=.*\d)/; // ensure that the password contains at least one number.
-    const specialCharRegex = /^(?=.[!@#$%&+^()])/; // ensure that the password contains at least one of the following symbols: !@#$%&+*^().
+    const specialCharRegex = /^(?=.*[!@#$%&+*^()_])/; // ensure that the password contains at least one of the following symbols: !@#$%&+*^()_.
+    const lengthPRegex = /^.{8,}$/; // ensure that the password is at least 8 characters long.
     
     if(password.trim()===""){
         return "Password is required.";
-    }else if (!lengthPRegex.test(password)){
-        return "Password must be at least 8 characters long.";
     } else if (!uppercaseRegex.test(password)){
         return "Password must contain at least one uppercase letter.";
     } else if (!lowercaseRegex.test(password)){
@@ -39,6 +36,8 @@ function validatePassword(password) {
         return "Password must contain at least one number.";
     } else if (!specialCharRegex.test(password)){
         return "Password must contain at least one of the following symbols: !@#$%&+*^()_.";
+    }else if (!lengthPRegex.test(password)){
+        return "Password must be at least 8 characters long.";
     }
     
 };
@@ -83,7 +82,48 @@ export const Signin = (props) => {
        event.preventDefault();
    };
 
-   
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+
+    fetch("http://localhost:8070/serviceprovider/login", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "username": username,
+        "password": password
+      })
+    })
+    .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Invalid login");
+        }
+      })
+      .then(data => {
+        console.log(data);
+        alert("Login Successful");
+      })
+      .catch(error => {
+        console.log(error);
+        alert(error.message)
+        
+      });
+  };
+
+  const handleGoogleLoginSuccess = (response) => {
+    const { tokenId } = response;
+    console.log("Encoded JWT ID token: " + tokenId);
+    alert("Google Login Successful")
+    // Send the tokenId to the server for verification and further processing
+  };
+
+  const handleGoogleLoginFailure = (error) => {
+    console.log("Google login failed:", error);
+  };
 
     return(
         <div className={styles.signContainer}>
