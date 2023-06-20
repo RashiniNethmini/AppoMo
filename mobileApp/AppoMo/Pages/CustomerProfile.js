@@ -88,10 +88,9 @@ const ProfileScreen = () => {
           </View>
         </TouchableWithoutFeedback>
 
-        //delete account
         <TouchableWithoutFeedback>
           <View style={styles.menuItem}>
-            <Icon name="key" color="#FFFFFF" size={25}/>
+            <Icon name="account" color="#FFFFFF" size={25}/>
             <Text style={styles.menuItemText}>Delete Account</Text>
             <Icon name="arrow-right-circle" color="#FFFFFF" size={25}/>
           </View>
@@ -114,7 +113,6 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: 'rgba(8,76,79,0.8)',
   },
 
   userInfoSection: {
@@ -163,7 +161,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingVertical: 35,
     paddingBottom: 40,
-    //backgroundColor: '#084C4F' 
   },
 
   menuItem: {
@@ -173,7 +170,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     paddingVertical: 15,
     paddingHorizontal: 30,
-    //backgroundColor: '#FFFFFF',
     backgroundColor: '#084C4F',
     borderRadius: 20,
     borderWidth: 3,

@@ -59,9 +59,14 @@ function App() {
         {/* // <Dashboard/> */}
         {/* <EditProfile/> */}
         {/* <AppointmentConfirm /> */}
+        {/* <FPw/>
+        <ResetPassword />  */}
+        {/*<Dashboard/>*/}
+        {/* <EditProfile/> */}
+        <AppointmentConfirm /> 
         {/* <BrUpdate/>  */}
        
-        {/* <Termination/> */}
+        <Termination/>
         
       </ThemeProvider>
     </div>

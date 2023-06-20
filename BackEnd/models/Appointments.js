@@ -45,9 +45,11 @@ const appntmntSchema = new Schema({
     Completed:{
       type: Boolean,
       required: true,
-  }
-
-
+    },
+    finalAmount: {
+      type: Number,
+      required: true,
+    }
 })
 
 appntmntSchema.pre('save', function (next) {

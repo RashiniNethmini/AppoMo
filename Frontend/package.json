@@ -25,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-google-button": "^0.7.2",
     "react-responsive-select": "^7.0.4",
+    "react-router": "^6.13.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "react-table": "^7.8.0",
@@ -59,5 +60,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

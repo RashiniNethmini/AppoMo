@@ -51,6 +51,12 @@ app.use("/Issues", IssueRouter);
 // const smsRouter = require("./APIs/sms.js");
 // app.use('/sms', smsRouter);
 
+// const serviceproviderRouter = require ("./routes/serviceproviders.js");
+// app.use("/serviceprovider", serviceproviderRouter);
+
+const UserDetailsRouter = require("./routes/UserDetails.js");
+app.use("/UserDetails", UserDetailsRouter);
+
 const serviceproviderRouter = require ("./routes/serviceproviders.js");
 app.use("/serviceprovider", serviceproviderRouter);
 
@@ -59,11 +65,15 @@ app.use("/Product", ProductRouter);
 
 // const UserDetailsRouter = require("./routes/UserDetails.js");
 // app.use("/UserDetails", UserDetailsRouter);
+const issueRouter = require('./routes/Issues.js');
+app.use('/Issues', issueRouter);
 
+const invoiceRoutes = require('./routes/Invoice.js');
+app.use('/Invoice', invoiceRoutes);
 
+const appointmentRouter = require('./routes/Appointments.js');
+app.use('/Appointments', appointmentRouter);
 
-// const serviceproviderRouter = require ("./routes/serviceproviders.js");
-// app.use("/serviceprovider", serviceproviderRouter);
 
 
 app.listen(PORT,() =>{

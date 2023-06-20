@@ -4,7 +4,6 @@ const User = require('../models/UserDetails');
 
 
  //add new user
-
 router.route("/add").post((req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -31,27 +30,89 @@ router.route("/add").post((req, res) => {
 }) 
 
 //update existing User
-router.route("/update/:id").put(async (req, res) => {
-    let userid = req.params.id;
-    const { username, password, email, contactNo, address,nic} = req.body;
+// router.route("/update/:id").put(async (req, res) => {
+//     let userid = req.params.id;
+//     const { username, password, email, contactNo, address,nic} = req.body;
 
-    const updateUser = {
-        username,
-        password,
-        contactNo,
-        email,
-        contactNo,
-        address,
-        nic
+//     const updateUser = {
+//         username,
+//         password,
+//         contactNo,
+//         email,
+//         contactNo,
+//         address,
+//         nic
+//     }
+
+//     const update = await User.findByIdAndUpdate(userid, updateUser)
+//         .then(() => {
+//             res.status(200).send({ status: "user updated" })
+//         }).catch((err) => {
+//             console.log(err);
+//             res.statusMessage(500).send({ status: "Error with updating data" });
+//         })
+// }) 
+
+router.route("/get/:id").get(async(req,res)=>{
+    console.log(req.params.id);  
+    
+    let UPP=await User.find(
+        {
+            "$or":[
+                {
+                   "username":{$regex:req.params.id}
+                }
+            ]
+        },
+    )
+    // res.send(data);
+    .then((UPP)=>{
+    res.send(UPP);
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get User"});
+    })
+})
+  
+router.route("/update/:id").put (async (req,res)=>{
+    let uId=req.params.id;
+    const{ 
+      username,
+      password,
+      email,
+      contactNo,
+      address,
+      nic}=req.body;
+
+    const updateUser={
+      username,
+      password,
+      email,
+      contactNo,
+      address,
+      nic,
     }
 
-    const update = await User.findByIdAndUpdate(userid, updateUser)
-        .then(() => {
-            res.status(200).send({ status: "user updated" })
-        }).catch((err) => {
-            console.log(err);
-            res.statusMessage(500).send({ status: "Error with updating data" });
-        })
-}) 
+    const update=await User.findOneAndUpdate(
+        {
+            "$or":[
+                {
+                    "username":{$regex:uId}
+                }
+            ]
+              
+        }
+        , updateUser)
+    .then(()=>{
+    res.status(200).send({status:"updated"})
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with updating data"});
+    })
 
+})
+ 
+    
+  
+    
 module.exports = router;

@@ -1,8 +1,7 @@
 .mainContainer {
     display: flex;
     justify-content: center;
-    padding-left: 50vw;
-    padding-right: 50vw;
+    padding: 20px;
 }
 
 .paperDiv {
@@ -37,3 +36,53 @@
     justify-content: center;
     margin: 20px;
 }
+
+.invoiceContainer {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+  
+.invoiceTitle {
+    text-align: center;
+}
+  
+.invoiceDetails {
+    margin-top: 20px;
+}
+  
+.label {
+    font-weight: bold;
+}
+  
+.buttonMain {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.invoiceTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+  
+.invoiceTable td {
+    padding: 8px;
+}
+  
+.invoiceTable .label {
+    font-weight: bold;
+    width: 200px;
+}
+
+.checkboxContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkboxContainer span {
+    margin-left: 8px;
+  }
+  

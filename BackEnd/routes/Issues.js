@@ -122,6 +122,22 @@ router.patch('/update/:id', async (req, res) => {
     }
   });
   
+  //fetch values from the Issue table based on the given cusname
+  router.route('/get/:CusName').get(async (req, res) => {
+    const CusName = req.params.CusName;
+    try {
+      const issue = await Issue.findOne({ CusName });
+      if (issue) {
+        res.status(200).json(issue);
+      } else {
+        res.status(404).json({ message: 'Issue not found' });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Error fetching issue' });
+    }
+  });
+  
   
 
 module.exports = router;

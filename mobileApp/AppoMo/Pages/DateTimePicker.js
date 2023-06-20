@@ -10,21 +10,23 @@ const DateTimePicker = () => {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
   const today = new Date();
 
-  //const _id = '64860f6de9907344a0e60397';
-  const Name = 'Gimhani';
-  const ContactNo = 774423315;
-  const InvoiceNo= '2065';
-  const Product= 'Phone';
-  const IssueInBrief= 'Broken';
-  //const ApntmntDate: ,
-  //const Time:
-  const AptmntStatus = true;
-  const Completed = false;
+  const branchID = '';
+  // const AptNumber = 1;
+  // const Name = 'Gimhani';
+  // const ContactNo = 774423315;
+  // const InvoiceNo= '2065';
+  // const Product= 'Phone';
+  // const IssueInBrief= 'Broken';
+  // const AptmntStatus = true;
+  // const Completed = false;
   const startTime = '08:00';
   const endTime = '19:00';
   const noOfAppointmentsPerHour = 4;
 
   const timeSlots = generateTimeSlots(startTime, endTime, noOfAppointmentsPerHour);
+
+  const twoWeeksFromToday = new Date();
+  twoWeeksFromToday.setDate(twoWeeksFromToday.getDate() + 14);
 
   const handleDateSelect = (date) => {
     setSelectedDate(date.dateString);
@@ -47,53 +49,6 @@ const DateTimePicker = () => {
         setSelectedTimeSlot(updatedTimeSlots[timeSlotIndex]);
       }
     }
-
-    /*try {
-      const updateFields = {
-        ApntmntDate,
-        Time
-      };
-      await axios.put(`http://localhost:8070/serviceprovider/update/${_id}`,updateFields);
-      alert('Appointment scheduled successfully.');
-    } catch (error) {
-      console.error('Error scheduling appointment:', error);
-    }*/
-
-    const requestBody = {
-      Name: name,
-      ContactNo: contactNo,
-      InvoiceNo: invoice,
-      Product: product,
-      IssueInBrief: issueInBrief,
-      //ApntmntDate: ,
-      //Time:
-      //AptmntStatus:
-      //Completed:
-
-    };
-  
-// Make an API request to send the data to the backend
-fetch("http://10.0.2.2:8070/Appointments/add", {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    "Name": name,
-    "ContactNo": contactNo,
-    "InvoiceNo": invoice,
-    "Product": product,
-    "IssueInBrief": issueInBrief
-  })
-})
-  .then(res => res.json())
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => {
-    console.log(error);
-  });
-
   };
 
 
@@ -102,7 +57,7 @@ fetch("http://10.0.2.2:8070/Appointments/add", {
       {/* Calendar */}
       {showCalendar && (
         <View style={styles.calendarContainer}>
-          <Calendar onDayPress={handleDateSelect} minDate={today} />
+          <Calendar onDayPress={handleDateSelect} minDate={today} maxDate={twoWeeksFromToday} />
         </View>
       )}
 

@@ -11,25 +11,38 @@ const ResetPwd = props => {
     return null;
   };
 
-  const validateNewPassword = (newpassword) => {
-    if (!newpassword) {
+  // const validateNewPassword = (newpassword) => {
+  //   if (!newpassword) {
+  //     return "*New Password is required.";
+  //   }
+
+  //   const passwordRegex = /^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[a-zA-Z]).{8,}$/;
+
+  //   if (!passwordRegex.test(newpassword)) {
+  //     return "*Your password must contain minimum of 8 characters with a combination of at least one uppercase letter, one lowercase letter and one number."
+  //   }
+  //   return null;
+  // };
+  const validateNewPassword = (password) => {
+    if (!password) {
       return "*New Password is required.";
     }
-
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-
-    if (!passwordRegex.test(newpassword)) {
-      return "*Your password must contain minimum of 8 characters with a combination of at least one uppercase letter, one lowercase letter and one number."
+  
+    const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.*\d).{8,}$/;
+  
+    if (!passwordRegex.test(password)) {
+      return "*Your password must contain a minimum of 8 characters with a combination of at least one uppercase letter, one lowercase letter, and one number.";
     }
     return null;
   };
+  
 
-  const validateConfirmPassword = (newpassword, confirmPassword) => {
+  const validateConfirmPassword = (password, confirmPassword) => {
     if (!confirmPassword) {
       return "*Please confirm password.";
     }
 
-    if (newpassword != confirmPassword) {
+    if (password != confirmPassword) {
       return "*Passwords do not match.";
     }
 
@@ -38,36 +51,38 @@ const ResetPwd = props => {
 
   const [fetchedPassword, setFetchedPassword] = useState('');
   const [currentpassword, setCurrentPassword] = useState('');
-  const [newpassword, setNewPassword] = useState('');
+  const [password, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
   const Cname = "username";
 
   useEffect(() => {
+    fetchdata();
+  }, []);
+
   const fetchdata = async () => {
     try {
-      const response = await axios.get(`http://localhost:8070/UserDetails/get/${Cname}`);
-      const data = response.data;
-      if (data && data.password) {
-        setFetchedPassword(data.password);
-      }
+      const data = await axios.get(`http://10.0.2.2:8070/UserDetails/get/${Cname}`);
+     
+      
+        setFetchedPassword(data.data[0].password);
+    
     } catch (error) {
       console.error('Error fetching password:', error);
     }
   };
-  fetchdata();
-}, []);
+
 
 
   const handleSubmit = async () => {
     const currentpasswordError = validateCurrentPassword(currentpassword);
-    const newpasswordError = validateNewPassword(newpassword);
-    const confirmPasswordError = validateConfirmPassword(newpassword, confirmPassword);
+    const newpasswordError = validateNewPassword(password);
+    const confirmPasswordError = validateConfirmPassword(password, confirmPassword);
     
     if (currentpasswordError || newpasswordError || confirmPasswordError) {
       setErrors({
         currentpassword: currentpasswordError,
-        newpassword: newpasswordError, 
+        password: newpasswordError, 
         confirmPassword: confirmPasswordError
       });
     }
@@ -87,11 +102,19 @@ const ResetPwd = props => {
       { cancelable: false },);
       
       try {
-        const updateFields = {
-          password
-        };
-        await axios.put(`http://localhost:8070/UserDetails/update/${Cname}`,updateFields);
-        alert('Details updated successfully');
+      //   const updateFields = {
+      //     password
+      //   };
+      //   await axios.put(`http://localhost:8070/UserDetails/update/${Cname}`,updateFields);
+      //   alert('Details updated successfully');
+      const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${Cname}`,
+       {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({password}),
+      });
       } catch (error) {
           console.error('Error updating user:', error);
       }
@@ -104,52 +127,49 @@ const ResetPwd = props => {
     setConfirmPassword('');
     setErrors({});
   };
-
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>Reset Password</Text>
       
-        <View style={styles.inputContainer}>
-      
-          <TextInput style={styles.inputField}
-            placeholder="Current Password"
-            secureTextEntry={true}
-            autoCapitalize="none"
-            autoCorrect={false}
-            value={currentpassword}
-            onChangeText={setCurrentPassword}/>
-            {errors.currentpassword && <Text style={styles.errorText}>{errors.currentpassword}</Text>}
+      <View style={styles.inputContainer}>
+    
+        <TextInput style={styles.inputField}
+          placeholder="Current Password"
+          secureTextEntry={true}
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={currentpassword}
+          onChangeText={setCurrentPassword}/>
+          {errors.currentpassword && <Text style={styles.errorText}>{errors.currentpassword}</Text>}
 
-          <TextInput style={styles.inputField}
-            placeholder="New Password"
-            secureTextEntry={true}
-            autoCapitalize="none"
-            autoCorrect={false}
-            value={newpassword}
-            onChangeText={setNewPassword}/>
-            {errors.newpassword && <Text style={styles.errorText}>{errors.newpassword}</Text>}
+        <TextInput style={styles.inputField}
+          placeholder="New Password"
+          secureTextEntry={true}
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={newpassword}
+          onChangeText={setNewPassword}/>
+          {errors.newpassword && <Text style={styles.errorText}>{errors.newpassword}</Text>}
 
-          <TextInput style={styles.inputField}
-            placeholder="Confirm Password"
-            secureTextEntry={true}
-            autoCapitalize="none"
-            autoCorrect={false}
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}/>
-            {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
-      
-          <TouchableOpacity  style={styles.btnContainer}
-            onPress={handleSubmit}>
-            <Text style={styles.btnText}>Change Password</Text>       
-          </TouchableOpacity>
+        <TextInput style={styles.inputField}
+          placeholder="Confirm Password"
+          secureTextEntry={true}
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}/>
+          {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
+    
+        <TouchableOpacity  style={styles.btnContainer}
+          onPress={handleSubmit}>
+          <Text style={styles.btnText}>Change Password</Text>       
+        </TouchableOpacity>
 
-          <TouchableOpacity  style={styles.btnContainer}
-            onPress={handleCancel}>
-            <Text style={styles.btnText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>   
-      </ScrollView>
+        <TouchableOpacity  style={styles.btnContainer}
+          onPress={handleCancel}>
+          <Text style={styles.btnText}>Cancel</Text>
+        </TouchableOpacity>
+      </View>   
     </View> 
   );
 }

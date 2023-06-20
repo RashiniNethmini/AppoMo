@@ -11,7 +11,7 @@ router.route("/add").post((req, res) => {
     const Time =  req.body.Time;
     const AptmntStatus = Boolean(req.body.AptmntStatus);
     const Completed = Boolean(req.body.Completed);
-
+    const finalAmount = Number(req.body.finalAmount);
 
     const newAppointment = new Appointment({
         Name,
@@ -22,8 +22,8 @@ router.route("/add").post((req, res) => {
         ApntmntDate,
         Time,
         AptmntStatus,
-        Completed
-        
+        Completed,
+        finalAmount
     })
     //pass the object to the database.
     newAppointment.save().then(() => {
@@ -180,5 +180,25 @@ router.route('/groupedData').get(async (req, res) => {
     })*/
 
 })
+
+// PUT /Appointments/updateFinalAmount/:aptNumber endpoint
+router.put('/Appointments/updateFinalAmount/:aptNumber', async (req, res) => {
+  try {
+    const { aptNumber } = req.params;
+    const { finalAmount } = req.body;
+
+    // Update the finalAmount in the Appointment table based on the aptNumber
+    await Appointment.findOneAndUpdate(
+      { AptNumber: aptNumber },
+      { $set: { finalAmount: finalAmount } }
+    );
+
+    res.status(200).json({ message: 'Final amount updated successfully' });
+  } catch (error) {
+    console.error('Error updating final amount:', error);
+    res.status(500).json({ error: 'An error occurred while updating the final amount' });
+  }
+});
+
 
 module.exports = router;

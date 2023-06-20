@@ -7,7 +7,8 @@ const brdetailsSchema = new Schema({
         type: String,
         required: true,
     },
-   managerName: {
+    
+    managerName: {
         type: String,
         required: true,
     },

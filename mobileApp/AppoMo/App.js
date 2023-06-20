@@ -28,6 +28,7 @@ import IssueSubmitMsg from './Pages/IssueSubmitMsg';
 import ProductDetails from './Pages/ProductDEtails';
 import SCIssueSubmission from './Pages/SCIssueSubmission';
 import VerifyOTP from './Pages/VerifyOTP';
+import DateTimePicker from './Pages/DateTimePicker';
 
 
 
@@ -37,8 +38,8 @@ export default function App() {
   return (
     <NativeRouter>
     <View style={styles.container}>
-    {/* <Provider>
-     <Routes>
+    <Provider>
+     {/* <Routes>
      
       {/*<Route path="/" element={<SplashScreen/>} />
       <Route path="/Login" element={<Login/>} />
@@ -77,6 +78,9 @@ export default function App() {
                  {/* <ForgotPW/>  */}
         <VerifyOTP/>
         {/* <EditProfile/> */}
+        {/* <EditProfile/>  */}
+        {/* <DateTimePicker/> */}
+        
         {/* <ResetPassword/> */}
         {/* <CustomerProfile/> */}
 

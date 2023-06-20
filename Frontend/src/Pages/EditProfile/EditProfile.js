@@ -32,7 +32,7 @@ const Sname = 'ABC';
 
   useEffect(()=>{
     const fetchdata= async ()=>{
-      const data=await axios.get(`http://localhost:8070/serviceprovider/get/${Sname}`);
+      const data=await axios.get(`http://localhost:8070/serviceprovider/searchE/${Sname}`);
       setData(data);
       setName(data.serviceProviderName);
       setAddress(data.address);

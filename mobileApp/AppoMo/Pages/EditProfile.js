@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput, Alert} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, TextInput, Alert} from 'react-native';
 import axios from 'axios';
 
 const EditProfile = props => {
@@ -66,9 +66,23 @@ const EditProfile = props => {
   const [email, setEmail] = useState('');
   const [nic, setNIC] = useState('');
   const [errors, setErrors] = useState({});
-  const Cname = "AnudhiDisra";
+  const [data,setData]=useState("");
+  const Cname = 'username';
 
-  
+  useEffect(() => {
+    fetchdata();
+  }, []);
+
+  const fetchdata= async ()=>{
+    try{
+    const data=await fetch(`http://10.0.2.2:8070/UserDetails/get/${Cname}`);
+    const jsonData = await data.json();
+    setData(jsonData);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+  };
+
 
   const handleSubmit = async () => {
     const usernameError = validateUsername(username);
@@ -95,70 +109,84 @@ const EditProfile = props => {
       { cancelable: false },);
 
       try {
-        const updateFields = {
-          username,
-          email,
-          contactNo,
-          address,
-          nic
-        };
-        await axios.put(`http://localhost:8070/serviceprovider/update/${Cname}`,updateFields);
-        alert('Details updated successfully');
+        const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${Cname}`,
+       {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({username,
+            email,
+            contactNo,
+            address,
+            nic}),
+      });
+  
       } catch (error) {
         console.error('Error updating user:', error);
       }
     }   
   };
 
+  const handleCancel = () => {
+    setUsername('');
+    setAddress('');
+    setContact('');
+    setEmail('');
+    setNIC('');
+    setErrors({});
+  };
+
+  
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      
         <Text style={styles.title}>Edit Profile</Text>
-      
         <View style={styles.inputContainer}>
+        
+        <TextInput style={styles.inputField}
+          placeholder="Username"
+          value={username}
+          onChangeText={setUsername}/>
+          {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
+
+        <TextInput style={styles.inputField}
+          placeholder="Address"
+          value={address}
+          onChangeText={setAddress}/>
+          {errors.address && <Text style={styles.errorText}>{errors.address}</Text>}
+
+        <TextInput style={styles.inputField}
+          placeholder="Contact Number"
+          keyboardType={'number'}
+          value={contactNo}
+          onChangeText={setContact}/>
+         {errors.contactNo && <Text style={styles.errorText}>{errors.contactNo}</Text>}
+
+        <TextInput style={styles.inputField}
+          placeholder="Email"
+          keyboardType={'email-address'}
+          value={email}
+          onChangeText={setEmail}/>
+          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+
+        <TextInput style={styles.inputField}
+          placeholder="NIC"
+          value={nic}
+          onChangeText={setNIC}/>
+          {errors.nic && <Text style={styles.errorText}>{errors.nic}</Text>}
+    
+        <TouchableOpacity  style={styles.btnContainer}
+          onPress={handleSubmit}>
+          <Text style={styles.btnText}>Save Changes</Text>       
+        </TouchableOpacity>
+
+        <TouchableOpacity  style={styles.btnContainer} 
+          onPress={handleCancel}>
+          <Text style={styles.btnText}>Cancel</Text>
+        </TouchableOpacity>
+      </View>   
       
-          <TextInput style={styles.inputField}
-            placeholder="Username"
-            value={username}
-            onChangeText={setUsername}/>
-            {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
-
-          <TextInput style={styles.inputField}
-            placeholder="Address"
-            value={address}
-            onChangeText={setAddress}/>
-            {errors.address && <Text style={styles.errorText}>{errors.address}</Text>}
-
-          <TextInput style={styles.inputField}
-            placeholder="Contact Number"
-            keyboardType={'number'}
-            value={contactNo}
-            onChangeText={setContact}/>
-           {errors.contactNo && <Text style={styles.errorText}>{errors.contactNo}</Text>}
-
-          <TextInput style={styles.inputField}
-            placeholder="Email"
-            keyboardType={'email-address'}
-            value={email}
-            onChangeText={setEmail}/>
-            {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-
-          <TextInput style={styles.inputField}
-            placeholder="NIC"
-            value={nic}
-            onChangeText={setNIC}/>
-            {errors.nic && <Text style={styles.errorText}>{errors.nic}</Text>}
-      
-          <TouchableOpacity  style={styles.btnContainer}
-            onPress={handleSubmit}>
-            <Text style={styles.btnText}>Save Changes</Text>       
-          </TouchableOpacity>
-
-          <TouchableOpacity  style={styles.btnContainer} >
-            <Text style={styles.btnText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>   
-      </ScrollView>
     </View> 
   );
 }
@@ -169,8 +197,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#084C4F',
     alignItems: "center",
-    justifyContent: 'center'
-    //width: 360
+    justifyContent: 'center',
+    width: 400,
   },
 
   scrollContainer: {
@@ -189,12 +217,12 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     backgroundColor: '#FFFFFF',
-    height: 650,
-    width: 360,
+    height: 750,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
     paddingTop: 20,
-    alignItems: 'center'
+    alignItems: 'center',
+    width: 400,
   },
 
   inputField: {
@@ -218,7 +246,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
-  btnText:{
+  btnText:{ 
     color: '#FFFFFF', 
     fontSize: 20,
     fontWeight: 'bold',
