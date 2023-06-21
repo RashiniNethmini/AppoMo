@@ -12,11 +12,12 @@ import RPw from "./component/ResetPwPage/RPw";
 import ProviderType from "./component/ProviderTypePage/ProviderType";
 // import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard/Dashboard"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NavBar from './component/NavBar/NavBar';
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NavBar from './component/NavBar';
 import AppointmentConfirm from "./Pages/AppoinmentConfirm/AppointmentConfirm";
 import { deepmerge } from '@mui/utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 const theme = createTheme({
@@ -42,33 +43,24 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-       
-        {/* <Signin/> */}
-        
-        {/* <Reg/> */}
-        {/* <FPw/> */}
-        {/* <RPw/> */}
-        <ProviderType/>
-
-        {/* <EditProfile/> */}
-        {/* <ResetPassword /> 
-        <Dashboard/>
-        <AppointmentConfirm />
-        <BrUpdate/> */}
-        {/* <ResetPassword />  */}
-        {/* // <Dashboard/> */}
-        {/* <EditProfile/> */}
-        {/* <AppointmentConfirm /> */}
-        {/* <FPw/>
-        <ResetPassword />  */}
-        {/*<Dashboard/>*/}
-        {/* <EditProfile/> */}
-        <AppointmentConfirm /> 
-        {/* <BrUpdate/>  */}
-       
-        <Termination/>
-        
-      </ThemeProvider>
+    <Router>
+    {/* <EditProfile/> */}
+      <NavBar/>
+      <Routes>
+        {/* <Route path='/' exact element={<Signin/>} /> */}
+        <Route path='/Dashboard' element={<Dashboard/>} />
+        <Route path='/AppointmentConfirm' element={<AppointmentConfirm/>} />
+        <Route path='/BrUpdate' element={<BrUpdate/>} />
+        <Route path='/EditProfile' element={<EditProfile/>} />
+        <Route path='/ResetPassword' element={<ResetPassword/>} />
+         {/* <Route path='/events' component={Events} />
+        <Route path='/annual' component={AnnualReport} /> */}
+       {/* <Route path='/team' component={Teams} />
+        <Route path='/blogs' component={Blogs} />
+        <Route path='/sign-up' component={SignUp} /> */}
+      </Routes>
+    </Router>
+    </ThemeProvider>
     </div>
   );
 

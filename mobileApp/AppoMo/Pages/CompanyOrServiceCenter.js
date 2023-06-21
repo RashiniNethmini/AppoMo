@@ -5,25 +5,35 @@ import { StyleSheet, Text, View,Button,TouchableOpacity,SafeAreaView,
 import {Table,Row,Rows} from 'react-native-table-component';
 import { MaterialIcons } from '@expo/vector-icons';
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { useParams } from 'react-router-native';
 
 
   function CompanyOrServiceCenter() {
 
     const navigate = useNavigate();
+    const {objectId} = useParams();
 
   const handlePress = () => {
-    navigate('/CompanyDetails');
+    navigate(`/CompanyDetails/${objectId}`,{objectId});
 
   };
   const handlePress1 = () => {
-    navigate('/SelectServiceCenter');
+    navigate(`/SelectServiceCenter/${objectId}`,{objectId});
 
   };
+  
   return (
-
+    <View  style={{flex:2,marginTop:60}}>
+     <View  style={{flex:1,flexDirection:'row',alignSelf:'flex-end'}}>
+<Link to="/NotificationInterface"><Ionicons name="notifications-sharp" size={40} color="black" /></Link>
+<Link to="/CustomerProfile"><FontAwesome name="user-circle-o" size={40} color="black" style={{ marginLeft: 30 }} /></Link>
+</View>
     <View 
-    style={{flex:2,flexDirection:'column',marginTop:200}}
+    style={{flex:2,flexDirection:'column',marginTop:-120}}
     >
+    
       <View>
       <TouchableOpacity onPressOut={handlePress}
       style={styles.appButtonContainer}>
@@ -36,6 +46,7 @@ import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
     <Text style={styles.appButtonText}>Service Center</Text>
   </TouchableOpacity>
       </View>  
+      </View>
       </View>
   );
 }

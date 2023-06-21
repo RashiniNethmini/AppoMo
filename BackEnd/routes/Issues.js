@@ -4,7 +4,7 @@ const sendSms = require('../APIs/SmsAPI.js');
 
 
 router.route("/add").post((req, res) => {
-  const { Name, ContactNo, InvoiceNo, Product, IssueInBrief, AudioUri } = req.body;
+  const { Name, ContactNo, InvoiceNo, Product, IssueInBrief, AudioUri,BranchDetails } = req.body;
 
   
 
@@ -14,7 +14,8 @@ router.route("/add").post((req, res) => {
     InvoiceNo,
     Product,
     IssueInBrief,
-    AudioUri //voice message URI
+    AudioUri,
+    BranchDetails
   });
 
   // Save the new issue to the database
@@ -139,6 +140,32 @@ router.patch('/update/:id', async (req, res) => {
   });
   
   
+
+router.route("/notfication/:id").get(async(req,res)=>{
+  let relevantUserId=req.params.id; 
+
+  let noti=await Issue.aggregate([
+      {
+          $match: {
+            status:'accepted',
+            UserDetails:relevantUserId
+          }
+        },
+        // {
+        //   $sort: {
+        //     starRating:-1
+        //   }
+        // },
+      ])
+  // res.send(data);
+  .then((noti)=>{
+  res.send(noti)
+ 
+  }).catch((err)=>{
+  console.log(err);
+  res.status(500).send({status:"Error with get notification"});
+  })
+})
 
 module.exports = router;
 

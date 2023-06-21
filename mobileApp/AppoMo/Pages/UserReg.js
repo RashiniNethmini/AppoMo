@@ -4,6 +4,7 @@ import { Card, Button, Text, TextInput, IconButton, Dialog, Paragraph, Portal, c
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as Animatable from 'react-native-animatable';
 import Feather from 'react-native-vector-icons/Feather';
+import { BackHandler } from 'react-native';
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
@@ -11,6 +12,19 @@ const MAX_HEIGHT = 500;
 
 export default function UserRegistr() {
   const navigate = useNavigate();
+  const handleBackButton = () => {
+    navigate('/Login');
+    return true;
+  };
+  
+  
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => backHandler.remove();
+  }, [handleBackButton]);
+
   const [username, setTextusername] = useState("");
   const [password, setTextpassword] = useState("");
   const [confirmPassword, setTextconfirmpassword] = useState("");
@@ -165,7 +179,7 @@ export default function UserRegistr() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
       })
       .catch(error => {
         console.log(error);
@@ -190,7 +204,25 @@ export default function UserRegistr() {
 
     // Check the input fields
     checkInputs();
-    navigate('/CompanyOrServiceCenter');
+    fetch(`http://10.0.2.2:8070/UserDetails/get/${username}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        const objectId = data[0]._id; // Assuming the response from the backend contains the object ID as "_id"
+        console.log(objectId);
+        navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
+
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  
+    
   };
 
   React.useEffect(() => {

@@ -41,7 +41,17 @@ const issueSchema = new Schema({
   AudioUri: {
     type: String,
     default: null,
-  },
+  }, 
+  BranchDetails: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'BranchDetails' 
+  }, 
+  UserDetails: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'UserDetails' 
+  }
+  
+
 });
 
 issueSchema.pre('save', function (next) {

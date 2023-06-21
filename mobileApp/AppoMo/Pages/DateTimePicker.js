@@ -49,7 +49,83 @@ const DateTimePicker = () => {
         setSelectedTimeSlot(updatedTimeSlots[timeSlotIndex]);
       }
     }
-  };
+
+    // Make an API request to send the data to the backend
+    fetch('http://10.0.2.2:8070/Appointments/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        Name,
+        ContactNo,
+        InvoiceNo,
+        Product,
+        IssueInBrief,
+        ApntmntDate,
+        Time,
+        AptmntStatus,
+        Completed,
+      }),
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        console.log(data);
+    })
+      .catch((error) => {
+        console.log(error);
+    });
+    /*try {
+      const updateFields = {
+        ApntmntDate,
+        Time
+      };
+      await axios.put(`http://localhost:8070/serviceprovider/update/${_id}`,updateFields);
+      alert('Appointment scheduled successfully.');
+    } catch (error) {
+      console.error('Error scheduling appointment:', error);
+    }
+
+    const requestBody = {
+      Name: name,
+      ContactNo: contactNo,
+      InvoiceNo: invoice,
+      Product: product,
+      IssueInBrief: issueInBrief,
+      //ApntmntDate: ,
+      //Time:
+      AptmntStatus: aptmntStatus,
+      Completed: completed,
+
+    };
+  
+  // Make an API request to send the data to the backend
+  fetch("http://10.0.2.2:8070/Appointments/add", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "Name": name,
+      "ContactNo": contactNo,
+      "InvoiceNo": invoice,
+      "Product": product,
+      "IssueInBrief": issueInBrief,
+      //"ApntmntDate":,
+      //"Time":,
+      //"AptmntStatus":,
+      //"Completed":,
+    })
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.log(error);
+    });*/
+
+    };
 
 
   return (

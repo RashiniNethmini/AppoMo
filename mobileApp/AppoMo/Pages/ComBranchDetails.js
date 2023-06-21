@@ -294,15 +294,15 @@
 // export default ComBranchDetails;
 
 import React, { useState,useEffect } from 'react';
-// import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import { StyleSheet, Text, View,TouchableOpacity,
     TouchableWithoutFeedback,
     Animated,
     ScrollView } from 'react-native';
 import {Table,Row,Rows} from 'react-native-table-component';
 import { MaterialIcons } from '@expo/vector-icons';
-// import { useParams } from 'react-router-native';
-
+import { useParams } from 'react-router-native';
+import { BackHandler } from 'react-native';
 
 
 
@@ -310,14 +310,25 @@ import { MaterialIcons } from '@expo/vector-icons';
 
     // const route = useRoute();
     // const { serviceProviderName } = route.params;
-    // const { serviceProviderName } = useParams();
+    const { serviceProviderName, _id } = useParams();
 
     // const route =Route();
     // const { componentId } = route.params;
-    // const [s, setS] = useState(null);
+    const [s, setS] = useState(null);
    
-    // const navigate = useNavigate();
-
+    const navigate = useNavigate();
+    const handleBackButton = () => {
+      navigate('/CompanyDetails/:objectId');
+      return true;
+    };
+  
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+  
+      return () => backHandler.remove();
+    }, [handleBackButton]);
+  
+  
   
     const starRatingOptions = [1, 2, 3, 4, 5];
 
@@ -365,14 +376,49 @@ import { MaterialIcons } from '@expo/vector-icons';
     }
   };
 
+  useEffect(() => {
+    if (starRating !== null) {
+      updateStarRating();
+    }
+  }, [starRating]);
   
+  const updateStarRating = async () => {
+    try {
+      const responsed = await fetch(`http://10.0.2.2:8070/serviceprovider/getr/${_id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+   
+    const resultt = await responsed.json();
+    // console.log(resultt);
+    const currentRating = resultt.serviceprovider.starRating || 0; // Default to 0 if no rating exists
+    const updatedRating = currentRating + starRating;
+
+
+      const updateresponse = await fetch(`http://10.0.2.2:8070/serviceprovider/updater/${_id}`,
+       {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ starRating: updatedRating }),
+      });
+  
+      const result = await updateresponse.json();
+      console.log(result); // Optional: Handle the response from the server
+    } catch (error) {
+      console.error('Error updating rating:', error);
+    }
+  };
     
   return (
   <View>
     <View style={{marginTop:200}}>
       <View>
         <Text style={styles.serviceCenterText}>
-        companyName
+        {serviceProviderName}
         </Text>
       </View>
       
@@ -381,12 +427,13 @@ import { MaterialIcons } from '@expo/vector-icons';
           <View style={{width:380 }}>
               {data.map(item => (
                
-               
-                <TouchableOpacity style={styles.appButtonContainer} key={item._id}>
+                <Link to={`/IssueSubmission/${item._id}`} component={TouchableOpacity} style={styles.appButtonContainer} key={item._id}>
                         <View><Text style={styles.appButtonText1}>{item.branchName}</Text>
                         <Text style={styles.appButtonText}>{item.contactNo}</Text>
                         <Text style={styles.appButtonText}>{item.address}</Text></View>
-                </TouchableOpacity>
+                </Link>
+                
+             
                ))}
                </View>
           </ScrollView>
@@ -508,3 +555,4 @@ const styles = StyleSheet.create({
 
 
 export default ComBranchDetails;
+

@@ -378,13 +378,13 @@ export const Reg = (props) => {
                         onChange={handleWorkingHoursChange} error={Boolean(workingHoursError)}
                         helperText={workingHoursError}/>
 
-                    </div>
-                    <div className={styles.regBodyTextbox}>
-                        <TextField label="No of Appoinments per day" required="outlined" sx={{ width: '100vw' }} id="noOfAppoinments"
-                        onChange={handleNoOfAppoinmentsChange} error={Boolean(noOfAppoinmentsError)}
-                        helperText={noOfAppoinmentsError}/>
-
                     </div> */}
+                    {/* <div className={styles.regBodyTextbox}>
+                        <TextField label="Reparing products" sx={{ width: '100vw' }} id="ReparingProducts"
+                        onChange={handleProduct} 
+                        />
+
+                    </div> */} 
 
                     <div className={styles.regButton}>
                         <Button variant="contained" sx={{mr:'10px'}} type="submit" >Cancel</Button>

@@ -1,6 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput, Alert} from 'react-native';
 import axios from 'axios';
+import { BackHandler } from 'react-native';
+
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 
 const ResetPwd = props => {
 
@@ -28,7 +32,7 @@ const ResetPwd = props => {
       return "*New Password is required.";
     }
   
-    const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.*\d).{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   
     if (!passwordRegex.test(password)) {
       return "*Your password must contain a minimum of 8 characters with a combination of at least one uppercase letter, one lowercase letter, and one number.";
@@ -127,6 +131,73 @@ const ResetPwd = props => {
     setConfirmPassword('');
     setErrors({});
   };
+
+
+
+  // const handleSubmit = async () => {
+  //   const currentpasswordError = validateCurrentPassword(currentpassword);
+  //   const newpasswordError = validateNewPassword(password);
+  //   const confirmPasswordError = validateConfirmPassword(password, confirmPassword);
+    
+  //   if (currentpasswordError || newpasswordError || confirmPasswordError) {
+  //     setErrors({
+  //       currentpassword: currentpasswordError,
+  //       password: newpasswordError, 
+  //       confirmPassword: confirmPasswordError
+  //     });
+  //   }
+  //   else if (currentpassword !== fetchedPassword) {
+  //     setErrors({
+  //     ...errors,
+  //     currentpassword: "*Current Password is incorrect."
+  //     });
+  //     return;
+  //   }
+  //   else {
+  //     Alert.alert('Information', 'Your password has been updated.',
+  //     [
+  //       {text: 'OK', 
+  //       onPress: () => console.log('OK Pressed')},
+  //     ],
+  //     { cancelable: false },);
+      
+  //     try {
+  //     //   const updateFields = {
+  //     //     password
+  //     //   };
+  //     //   await axios.put(`http://localhost:8070/UserDetails/update/${Cname}`,updateFields);
+  //     //   alert('Details updated successfully');
+  //     const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${Cname}`,
+  //      {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({password}),
+  //     });
+  //     } catch (error) {
+  //         console.error('Error updating user:', error);
+  //     }
+  //   }
+  // };
+
+  // const handleCancel = () => {
+  //   setCurrentPassword('');
+  //   setNewPassword('');
+  //   setConfirmPassword('');
+  //   setErrors({});
+  // };
+
+  const navigate = useNavigate();
+    const handleBackButton = () => {
+      navigate('/CustomerProfile');
+      return true;
+    };
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+  
+      return () => backHandler.remove();
+    }, [handleBackButton]);
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Reset Password</Text>
@@ -142,14 +213,14 @@ const ResetPwd = props => {
           onChangeText={setCurrentPassword}/>
           {errors.currentpassword && <Text style={styles.errorText}>{errors.currentpassword}</Text>}
 
-        <TextInput style={styles.inputField}
-          placeholder="New Password"
-          secureTextEntry={true}
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={newpassword}
-          onChangeText={setNewPassword}/>
-          {errors.newpassword && <Text style={styles.errorText}>{errors.newpassword}</Text>}
+          <TextInput style={styles.inputField}
+            placeholder="New Password"
+            secureTextEntry={true}
+            autoCapitalize="none"
+            autoCorrect={false}
+            value={password}
+            onChangeText={setNewPassword}/>
+            {errors.newpassword && <Text style={styles.errorText}>{errors.newpassword}</Text>}
 
         <TextInput style={styles.inputField}
           placeholder="Confirm Password"

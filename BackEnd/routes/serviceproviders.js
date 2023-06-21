@@ -359,7 +359,53 @@ router.route("/get/:id").get(async(req,res)=>{
             "$or":[
                 {
                     "providerType":{$regex:'Service Center'},
-                   "address":{$regex:req.params.id}
+                   "address":{$regex:req.params.id},
+                }
+            ]
+        }
+    )
+    // res.send(data);
+    .then((SP)=>{
+    res.send(SP)
+   
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get Appointment"});
+    })
+})
+
+router.route("/getp/:id").get(async(req,res)=>{
+    console.log(req.params.id);   
+
+    let SP=await ServiceProvider.find(
+        {
+            "$or":[
+                {
+                    "providerType":{$regex:'Service Center'},
+                   "ReparingProducts":{$regex:req.params.id}
+                }
+            ]
+        }
+    )
+    // res.send(data);
+    .then((SP)=>{
+    res.send(SP)
+   
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get Appointment"});
+    })
+})
+
+router.route("/getC/:id").get(async(req,res)=>{
+    console.log(req.params.id);   
+
+    let SP=await ServiceProvider.find(
+        {
+            "$or":[
+                {
+                    "providerType":{$regex:'Company'},
+                   "address":{$regex:req.params.id},
                 }
             ]
         }
@@ -398,7 +444,7 @@ router.route("/search/:id").get(async(req,res)=>{
 })
 
 router.route("/searchE/:id").get(async(req,res)=>{
-    console.log(req.params.id);  
+    // console.log(req.params.id);  
     
     let SPP=await ServiceProvider.find(
         {
@@ -451,6 +497,37 @@ router.route("/getSC").get(async(req,res)=>{
     })
 })
 
+router.route("/getCom").get(async(req,res)=>{
+    console.log(req.params.id);   
+
+    let Com=await ServiceProvider.aggregate([
+        {
+            $match: {
+                providerType:'Company'
+            }
+          },
+          {
+            $sort: {
+              starRating:-1
+            }
+          },
+        // {
+        //     "$or":[
+        //         {
+        //            "providerType":{$regex:'Service Center'}
+        //         }
+        //     ]
+        // }
+        ])
+    // res.send(data);
+    .then((Com)=>{
+    res.send(Com)
+   
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get Appointment"});
+    })
+})
 router.route("/getr/:id").get(async(req,res)=>{
         let serviceProviderId=req.params.id;   
        

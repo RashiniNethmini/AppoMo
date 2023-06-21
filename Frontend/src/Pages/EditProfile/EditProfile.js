@@ -31,17 +31,17 @@ const [data,setData]=useState("");
 const Sname = 'ABC';
 
   useEffect(()=>{
-    const fetchdata= async ()=>{
-      const data=await axios.get(`http://localhost:8070/serviceprovider/searchE/${Sname}`);
-      setData(data);
-      setName(data.serviceProviderName);
-      setAddress(data.address);
-      setemail(data.email);
-      setceo(data.ceoName);
-      validity(true);
-    };
-    fetchdata();
-  },[]);
+const fetchdata= async ()=>{
+  const data=await axios.get(`http://localhost:8070/serviceprovider/searchE/${Sname}`);
+  setData(data);
+  setName(data.serviceProviderName);
+  setAddress(data.address);
+  setemail(data.email);
+  setceo(data.ceoName);
+  validity(true);
+};
+fetchdata();
+},[]);
 
 
   const handleUpdate = async () => {
@@ -86,7 +86,7 @@ const Sname = 'ABC';
      
     }else{
       setErr1("");
-    
+  
     }
   } 
 
@@ -195,4 +195,3 @@ const validateEmail = (e) => {
   );
 
 }
-

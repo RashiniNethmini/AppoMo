@@ -13,9 +13,10 @@
     display: flex;
     justify-content: center;
     max-width: 1000px;
-    padding-left: 30vw;
+    padding-left: 20vw;
     padding-right: 30vw;
-    margin:  15vw;
+   margin-top: -5%;
+    /* margin:  15vw; */
     
 
  

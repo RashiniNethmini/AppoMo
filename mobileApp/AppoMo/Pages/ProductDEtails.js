@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, StatusBar, Dimensions } from 'react-native';
-import { Text, Card } from 'react-native-paper';
+import { Text, Card,Button } from 'react-native-paper';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 export default function ProductDetails() {
@@ -79,6 +79,16 @@ export default function ProductDetails() {
             )}
           </Card.Content>
         </Card>
+        <View>
+                    
+                    <Button mode="contained"
+                     onPress={()=>handleSubmit()} 
+                     style={{ backgroundColor: '#388F82' }} 
+                     >
+                      OK
+                    </Button>
+                 
+                  </View>
       </View>
     </>
   );

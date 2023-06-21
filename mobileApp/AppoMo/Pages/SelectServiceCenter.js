@@ -6,10 +6,25 @@ import { SearchBar } from "@rneui/base";
 // import { useNavigation } from '@react-navigation/native';
 import ServiceCenter from './ServiceCenter';
 // export { handlePress };
+import { BackHandler } from 'react-native';
 
 function SelectServiceCenter() {
 
   const navigate = useNavigate();
+  
+  const handleBackButton = () => {
+    navigate('/CompanyOrServiceCenter/:objectId');
+    return true;
+  };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => backHandler.remove();
+  }, [handleBackButton]);
+
+
+
 
   const handlePress = (serviceProviderName) => {
     navigate('/ServiceCenter', { serviceProviderName, _id});
@@ -24,7 +39,7 @@ function SelectServiceCenter() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://192.168.1.226:8070/serviceprovider/getSC");
+      const response = await fetch("http://10.0.2.2:8070/serviceprovider/getSC");
       const jsonData = await response.json();
       setData(jsonData);
     } catch (error) {
@@ -42,7 +57,7 @@ function SelectServiceCenter() {
 
   const fetchSearchData = async () => {
      {
-      const responsee = await fetch(`http://192.168.1.226:8070/serviceprovider/get/${searchTerm}`);
+      const responsee = await fetch(`http://10.0.2.2:8070/serviceprovider/get/${searchTerm}`);
       const jsonData = await responsee.json();
       setsData(jsonData);
     }
@@ -70,6 +85,7 @@ function SelectServiceCenter() {
     <View>
     <View>
           <View style={styles.searchStyles}>
+
               <SearchBar
       platform="default"
       containerStyle={{}}
@@ -87,6 +103,7 @@ function SelectServiceCenter() {
       onCancel={() => console.log(onCancel())}
       value={searchTerm}
     />
+  
           </View>
       </View>  
           <ScrollView style={{ flexGrow: 0.75 ,height:500}}>     
@@ -130,8 +147,9 @@ function SelectServiceCenter() {
 
 const styles = StyleSheet.create({
   searchStyles:{
-    // marginVertical:50,
-    marginTop:200,
+    margin:20,
+    marginVertical:50,
+    marginTop:150,
     width:350
   },
   list:{

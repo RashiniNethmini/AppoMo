@@ -15,6 +15,7 @@ router.route("/add").post((req, res) => {
     const nofappnmntsPerHr = Number(req.body.nofappnmntsPerHr);
     const nofworkinghrsPerDay = Number(req.body.nofworkinghrsPerDay);
     const daysopen = req.body.daysopen;
+    const ServiceProvider=req.body.ServiceProvider;
     
 
     const newBranch = new Branch({
@@ -25,7 +26,8 @@ router.route("/add").post((req, res) => {
         email,
         nofappnmntsPerHr,
         nofworkinghrsPerDay,
-        daysopen
+        daysopen,
+        ServiceProvider
        
     })
 

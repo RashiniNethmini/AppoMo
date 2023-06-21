@@ -28,7 +28,11 @@ import IssueSubmitMsg from './Pages/IssueSubmitMsg';
 import ProductDetails from './Pages/ProductDEtails';
 import SCIssueSubmission from './Pages/SCIssueSubmission';
 import VerifyOTP from './Pages/VerifyOTP';
+
 import DateTimePicker from './Pages/DateTimePicker';
+import NotificationInterface from './Pages/NotificationInterface';
+
+
 
 
 
@@ -39,21 +43,34 @@ export default function App() {
     <NativeRouter>
     <View style={styles.container}>
     <Provider>
-     {/* <Routes>
+     <Routes>
      
-      {/*<Route path="/" element={<SplashScreen/>} />
+      <Route path="/" element={<SplashScreen/>} />
       <Route path="/Login" element={<Login/>} />
       <Route path="/UserRegistr" element={<UserRegistr/>} />
-      <Route path="/CompanyOrServiceCenter" element={<CompanyOrServiceCenter/>} />
-      <Route path="/CompanyDetails" element={<CompanyDetails/>} />
-      <Route path="/SelectServiceCenter" element={<SelectServiceCenter/>} />
+      <Route path="/CompanyOrServiceCenter/:objectId" element={<CompanyOrServiceCenter/>} />
+      <Route path="/CompanyDetails/:objectId" element={<CompanyDetails/>} />
+      <Route path="/ComBranchDetails/:_id/:serviceProviderName" element={<ComBranchDetails/>} />
+      <Route path="/SelectServiceCenter/:objectId" element={<SelectServiceCenter/>} />
       <Route path="/ServiceCenter/:_id/:serviceProviderName" element={<ServiceCenter/>} />
+      <Route path="/ProductDetails" element={<ProductDetails/>} /> 
       <Route path="/IssueSubmission/:_id" element={<IssueSubmission/>} /> 
-      <Route path="/IssueSubmitMsg" element={<IssueSubmitMsg/>} /> 
-  </Routes>  */}
-    {/* <SelectServiceCenter/> */}
-    {/* </Provider> */}
-     <Provider> 
+      <Route path="/SCIssueSubmission/:_id" element={<SCIssueSubmission/>} />
+      <Route path="/IssueSubmitMsg" element={<IssueSubmitMsg/>} />
+      <Route path="/NotificationInterface" element={<NotificationInterface/>} />  
+      <Route path="/CustomerProfile" element={<CustomerProfile/>} /> 
+      <Route path="/EditProfile" element={<EditProfile/>} /> 
+      <Route path="/ResetPwd" element={<ResetPwd/>} /> 
+    </Routes>  
+    {/* <ForgotPW/>
+    {/* <AdvPayment/> */}
+    {/* <ResetPwd/> */}
+    {/* <EditProfile/> */}
+    {/* <NotificationInterface/> */}
+    {/* <CustomerProfile/> */}
+    {/* <ProductDetails/> */}
+    </Provider>
+      {/* <Provider>
         {/* 
         <NavigationContainer>
           <Stack.Navigator>
@@ -76,7 +93,8 @@ export default function App() {
         {/* <IssueSubmission/> */}
         {/* <AdvPayment/> */}
                  {/* <ForgotPW/>  */}
-        <VerifyOTP/>
+        {/* <VerifyOTP/> */}
+        {/* <ProductDetails/> */}
         {/* <EditProfile/> */}
         {/* <EditProfile/>  */}
         {/* <DateTimePicker/> */}
@@ -84,9 +102,10 @@ export default function App() {
         {/* <ResetPassword/> */}
         {/* <CustomerProfile/> */}
 
-      </Provider>
+      {/* </Provider> */}
  {/* <CompanyOrServiceCenter/> */}
   {/* <ServiceCenter/> */}
+  {/* <DateTimePicker/> */}
       <StatusBar style="auto" />
      
      

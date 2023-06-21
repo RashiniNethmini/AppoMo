@@ -3,6 +3,9 @@ import {View, SafeAreaView, StyleSheet, ToastAndroid, TouchableWithoutFeedback} 
 import {Avatar, Title, Caption, Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker';
+import { BackHandler } from 'react-native';
+
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 
 const ProfileScreen = () => {
 
@@ -41,15 +44,35 @@ const ProfileScreen = () => {
     }
 
 
+    const navigate = useNavigate();
+    const handleBackButton = () => {
+      navigate('/CompanyOrServiceCenter/:objectId');
+      return true;
+    };
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+  
+      return () => backHandler.remove();
+    }, [handleBackButton]);
+
+    const EditProfile = () => {
+      navigate(`/Editprofile`);
+  
+    };
+    const Resetpwd = () => {
+      navigate(`/ResetPwd`);
+  
+    };
+
   return (
     <SafeAreaView style={styles.container}>     
       <View style={styles.userInfoSection}>  
-        <TouchableWithoutFeedback>
+        {/* <TouchableWithoutFeedback>
           <View style={styles.topContainer}>
             <Icon name="arrow-left" color="#084C4F" size={25}/>
             <Text style={styles.btnText}>Back</Text>
           </View>
-        </TouchableWithoutFeedback> 
+        </TouchableWithoutFeedback>  */}
 
         <View style={styles.imageContainer}>     
           <Avatar.Image
@@ -72,7 +95,7 @@ const ProfileScreen = () => {
           </View>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback onPress={() => props.navigation.navigate('/EditProfile')}>
+        <TouchableWithoutFeedback onPress={EditProfile}>
           <View style={styles.menuItem}>
             <Icon name='pencil' color="#FFFFFF" size={25}/>
             <Text style={styles.menuItemText}>Edit Profile</Text>
@@ -80,7 +103,7 @@ const ProfileScreen = () => {
           </View>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback onPress={() => props.navigation.navigate('/ResetPwd')}>
+        <TouchableWithoutFeedback onPress={Resetpwd}>
           <View style={styles.menuItem}>
             <Icon name="key" color="#FFFFFF" size={25}/>
             <Text style={styles.menuItemText}>Reset Password</Text>

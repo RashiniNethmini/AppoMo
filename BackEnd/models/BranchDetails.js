@@ -41,7 +41,11 @@ const brdetailsSchema = new Schema({
     daysopen: {
         type: String,
         required: true,
-    }
+    }, 
+    ServiceProvider: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'ServiceProvider' 
+      }
     
   
 })

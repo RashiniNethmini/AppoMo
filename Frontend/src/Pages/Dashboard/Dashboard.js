@@ -1,7 +1,8 @@
 import React,{useState,useEffect} from 'react';
 import axios from 'axios';
 import s from './dashboard.css';
-import { Button, IconButton, Paper, TextField, Tooltip } from "@mui/material";
+import { Button, IconButton, Paper, TextField, Tooltip,Checkbox } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send';
 import { AppointmentList } from '../../AppointmentList';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -20,11 +21,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
   export default function CollapsibleTable() {
     const [open, setOpen] = React.useState(false);
     const [data,setData]=useState("");
-  
+    const [openRow, setOpenRow] = useState(null);
 
     const [groupedData, setGroupedData] = useState([]);
 
@@ -56,6 +58,13 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
       }
     };
 
+    const handleOpenRow = (index) => {
+      if (openRow === index) {
+        setOpenRow(null);
+      } else {
+        setOpenRow(index);
+      }
+    };
 
     const [openn, setOpenn] = React.useState(false);
 
@@ -69,10 +78,10 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 
     return (
-
-      <div>
-<div className={s.buttonadd}>
-            <Button variant="contained" sx={{ mr: '10px' }} onClick={handleClickOpen}>Ongoing Appointments</Button>
+<Paper style={{width:1000,margin:130}}>
+      <div style={{marginTop:150,width:1000}}>
+          <div className={s.buttonadd} >
+            &nbsp; &nbsp;<Button variant="contained" sx={{ mr: '10px' }} style={{marginTop:10}} onClick={handleClickOpen}>Ongoing Appointments</Button>
 
             <Dialog open={openn} onClose={handleOnClose}>
               {/* <DialogTitle className={s.DialogTitle} textAlign="center">
@@ -103,7 +112,7 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
            
              <TableBody>
              {group.details.map((a) => (
-           <React.Fragment>
+           <React.Fragment key={a.id}>
            <TableRow >
              
              <TableCell component="th" scope="row">
@@ -115,15 +124,23 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
              <IconButton
                  aria-label="expand row"
                  size="small"
-                 onClick={() => setOpen(!open)}
+                //  onClick={() => setOpen(!open)}
+                onClick={() => handleOpenRow(a.id)}
                >
-                 {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                  {/* {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />} */}
+                {openRow === a.id ? (
+                                  <KeyboardArrowUpIcon />
+                                ) : (
+                                  <KeyboardArrowDownIcon />
+                                )}
                </IconButton></TableCell>
+               <TableCell><Checkbox {...label} /></TableCell>
+              <TableCell> <Button v endIcon={<SendIcon />}></Button></TableCell>
              
            </TableRow>
            <TableRow>
              <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-               <Collapse in={open} timeout="auto" unmountOnExit>
+               <Collapse in={openRow === a.id} timeout="auto" unmountOnExit>
                  <Box sx={{ margin: 1 }}>
                    <Typography variant="h6">
                  {/* Appointment {id} */}
@@ -229,7 +246,8 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
                 >
                   {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                 </IconButton></TableCell>
-              
+              <TableCell><Checkbox {...label} /></TableCell>
+              <TableCell> <Button  endIcon={<SendIcon />}></Button></TableCell>
             </TableRow>
             <TableRow>
               <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -284,6 +302,7 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
       </TableContainer>
 </div>
 </div>
+</Paper>
       
     );
   }

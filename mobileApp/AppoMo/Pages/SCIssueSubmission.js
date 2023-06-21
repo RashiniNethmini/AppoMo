@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, StyleSheet, Platform, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
 import { Card, Button, Text, TextInput, IconButton, Dialog, Paragraph, Portal, colors } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Audio } from 'expo-av';
+import { BackHandler } from 'react-native';
 
 import { useParams } from 'react-router-native';
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
@@ -22,6 +23,16 @@ export default function SCIssueSubmission() {
   const { _id } = useParams();
 
   const navigate = useNavigate();
+
+  const handleBackButton = () => {
+    navigate('/CompanyOrServiceCenter/:objectId');
+    return true;
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => backHandler.remove();
+  }, [handleBackButton]);
 
   const [error, setError] = useState('');  // set restriction to add only 10 numbers to contact number.
   const handleInputChange = (text) => {
@@ -126,7 +137,7 @@ const handleMicPress = async () => {
   
     try {
       // Make an API request to send the data to the backend
-      const response = await fetch("http:// 192.168.43.100:8070/Issues/add", {
+      const response = await fetch("http:// 10.0.2.2:8070/Issues/add", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -279,6 +279,7 @@ export default function BranchForm() {
 
   ];
 
+const ServiceProvider="648661d73faee59051640f01";
 
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
@@ -294,7 +295,8 @@ export default function BranchForm() {
         Email: email,
         ApptmntsPerHr: hrs,
         WHrsPerDay: whrs,
-        DaysOpen: opdays
+        DaysOpen: opdays,
+        ServiceProvider:ServiceProvider
 
       };
       console.log('Submit button pressed');
@@ -314,7 +316,9 @@ export default function BranchForm() {
           "email": email,
           "nofappnmntsPerHr": hrs,
           "nofworkinghrsPerDay": whrs,
-          "daysopen": opdays
+          "daysopen": opdays,
+          "ServiceProvider":ServiceProvider
+
 
         })
       })

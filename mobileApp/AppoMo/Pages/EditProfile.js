@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, TextInput, Alert} from 'react-native';
-import axios from 'axios';
+import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput, Alert} from 'react-native';
+import { BackHandler } from 'react-native';
+
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
+// import axios from 'axios';
 
 const EditProfile = props => {
 
@@ -109,6 +112,15 @@ const EditProfile = props => {
       { cancelable: false },);
 
       try {
+        // const updateFields = {
+        //   username,
+        //   email,
+        //   contactNo,
+        //   address,
+        //   nic
+        // };
+        // await axios.put(`http://10.0.2.2:8070/UserDetails/update/${Cname}`,updateFields);
+        // alert('Details updated successfully');
         const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${Cname}`,
        {
         method: 'PUT',
@@ -137,6 +149,16 @@ const EditProfile = props => {
     setErrors({});
   };
 
+  const navigate = useNavigate();
+    const handleBackButton = () => {
+      navigate('/CustomerProfile');
+      return true;
+    };
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+  
+      return () => backHandler.remove();
+    }, [handleBackButton]);
   
   return (
     <View style={styles.container}>
@@ -144,48 +166,48 @@ const EditProfile = props => {
         <Text style={styles.title}>Edit Profile</Text>
         <View style={styles.inputContainer}>
         
-        <TextInput style={styles.inputField}
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}/>
-          {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
+          <TextInput style={styles.inputField}
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}/>
+            {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
 
-        <TextInput style={styles.inputField}
-          placeholder="Address"
-          value={address}
-          onChangeText={setAddress}/>
-          {errors.address && <Text style={styles.errorText}>{errors.address}</Text>}
+          <TextInput style={styles.inputField}
+            placeholder="Address"
+            value={address}
+            onChangeText={setAddress}/>
+            {errors.address && <Text style={styles.errorText}>{errors.address}</Text>}
 
-        <TextInput style={styles.inputField}
-          placeholder="Contact Number"
-          keyboardType={'number'}
-          value={contactNo}
-          onChangeText={setContact}/>
-         {errors.contactNo && <Text style={styles.errorText}>{errors.contactNo}</Text>}
+          <TextInput style={styles.inputField}
+            placeholder="Contact Number"
+            keyboardType={'number'}
+            value={contactNo}
+            onChangeText={setContact}/>
+           {errors.contactNo && <Text style={styles.errorText}>{errors.contactNo}</Text>}
 
-        <TextInput style={styles.inputField}
-          placeholder="Email"
-          keyboardType={'email-address'}
-          value={email}
-          onChangeText={setEmail}/>
-          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+          <TextInput style={styles.inputField}
+            placeholder="Email"
+            keyboardType={'email-address'}
+            value={email}
+            onChangeText={setEmail}/>
+            {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
-        <TextInput style={styles.inputField}
-          placeholder="NIC"
-          value={nic}
-          onChangeText={setNIC}/>
-          {errors.nic && <Text style={styles.errorText}>{errors.nic}</Text>}
-    
-        <TouchableOpacity  style={styles.btnContainer}
-          onPress={handleSubmit}>
-          <Text style={styles.btnText}>Save Changes</Text>       
-        </TouchableOpacity>
+          <TextInput style={styles.inputField}
+            placeholder="NIC"
+            value={nic}
+            onChangeText={setNIC}/>
+            {errors.nic && <Text style={styles.errorText}>{errors.nic}</Text>}
+      
+          <TouchableOpacity  style={styles.btnContainer}
+            onPress={handleSubmit}>
+            <Text style={styles.btnText}>Save Changes</Text>       
+          </TouchableOpacity>
 
-        <TouchableOpacity  style={styles.btnContainer} 
-          onPress={handleCancel}>
-          <Text style={styles.btnText}>Cancel</Text>
-        </TouchableOpacity>
-      </View>   
+          <TouchableOpacity  style={styles.btnContainer} 
+            onPress={handleCancel}>
+            <Text style={styles.btnText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>   
       
     </View> 
   );

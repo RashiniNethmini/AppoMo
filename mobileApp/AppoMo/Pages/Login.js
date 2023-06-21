@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import {
     StyleSheet,
@@ -17,12 +17,24 @@ import { ScreenHeight, ScreenWidth } from 'react-native-elements/dist/helpers';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 //import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-
+import { BackHandler } from 'react-native';
 
 // const navigation = useNavigation();
 function Login() {
     const navigate = useNavigate();
-
+    const handleBackButton = () => {
+        navigate('/');
+        return true;
+      };
+      
+      
+    
+      useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+    
+        return () => backHandler.remove();
+      }, [handleBackButton]);
+    
     const handlePress = () => {
         navigate('/UserRegistr');
     };
@@ -138,26 +150,50 @@ function Login() {
 
         // Make an API request to send the data to the backend
         fetch("http://10.0.2.2:8070/Login/login", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "username": username,
-                "password": password,
-
-            })
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "username": username,
+            "password": password,
+            
+          })
         })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+          fetch(`http://10.0.2.2:8070/UserDetails/get/${username}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        const objectId = data[0]._id; // Assuming the response from the backend contains the object ID as "_id"
+        console.log(objectId);
+        navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
 
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        navigate('/CompanyOrServiceCenter');
+      })
+      .catch(error => {
+        console.log(error);
+      });
     };
+    // React.useEffect(() => {
+    //     GoogleSignin.configure({
+    //         webClientId: '<YOUR_WEB_CLIENT_ID>',
+    //         offlineAccess: true,
+    //         forceCodeForRefreshToken: true,
+    //     });
+    // }, []);
+
+    
 
     return (
         <View style={styles.container}>

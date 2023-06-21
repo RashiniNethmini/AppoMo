@@ -65,8 +65,9 @@ app.use("/Product", ProductRouter);
 
 // const UserDetailsRouter = require("./routes/UserDetails.js");
 // app.use("/UserDetails", UserDetailsRouter);
-const issueRouter = require('./routes/Issues.js');
-app.use('/Issues', issueRouter);
+// const issueRouter = require('./routes/Issues.js');
+// app.use('/Issues', issueRouter);
+
 
 const invoiceRoutes = require('./routes/Invoice.js');
 app.use('/Invoice', invoiceRoutes);
