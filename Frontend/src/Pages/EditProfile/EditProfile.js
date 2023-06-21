@@ -115,7 +115,7 @@ const validateEmail = (e) => {
 
   return (
   
-    <div className='edit'>
+    <div className='edit' style={{width:1000,margin:130}}>
       <Paper elevation={6} className="editPaper">
         <div classname="editform" style={{padding:"10px"}}>
             <div className='editdetailslogo' >

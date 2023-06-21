@@ -8,6 +8,8 @@ import BrUpdate from "./component/BranchUpdate/BrUpdate";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
+import FirstPage from "./Pages/FirstPage/FirstPage";
+import TwoSignIn from "./Pages/TwoSignIn/TwoSignIn";
 import RPw from "./component/ResetPwPage/RPw";
 import ProviderType from "./component/ProviderTypePage/ProviderType";
 // import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -45,14 +47,17 @@ function App() {
       <ThemeProvider theme={theme}>
     <Router>
     {/* <EditProfile/> */}
-      <NavBar/>
+    <FirstPage/>
+      {/* <NavBar/> */}
       <Routes>
-        {/* <Route path='/' exact element={<Signin/>} /> */}
+        <Route path='/Reg' exact element={<Reg/>} />
+        <Route path='/TwoSignIn' exact element={<TwoSignIn/>} />
         <Route path='/Dashboard' element={<Dashboard/>} />
         <Route path='/AppointmentConfirm' element={<AppointmentConfirm/>} />
         <Route path='/BrUpdate' element={<BrUpdate/>} />
         <Route path='/EditProfile' element={<EditProfile/>} />
         <Route path='/ResetPassword' element={<ResetPassword/>} />
+        <Route path='/Signin' element={<Signin/>} />
          {/* <Route path='/events' component={Events} />
         <Route path='/annual' component={AnnualReport} /> */}
        {/* <Route path='/team' component={Teams} />
