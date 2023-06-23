@@ -4,6 +4,8 @@ import {Avatar, Title, Caption, Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker';
 import { BackHandler } from 'react-native';
+import { useParams } from 'react-router-native';
+
 
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 
@@ -63,6 +65,7 @@ const ProfileScreen = () => {
       navigate(`/ResetPwd`);
   
     };
+    const {objectId} = useParams();
 
   return (
     <SafeAreaView style={styles.container}>     

@@ -10,6 +10,7 @@ import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
 import FirstPage from "./Pages/FirstPage/FirstPage";
 import TwoSignIn from "./Pages/TwoSignIn/TwoSignIn";
+import BranchSignin from "./component/BranchSignin/BranchSignin";
 import RPw from "./component/ResetPwPage/RPw";
 import ProviderType from "./component/ProviderTypePage/ProviderType";
 // import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -45,27 +46,35 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-       
-        <Signin/>
-        <Reg/>
-        <FPw/>
-        <RPw/>
-        <ProviderType/>
 
-        {/* <EditProfile/> */}
-        {/* <ResetPassword /> 
-        <Dashboard/>
-        <AppointmentConfirm />
-        <BrUpdate/> */}
-        {/* <ResetPassword />  */}
-        {/* // <Dashboard/> */}
-        {/* <EditProfile/> */}
-        {/* <AppointmentConfirm /> */}
-        {/* <BrUpdate/>  */}
-       
-        {/* <Termination/> */}
-        
-      </ThemeProvider>
+    {/* <Router> */}
+    {/* <EditProfile/> */}
+   
+      {/* <NavBar/> */}
+      {/* <Routes> */}
+      
+      {/* <Route path='/' exact element={<FirstPage/>} />
+        <Route path='/Reg' exact element={<Reg/>} />
+        <Route path='/TwoSignIn' exact element={<TwoSignIn/>} />
+        <Route path='/BranchSignin' exact element={<BranchSignin/>} />
+        <Route path='/Dashboard' element={<Dashboard/>} />
+        <Route path='/AppointmentConfirm' element={<AppointmentConfirm/>} />
+        <Route path='/BrUpdate/:objectId' element={<BrUpdate/>} />
+        <Route path='/EditProfile' element={<EditProfile/>} />
+        <Route path='/ResetPassword' element={<ResetPassword/>} />
+        <Route path='/Signin' element={<Signin/>} /> */}
+         {/* <Route path='/events' component={Events} />
+        <Route path='/annual' component={AnnualReport} /> */}
+       {/* <Route path='/team' component={Teams} />
+        <Route path='/blogs' component={Blogs} />
+        <Route path='/sign-up' component={SignUp} /> */}
+      {/* </Routes>
+    </Router> */}
+    <Signin/>
+    <BrUpdate/>
+    <AppointmentConfirm/>
+    </ThemeProvider>
+
     </div>
   );
 

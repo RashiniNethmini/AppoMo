@@ -82,7 +82,7 @@ export default function ProductDetails() {
         <View>
                     
                     <Button mode="contained"
-                     onPress={()=>handleSubmit()} 
+                    //  onPress={()=>handleSubmit()} 
                      style={{ backgroundColor: '#388F82' }} 
                      >
                       OK

@@ -44,7 +44,7 @@ export default function App() {
     <NativeRouter>
     <View style={styles.container}>
     <Provider>
-     <Routes>
+     {/* <Routes>
      
       <Route path="/" element={<SplashScreen/>} />
       <Route path="/Login" element={<Login/>} />
@@ -54,22 +54,22 @@ export default function App() {
       <Route path="/ComBranchDetails/:_id/:serviceProviderName" element={<ComBranchDetails/>} />
       <Route path="/SelectServiceCenter/:objectId" element={<SelectServiceCenter/>} />
       <Route path="/ServiceCenter/:_id/:serviceProviderName" element={<ServiceCenter/>} />
-      <Route path="/ProductDetails" element={<ProductDetails/>} /> 
+      <Route path="/ProductDetails/:_id" element={<ProductDetails/>} /> 
       <Route path="/IssueSubmission/:_id" element={<IssueSubmission/>} /> 
       <Route path="/SCIssueSubmission/:_id" element={<SCIssueSubmission/>} />
       <Route path="/IssueSubmitMsg" element={<IssueSubmitMsg/>} />
-      <Route path="/NotificationInterface" element={<NotificationInterface/>} />  
-      <Route path="/CustomerProfile" element={<CustomerProfile/>} /> 
+      <Route path="/NotificationInterface/:objectId" element={<NotificationInterface/>} />  
+      <Route path="/CustomerProfile/:objectId" element={<CustomerProfile/>} /> 
       <Route path="/EditProfile" element={<EditProfile/>} /> 
       <Route path="/ResetPwd" element={<ResetPwd/>} /> 
-    </Routes>  
+    </Routes>   */}
     {/* <ForgotPW/>
     {/* <AdvPayment/> */}
     {/* <ResetPwd/> */}
     {/* <EditProfile/> */}
     {/* <NotificationInterface/> */}
     {/* <CustomerProfile/> */}
-    {/* <ProductDetails/> */}
+    <ProductDetails/>
     </Provider>
       {/* <Provider>
         {/* 
