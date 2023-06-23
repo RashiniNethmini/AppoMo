@@ -1,7 +1,7 @@
 .FPwContainer {
     display: flex;
     justify-content: center;
-   
+    margin: 10vw;
 
 }
 .pDiv{
@@ -54,4 +54,14 @@
     align-items: center;
     flex-wrap: wrap;
     margin: 10px;
+}
+.otpE{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.textStyle{
+    color:rgb(228, 3, 3);
+    font-size: 14px;
+    
 }

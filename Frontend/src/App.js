@@ -46,6 +46,7 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
+
     {/* <Router> */}
     {/* <EditProfile/> */}
    
@@ -73,6 +74,7 @@ function App() {
     <BrUpdate/>
     <AppointmentConfirm/>
     </ThemeProvider>
+
     </div>
   );
 

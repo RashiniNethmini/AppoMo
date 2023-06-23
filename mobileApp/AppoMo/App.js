@@ -36,6 +36,7 @@ import NotificationInterface from './Pages/NotificationInterface';
 
 
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -87,7 +88,7 @@ export default function App() {
         {/* <Login/> */}
         {/* <UserRegistr/> */}
 
-        {/* <CompanyDetails/> */}
+        <CompanyDetails/>
         {/*<ComBranchDetails/>*/}
         {/* <SelectServiceCenter/> */}
         {/* <IssueSubmission/> */}

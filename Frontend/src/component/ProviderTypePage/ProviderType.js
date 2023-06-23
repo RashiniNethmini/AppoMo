@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import styles from "./ProviderType.module.css";
 import {
   Paper,
@@ -8,170 +7,139 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  TextField,
-  IconButton,
+  Button,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import axios from "axios";
 
 export default function ProviderType() {
   const [types, setTypes] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedModels, setSelectedModels] = useState({});
-  
+  const [error, setError] = useState("");
 
   useEffect(() => {
     // Fetch product types and their models from an API or a data source
     // For demonstration purposes, I'm using static data here
     const productTypes = [
       {
-        id: 1,
         name: "Mobile Phone",
-        models: [],
+        models: ["Samsung M21", "Samsung M31"],
       },
       {
-        id: 2,
         name: "Laptop",
-        models: [],
+        models: ["Asus", "Dell"],
       },
       {
-        id: 3,
         name: "Desktop",
-        models: [],
+        models: ["Dell", "Asus"],
       },
       {
-        id: 4,
         name: "Washing Machine",
-        models: [],
+        models: ["Singer", "Abans"],
       },
       {
-        id: 5,
-        name: "TV",
-        models: [],
+        name: "Television",
+        models: ["LG", "Singer"],
       },
     ];
 
     setTypes(productTypes);
   }, []);
 
-  const handleTypeChange = (event, typeId) => {
+  const handleModelChange = (event, typeName) => {
+    const selectedModels = Array.from(event.target.value);
+    setSelectedModels((prevSelectedModels) => ({
+      ...prevSelectedModels,
+      [typeName]: selectedModels,
+    }));
+  };
+
+  const handleTypeChange = (event, typeName) => {
     const isChecked = event.target.checked;
 
     if (isChecked) {
-      const selectedType = types.find((type) => type.id === typeId);
+      const selectedType = types.find((type) => type.name === typeName);
       setSelectedTypes((prevSelectedTypes) => [...prevSelectedTypes, selectedType]);
       setSelectedModels((prevSelectedModels) => ({
         ...prevSelectedModels,
-        [typeId]: [""],
+        [typeName]: [],
       }));
     } else {
       setSelectedTypes((prevSelectedTypes) =>
-        prevSelectedTypes.filter((type) => type.id !== typeId)
+        prevSelectedTypes.filter((type) => type.name !== typeName)
       );
       setSelectedModels((prevSelectedModels) => {
         const updatedSelectedModels = { ...prevSelectedModels };
-        delete updatedSelectedModels[typeId];
+        delete updatedSelectedModels[typeName];
         return updatedSelectedModels;
       });
     }
   };
 
-  const handleModelChange = (event, typeId, modelIndex) => {
-    const modelsCopy = [...selectedModels[typeId]];
-    modelsCopy[modelIndex] = event.target.value;
+  function saveProduct  (e)  {
+    e.preventDefault();
 
-    setSelectedModels((prevSelectedModels) => ({
-      ...prevSelectedModels,
-      [typeId]: modelsCopy,
-    }));
+    const newProduct = {
+      MobilePhone: selectedModels["Mobile Phone"] || [],
+      Laptop: selectedModels["Laptop"] || [],
+      Desktop: selectedModels["Desktop"] || [],
+      WashingMachine: selectedModels["Washing Machine"] || [],
+      Television: selectedModels["Television"] || [],
+    };
+  
+    axios.post("http://localhost:8070/Product/add",newProduct).then((response) => {
+        console.log(response.data);
+        alert("Products added");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Error occurred while adding the product");
+      });
   };
-
-  const addModel = (typeId) => {
-    setSelectedModels((prevSelectedModels) => ({
-      ...prevSelectedModels,
-      [typeId]: [...prevSelectedModels[typeId], ""],
-    }));
-  };
-
-  const removeModel = (typeId, modelIndex) => {
-    const modelsCopy = [...selectedModels[typeId]];
-    modelsCopy.splice(modelIndex, 1);
-
-    setSelectedModels((prevSelectedModels) => ({
-      ...prevSelectedModels,
-      [typeId]: modelsCopy,
-    }));
-  };
-
- const handleSave = () => {
-  const products = selectedTypes.map((selectedType) => ({
-    productType: selectedType.name,
-    models: selectedModels[selectedType.id],
-  }));
-
-  axios
-    .post('http://localhost:8070/Product/add', products)
-    .then((response) => {
-      console.log(response.data);
-      alert('Products Added');
-      // Handle success or show a success message
-    })
-    .catch((error) => {
-      console.error(error);
-      alert('Error occurred while adding the products');
-      // Handle error or show an error message
-    });
-};
 
   return (
     <div className={styles.typeContainer}>
       <Paper elevation={6} className={styles.pDiv}>
         <div className={styles.typeTitle}>
-          <h1>Product Types</h1>
+          <h1>Product Type</h1>
         </div>
         <div className={styles.typeList}>
           {types.map((type) => (
-            <div className={styles.typeItem} key={type.id}>
+            <div className={styles.typeItem} key={type.name}>
               <Checkbox
-                checked={selectedTypes.some((selectedType) => selectedType.id === type.id)}
-                onChange={(event) => handleTypeChange(event, type.id)}
+                checked={selectedTypes.some((selectedType) => selectedType.name === type.name)}
+                onChange={(event) => handleTypeChange(event, type.name)}
               />
               <span className={styles.typeName}>{type.name}</span>
-              {selectedTypes.some((selectedType) => selectedType.id === type.id) && (
-                <div className={styles.modelFields}>
-                  {selectedModels[type.id].map((model, modelIndex) => (
-                    <div className={styles.modelField} key={modelIndex}>
-                      <TextField
-                        label="Model"
-                        value={model}
-                        onChange={(event) => handleModelChange(event, type.id, modelIndex)}
-                      />
-                      {modelIndex === selectedModels[type.id].length - 1 && (
-                        <IconButton
-                          className={styles.addButton}
-                          onClick={() => addModel(type.id)}
-                        >
-                          <AddIcon />
-                        </IconButton>
-                      )}
-                      {modelIndex !== selectedModels[type.id].length - 1 && (
-                        <IconButton
-                          className={styles.removeButton}
-                          onClick={() => removeModel(type.id, modelIndex)}
-                        >
-                          <RemoveIcon />
-                        </IconButton>
-                      )}
+              {selectedTypes.some((selectedType) => selectedType.name === type.name) && (
+                <div className={styles.modelDropdown}>
+                  <FormControl>
+                    <div>
+                      <InputLabel>Model</InputLabel>
+                      <Select
+                        multiple
+                        value={selectedModels[type.name] || []}
+                        onChange={(event) => handleModelChange(event, type.name)}
+                        renderValue={(selected) => selected.join(", ")}
+                      >
+                        {type.models.map((model) => (
+                          <MenuItem key={model} value={model}>
+                            <Checkbox checked={selectedModels[type.name]?.includes(model)} />
+                            {model}
+                          </MenuItem>
+                        ))}
+                      </Select>
                     </div>
-                  ))}
+                  </FormControl>
                 </div>
               )}
             </div>
           ))}
-          <div>
-          <button onClick={handleSave}>Save Products</button>
-          </div>
         </div>
+        <Button variant="contained" onClick={saveProduct}>
+          Save
+        </Button>
+        {error && <p>{error}</p>}
       </Paper>
     </div>
   );

@@ -220,11 +220,6 @@ export const Reg = (props) => {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {setOpen(true);}; //Opening popup messages.
     const handleClose = () => {setOpen(false);}; //Closing the popup messages.
-    // const CombinedOnClick = ()=> {
-    //     handleClickOpen();
-        
-    //     sendRegDetails();
-    // };
     
     
     function sendRegDetails(e){
@@ -241,19 +236,19 @@ export const Reg = (props) => {
             email,
             ceoName,
             regNo,
-            // workingDates,
-            // workingHours,
-            // noOfAppoinments,
+           
             
 
         }
         
         
-        // console.log(newServiceProvider);
-        axios.post("http://localhost:8070/serviceprovider/add",newServiceProvider).then(()=>{
+        
+        axios.post("http://localhost:8070/serviceprovider/add",newServiceProvider).then((response)=>{
+            console.log(response.data);    
             alert("Service provider Added")
             handleClickOpen();
         }).catch((err)=>{
+            console.log(err);
             alert(err)  
         })
     }

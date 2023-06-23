@@ -40,21 +40,11 @@ router.route("/add").post((req,res) => {
     const email = req.body.email;
     const ceoName = req.body.ceoName;
     const regNo = req.body.regNo;
-    // const workingDates = req.body.workingDates;
-    // const workingHours = req.body.workingHours;
-    // const noOfAppoinments = req.body.noOfAppoinments;
-
-    
-    // const existingUser = ServiceProvider.findOne({ email });
-    // if (existingUser) {
-    //   return res.status(400).json({ message: 'User already exists' });
-    // }
-
-    // const hashedPassword = bcrypt.hash(password, 10);
+   
 
     const newServiceProvider = new ServiceProvider({
         providerType,
-        logo, 
+        logo,  
         // req.file.filename,
         // :{
         //     data: fs.readFileSync('uploads/',req.file.filename),
@@ -66,53 +56,16 @@ router.route("/add").post((req,res) => {
         address,
         email,
         ceoName,
-        regNo,
-        // workingDates,
-        // workingHours,
-        // noOfAppoinments,
-            
-        
-
+        regNo
+    
     })
     newServiceProvider.save().then(()=>{
-        // const oldUser = newServiceProvider.findOne((email));
-        // if(oldUser){
-        //    return res.json({error: "User "});
-        // }
+      
         res.json("Service Provider Added")
     }).catch((err)=>{
         console.log(err);
     })
 })
-
-// router.route("/login").post (async (req,res) => {
-//     try {
-//         const { email, password } = req.body;
-//     const user = await ServiceProvider.findOne({ email });
-//     if (!user) {
-//       return res.status(401).json({ message: 'Invalid credentials' });
-//     }
-
-//     const isPasswordValid = await bcrypt.compare(password, user.password);
-//     if (!isPasswordValid) {
-//       return res.status(401).json({ message: 'Invalid credentials' });
-//     }
-
-//     const token = jwt.sign({ userId: user._id }, 'secret-key');
-//     res.json({ token });
-//     }catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: 'Server error' });
-//     }
-
-//     // const username = req.body.username;
-//     // const  password = req.body.password;
-//     // const user = newServiceProvider.findOne((username));
-//     // if(!user){
-//     //     return res.json({error : ""});
-//     // }
-
-// })
 
 
 router.post('/login', async (req, res) => {
@@ -123,12 +76,15 @@ router.post('/login', async (req, res) => {
   
       if (user) {
         res.status(200).json({ success: true, message: 'Login successful' });
+        console.log("success")
       } else {
         res.status(401).json({ success: false, message: 'Invalid username or password' });
+        console.log("invalid")
       }
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: 'An error occurred during login' });
+      console.log("error logging in")
     }
 });
 
