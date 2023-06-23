@@ -158,7 +158,7 @@ export const Signin = (props) => {
                           }} />
                     </div> 
                     <div className={styles.signButton}>
-                        <Button variant="contained" sx={{mr:'10px'}}>Sign in</Button>
+                        <Button variant="contained" sx={{mr:'10px'}}  onClick={handleSubmit}>Sign in</Button>
                     </div>
                     <div className={styles.signFPw}>
                         <Link href="#" color="inherit">Forgot Password?</Link>
@@ -173,7 +173,7 @@ export const Signin = (props) => {
                         <Link href="#">Register Now</Link>
                         
                      </div> 
-                    <div className={styles.GButton} id="signInDiv"></div> 
+                    <div className={styles.GButton} onClick={handleGoogleLoginSuccess} id="signInDiv"></div> 
                     
                 </div>
             </div>

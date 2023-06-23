@@ -45,27 +45,27 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-    <Router>
-    {/* <EditProfile/> */}
-    <FirstPage/>
-      {/* <NavBar/> */}
-      <Routes>
-        <Route path='/Reg' exact element={<Reg/>} />
-        <Route path='/TwoSignIn' exact element={<TwoSignIn/>} />
-        <Route path='/Dashboard' element={<Dashboard/>} />
-        <Route path='/AppointmentConfirm' element={<AppointmentConfirm/>} />
-        <Route path='/BrUpdate' element={<BrUpdate/>} />
-        <Route path='/EditProfile' element={<EditProfile/>} />
-        <Route path='/ResetPassword' element={<ResetPassword/>} />
-        <Route path='/Signin' element={<Signin/>} />
-         {/* <Route path='/events' component={Events} />
-        <Route path='/annual' component={AnnualReport} /> */}
-       {/* <Route path='/team' component={Teams} />
-        <Route path='/blogs' component={Blogs} />
-        <Route path='/sign-up' component={SignUp} /> */}
-      </Routes>
-    </Router>
-    </ThemeProvider>
+       
+        <Signin/>
+        <Reg/>
+        <FPw/>
+        <RPw/>
+        <ProviderType/>
+
+        {/* <EditProfile/> */}
+        {/* <ResetPassword /> 
+        <Dashboard/>
+        <AppointmentConfirm />
+        <BrUpdate/> */}
+        {/* <ResetPassword />  */}
+        {/* // <Dashboard/> */}
+        {/* <EditProfile/> */}
+        {/* <AppointmentConfirm /> */}
+        {/* <BrUpdate/>  */}
+       
+        {/* <Termination/> */}
+        
+      </ThemeProvider>
     </div>
   );
 

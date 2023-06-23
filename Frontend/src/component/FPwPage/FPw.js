@@ -16,11 +16,11 @@ function validateEmail(email){  //ensure that the email address is in a valid fo
     }
 };
 function validateOtp(otp){  // checks if the otp per day field is not empty after removing any leading or trailing whitespace.
-    const numbersRegex = /^[0-9]*$/; //ensure that the otp contain only numbers.
+    const numbersRegex = /^[0-9]{1}$/; //ensure that the otp contain only numbers.
     if(otp.trim()===""){
         return "Otp is required.";
     }else if(!numbersRegex.test(otp)){
-        return "Otp per day is invalid.";
+        return "OTP should be a single digit.";
     }
 };
 
@@ -124,17 +124,19 @@ export default function Fpw() {
                     <h1>Forgot your password?</h1>
                 </div>
                 <div>
-                    
+                    <div>
                     <div className={styles.Femail}>
-                        <label>Email &nbsp;</label>
+                        <label>Email &nbsp; &nbsp; &nbsp;</label>
                         <TextField required ="outlined-required" label=" Enter email"  type="email" variant="outlined" sx={{ width: '45vw' }}  id="email"
                             onChange={handleEmailChange} 
                             error={Boolean(emailError)}
                             helperText={emailError} />
                        
                     </div>
+                    </div>
+                    
                     <div className={styles.sendB}>
-                    <Button variant="contained" onClick={handleClickOpen} sx={{mr:'20px'}} >Send code </Button>
+                    <Button variant="contained" onClick={handleSendCode} sx={{mr:'20px'}} >Send code </Button>
                          <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         
                             <DialogContent>
@@ -152,21 +154,23 @@ export default function Fpw() {
                         <TextField className={styles.codeB} id="otp1" onChange={handleOtpChange} error={Boolean(otpError)}
                         // helperText={otpError}
                         />
-                        <TextField  className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
+                        <TextField  className={styles.codeB} id="otp2" onChange={handleOtpChange} error={Boolean(otpError)}
                         // helperText={otpError}
                         />
-                        <TextField className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
+                        <TextField className={styles.codeB} id="otp3" onChange={handleOtpChange} error={Boolean(otpError)}
                         // helperText={otpError}
                         />
-                        <TextField className={styles.codeB} id="otp" onChange={handleOtpChange} error={Boolean(otpError)}
+                        <TextField className={styles.codeB} id="otp4" onChange={handleOtpChange} error={Boolean(otpError)}
                         // helperText={otpError}
                         />
-                        
-                        
-                        
                     </div>
+                    <div className={styles.otpE}>
+                        <p className={styles.textStyle}>{otpError}</p>
+                    </div>
+                    
+
                     <div className={styles.verifyB}>
-                        <Button variant="contained" onClick={handleClickOpen1} sx={{mr:'10px'}}>Verify Account</Button>
+                        <Button variant="contained" onClick={handleVerifyAccount} sx={{mr:'10px'}}>Verify Account</Button>
                         <Dialog open={open1} onClose={handleClose1} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         
                             <DialogContent>
