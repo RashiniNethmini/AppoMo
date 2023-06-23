@@ -2,6 +2,8 @@ import React,{useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { BackHandler } from 'react-native';
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
+import { useParams } from 'react-router-native';
+
 
 const Notification = ({ title, message, onPress }) => {
   return (
@@ -33,10 +35,12 @@ const NotificationInterface = () => {
 
     return () => backHandler.remove();
   }, [handleBackButton]);
+ 
+    const {objectId} = useParams();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Notifications</Text>
+      <Text style={styles.heading}>Notification</Text>
       {notifications.map((notification) => (
         <Notification
           key={notification.id}

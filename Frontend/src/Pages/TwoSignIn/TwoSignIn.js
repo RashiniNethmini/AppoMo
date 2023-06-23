@@ -11,9 +11,9 @@ export default function TwoSignIn() {
         </Button></Link>
         </div>
         <div>
-        <Button variant="outlined" size="large">
+        <Link to='/BranchSignin'><Button variant="outlined" size="large">
           Branch ?
-        </Button>
+        </Button></Link>
         </div>
       </div>
 

@@ -27,8 +27,8 @@ import { useParams } from 'react-router-native';
   return (
     <View  style={{flex:2,marginTop:60}}>
      <View  style={{flex:1,flexDirection:'row',alignSelf:'flex-end'}}>
-<Link to="/NotificationInterface"><Ionicons name="notifications-sharp" size={40} color="black" /></Link>
-<Link to="/CustomerProfile"><FontAwesome name="user-circle-o" size={40} color="black" style={{ marginLeft: 30 }} /></Link>
+<Link to={`/NotificationInterface/${objectId}`}><Ionicons name="notifications-sharp" size={40} color="black" /></Link>
+<Link to={`/CustomerProfile/${objectId}`}><FontAwesome name="user-circle-o" size={40} color="black" style={{ marginLeft: 30 }} /></Link>
 </View>
     <View 
     style={{flex:2,flexDirection:'column',marginTop:-120}}
