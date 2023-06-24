@@ -108,12 +108,8 @@ export default function App() {
       </Provider> 
 
       <StatusBar style="auto" />
-     
-     
     </View>
   </NativeRouter>
-
-    
   );
 }
 

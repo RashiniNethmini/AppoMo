@@ -46,7 +46,31 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-
+       
+        
+        {/* <FPw/> */}
+        
+        <AppointmentConfirm />
+        <Signin/>
+      
+      {/* <Route path='/' exact element={<FirstPage/>} />
+        <Route path='/Reg' exact element={<Reg/>} />
+        <Route path='/TwoSignIn' exact element={<TwoSignIn/>} />
+        <Route path='/BranchSignin' exact element={<BranchSignin/>} />
+        <Route path='/Dashboard' element={<Dashboard/>} />
+        <Route path='/AppointmentConfirm' element={<AppointmentConfirm/>} />
+        <Route path='/BrUpdate/:objectId' element={<BrUpdate/>} />
+        <Route path='/EditProfile' element={<EditProfile/>} />
+        <Route path='/ResetPassword' element={<ResetPassword/>} />
+        <Route path='/Signin' element={<Signin/>} /> */}
+         {/* <Route path='/events' component={Events} />
+        <Route path='/annual' component={AnnualReport} /> */}
+       {/* <Route path='/team' component={Teams} />
+        <Route path='/blogs' component={Blogs} />
+        <Route path='/sign-up' component={SignUp} /> */}
+      {/* </Routes>
+    </Router> */}
+    <Signin/>
     <BrUpdate/>
         
       </ThemeProvider>
