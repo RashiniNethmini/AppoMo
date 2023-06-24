@@ -46,12 +46,12 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-
-    {/* <Router> */}
-    {/* <EditProfile/> */}
-   
-      {/* <NavBar/> */}
-      {/* <Routes> */}
+       
+        
+        {/* <FPw/> */}
+        
+        <AppointmentConfirm />
+        <Signin/>
       
       {/* <Route path='/' exact element={<FirstPage/>} />
         <Route path='/Reg' exact element={<Reg/>} />

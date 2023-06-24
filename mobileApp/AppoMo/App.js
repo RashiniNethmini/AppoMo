@@ -90,8 +90,9 @@ export default function App() {
 
         <CompanyDetails/>
         {/*<ComBranchDetails/>*/}
-        {/* <SelectServiceCenter/> */}
-        {/* <IssueSubmission/> */}
+        {/*<SelectServiceCenter/>*/} 
+         {/*<IssueSubmission/> */}
+        {/* <SCIssueSubmission/>*/}
         {/* <AdvPayment/> */}
                  {/* <ForgotPW/>  */}
         {/* <VerifyOTP/> */}
@@ -108,12 +109,8 @@ export default function App() {
   {/* <ServiceCenter/> */}
   {/* <DateTimePicker/> */}
       <StatusBar style="auto" />
-     
-     
     </View>
   </NativeRouter>
-
-    
   );
 }
 
