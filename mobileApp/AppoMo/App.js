@@ -43,11 +43,13 @@ export default function App() {
   return (
     <NativeRouter>
     <View style={styles.container}>
-    <Provider>
+    {/* <Provider> */}
      {/* <Routes>
      
       <Route path="/" element={<SplashScreen/>} />
       <Route path="/Login" element={<Login/>} />
+      <Route path="/ForgotPW" element={<ForgotPW/>} />
+      <Route path="/VerifyOTP" element={<VerifyOTP/>} />
       <Route path="/UserRegistr" element={<UserRegistr/>} />
       <Route path="/CompanyOrServiceCenter/:objectId" element={<CompanyOrServiceCenter/>} />
       <Route path="/CompanyDetails/:objectId" element={<CompanyDetails/>} />
@@ -69,9 +71,9 @@ export default function App() {
     {/* <EditProfile/> */}
     {/* <NotificationInterface/> */}
     {/* <CustomerProfile/> */}
-    <ProductDetails/>
-    </Provider>
-      {/* <Provider>
+    {/* <ProductDetails/>
+    </Provider> */}
+     <Provider>
         {/* 
         <NavigationContainer>
           <Stack.Navigator>
@@ -80,19 +82,19 @@ export default function App() {
             <Stack.Screen name=" userRegistr" component={UserRegistr} />
           </Stack.Navigator>
 
-        </NavigationContainer> */}
+        </NavigationContainer> */} 
         {/* <SplashScreen/> */}
         {/*<IssueSubmitMsg/>*/}
 
        
-        {/* <Login/> */}
+        <Login/>
         {/* <UserRegistr/> */}
 
-        <CompanyDetails/>
-        {/*<ComBranchDetails/>*/}
+        {/* <CompanyDetails/> */}
+        {/* <ComBranchDetails/> */}
         {/* <SelectServiceCenter/> */}
         {/* <IssueSubmission/> */}
-        {/* <AdvPayment/> */}
+        {/* <AdvPayment/>
                  {/* <ForgotPW/>  */}
         {/* <VerifyOTP/> */}
         {/* <ProductDetails/> */}
@@ -102,11 +104,9 @@ export default function App() {
         
         {/* <ResetPassword/> */}
         {/* <CustomerProfile/> */}
+ 
+      </Provider> 
 
-      {/* </Provider> */}
- {/* <CompanyOrServiceCenter/> */}
-  {/* <ServiceCenter/> */}
-  {/* <DateTimePicker/> */}
       <StatusBar style="auto" />
      
      
@@ -130,9 +130,3 @@ const styles = StyleSheet.create({
 });
 
 
-{/* <UserRegistr/>
-<ForgotPW/>
-<CompanyDetails/>
-<ComBranchDetails/>
-<ServiceCenter/> 
-*/}

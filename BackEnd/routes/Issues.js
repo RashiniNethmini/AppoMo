@@ -85,6 +85,7 @@ router.patch('/update/:id', async (req, res) => {
     }
 
     if (status === 'rejected') {
+      
       issue.status = status;
       issue.comment = comment;
       await issue.save();

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import { View, TextInput, Text,  Alert, StyleSheet, TouchableOpacity, } from 'react-native';
 import axios from 'axios';
 
 const VerifyOTP = () => {
+
+    const navigate = useNavigate();
     const [enteredOTP, setenteredOTP] = useState('');
 
     const handleVerifyOTP = () => {
@@ -11,7 +14,8 @@ const VerifyOTP = () => {
       const data = response.data; // Get the response data
       if (data.success) {
         // OTP verification success
-        Alert.alert('Success', 'OTP verified successfully!');
+        // Alert.alert('Success', 'OTP verified successfully!');
+        navigate('/CompanyOrServiceCenter');
       } else {
         // OTP verification failed
         Alert.alert('Error', 'Invalid OTP!');

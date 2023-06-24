@@ -7,6 +7,7 @@ import {
   Alert,
     TouchableOpacity,
 } from "react-native";
+import axios from 'axios';
 //import { useNavigation } from '@react-navigation/native';
 
 
@@ -51,24 +52,42 @@ function AdvPayment() {
     
     
       // Make the fetch request to update appointment status and send SMS
-      fetch('http://10.0.2.2:8070/Advpayment/update', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify( { mobileNumber: mobileNumber})
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Appointment status updated  and message sent successfully');
+    //   fetch('http://10.0.2.2:8070/Advpayment/update', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify( { mobileNumber: mobileNumber})
+    //   })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       console.log('Appointment status updated  and message sent successfully');
          
-        })
-        .catch(error => {
-          console.error('Error updating appointment status and message sending :', error);
-          // Handle error case
-        });
-    };
+    //     })
+    //     .catch(error => {
+    //       console.error('Error updating appointment status and message sending :', error);
+    //       // Handle error case
+    //     });
+    // };
     
+    axios.post("http://10.0.2.2:8070/Advpayment/payment", { mobileNumber: mobileNumber})
+        .then((response) => {
+          console.log(response);
+          console.log('Appointment status updated  and message sent successfully');
+ 
+      })
+    
+          .catch(error => {
+            console.error(error);
+            console.error('Error updating appointment status and message sending :', error);
+           
+          });
+
+    
+        setMobileNumber('');
+        // navigate('/VerifyOTP');
+      
+    };
 
 
   

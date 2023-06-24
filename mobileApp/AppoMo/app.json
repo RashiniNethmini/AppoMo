@@ -13,18 +13,26 @@
     },
     "assetBundlePatterns": [
       "**/*"
+      
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "package": "com.auth.appomo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.auth.appomo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d63c283d-4bb5-4dad-b9d7-4eb863ea8aa4"
+      }
     }
   }
 }

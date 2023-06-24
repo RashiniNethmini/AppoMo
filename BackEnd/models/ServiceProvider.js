@@ -45,6 +45,22 @@ const serviceproviderSchema = new Schema({
     //     type: Number,
     //     // required: true,
     //   },
+    // workingDates : {
+    //     type : String,
+    //     required: true
+    // },
+    // workingHours : {
+    //     type : String,
+    //     required: true
+    // },
+    // noOfAppoinments : {
+    //     type : String,
+    //     required: true
+    // },
+    starRating: {
+        type: Number,
+        // required: true,
+      },
     
     
 
@@ -53,7 +69,7 @@ const serviceproviderSchema = new Schema({
 const ServiceProvider = mongoose.model("ServiceProvider", serviceproviderSchema);
 module.exports = ServiceProvider;
 
-// AppointmentSchedule Schema
+// // AppointmentSchedule Schema
 // const appointmentSchema = new Schema({
 //     timeSlot: {
 //       type: Date,

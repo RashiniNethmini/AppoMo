@@ -65,10 +65,16 @@ export default function BranchForm() {
 
 
 
-  const [tableData, setTableData] = useState(() => {
-    const storedData = localStorage.getItem('tableData');
-    return storedData ? JSON.parse(storedData) : [];
-  });
+  // const [tableData, setTableData] = useState(() => {
+  //   // const storedData = localStorage.getItem('tableData');
+  //   // return storedData ? JSON.parse(storedData) : [];
+  // });
+
+
+  const [tableData, setTableData] = useState([]);
+
+
+
 
   const [editIndex, setEditIndex] = useState(-1);
   const [formData, setFormData] = useState({
@@ -112,12 +118,12 @@ export default function BranchForm() {
       setBrNameError('*Name should contain only alphabets and spaces');
     } else {
       setBrNameError('');
-      
-        // const updatedTableData = [...tableData];
-        // updatedTableData[editIndex].BrName = event.target.value;
-        // setTableData(updatedTableData);
-      
-      
+
+      // const updatedTableData = [...tableData];
+      // updatedTableData[editIndex].BrName = event.target.value;
+      // setTableData(updatedTableData);
+
+
     }
   };
 
@@ -191,11 +197,32 @@ export default function BranchForm() {
       setEmailError('');
     }
   };
+
+  // Fetch table data from the backend on page load
+  useEffect(() => {
+    getData();
+  }, []);
+
+
+const getData=()=>{
+  fetch('http://localhost:8070/BranchDetails/')
+  .then((res) => res.json())
+  .then((data) => {
+    console.log(data);
+    setTableData(data);
+
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  
+};
+
+
   const handleCreateNewRow = (values) => {
     const newRow = { ...values };
     setTableData((prevData) => {
       const updatedData = [...prevData, newRow];
-      localStorage.setItem('tableData', JSON.stringify(updatedData));
       return updatedData;
     });
   };
@@ -219,19 +246,15 @@ export default function BranchForm() {
       return;
     }
     const branchToDelete = tableData[index];
-    const updatedTableData = tableData.filter((_, i) => i !== index);
-    localStorage.setItem('tableData', JSON.stringify(updatedTableData));  // Update local storage with the updated table data
-    setTableData(updatedTableData);
-
-
+  
     // Make an API request to delete the document from the MongoDB database
-    fetch(`http://localhost:8070/BranchDetails/delete/${branchToDelete}`, {
+    fetch(`http://localhost:8070/BranchDetails/delete/${branchToDelete._id}`, {
       method: 'DELETE',
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-
+  
         // Update the state to remove the deleted document from the tableData
         const updatedTableData = [...tableData];
         updatedTableData.splice(index, 1);
@@ -241,23 +264,24 @@ export default function BranchForm() {
         console.log(error);
       });
   }
-  //edit row
- const handleOnEdit = (index) => {
-  setEditIndex(index);
-  const rowData = tableData[index];
-  setFormData({
-    BrName: rowData.BrName,
-    ManName: rowData.ManName,
-    Cntct: rowData.Cntct,
-    Addrs: rowData.Addrs,
-    Email: rowData.Email,
-    ApptmntsPerHr: rowData.ApptmntsPerHr,
-    WHrsPerDay: rowData.WHrsPerDay,
-    DaysOpen: rowData.DaysOpen
-  });
-  handleClickOpen();
-};
   
+  //edit row
+  // const handleOnEdit = (index) => {
+  //   setEditIndex(index);
+  //   const rowData = tableData[index];
+  //   setFormData({
+  //     BrName: rowData.BrName,
+  //     ManName: rowData.ManName,
+  //     Cntct: rowData.Cntct,
+  //     Addrs: rowData.Addrs,
+  //     Email: rowData.Email,
+  //     ApptmntsPerHr: rowData.ApptmntsPerHr,
+  //     WHrsPerDay: rowData.WHrsPerDay,
+  //     DaysOpen: rowData.DaysOpen
+  //   });
+  //   handleClickOpen();
+  // };
+
 
   // const handleUpdate =()=>{
   //  addFormData.splice(editIndex,1,tableData)
@@ -265,18 +289,14 @@ export default function BranchForm() {
   // }
 
   const columns = [
-    { id: 'BrName', label: 'Branch Name', Width: 300, align: 'center' },
-    { id: 'ManName', label: 'Name of Manager', Width: 300, align: 'center' },
-    { id: 'Cntct', label: 'Contact Number', Width: 300, align: 'center' },
-    { id: 'Addrs', label: 'Address', Width: 300, align: 'center' },
-    { id: 'Email', label: 'Email', Width: 300, align: 'center' },
-    { id: 'ApptmntsPerHr', label: 'No. of Appointments Per Hour', Width: 300, align: 'center' },
-    { id: 'WHrsPerDay', label: 'No. of Working Hours Per Day', Width: 300, align: 'center' },
-    { id: 'DaysOpen', label: 'Days Open ', Width: 300, align: 'center' },
-
-
-
-
+    { id: 'branchName', label: 'Branch Name', Width: 300, align: 'center' },
+    { id: 'managerName', label: 'Name of Manager', Width: 300, align: 'center' },
+    { id: 'contactNo', label: 'Contact Number', Width: 300, align: 'center' },
+    { id: 'address', label: 'Address', Width: 300, align: 'center' },
+    { id: 'email', label: 'Email', Width: 300, align: 'center' },
+    { id: 'nofappnmntsPerHr', label: 'No. of Appointments Per Hour', Width: 300, align: 'center' },
+    { id: 'nofworkinghrsPerDay', label: 'No. of Working Hours Per Day', Width: 300, align: 'center' },
+    { id: 'daysopen', label: 'Days Open', Width: 300, align: 'center' },
   ];
 
 const ServiceProvider="648661d73faee59051640f01";
@@ -284,9 +304,15 @@ const ServiceProvider="648661d73faee59051640f01";
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
 
-     if (editIndex === -1) {
-    if (validateBrName(brName) && validateManName(manName) && validateAddress(address) && validateContactNumber(contactNumber) && validateAptmntHrs(hrs) && validateWorkingHrs(whrs) && validateOpenDays(opdays)) {
-      const newBranch = {
+    if (editIndex === -1) {
+      if (validateBrName(brName) &&
+        validateManName(manName) &&
+        validateAddress(address) &&
+        validateContactNumber(contactNumber) &&
+        validateAptmntHrs(hrs) &&
+        validateWorkingHrs(whrs) &&
+        validateOpenDays(opdays)) {
+        const newBranch = {
 
         BrName: brName,
         ManName: manName,
@@ -298,9 +324,9 @@ const ServiceProvider="648661d73faee59051640f01";
         DaysOpen: opdays,
         ServiceProvider:ServiceProvider
 
-      };
-      console.log('Submit button pressed');
-      console.log(brName, contactNumber);
+        };
+        console.log('Submit button pressed');
+        console.log(brName, contactNumber);
 
       // Make an API request to send the data to the backend
       fetch("http://localhost:8070/BranchDetails/add", {
@@ -320,45 +346,63 @@ const ServiceProvider="648661d73faee59051640f01";
           "ServiceProvider":ServiceProvider
 
 
+          })
         })
-      })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          handleOnClose();
-        })
-        .catch(error => {
-          console.log(error);
-        });
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            handleOnClose();
+            getData();
+          })
+          .catch(error => {
+            console.log(error);
+          });
         if (editIndex !== -1) {
           // If in edit mode, update the existing branch
           const updatedTableData = [...tableData];
           updatedTableData[editIndex] = newBranch;
-          localStorage.setItem("tableData", JSON.stringify(updatedTableData));
           setTableData(updatedTableData);
         } else {
-        
-      //   const newBranches = [...tableData, newBranch];
-      // setTableData(newBranches);
-     handleCreateNewRow(newBranch);}
-      // const updatedTableData = [...tableData, newBranch];
-      // setTableData(updatedTableData);
-      handleOnClose();
-    }
-   else {
 
-      alert('Please fill in all fields correctly');
-    }
+          handleCreateNewRow(newBranch);
+        }
 
-  }
+        handleOnClose();
+      }
+      else {
+        alert('Please fill in all fields correctly');
+      }
+
+    }
   };
 
-  const handleEditFormSubmit = (event) => {
-    event.preventDefault();
+  const handleEditFormSubmit = (i) => {
+    handleClickOpen();
+    setEditIndex(i);
+    const rowData = tableData[i];
+    setFormData({
+      BrName: rowData.BrName,
+      ManName: rowData.ManName,
+      Cntct: rowData.Cntct,
+      Addrs: rowData.Addrs,
+      Email: rowData.Email,
+      ApptmntsPerHr: rowData.ApptmntsPerHr,
+      WHrsPerDay: rowData.WHrsPerDay,
+      DaysOpen: rowData.DaysOpen
+    });
+  };
 
-    // Validate the form data
-
-    if (validateBrName(brName) && validateManName(manName) && validateAddress(address) && validateContactNumber(contactNumber) && validateAptmntHrs(hrs) && validateWorkingHrs(whrs) && validateOpenDays(opdays)) {
+  const submitForm = () => {
+    if (
+      validateBrName(brName) &&
+      validateManName(manName) &&
+      validateAddress(address) &&
+      validateContactNumber(contactNumber) &&
+      validateEmail(email) &&
+      validateAptmntHrs(hrs) &&
+      validateWorkingHrs(whrs) &&
+      validateOpenDays(opdays)
+    ) {
       const updatedRow = {
         BrName: brName,
         ManName: manName,
@@ -370,7 +414,7 @@ const ServiceProvider="648661d73faee59051640f01";
         DaysOpen: opdays
       };
 
-     // Update the tableData state with the edited row
+      // Update the tableData state with the edited row
       const updatedTableData = [...tableData];
       updatedTableData[editIndex] = updatedRow;
       setTableData(updatedTableData);
@@ -382,20 +426,7 @@ const ServiceProvider="648661d73faee59051640f01";
     }
   };
 
-
-  // Step 1: Retrieve table data from local storage on page load
-  useEffect(() => {
-    const storedData = localStorage.getItem('tableData');
-    if (storedData) {
-      setTableData(JSON.parse(storedData));
-    }
-  }, []);
-
-  // Step 2: Update local storage whenever tableData changes
-  useEffect(() => {
-    localStorage.setItem('tableData', JSON.stringify(tableData));
-  }, [tableData]);
-
+  
   return (
     <div className={styleset.mainContainer}>
       <div >
@@ -428,7 +459,7 @@ const ServiceProvider="648661d73faee59051640f01";
                     label="Branch Name "
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    //  value={editIndex !== -1 ? tableData[editIndex].BrName : ''}
+                    // value={editIndex !== -1 ? tableData[editIndex].BrName : ''}
                     onChange={handleBrNameChange} />
                   {brNameError && <span style={{ color: 'red', fontSize: 12 }}>{brNameError}</span>}
                 </div>
@@ -452,7 +483,7 @@ const ServiceProvider="648661d73faee59051640f01";
                     label="Contact No"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    //  value={editIndex !== -1 ? tableData[editIndex].Cntct : ''}
+                    // value={editIndex !== -1 ? tableData[editIndex].Cntct : ''}
                     onChange={handleContactNumberChange} />
                   {contactNumberError && <span style={{ color: 'red', fontSize: 12 }}>{contactNumberError}</span>}
                 </div>
@@ -463,7 +494,7 @@ const ServiceProvider="648661d73faee59051640f01";
                     label="Address"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    //  value={editIndex !== -1 ? tableData[editIndex].Addrs : ''}
+                    // value={editIndex !== -1 ? tableData[editIndex].Addrs : ''}
                     onChange={handleAddressChange} />
                   {addressError && <span style={{ color: 'red', fontSize: 12 }}>{addressError}</span>}
 
@@ -475,7 +506,7 @@ const ServiceProvider="648661d73faee59051640f01";
                     label="Email"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    //  value={editIndex !== -1 ? tableData[editIndex].Email : ''}
+                    // value={editIndex !== -1 ? tableData[editIndex].Email : ''}
                     onChange={handleEmailChange} />
                   {emailError && <span style={{ color: 'red', fontSize: 12 }}>{emailError}</span>}
                 </div>
@@ -487,7 +518,7 @@ const ServiceProvider="648661d73faee59051640f01";
                     label="No. of Appointments Per Hour"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    //  value={editIndex !== -1 ? tableData[editIndex].ApptmntsPerHr : ''}
+                    // value={editIndex !== -1 ? tableData[editIndex].ApptmntsPerHr : ''}
                     onChange={handleAptmntHrsChange} />
                 </div>
                 {hrsError && <span style={{ color: 'red', fontSize: 12 }}>{hrsError}</span>}
@@ -499,7 +530,7 @@ const ServiceProvider="648661d73faee59051640f01";
                     label="No. of Working Hours Per Day"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    //  value={editIndex !== -1 ? tableData[editIndex].ApptmntsPerHr : ''}
+                    // value={editIndex !== -1 ? tableData[editIndex].WHrsPerDay : ''}
                     onChange={handleWorkingHrsChange} />
                 </div>
                 {whrsError && <span style={{ color: 'red', fontSize: 12 }}>{whrsError}</span>}
@@ -510,7 +541,7 @@ const ServiceProvider="648661d73faee59051640f01";
                     label="Days Open "
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    //  value={editIndex !== -1 ? tableData[editIndex].Addrs : ''}
+                    // value={editIndex !== -1 ? tableData[editIndex].DaysOpen : ''}
                     onChange={handleOpenDaysChange} />
                   {opdaysError && <span style={{ color: 'red', fontSize: 12 }}>{opdaysError}</span>}
 
@@ -520,7 +551,7 @@ const ServiceProvider="648661d73faee59051640f01";
 
               <DialogActions>
                 <Button onClick={handleOnClose}>Cancel</Button>
-                
+
                 <Button onClick={handleAddFormSubmit}>Done</Button>
               </DialogActions>
             </Dialog>
@@ -564,7 +595,7 @@ const ServiceProvider="648661d73faee59051640f01";
 
                       <div className={styleset.iconsUpDel}>
                         <Tooltip arrow placement="left" title="Edit">
-                          <IconButton aria-label="" onClick={() => handleOnEdit(i)}>
+                          <IconButton aria-label="" onClick={() => handleEditFormSubmit(i)}>
                             <EditIcon color="primary" />
                           </IconButton>
                         </Tooltip>

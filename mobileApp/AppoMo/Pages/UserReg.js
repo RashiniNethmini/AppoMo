@@ -139,7 +139,7 @@ export default function UserRegistr() {
   const isValidNic = (nic) => {
     // Basic NIC validation assuming a valid format of 12 digits
     const nicRegex1 = /^[0-9]{9}[vVxX]$/;
-    const nicRegex2 = /^[0-9]{11}$/;
+    const nicRegex2 = /^[0-9]{12}$/;
 
     return(nicRegex1.test(nic) || nicRegex2.test(nic));
   };

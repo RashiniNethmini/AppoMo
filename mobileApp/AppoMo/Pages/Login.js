@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState ,useEffect} from "react";
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import {
     StyleSheet,
@@ -19,7 +19,6 @@ import Feather from 'react-native-vector-icons/Feather';
 //import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { BackHandler } from 'react-native';
 
-// const navigation = useNavigation();
 function Login() {
     const navigate = useNavigate();
     const handleBackButton = () => {
@@ -146,8 +145,6 @@ function Login() {
 
         console.log('Submit button pressed');
 
-
-
         // Make an API request to send the data to the backend
         fetch("http://10.0.2.2:8070/Login/login", {
           method: 'POST',
@@ -194,6 +191,34 @@ function Login() {
     // }, []);
 
     
+
+    // useEffect(() => {
+    //     GoogleSignin.configure({
+    //       AndroidClientId: '850685778557-fkjnbh77b0uqi8s1b2s21p92b6t0dkj3.apps.googleusercontent.com',
+    //       offlineAccess: false,
+    //     });
+    //   }, []);
+    
+    // //   Implement the sign-in function
+    //   const signInWithGoogle = async () => {
+    //     try {
+    //       await GoogleSignin.hasPlayServices();
+    //       const userInfo = await GoogleSignin.signIn();
+    //       console.log('User Info:', userInfo);
+    //       // You can now send the user information to your backend for further processing
+    //     } catch (error) {
+    //       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+    //         console.log('User cancelled the sign-in flow');
+    //       } else if (error.code === statusCodes.IN_PROGRESS) {
+    //         console.log('Sign-in is already in progress');
+    //       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+    //         console.log('Play services are not available');
+    //       } else {
+    //         console.log('Something went wrong:', error.message);
+    //       }
+    //     }
+    // }
+
 
     return (
         <View style={styles.container}>
@@ -292,17 +317,17 @@ function Login() {
                     </TouchableOpacity>
                 </View>
                 {data.isValidPassword ? null :
-                    // <Animatable.View animation="fadeInLeft" duration={500}>
+                    <Animatable.View animation="fadeInLeft" duration={500}>
                     <View>
                         <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
                     </View>
-                    // </Animatable.View>
+                     </Animatable.View>
                 }
-
+{/* onPress={  navigate('/ForgotPW')}  */}
 
                 <TouchableOpacity>
 
-                    <Text style={{ color: '#009387', marginTop: 15 }}>Forgot password?</Text>
+                    <Text style={{ color: '#009387', marginTop: 15 }}   >Forgot password?</Text>
                 </TouchableOpacity>
                 <View style={styles.button}>
 
@@ -331,7 +356,7 @@ function Login() {
                             marginTop: 15,
                             marginVertical: 0
                         }]}
-                        onPress={() => { }}
+                        // onPress={signInWithGoogle}
                     >
                         <Text style={[styles.textSign, {
                             color: '#009387'

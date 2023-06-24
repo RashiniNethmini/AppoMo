@@ -33,12 +33,13 @@ app.use("/forgotPw", ForgotPwRouter);
 // const validateOTPRouter = require('./routes/ForgotPW.js');
 // app.use("/validateOTP", validateOTPRouter);
 
-// const advancePaymentRouter = require("./routes/Advpayment.js");
-// app.use("/advpayment", advancePaymentRouter);
+const advancePaymentRouter = require("./routes/Advpayment.js");
+app.use("/Advpayment", advancePaymentRouter);
 
 
 const loginRouter = require("./routes/Login.js");
 app.use("/login", loginRouter);
+app.use("/userdetails", loginRouter);
 
 const ConfApntmntsRouter = require("./routes/Appointments.js");
  app.use("/Appointments",ConfApntmntsRouter);

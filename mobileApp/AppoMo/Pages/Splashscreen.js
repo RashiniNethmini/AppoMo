@@ -18,10 +18,7 @@ const SplashScreen = ({navigation}) => {
     const { colors } = useTheme();
     const navigate = useNavigate();
 
-  const handlePress = () => {
-    navigate('/Login');
-  };
-
+ 
     return (
       <View style={styles.container}>
           <StatusBar backgroundColor='#009387' barStyle="light-content"/>

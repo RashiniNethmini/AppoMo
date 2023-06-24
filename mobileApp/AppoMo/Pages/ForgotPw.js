@@ -7,11 +7,15 @@ import {
     Alert,
     TouchableOpacity,
 } from "react-native";
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import * as Animatable from 'react-native-animatable';
 import { Button } from "react-native-paper";
 import axios from 'axios';
 
 export default function ForgotPW() {
+
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [error, setError] = useState({});
 
@@ -53,6 +57,7 @@ export default function ForgotPW() {
 
     
         setEmail('');
+        navigate('/VerifyOTP');
       
     };
   }

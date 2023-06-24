@@ -20,4 +20,17 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
+// Define the API endpoint for receiving user data
+router.post('/userdetails', async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    const user = new Userlog({ name, email });
+    await user.save();
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 module.exports = router;

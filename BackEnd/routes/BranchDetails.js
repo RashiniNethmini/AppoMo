@@ -31,12 +31,16 @@ router.route("/add").post((req, res) => {
        
     })
 
-    newBranch.save().then(() => {
-        res.json("Branch Added")
-    }).catch((err) => {
-        console.log(err);
+    newBranch
+    .save()
+    .then(() => {
+      res.json({ status: "Branch Added"});
     })
-}) 
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ status: "Error with adding branch" });
+    });
+});
 
 //retrieve entered branches
 router.route("/").get((req, res) => {

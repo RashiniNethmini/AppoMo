@@ -9,7 +9,7 @@ const userdetailsSchema = new Schema({
     },
    password: {
         type: String,
-        required: true,
+        // required: true,
     },
     email: {
         type: String,
@@ -18,17 +18,17 @@ const userdetailsSchema = new Schema({
 
     contactNo: {
         type: Number,
-        required: true,
+        // required: true,
     },
     
     address: {
         type: String,
-        required: true,
+        // required: true,
     },
    
     nic:{
         type: String,
-        required: true,
+        // required: true,
     },
 
 
