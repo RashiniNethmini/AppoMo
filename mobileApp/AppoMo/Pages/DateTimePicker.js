@@ -1,9 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import axios from 'axios';
+import { BackHandler } from 'react-native';
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
+import { useParams } from 'react-router-native';
 
 const DateTimePicker = () => {
+
+  const navigate = useNavigate();
+  const {objectId} = useParams();
+  const {BranchDetails} = useParams();
+  const {_id} = useParams();
+  const handleBackButton = () => {
+    navigate(`/NotificationInterface/${objectId}`,{objectId});
+    return true;
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => backHandler.remove();
+  }, [handleBackButton]);
+ 
+  
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [showTimeSlots, setShowTimeSlots] = useState(false);
   const [showCalendar, setShowCalendar] = useState(true);
@@ -221,9 +241,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#084C4F',
   },
   calendarContainer: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#fff',
-    padding: 10,
+    padding: 100,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -231,9 +251,9 @@ const styles = StyleSheet.create({
     marginTop: '2%',
   },
   timeSlotsContainer: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#f2f2f2',
-    padding: 10,
+    padding: 20,
     display: 'flex',
     borderWidth: 1,
     borderColor: '#ccc',

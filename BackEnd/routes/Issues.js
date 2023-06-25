@@ -4,7 +4,7 @@ const sendSms = require('../APIs/SmsAPI.js');
 
 
 router.route("/add").post((req, res) => {
-  const { Name, ContactNo, InvoiceNo, Product, IssueInBrief, AudioUri,BranchDetails } = req.body;
+  const { Name, ContactNo, InvoiceNo, Product, IssueInBrief, AudioUri,BranchDetails,UserDetails } = req.body;
 
   
 
@@ -15,7 +15,8 @@ router.route("/add").post((req, res) => {
     Product,
     IssueInBrief,
     AudioUri,
-    BranchDetails
+    BranchDetails,
+    UserDetails
   });
 
   // Save the new issue to the database
@@ -142,23 +143,43 @@ router.patch('/update/:id', async (req, res) => {
   
   
 
-router.route("/notfication/:id").get(async(req,res)=>{
-  let relevantUserId=req.params.id; 
+router.route("/notification/:id").get(async(req,res)=>{
+  
 
-  let noti=await Issue.aggregate([
-      {
-          $match: {
-            status:'accepted',
-            UserDetails:relevantUserId
-          }
-        },
-        // {
-        //   $sort: {
-        //     starRating:-1
-        //   }
-        // },
-      ])
-  // res.send(data);
+  let noti=await Issue.
+  find(
+    {
+        "$or":[
+            {
+              "UserDetails": {$eq:req.params.id},
+              "status": 'accepted'
+            }
+        ]
+    }
+)
+  .then((noti)=>{
+  res.send(noti)
+ 
+  }).catch((err)=>{
+  console.log(err);
+  res.status(500).send({status:"Error with get notification"});
+  })
+})
+
+router.route("/notificationr/:id").get(async(req,res)=>{
+  
+
+  let noti=await Issue.
+  find(
+    {
+        "$or":[
+            {
+              "UserDetails": {$eq:req.params.id},
+              "status": 'rejected'
+            }
+        ]
+    }
+)
   .then((noti)=>{
   res.send(noti)
  

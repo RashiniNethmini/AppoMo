@@ -12,18 +12,18 @@ import { BackHandler } from 'react-native';
 
 
   function ServiceCenter() {
-
+    const {objectId} = useParams();
     // const route = useRoute();
     // const { serviceProviderName } = route.params;
     const { serviceProviderName, _id } = useParams();
-
+const companyID=_id;
     // const route =Route();
     // const { componentId } = route.params;
     const [s, setS] = useState(null);
    
     const navigate = useNavigate();
     const handleBackButton = () => {
-      navigate('/SelectServiceCenter/:objectId');
+      navigate(`/SelectServiceCenter/${objectId}`,{objectId});
       return true;
     };
   
@@ -134,7 +134,7 @@ import { BackHandler } from 'react-native';
           <View style={{width:380 }}>
               {data.map(item => (
                
-                <Link to={`/SCIssueSubmission/${item._id}`} component={TouchableOpacity} style={styles.appButtonContainer} key={item._id}>
+                <Link to={`/ProductDetails/${objectId}/${companyID}/${serviceProviderName}/${item._id}`} component={TouchableOpacity} style={styles.appButtonContainer} key={item._id}>
                         <View><Text style={styles.appButtonText1}>{item.branchName}</Text>
                         <Text style={styles.appButtonText}>{item.contactNo}</Text>
                         <Text style={styles.appButtonText}>{item.address}</Text></View>
