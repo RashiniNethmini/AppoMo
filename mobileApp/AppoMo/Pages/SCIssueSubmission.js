@@ -20,12 +20,16 @@ export default function SCIssueSubmission() {
   const [recording, setRecording] = useState(null);
   const [audioUri, setAudioUri] = useState(null);
   
-  const { _id } = useParams();
-
+  const {objectId} = useParams();
+  const {companyID} = useParams();
+  const {serviceProviderName} = useParams();
+  const {branchID} = useParams();
+  const {selectedCategory} = useParams();
+  const {selectedModel} = useParams();
   const navigate = useNavigate();
 
   const handleBackButton = () => {
-    navigate('/CompanyOrServiceCenter/:objectId');
+    navigate(`/ProductDetails/${objectId}/${companyID}/${serviceProviderName}/${branchID}`,{objectId,companyID,serviceProviderName,branchID});
     return true;
   };
   useEffect(() => {
@@ -165,7 +169,7 @@ const handleMicPress = async () => {
     } catch (error) {
       console.log(error);
     }
-    navigate('/IssueSubmitMsg');
+    navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
    
   };
   
@@ -192,7 +196,9 @@ const handleMicPress = async () => {
     <>
       <StatusBar backgroundColor="#108F94" translucent={true} />
       <View>
-            <Text variant="headlineLarge" style={styles.title} >Let Us Know What's Wrong</Text>
+            <Text variant="headlineLarge" style={styles.title} >
+            {/* Let Us Know What's Wrong */}{selectedCategory}{selectedModel}
+            </Text>
           </View>
       <KeyboardAwareScrollView
         style={styles.view}
