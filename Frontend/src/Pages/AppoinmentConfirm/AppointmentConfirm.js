@@ -179,7 +179,7 @@ export default function AppointmentConfirm() {
         <Container className={`${styles.rejectAppointmentList} ${styles.border}`}>
           <div className={styles.searchContainer}>
             <TextField
-            size="small" label="Search" value={searchQuery} onChange={handleSearch} sx={{ mr:0 }} // Add margin to create space between the search field and icon
+            size="small" label="Search" value={searchQuery} onChange={handleSearch} sx={{ mr:0 }} 
             />
             <SearchIcon sx={{ fontSize:30 }} /> {/* Adjust the fontSize to match the size of the search field */}
           </div>
@@ -197,6 +197,8 @@ export default function AppointmentConfirm() {
               <b>Comment:</b> {appointment.comment}
               <br/>
               <b>Product:</b> {appointment.Product}
+              <br/>
+              <b>Model:</b> {appointment.Model}
               <br/>
               {deleteAllRejectedAppointments ? null : (
               <IconButton aria-label="delete" onClick={() => handleDeleteRejectedAppointment(appointment._id)}>

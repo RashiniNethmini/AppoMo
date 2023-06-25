@@ -27,6 +27,10 @@ const issueSchema = new Schema({
     type: String,
     // required: true,
   },
+  Model: {
+    type: String,
+    required: true,
+  },
   IssueInBrief: {
     type: String,
     required: true,

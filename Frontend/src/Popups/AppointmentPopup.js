@@ -73,6 +73,7 @@ const handleVoiceRecordingChange = (event) => {
                 Contact No<br />
                 Invoice No<br />
                 Product<br />
+                Model<br/>
                 Issue<br />
                 Voice Message<br /><br />
               </Typography>
@@ -83,6 +84,7 @@ const handleVoiceRecordingChange = (event) => {
                 : {appointment.ContactNo}<br />
                 : {appointment.InvoiceNo}<br />
                 : {appointment.Product}<br />
+                : {appointment.Model}<br />
                 : {appointment.IssueInBrief}<br />
                 <div className={styles.audioOuter}><audio src={voiceRecording} className={styles.audio} controls />
 </div>
