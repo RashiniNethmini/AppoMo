@@ -31,4 +31,19 @@ router.route("/add").post((req, res) => {
     });
 });
 
+router.route("/first").get((req, res) => {
+  Product.findOne()
+    .then((product) => {
+      if (!product) {
+        res.status(404).json({ error: 'No products found' });
+      } else {
+        res.json(product);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: 'Failed to fetch product details', message: err.message });
+    });
+});
+
 module.exports = router;

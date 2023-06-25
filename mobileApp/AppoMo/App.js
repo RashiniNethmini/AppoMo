@@ -71,8 +71,8 @@ export default function App() {
     {/* <EditProfile/> */}
     {/* <NotificationInterface/> */}
     {/* <CustomerProfile/> */}
-    {/* <ProductDetails/>
-    </Provider> */}
+    <ProductDetails/>
+    {/*</Provider> */}
      <Provider>
         {/* 
         <NavigationContainer>
@@ -87,7 +87,7 @@ export default function App() {
         {/*<IssueSubmitMsg/>*/}
 
        
-        <Login/>
+        {/* <Login/> */}
         {/* <UserRegistr/> */}
 
         {/* <CompanyDetails/> */}
