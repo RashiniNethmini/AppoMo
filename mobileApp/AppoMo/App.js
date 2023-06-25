@@ -31,6 +31,8 @@ import VerifyOTP from './Pages/VerifyOTP';
 
 import DateTimePicker from './Pages/DateTimePicker';
 import NotificationInterface from './Pages/NotificationInterface';
+import ProductDetailsCompany from './Pages/ProductDetailsCompany';
+
 
 
 
@@ -71,7 +73,7 @@ export default function App() {
     {/* <EditProfile/> */}
     {/* <NotificationInterface/> */}
     {/* <CustomerProfile/> */}
-    <ProductDetails/>
+    <ProductDetailsCompany/>
     {/*</Provider> */}
      <Provider>
         {/* 
