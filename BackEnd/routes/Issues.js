@@ -4,7 +4,7 @@ const sendSms = require('../APIs/SmsAPI.js');
 
 
 router.route("/add").post((req, res) => {
-  const { Name, ContactNo, InvoiceNo, Product, IssueInBrief, AudioUri,BranchDetails } = req.body;
+  const { Name, ContactNo, InvoiceNo, Product,Model, IssueInBrief, AudioUri,BranchDetails } = req.body;
 
   
 
@@ -13,6 +13,7 @@ router.route("/add").post((req, res) => {
     ContactNo,
     InvoiceNo,
     Product,
+    Model,
     IssueInBrief,
     AudioUri,
     BranchDetails
