@@ -75,13 +75,17 @@ export default function App() {
     {/* <NotificationInterface/> */}
     {/* <CustomerProfile/> */}
 
+    {/* <ProductDetailsCompany/> */}
+
+
     {/* <ProductDetails/> */}
     {/* <NotificationInterface/> */}
    
     </Provider>
       {/* <Provider>
-=======
+
     <ProductDetailsCompany/>
+
     {/*</Provider> */}
     
 
@@ -104,7 +108,7 @@ export default function App() {
         {/* <CompanyDetails/> */}
         {/*<ComBranchDetails/>*/}
         {/* <SelectServiceCenter/> */}
-        {/* <IssueSubmission/> */}
+//          <SCIssueSubmission/> 
         {/* <AdvPayment/>
                  {/* <ForgotPW/>  */}
         {/* <VerifyOTP/> */}
