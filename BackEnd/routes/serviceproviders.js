@@ -1,6 +1,4 @@
 const router = require("express").Router();
-// const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const multer = require ("multer");
@@ -13,22 +11,7 @@ let ServiceProvider = require("../models/ServiceProvider");
 
 
 
-// router.route("/add").post ((req,res) => {
-// Create a storage engine for multer
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'uploads'); // Specify the destination folder for uploaded files
-//   },
-//   filename: function (req, file, cb) {
-//     // Generate a unique filename for the uploaded file
-//     cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-//   }
-// });
 
-// Create a multer instance with the storage engine
-// const upload = multer({ storage: storage });
-
-// router.route('/add', upload.single('logo'), (req, res) => {
 router.route("/add").post((req,res) => {
 
     const providerType = req.body.providerType;
@@ -45,11 +28,6 @@ router.route("/add").post((req,res) => {
     const newServiceProvider = new ServiceProvider({
         providerType,
         logo,  
-        // req.file.filename,
-        // :{
-        //     data: fs.readFileSync('uploads/',req.file.filename),
-        //     contentType:"image/png"
-        // },
         username,
         password,
         serviceProviderName,
@@ -116,7 +94,7 @@ router.route("/google-login").post(async (req, res) => {
       console.error(error);
       res.status(500).json({ message: "Server error" });
     }
-  });
+});
 
     //start
 let gotp = '';
@@ -217,7 +195,7 @@ router.route("/").get((req,res)=>{
     ServiceProvider.find().then((serviceproviders)=>{
         res.json(serviceproviders)
     }).catch((err)=>{
-        cosole.log(err)
+        console.log(err)
     })
 })
 
@@ -320,6 +298,29 @@ router.route("/resetPw/:id").put (async (req,res)=>{
     res.status(500).send({status:"Unsuccessfull"});
     })
 
+});
+
+router.route("/searchEmail/:id").get(async(req,res)=>{
+  console.log(req.params.id);  
+  const{ 
+      email}=req.body; 
+
+  let SPP=await ServiceProvider.find(
+      {
+          "$or":[
+              {
+                 "serviceProviderName":{$regex:req.params.id}
+              }
+          ]
+      },'email'
+  )
+  // res.send(data);
+  .then((SPP)=>{
+  res.send(SPP);
+  }).catch((err)=>{
+  console.log(err);
+  res.status(500).send({status:"Error with get the service provider"});
+  })
 })
 
 // router.route("/get/:id").get(async(req,res)=>{

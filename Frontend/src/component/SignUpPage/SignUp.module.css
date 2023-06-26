@@ -1,0 +1,45 @@
+.signUpTitle {
+    display: flex;
+    justify-content: center;
+}
+
+.signUpContainer{
+    display: flex;
+    justify-content: center;
+    padding-left: 50vw;
+    padding-right: 50vw;
+
+
+}
+
+.signUppaperDiv {
+    max-width: 700px;
+    border-radius: 25px !important;
+    width: 75vw;
+    margin: 10vw;
+    padding: 10px;
+}
+
+.signUpBody {
+    display: flex;
+    flex-direction: column;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    justify-content: center;
+
+
+}
+
+.signUpBodyTextbox {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.signUpButton {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+
+
+}

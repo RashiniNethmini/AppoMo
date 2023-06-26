@@ -12,6 +12,8 @@ import FirstPage from "./Pages/FirstPage/FirstPage";
 import TwoSignIn from "./Pages/TwoSignIn/TwoSignIn";
 import BranchSignin from "./component/BranchSignin/BranchSignin";
 import RPw from "./component/ResetPwPage/RPw";
+import Admin from "./component/AdminPage/Admin";
+import SignUp from "./component/SignUpPage/SignUp";
 import ProviderType from "./component/ProviderTypePage/ProviderType";
 // import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard/Dashboard"
@@ -73,7 +75,18 @@ function App() {
     {/* <Signin/>
     <BrUpdate/>
     <AppointmentConfirm/> */}
+      {/* </Routes>
+    </Router> */}
+    {/* <Signin/> */}
+    {/* <Reg/> */}
+    {/* <FPw/>
+    <RPw/> */}
+    <Admin/>
+    <SignUp/>
     </ThemeProvider>
+    {/* <BrUpdate/> */}
+    <AppointmentConfirm/>
+    {/* </ThemeProvider> */}
 
     </div>
   );

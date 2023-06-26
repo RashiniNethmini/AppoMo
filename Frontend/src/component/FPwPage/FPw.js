@@ -42,7 +42,7 @@ export default function Fpw() {
         setEmailError(validateEmail(value));
     };
     
-    // const [password, setPassword] =useState("");
+    
     // const [data, setData]=useState("");
     // const Semail = 'abc@gmail.com';
 
@@ -53,17 +53,16 @@ export default function Fpw() {
         fetchdata();
       }, []);
     
-      const fetchdata= async ()=>{
-        // const up = {
-        //   password
-        // };
-        const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Sname}`
-        // ,up
-        );
+    const fetchdata= async ()=>{
+        const updatable = {
+          email
+        };
+        const data=await axios.get(`http://localhost:8070/serviceprovider/searchEmail/${Sname}`,updatable);
         setData(data);
-        // const response = data.data[0].password;
+        const response = data.data[0].email;
+        setEmail(response);
         // setCP(response);
-      };
+    };
 
     const [otp, setOtp] = useState("");
     const [otpError, setOtpError] = useState(null);
@@ -87,6 +86,8 @@ export default function Fpw() {
                 console.log(response);
                 alert("Otp send")
                 handleClickOpen();
+                fetchdata();
+
             })
             .catch((error) => {
               // Show an error message to the user

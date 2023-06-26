@@ -14,44 +14,30 @@ export default function ResetPassword() {
   // const [passwordError0, setPasswordErr0] = useState("");
   const [passwordError1, setPasswordErr1] = useState("");
   const [passwordError2, setPasswordErr2] = useState("");
-  const [currentPass, setCurrent] = useState('');
-  const [cPass, setCP] = useState('');
-  const [iPass, setIP] = useState('');
+  // const [currentPass, setCurrent] = useState('');
+  // const [cPass, setCP] = useState('');
+  // const [iPass, setIP] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirm] = useState('');
   const [match, setmatch] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const [data,setData]=useState("");
-  const Sname = 'ABC';
-  
-  // useEffect(() => {
-  //   fetchdata();
-  // }, []);
-
-  // const fetchdata= async ()=>{
-  //   const up = {
-  //     password
-  //   };
-  //   const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Sname}`,up);
-  //   setData(data);
-  //   const response = data.data[0].password;
-  //   setCP(response);
+  // const handleMouseDownPassword = (event) => {
+  //   event.preventDefault();
   // };
 
+  // const [data,setData]=useState("");
+  const Sname = 'ABC';
+  
 
   const handleUpdate = async () => {
     try {
       const updateFields = {
         password
       };
-      await axios.put(`http://localhost:8070/serviceprovider/update/${Sname}`,updateFields);
+      await axios.put(`http://localhost:8070/serviceprovider/resetPw/${Sname}`,updateFields);
       
-      setIP(false);
-      setCurrent("");
+      // setIP(false);
+      // setCurrent("");
       setPassword("");
       setConfirm("");
       // setPasswordErr0("");
@@ -147,8 +133,8 @@ const RePass=(evnt)=>{
 
 // const ref = useRef(null);
 const Cancel = () => {
-  setIP(false);
-  setCurrent("");
+  // setIP(false);
+  // setCurrent("");
   setPassword("");
   setConfirm("");
   // setPasswordErr0("");
@@ -232,7 +218,7 @@ const Cancel = () => {
               
               <Stack spacing={2} direction="row">
                   <Button  onClick={Cancel} variant="contained">CANCEL</Button>
-                  <Button variant="contained" disabled={!(iPass && confirmPassword && password && match)}  onClick={handleUpdate}>CHANGE PASSWORD</Button>
+                  <Button variant="contained" disabled={!(confirmPassword && password && match)}  onClick={handleUpdate}>CHANGE PASSWORD</Button>
                   
               </Stack>
             </div>

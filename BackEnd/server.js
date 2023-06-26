@@ -52,9 +52,6 @@ app.use("/Issues", IssueRouter);
 // const smsRouter = require("./APIs/sms.js");
 // app.use('/sms', smsRouter);
 
-// const serviceproviderRouter = require ("./routes/serviceproviders.js");
-// app.use("/serviceprovider", serviceproviderRouter);
-
 const UserDetailsRouter = require("./routes/UserDetails.js");
 app.use("/UserDetails", UserDetailsRouter);
 
@@ -64,11 +61,8 @@ app.use("/serviceprovider", serviceproviderRouter);
 const ProductRouter = require ("./routes/Products.js");
 app.use("/Product", ProductRouter);
 
-// const UserDetailsRouter = require("./routes/UserDetails.js");
-// app.use("/UserDetails", UserDetailsRouter);
-// const issueRouter = require('./routes/Issues.js');
-// app.use('/Issues', issueRouter);
-
+const SignUpDetailsRouter = require ("./routes/SignUpDetails.js");
+app.use("/SignUpDetails", SignUpDetailsRouter);
 
 const invoiceRoutes = require('./routes/Invoice.js');
 app.use('/Invoice', invoiceRoutes);

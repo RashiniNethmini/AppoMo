@@ -382,7 +382,7 @@ export const Reg = (props) => {
                     </div> */} 
 
                     <div className={styles.regButton}>
-                        <Button variant="contained" sx={{mr:'10px'}} type="submit" >Cancel</Button>
+                        <Button variant="contained" sx={{mr:'10px'}}  >Cancel</Button>
                         <div>
                             <Button variant="contained" type="submit"  sx={{mr:'10px'}} 
                             // onClick={CombinedOnClick} 
