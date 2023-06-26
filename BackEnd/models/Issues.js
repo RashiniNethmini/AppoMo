@@ -25,7 +25,8 @@ const issueSchema = new Schema({
   },
   Product: {
     type: String,
-    
+    // required: true,
+
   },
   Model: {
     type: String,

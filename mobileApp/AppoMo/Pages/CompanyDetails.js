@@ -180,13 +180,14 @@ import { SearchBar } from "@rneui/base";
 // import ServiceCenter from './ServiceCenter';
 // export { handlePress };
 import { BackHandler } from 'react-native';
+import { useParams } from 'react-router-native';
 
 function CompanyDetails() {
 
   const navigate = useNavigate();
-
+  const {objectId} = useParams();
   const handleBackButton = () => {
-    navigate('/CompanyOrServiceCenter/:objectId');
+    navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
     return true;
   };
 
@@ -200,7 +201,7 @@ function CompanyDetails() {
 
 
   const handlePress = (serviceProviderName) => {
-    navigate('/ComBranchDetails', { serviceProviderName, _id});
+    navigate('/ComBranchDetails', { objectId,serviceProviderName, _id});
   };
 
   // const navigation = useNavigation();
@@ -245,7 +246,7 @@ function CompanyDetails() {
 
     return items.map(item => (
       <View style={styles.item} key={item.serviceProviderName}>
-        <Link to={`/ComBranchDetails/${item._id}/${item.serviceProviderName}`} component={TouchableOpacity} style={styles.imagesStyle}>
+        <Link to={`/ComBranchDetails/${objectId}/${item._id}/${item.serviceProviderName}`} component={TouchableOpacity} style={styles.imagesStyle}>
           <Image source={require('../assets/avatar.jpg')} style={styles.imageStyle} />
         </Link>
         <Text style={styles.tStyle}>{item.serviceProviderName}</Text>
@@ -319,7 +320,11 @@ function CompanyDetails() {
 const styles = StyleSheet.create({
   searchStyles:{
     // marginVertical:50,
-    marginTop:200,
+    // marginTop:200,
+    // width:350
+    margin:20,
+    marginVertical:50,
+    marginTop:150,
     width:350
   },
   list:{

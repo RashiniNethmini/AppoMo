@@ -7,13 +7,15 @@ import { SearchBar } from "@rneui/base";
 import ServiceCenter from './ServiceCenter';
 // export { handlePress };
 import { BackHandler } from 'react-native';
+import { useParams } from 'react-router-native';
 
 function SelectServiceCenter() {
 
   const navigate = useNavigate();
-  
+  const {objectId} = useParams();
   const handleBackButton = () => {
-    navigate('/CompanyOrServiceCenter/:objectId');
+    // navigate('/CompanyOrServiceCenter/:objectId');
+    navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
     return true;
   };
 
@@ -27,7 +29,7 @@ function SelectServiceCenter() {
 
 
   const handlePress = (serviceProviderName) => {
-    navigate('/ServiceCenter', { serviceProviderName, _id});
+    navigate('/ServiceCenter', { objectId,serviceProviderName, _id});
   };
 
   // const navigation = useNavigation();
@@ -72,7 +74,7 @@ function SelectServiceCenter() {
 
     return items.map(item => (
       <View style={styles.item} key={item.serviceProviderName}>
-        <Link to={`/ServiceCenter/${item._id}/${item.serviceProviderName}`} component={TouchableOpacity} style={styles.imagesStyle}>
+        <Link to={`/ServiceCenter/${objectId}/${item._id}/${item.serviceProviderName}`} component={TouchableOpacity} style={styles.imagesStyle}>
           <Image source={require('../assets/a.jpg')} style={styles.imageStyle} />
         </Link>
         <Text style={styles.tStyle}>{item.serviceProviderName}</Text>
@@ -96,7 +98,7 @@ function SelectServiceCenter() {
       loadingProps={{}}
       onChangeText={newVal => setSearchTerm(newVal)}
       onClearText={() => console.log(onClearText())}
-      placeholder="Search location wis..."
+      placeholder="Search location wise..."
       placeholderTextColor="#888"
       cancelButtonTitle="Cancel"
       cancelButtonProps={{}}

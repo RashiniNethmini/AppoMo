@@ -18,7 +18,7 @@ export default function IssueSubmission() {
   const [issueInBrief, setTextissue] = useState("");
   const [recording, setRecording] = useState(null);
   const [audioUri, setAudioUri] = useState(null);
-  
+  const {objectId} = useParams();
   const { _id } = useParams();
 
   const navigate = useNavigate();
@@ -140,12 +140,13 @@ const handleMicPress = async () => {
       InvoiceNo: invoice,
       IssueInBrief: issueInBrief,
       AudioUri: audioUri, // Add the audio URI field
-      BranchDetails: _id
+      BranchDetails: _id,
+      UserDetails:objectId
     };
   
     try {
       // Make an API request to send the data to the backend
-      const response = await fetch("http://192.168.1.226:8070/Issues/add", {
+      const response = await fetch("http://10.0.2.2:8070/Issues/add", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -174,8 +175,8 @@ const handleMicPress = async () => {
     } catch (error) {
       console.log(error);
     }
-    navigate('/IssueSubmitMsg');
-   
+    // navigate('/IssueSubmitMsg');
+    navigate(`/IssueSubmitMsg/${objectId}`,{objectId});
   };
   
   

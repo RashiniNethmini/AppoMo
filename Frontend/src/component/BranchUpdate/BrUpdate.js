@@ -15,11 +15,13 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditIcon from '@mui/icons-material/Edit';
 // import data from './mock-data.json';
 import axios from 'axios';
-
+import {useParams} from 'react-router-dom'
 
 
 
 export default function BranchForm() {
+
+  const {objectId} = useParams();
 
 
   const validateBrName = (brName) => {
