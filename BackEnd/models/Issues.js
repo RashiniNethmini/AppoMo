@@ -59,21 +59,21 @@ const issueSchema = new Schema({
 
 });
 
-issueSchema.pre('save', function (next) {
-  const doc = this;
-  Counter.findByIdAndUpdate(
-    { _id: 'issueNumber' },
-    { $inc: { seq: 1 } },
-    { new: true, upsert: true }
-  )
-    .then((counter) => {
-      doc.issueNumber = counter.seq;
-      next();
-    })
-    .catch((error) => {
-      next(error);
-    });
-});
+// issueSchema.pre('save', function (next) {
+//   const doc = this;
+//   Counter.findByIdAndUpdate(
+//     { _id: 'issueNumber' },
+//     { $inc: { seq: 1 } },
+//     { new: true, upsert: true }
+//   )
+//     .then((counter) => {
+//       doc.issueNumber = counter.seq;
+//       next();
+//     })
+//     .catch((error) => {
+//       next(error);
+//     });
+// });
 
 const Issue = mongoose.model('Issue', issueSchema);
 module.exports = Issue;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { StyleSheet, Text, View,Button,TouchableOpacity,SafeAreaView,
     TouchableWithoutFeedback,
     Animated } from 'react-native';
@@ -8,12 +8,23 @@ import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { useParams } from 'react-router-native';
+import { BackHandler } from 'react-native';
 
 
   function CompanyOrServiceCenter() {
 
     const navigate = useNavigate();
     const {objectId} = useParams();
+    
+  const handleBackButton = () => {
+    navigate(`/`);
+    return true;
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => backHandler.remove();
+  }, [handleBackButton]);
 
   const handlePress = () => {
     navigate(`/CompanyDetails/${objectId}`,{objectId});

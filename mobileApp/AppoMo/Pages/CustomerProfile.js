@@ -48,7 +48,7 @@ const ProfileScreen = () => {
 
     const navigate = useNavigate();
     const handleBackButton = () => {
-      navigate('/CompanyOrServiceCenter/:objectId');
+      navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
       return true;
     };
     useEffect(() => {
@@ -58,11 +58,11 @@ const ProfileScreen = () => {
     }, [handleBackButton]);
 
     const EditProfile = () => {
-      navigate(`/Editprofile`);
+      navigate(`/EditProfile/${objectId}`,{objectId});
   
     };
     const Resetpwd = () => {
-      navigate(`/ResetPwd`);
+      navigate(`/ResetPwd/${objectId}`,{objectId});
   
     };
     const {objectId} = useParams();
@@ -122,13 +122,13 @@ const ProfileScreen = () => {
           </View>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback>
+        <Link to='/'  component={TouchableWithoutFeedback}>
           <View style={styles.menuItem}>
             <Icon name="logout" color="#FFFFFF" size={25}/>
             <Text style={styles.menuItemText}>Log Out</Text>
             <Icon name="arrow-right-circle" color="#FFFFFF" size={25}/>
           </View>
-        </TouchableWithoutFeedback>
+       </Link>
       </View>
     </SafeAreaView>
   );

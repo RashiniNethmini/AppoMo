@@ -5,8 +5,7 @@ const sendSms = require('../APIs/SmsAPI.js');
 
 router.route("/add").post((req, res) => {
 
-=======
-  const { Name, ContactNo, InvoiceNo, Product,Model, IssueInBrief, AudioUri,BranchDetails,,UserDetails } = req.body;
+  const { Name, ContactNo, InvoiceNo, Product,Model, IssueInBrief, AudioUri,BranchDetails,UserDetails } = req.body;
 
 
   
@@ -190,6 +189,19 @@ router.route("/notificationr/:id").get(async(req,res)=>{
   }).catch((err)=>{
   console.log(err);
   res.status(500).send({status:"Error with get notification"});
+  })
+})
+
+router.route("/getAdv/:id").get(async(req,res)=>{
+  let iId=req.params.id;   
+ 
+  const select=await Issue.findById(iId)
+  .then((Issues)=>{
+  res.status(200).send({status:"Issue fetched",Issues})
+ 
+  }).catch((err)=>{
+  console.log(err);
+  res.status(500).send({status:"Error"});
   })
 })
 

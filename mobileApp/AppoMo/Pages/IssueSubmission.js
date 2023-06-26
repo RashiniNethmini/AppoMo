@@ -19,11 +19,15 @@ export default function IssueSubmission() {
   const [recording, setRecording] = useState(null);
   const [audioUri, setAudioUri] = useState(null);
   const {objectId} = useParams();
-  const { _id } = useParams();
+  const {companyID} = useParams();
+  const {serviceProviderName} = useParams();
+  const {branchID} = useParams();
+  const {selectedCategory} = useParams();
+  const {selectedModel} = useParams();
 
   const navigate = useNavigate();
   const handleBackButton = () => {
-    navigate('/CompanyOrServiceCenter/:objectId');
+    navigate(`/ProductDetailsCompany/${objectId}/${companyID}/${serviceProviderName}/${branchID}`,{objectId,companyID,serviceProviderName,branchID});
     return true;
   };
   
@@ -140,7 +144,9 @@ const handleMicPress = async () => {
       InvoiceNo: invoice,
       IssueInBrief: issueInBrief,
       AudioUri: audioUri, // Add the audio URI field
-      BranchDetails: _id,
+      Product:selectedCategory,
+      Model:selectedModel,
+      BranchDetails:branchID,
       UserDetails:objectId
     };
   
