@@ -8,11 +8,32 @@ import {
     TouchableOpacity,
 } from "react-native";
 import axios from 'axios';
+import { BackHandler } from 'react-native';
+import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
+import { useParams } from 'react-router-native';
 //import { useNavigation } from '@react-navigation/native';
 
 
 
 function AdvPayment() {
+
+  const navigate = useNavigate();
+  const {objectId} = useParams();
+  const {BranchDetails} = useParams();
+  const {issueId} = useParams();
+  const {selectedDate} = useParams();
+  const {selectedtime} = useParams();
+  const time=selectedtime;
+  const handleBackButton = () => {
+    navigate(`/DateTimePicker/${objectId}/${BranchDetails}/${issueId}`,{objectId,BranchDetails,issueId});
+    return true;
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => backHandler.remove();
+  }, [handleBackButton]);
+ 
  // const navigation = useNavigation();
  const [mobileNumber, setMobileNumber] = useState("");
  const [isNumberValid, setIsNumberValid] = useState(true);
@@ -31,9 +52,63 @@ function AdvPayment() {
         {
           text: "Yes",
           onPress: () => {
-            console.log("Payment confirmed");
+            
             // Perform payment deduction and send SMS using API
-            performPaymentAndSendSMS();
+            // performPaymentAndSendSMS();
+
+            
+          
+
+            fetch(`http://10.0.2.2:8070/Issues/getAdv/${issueId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            const Name = data.Issues.Name;
+            const ContactNo = data.Issues.ContactNo;
+            const InvoiceNo = data.Issues.InvoiceNo;
+            const Product = data.Issues.Product;
+            const IssueInBrief = data.Issues.IssueInBrief; // Assuming the response from the backend contains the object ID as "_id"
+            const fAmount='100';
+            
+            fetch("http://10.0.2.2:8070/Appointments/add", {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                "Name": Name,
+                "ContactNo": ContactNo,
+                "InvoiceNo": InvoiceNo,
+                "Product":Product,
+                "IssueInBrief": IssueInBrief,
+                "ApntmntDate":selectedDate, // Add the audio URI field
+                "Time":time,
+                "finalAmount":fAmount,
+                // Model:selectedModel,
+                "BranchDetails":BranchDetails,
+                "UserDetails":objectId
+        
+              })
+            })
+              .then(res => res.json())
+              .then(data => {
+                console.log(data);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+            
+          })
+          .catch(error => {
+            console.log(error);
+          });
+          console.log("Payment confirmed");
+          navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
           },
         },
       ],
@@ -42,52 +117,55 @@ function AdvPayment() {
   } else {
     Alert.alert("Error", "Please enter mobile number and amount.");
   }
+
+  
+
 };
 
 
-  const performPaymentAndSendSMS = () => {
+  // const performPaymentAndSendSMS = () => {
  
-      // Use the mobileNumber state variable as the mobile number to send the SMS to
-      console.log("Performing payment deduction and sending SMS...");
+  //     // Use the mobileNumber state variable as the mobile number to send the SMS to
+  //     console.log("Performing payment deduction and sending SMS...");
     
     
-      // Make the fetch request to update appointment status and send SMS
-    //   fetch('http://10.0.2.2:8070/Advpayment/update', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify( { mobileNumber: mobileNumber})
-    //   })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       console.log('Appointment status updated  and message sent successfully');
+  //     // Make the fetch request to update appointment status and send SMS
+  //   //   fetch('http://10.0.2.2:8070/Advpayment/update', {
+  //   //     method: 'POST',
+  //   //     headers: {
+  //   //       'Content-Type': 'application/json'
+  //   //     },
+  //   //     body: JSON.stringify( { mobileNumber: mobileNumber})
+  //   //   })
+  //   //     .then(response => response.json())
+  //   //     .then(data => {
+  //   //       console.log('Appointment status updated  and message sent successfully');
          
-    //     })
-    //     .catch(error => {
-    //       console.error('Error updating appointment status and message sending :', error);
-    //       // Handle error case
-    //     });
-    // };
+  //   //     })
+  //   //     .catch(error => {
+  //   //       console.error('Error updating appointment status and message sending :', error);
+  //   //       // Handle error case
+  //   //     });
+  //   // };
     
-    axios.post("http://10.0.2.2:8070/Advpayment/payment", { mobileNumber: mobileNumber})
-        .then((response) => {
-          console.log(response);
-          console.log('Appointment status updated  and message sent successfully');
+  //   axios.post("http://10.0.2.2:8070/Advpayment/payment", { mobileNumber: mobileNumber})
+  //       .then((response) => {
+  //         console.log(response);
+  //         console.log('Appointment status updated  and message sent successfully');
  
-      })
+  //     })
     
-          .catch(error => {
-            console.error(error);
-            console.error('Error updating appointment status and message sending :', error);
+  //         .catch(error => {
+  //           console.error(error);
+  //           console.error('Error updating appointment status and message sending :', error);
            
-          });
+  //         });
 
     
-        setMobileNumber('');
-        // navigate('/VerifyOTP');
+  //       setMobileNumber('');
+  //       // navigate('/VerifyOTP');
       
-    };
+  //   };
 
 
   
@@ -104,11 +182,16 @@ function AdvPayment() {
         },
         {
           text: 'Yes',
-          onPress: () =>console.log('Payment cancelled'),
+          onPress: () =>{
+            console.log('Payment cancelled');
+            navigate(`/DateTimePicker/${objectId}/${BranchDetails}/${issueId}`,{objectId,BranchDetails,issueId});
         },
+      }
       ],
+      
       { cancelable: false }
     );
+    
   };
 
    function isNumeric(input) {

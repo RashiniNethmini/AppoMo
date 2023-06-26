@@ -164,7 +164,7 @@ function Login() {
           .catch(error => {
             console.log(error);
           });
-          fetch(`http://10.0.2.2:8070/UserDetails/get/${username}`, {
+          fetch(`http://10.0.2.2:8070/UserDetails/getu/${username}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

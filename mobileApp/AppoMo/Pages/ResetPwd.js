@@ -5,6 +5,7 @@ import axios from 'axios';
 import { BackHandler } from 'react-native';
 
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
+import { useParams } from 'react-router-native';
 
 const ResetPwd = props => {
 
@@ -60,16 +61,30 @@ const ResetPwd = props => {
   const [errors, setErrors] = useState({});
   const Cname = "username";
 
+  const {objectId} = useParams();
+  const navigate = useNavigate();
+  const handleBackButton = () => {
+    navigate(`/CustomerProfile/${objectId}`,{objectId});
+    return true;
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => backHandler.remove();
+  }, [handleBackButton]);
+ 
+
+
   useEffect(() => {
     fetchdata();
   }, []);
 
   const fetchdata = async () => {
     try {
-      const data = await axios.get(`http://10.0.2.2:8070/UserDetails/get/${Cname}`);
+      const data = await axios.get(`http://10.0.2.2:8070/UserDetails/get/${objectId}`);
      
       
-        setFetchedPassword(data.data[0].password);
+        setFetchedPassword(data.data.UserDetails.password);
     
     } catch (error) {
       console.error('Error fetching password:', error);
@@ -111,7 +126,7 @@ const ResetPwd = props => {
       //   };
       //   await axios.put(`http://localhost:8070/UserDetails/update/${Cname}`,updateFields);
       //   alert('Details updated successfully');
-      const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${Cname}`,
+      const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${objectId}`,
        {
         method: 'PUT',
         headers: {
@@ -130,6 +145,7 @@ const ResetPwd = props => {
     setNewPassword('');
     setConfirmPassword('');
     setErrors({});
+    navigate(`/CustomerProfile/${objectId}`,{objectId});
   };
 
 
@@ -188,16 +204,7 @@ const ResetPwd = props => {
   //   setErrors({});
   // };
 
-  const navigate = useNavigate();
-    const handleBackButton = () => {
-      navigate('/CustomerProfile');
-      return true;
-    };
-    useEffect(() => {
-      const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
-  
-      return () => backHandler.remove();
-    }, [handleBackButton]);
+ 
   return (
     <View style={styles.container}>
         <Text style={styles.title}>Reset Password</Text>

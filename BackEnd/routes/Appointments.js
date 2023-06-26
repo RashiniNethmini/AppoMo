@@ -3,15 +3,16 @@ let Appointment = require('../models/Appointments');
 
 router.route("/add").post((req, res) => {
     const Name = req.body.Name;
-    const ContactNo = Number(req.body.ContactNo);
+    const ContactNo = req.body.ContactNo;
     const InvoiceNo = req.body.InvoiceNo;
     const Product = req.body.Product;
     const IssueInBrief = req.body.IssueInBrief;
     const ApntmntDate=  req.body.ApntmntDate;
     const Time =  req.body.Time;
-    const AptmntStatus = Boolean(req.body.AptmntStatus);
-    const Completed = Boolean(req.body.Completed);
-    const finalAmount = Number(req.body.finalAmount);
+    const Completed = req.body.Completed;
+    const finalAmount = req.body.finalAmount;
+   const BranchDetails = req.body.BranchDetails;
+    const UserDetails= req.body.UserDetails;
 
     const newAppointment = new Appointment({
         Name,
@@ -21,9 +22,10 @@ router.route("/add").post((req, res) => {
         IssueInBrief,
         ApntmntDate,
         Time,
-        AptmntStatus,
         Completed,
-        finalAmount
+        finalAmount,
+        BranchDetails,
+        UserDetails
     })
     //pass the object to the database.
     newAppointment.save().then(() => {

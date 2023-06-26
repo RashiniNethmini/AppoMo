@@ -3,6 +3,7 @@ import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput, Alert} 
 import { BackHandler } from 'react-native';
 
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
+import { useParams } from 'react-router-native';
 // import axios from 'axios';
 
 const EditProfile = props => {
@@ -70,7 +71,20 @@ const EditProfile = props => {
   const [nic, setNIC] = useState('');
   const [errors, setErrors] = useState({});
   const [data,setData]=useState("");
-  const Cname = 'username';
+  // const Cname = 'username';
+
+  const {objectId} = useParams();
+  const navigate = useNavigate();
+  const handleBackButton = () => {
+    navigate(`/CustomerProfile/${objectId}`,{objectId});
+    return true;
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => backHandler.remove();
+  }, [handleBackButton]);
+ 
 
   useEffect(() => {
     fetchdata();
@@ -78,7 +92,7 @@ const EditProfile = props => {
 
   const fetchdata= async ()=>{
     try{
-    const data=await fetch(`http://10.0.2.2:8070/UserDetails/get/${Cname}`);
+    const data=await fetch(`http://10.0.2.2:8070/UserDetails/get/${objectId}`);
     const jsonData = await data.json();
     setData(jsonData);
   } catch (error) {
@@ -121,7 +135,7 @@ const EditProfile = props => {
         // };
         // await axios.put(`http://10.0.2.2:8070/UserDetails/update/${Cname}`,updateFields);
         // alert('Details updated successfully');
-        const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${Cname}`,
+        const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${objectId}`,
        {
         method: 'PUT',
         headers: {
@@ -147,18 +161,10 @@ const EditProfile = props => {
     setEmail('');
     setNIC('');
     setErrors({});
+    navigate(`/CustomerProfile/${objectId}`,{objectId});
   };
 
-  const navigate = useNavigate();
-    const handleBackButton = () => {
-      navigate('/CustomerProfile');
-      return true;
-    };
-    useEffect(() => {
-      const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
   
-      return () => backHandler.remove();
-    }, [handleBackButton]);
   
   return (
     <View style={styles.container}>

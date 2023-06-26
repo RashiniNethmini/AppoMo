@@ -59,14 +59,18 @@ export default function App() {
       <Route path="/SelectServiceCenter/:objectId" element={<SelectServiceCenter/>} />
       <Route path="/ServiceCenter/:objectId/:_id/:serviceProviderName" element={<ServiceCenter/>} />
       <Route path="/ProductDetails/:objectId/:companyID/:serviceProviderName/:_id" element={<ProductDetails/>} /> 
-      <Route path="/IssueSubmission/:objectId/:_id" element={<IssueSubmission/>} /> 
+      <Route path="/ProductDetailsCompany/:objectId/:companyID/:serviceProviderName/:_id" element={<ProductDetailsCompany/>} /> 
+      <Route path="/IssueSubmission/:objectId/:companyID/:serviceProviderName/:branchID/:selectedCategory/:selectedModel" element={<IssueSubmission/>} /> 
       <Route path="/SCIssueSubmission/:objectId/:companyID/:serviceProviderName/:branchID/:selectedCategory/:selectedModel" element={<SCIssueSubmission/>} />
       <Route path="/IssueSubmitMsg/:objectId" element={<IssueSubmitMsg/>} />
       <Route path="/NotificationInterface/:objectId" element={<NotificationInterface/>} />  
       <Route path="/CustomerProfile/:objectId" element={<CustomerProfile/>} /> 
+      <Route path="/EditProfile/:objectId" element={<EditProfile/>} /> 
+      <Route path="/ResetPwd/:objectId" element={<ResetPwd/>} /> 
       <Route path="/EditProfile" element={<EditProfile/>} /> 
       <Route path="/ResetPwd" element={<ResetPwd/>} /> 
       <Route path="/DateTimePicker/:objectId/:BranchDetails/:_id" element={<DateTimePicker/>} /> 
+      <Route path="/AdvPayment/:objectId/:BranchDetails/:issueId/:selectedDate/:selectedtime" element={<AdvPayment/>} /> 
     </Routes>  
     {/* <ForgotPW/>
     {/* <AdvPayment/> */}
@@ -108,7 +112,7 @@ export default function App() {
         {/* <CompanyDetails/> */}
         {/*<ComBranchDetails/>*/}
         {/* <SelectServiceCenter/> */}
-//          <SCIssueSubmission/> 
+
         {/* <AdvPayment/>
                  {/* <ForgotPW/>  */}
         {/* <VerifyOTP/> */}

@@ -138,11 +138,15 @@ const handleMicPress = async () => {
       ContactNo: contactNo,
       IssueInBrief: issueInBrief,
       AudioUri: audioUri, 
+      Product:selectedCategory,
+      Model:selectedModel,
+      BranchDetails:branchID,
+      UserDetails:objectId
     };
   
     try {
       // Make an API request to send the data to the backend
-      const response = await fetch("http://192.168.1.226:8070/Issues/add", {
+      const response = await fetch("http://10.0.2.2:8070/Issues/add", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -170,7 +174,7 @@ const handleMicPress = async () => {
     } catch (error) {
       console.log(error);
     }
-    navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
+    navigate(`/IssueSubmitMsg/${objectId}`,{objectId});
    
   };
   
@@ -198,7 +202,7 @@ const handleMicPress = async () => {
       <StatusBar backgroundColor="#108F94" translucent={true} />
       <View>
             <Text variant="headlineLarge" style={styles.title} >
-            {/* Let Us Know What's Wrong */}{selectedCategory}{selectedModel}
+            Let Us Know What's Wrong
             </Text>
           </View>
       <KeyboardAwareScrollView

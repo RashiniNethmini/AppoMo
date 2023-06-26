@@ -49,11 +49,11 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
 
-    <Router>
+    {/* <Router> */}
     {/* <EditProfile/> */}
-   
-      <NavBar/>
-      <Routes>
+{/*    
+      <NavBar/> */}
+      {/* <Routes>
       
       <Route path='/' exact element={<FirstPage/>} />
         <Route path='/Reg' exact element={<Reg/>} />
@@ -64,14 +64,14 @@ function App() {
         <Route path='/BrUpdate/:objectId' element={<BrUpdate/>} />
         <Route path='/EditProfile' element={<EditProfile/>} />
         <Route path='/ResetPassword' element={<ResetPassword/>} />
-        <Route path='/Signin' element={<Signin/>} />
+        <Route path='/Signin' element={<Signin/>} /> */}
          {/* <Route path='/events' component={Events} />
         <Route path='/annual' component={AnnualReport} /> */}
        {/* <Route path='/team' component={Teams} />
         <Route path='/blogs' component={Blogs} />
         <Route path='/sign-up' component={SignUp} /> */}
-      </Routes>
-    </Router>
+      {/* </Routes>
+    </Router> */}
     {/* <Signin/>
     <BrUpdate/>
     <AppointmentConfirm/> */}
@@ -83,9 +83,10 @@ function App() {
     <RPw/> */}
     <Admin/>
     <SignUp/>
+    <AppointmentConfirm/>
     </ThemeProvider>
     {/* <BrUpdate/> */}
-    <AppointmentConfirm/>
+    
     {/* </ThemeProvider> */}
 
     </div>

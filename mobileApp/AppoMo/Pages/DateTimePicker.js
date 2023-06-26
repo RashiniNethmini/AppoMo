@@ -12,6 +12,7 @@ const DateTimePicker = () => {
   const {objectId} = useParams();
   const {BranchDetails} = useParams();
   const {_id} = useParams();
+  const issueId=_id;
   const handleBackButton = () => {
     navigate(`/NotificationInterface/${objectId}`,{objectId});
     return true;
@@ -170,9 +171,9 @@ const DateTimePicker = () => {
                 <View>
                   <Text style={styles.dateText}>Selected Time Slot: {selectedTimeSlot.time}</Text>
                   <Text style={styles.timeSlotText}>Do you want to schedule an appointment?</Text>
-                  <TouchableOpacity style={styles.timeSlotButton} onPress={handleAppointmentConfirmation}>
+                  <Link to={`/AdvPayment/${objectId}/${BranchDetails}/${issueId}/${selectedDate}/${selectedTimeSlot.time}`} component={TouchableOpacity} style={styles.timeSlotButton} >
                     <Text style={styles.timeSlotButtonText}>Yes</Text>
-                  </TouchableOpacity>
+                  </Link>
                   <TouchableOpacity
                     onPress={() => setSelectedTimeSlot(null)}
                     style={styles.timeSlotButton}

@@ -312,7 +312,7 @@ import { BackHandler } from 'react-native';
     // const route = useRoute();
     // const { serviceProviderName } = route.params;
     const { serviceProviderName, _id } = useParams();
-
+    const companyID=_id;
     // const route =Route();
     // const { componentId } = route.params;
     const [s, setS] = useState(null);
@@ -428,7 +428,7 @@ import { BackHandler } from 'react-native';
           <View style={{width:380 }}>
               {data.map(item => (
                
-                <Link to={`/ProductDetails/${objectId}/${item._id}`} component={TouchableOpacity} style={styles.appButtonContainer} key={item._id}>
+                <Link to={`/ProductDetailsCompany/${objectId}/${companyID}/${serviceProviderName}/${item._id}`} component={TouchableOpacity} style={styles.appButtonContainer} key={item._id}>
                         <View><Text style={styles.appButtonText1}>{item.branchName}</Text>
                         <Text style={styles.appButtonText}>{item.contactNo}</Text>
                         <Text style={styles.appButtonText}>{item.address}</Text></View>

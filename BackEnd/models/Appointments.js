@@ -24,7 +24,7 @@ const appntmntSchema = new Schema({
     },
     Product: {
         type: String,
-        required: true,
+        // required: true,
     },
     IssueInBrief: {
         type: String,
@@ -38,35 +38,43 @@ const appntmntSchema = new Schema({
         type: String,
         required: true,
     },
-    AptmntStatus:{
-        type: Boolean,
-        required: true,
-    },
+    // AptmntStatus:{
+    //     type: Boolean,
+    //     required: true,
+    // },
     Completed:{
       type: Boolean,
-      required: true,
+      // required: true,
     },
     finalAmount: {
       type: Number,
       required: true,
+    }, 
+    BranchDetails: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'BranchDetails' 
+    }, 
+    UserDetails: { 
+          type: mongoose.Schema.Types.ObjectId, 
+          ref: 'UserDetails' 
     }
 })
 
-appntmntSchema.pre('save', function (next) {
-    const doc = this;
-    Counterr.findByIdAndUpdate(
-      { _id: 'AptNumber' },
-      { $inc: { seq: 1 } },
-      { new: true, upsert: true }
-    )
-      .then((counter) => {
-        doc.AptNumber = counter.seq;
-        next();
-      })
-      .catch((error) => {
-        next(error);
-      });
-  });
+// appntmntSchema.pre('save', function (next) {
+//     const doc = this;
+//     Counterr.findByIdAndUpdate(
+//       { _id: 'AptNumber' },
+//       { $inc: { seq: 1 } },
+//       { new: true, upsert: true }
+//     )
+//       .then((counter) => {
+//         doc.AptNumber = counter.seq;
+//         next();
+//       })
+//       .catch((error) => {
+//         next(error);
+//       });
+//   });
 
 const Appointment = mongoose.model('Appointment', appntmntSchema);
 module.exports = Appointment;
