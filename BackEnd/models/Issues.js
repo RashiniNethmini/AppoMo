@@ -21,15 +21,15 @@ const issueSchema = new Schema({
   },
   InvoiceNo: {
     type: String,
-    required: true,
+   
   },
   Product: {
     type: String,
-    required: true,
+    
   },
   Model: {
     type: String,
-    required: true,
+    
   },
   IssueInBrief: {
     type: String,

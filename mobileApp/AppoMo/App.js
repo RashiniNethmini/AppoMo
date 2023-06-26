@@ -73,7 +73,7 @@ export default function App() {
     {/* <EditProfile/> */}
     {/* <NotificationInterface/> */}
     {/* <CustomerProfile/> */}
-    <ProductDetailsCompany/>
+    {/* <ProductDetailsCompany/> */}
     {/*</Provider> */}
      <Provider>
         {/* 
@@ -95,7 +95,7 @@ export default function App() {
         {/* <CompanyDetails/> */}
         {/* <ComBranchDetails/> */}
         {/* <SelectServiceCenter/> */}
-        {/* <IssueSubmission/> */}
+         <SCIssueSubmission/> 
         {/* <AdvPayment/>
                  {/* <ForgotPW/>  */}
         {/* <VerifyOTP/> */}
