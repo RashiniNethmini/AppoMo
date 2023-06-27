@@ -79,6 +79,8 @@ const SignUp = () => {
         setVerificationCodeError(validateVerificationCode(value));
     };
 
+    const [status, setStatus] =useState("");
+
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {setOpen(true);}; //Opening popup messages.
     const handleClose = () => {setOpen(false);}; //Closing the popup messages.
@@ -105,6 +107,7 @@ const SignUp = () => {
             serviceProviderName,
             email,
             regNo,
+            status,
             verificationCode
         }
          
@@ -178,8 +181,8 @@ const SignUp = () => {
                     </div>
 
                     <div className={styles.signUpButton}>
-                            <Button variant="contained" type="submit"  sx={{mr:'10px'}} onClick={sendSignUpDetails} disabled={verificationCodeError !== null}
-                            // disabled={(serviceProviderName && email && regNo && verificationCode )}
+                            <Button variant="contained" type="submit"  sx={{mr:'10px'}} onClick={sendSignUpDetails} id="status"
+                            disabled={verificationCodeError !== null}
                             >Send</Button> 
                             <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         
@@ -202,8 +205,8 @@ const SignUp = () => {
                     <div className={styles.signUpButton}>
                         
                         
-                        <Button variant="contained" sx={{mr:'10px'}} disabled={!(serviceProviderName && email && regNo && (verificationCodeError !== null))}
-                        // disabled={!(serviceProviderName && email && regNo && verificationCode )}
+                        <Button variant="contained" sx={{mr:'10px'}} 
+                        disabled={!(serviceProviderName && email && regNo && (verificationCodeError !== null))}
                         onClick={handleVerifyAccount} >Next</Button>
                         
                             

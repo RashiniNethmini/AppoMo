@@ -15,6 +15,10 @@ const signUpSchema = new Schema({
         type : String,
         required: true
     },
+    status : {
+        type : String,
+        default : []
+    }
    
 })
 
