@@ -7,15 +7,13 @@ router.route("/add").post((req,res) => {
     const serviceProviderName = req.body.serviceProviderName;
     const email = req.body.email;
     const regNo = req.body.regNo;
-    const verificationCode = req.body.verificationCode;
-   
+    
 
     const newSignUpDetails = new SignUpDetails({
         serviceProviderName,
         email,
-        regNo,
-        verificationCode
-    
+        regNo
+       
     })
     newSignUpDetails.save().then(()=>{
       
