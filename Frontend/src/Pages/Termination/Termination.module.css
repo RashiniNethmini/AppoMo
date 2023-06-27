@@ -12,6 +12,15 @@
     padding: 10px;
 }
 
+.titleContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    text-align: center;
+}
+
 .bodyMain {
     display: flex;
     flex-direction: column;
@@ -24,11 +33,6 @@
     display: flex;
     justify-content: center;
     margin: 10px;
-}
-
-.radioBoxContainer {
-    display: flex;
-    justify-content: center;
 }
 
 .buttonMain {
@@ -80,9 +84,9 @@
 .checkboxContainer {
     display: flex;
     align-items: center;
-  }
+}
   
-  .checkboxContainer span {
+.checkboxContainer span {
     margin-left: 8px;
-  }
+}
   

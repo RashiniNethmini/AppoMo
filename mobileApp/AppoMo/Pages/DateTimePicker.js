@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import axios from 'axios';
 import { BackHandler } from 'react-native';
@@ -7,12 +7,13 @@ import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import { useParams } from 'react-router-native';
 
 const DateTimePicker = () => {
-
+  const [showContainer, setShowContainer] = useState(true);
   const navigate = useNavigate();
   const {objectId} = useParams();
   const {BranchDetails} = useParams();
   const {_id} = useParams();
   const issueId=_id;
+
   const handleBackButton = () => {
     navigate(`/NotificationInterface/${objectId}`,{objectId});
     return true;
@@ -24,7 +25,6 @@ const DateTimePicker = () => {
   }, [handleBackButton]);
  
   
-
   const [selectedDate, setSelectedDate] = useState(null);
   const [showTimeSlots, setShowTimeSlots] = useState(false);
   const [showCalendar, setShowCalendar] = useState(true);
@@ -53,6 +53,7 @@ const DateTimePicker = () => {
     setSelectedDate(date.dateString);
     setShowTimeSlots(true);
     setShowCalendar(false);
+    setShowContainer(false);
   };
 
   const handleGoBack = () => {
@@ -150,7 +151,8 @@ const DateTimePicker = () => {
 
 
   return (
-    <View style={styles.container}>
+    <ScrollView>
+      {/* <Text style={styles.title}>Select a Date</Text> */}
       {/* Calendar */}
       {showCalendar && (
         <View style={styles.calendarContainer}>
@@ -160,7 +162,7 @@ const DateTimePicker = () => {
 
       {/* Time Slots */}
       {showTimeSlots && (
-        <View style={styles.timeSlotsContainer}>
+        <View style={[styles.timeSlotsContainer, !showContainer]}>
           <TouchableOpacity onPress={handleGoBack} style={styles.goBackButton}>
             <Text style={styles.goBackButtonText}>Go Back</Text>
           </TouchableOpacity>
@@ -211,7 +213,8 @@ const DateTimePicker = () => {
           )}
         </View>
       )}
-    </View>
+    
+    </ScrollView>
   );
 };
 
@@ -236,38 +239,50 @@ const generateTimeSlots = (startTime, endTime, noOfAppointmentsPerHour) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#084C4F',
-  },
+
+  // title: {
+
+  //   fontSize: 30,
+  //   fontWeight: 'bold',
+  //   marginTop: 100,
+  //   marginBottom: 15,
+  //   color: '#FFFFFF',
+  // },
+
   calendarContainer: {
-    // flex: 1,
     backgroundColor: '#fff',
-    padding: 100,
-    borderRadius: 10,
+    padding: 20,
+    width: 400,
+    height: 500,
+    marginTop: 70,
+    // borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     alignSelf: 'center',
-    marginTop: '2%',
+    flexGrow: 1,
   },
+
   timeSlotsContainer: {
-    // flex: 1,
+    marginTop: 0,
+    width: 400,
+    height: 850,
     backgroundColor: '#f2f2f2',
-    padding: 20,
-    display: 'flex',
     borderWidth: 1,
     borderColor: '#ccc',
+    padding: 10,
   },
+
   dateText: {
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 10,
   },
+
   timeSlotText: {
     fontSize: 16,
     marginBottom: 10,
   },
+
   timeSlotButton: {
     backgroundColor: '#e6e6e6',
     paddingVertical: 10,
@@ -275,18 +290,22 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
   },
+
   timeSlotButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  
   goBackButton: {
     backgroundColor: '#cccccc',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 5,
     marginBottom: 10,
+    marginTop: 40,
   },
+
   goBackButtonText: {
     fontSize: 16,
     fontWeight: 'bold',

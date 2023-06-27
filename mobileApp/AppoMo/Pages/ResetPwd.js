@@ -1,57 +1,69 @@
-
 import React, { useState, useEffect } from 'react';
 import {View, StyleSheet, ScrollView, Text, TouchableOpacity, TextInput, Alert} from 'react-native';
 import axios from 'axios';
 import { BackHandler } from 'react-native';
-
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import { useParams } from 'react-router-native';
 
-const ResetPwd = props => {
-
-  const validateCurrentPassword = (currentpassword) => {
+const ResetPwd = () => {
+  const validateCurrentPassword = currentpassword => {
     if (!currentpassword) {
       return "*Current Password is required.";
     }
     return null;
   };
 
-  // const validateNewPassword = (newpassword) => {
-  //   if (!newpassword) {
-  //     return "*New Password is required.";
-  //   }
-
-  //   const passwordRegex = /^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[a-zA-Z]).{8,}$/;
-
-  //   if (!passwordRegex.test(newpassword)) {
-  //     return "*Your password must contain minimum of 8 characters with a combination of at least one uppercase letter, one lowercase letter and one number."
-  //   }
-  //   return null;
-  // };
-  const validateNewPassword = (password) => {
+  const validateNewPassword = password => {
     if (!password) {
       return "*New Password is required.";
     }
-  
+
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-  
+
     if (!passwordRegex.test(password)) {
-      return "*Your password must contain a minimum of 8 characters with a combination of at least one uppercase letter, one lowercase letter, and one number.";
+      return "*Password should have a minimum of 8 characters, including at least one uppercase letter, one lowercase letter, and one number.";
     }
     return null;
   };
-  
 
   const validateConfirmPassword = (password, confirmPassword) => {
     if (!confirmPassword) {
       return "*Please confirm password.";
     }
 
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       return "*Passwords do not match.";
     }
 
-    return null; 
+    return null;
+  };
+
+  const handleCurrentPasswordChange = currentpassword => {
+    setCurrentPassword(currentpassword);
+    const currentpasswordError = validateCurrentPassword(currentpassword);
+    setErrors(prevErrors => ({
+      ...prevErrors,
+      currentpassword: currentpasswordError,
+    }));
+  };
+
+
+  const handlePasswordChange = password => {
+    setNewPassword(password);
+    const newpasswordError = validateNewPassword(password);
+    setErrors(prevErrors => ({
+      ...prevErrors,
+      password: newpasswordError,
+    }));
+  };
+
+  const handleConfirmPasswordChange = confirmPassword => {
+    setConfirmPassword(confirmPassword);
+    const confirmPasswordError = validateConfirmPassword(password, confirmPassword);
+    setErrors(prevErrors => ({
+      ...prevErrors,
+      confirmPassword: confirmPasswordError,
+    }));
   };
 
   const [fetchedPassword, setFetchedPassword] = useState('');
@@ -59,21 +71,22 @@ const ResetPwd = props => {
   const [password, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
-  const Cname = "username";
-
   const {objectId} = useParams();
   const navigate = useNavigate();
+
   const handleBackButton = () => {
+
     navigate(`/CustomerProfile/${objectId}`,{objectId});
+
     return true;
+
   };
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
-
     return () => backHandler.remove();
-  }, [handleBackButton]);
- 
 
+  }, [handleBackButton]);
 
   useEffect(() => {
     fetchdata();
@@ -81,30 +94,29 @@ const ResetPwd = props => {
 
   const fetchdata = async () => {
     try {
+
       const data = await axios.get(`http://10.0.2.2:8070/UserDetails/get/${objectId}`);
-     
-      
-        setFetchedPassword(data.data.UserDetails.password);
-    
+      setFetchedPassword(data.data.UserDetails.password);
+
     } catch (error) {
       console.error('Error fetching password:', error);
     }
   };
 
-
-
   const handleSubmit = async () => {
+
     const currentpasswordError = validateCurrentPassword(currentpassword);
     const newpasswordError = validateNewPassword(password);
-    const confirmPasswordError = validateConfirmPassword(password, confirmPassword);
-    
+    const confirmPasswordError = validateConfirmPassword(password, confirmPassword);  
+
     if (currentpasswordError || newpasswordError || confirmPasswordError) {
       setErrors({
         currentpassword: currentpasswordError,
-        password: newpasswordError, 
+        password: newpasswordError,
         confirmPassword: confirmPasswordError
       });
     }
+
     else if (currentpassword !== fetchedPassword) {
       setErrors({
       ...errors,
@@ -112,28 +124,33 @@ const ResetPwd = props => {
       });
       return;
     }
+
     else {
       Alert.alert('Information', 'Your password has been updated.',
       [
-        {text: 'OK', 
+        {text: 'OK',
         onPress: () => console.log('OK Pressed')},
       ],
       { cancelable: false },);
-      
+
       try {
-      //   const updateFields = {
-      //     password
-      //   };
-      //   await axios.put(`http://localhost:8070/UserDetails/update/${Cname}`,updateFields);
-      //   alert('Details updated successfully');
+
       const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${objectId}`,
        {
         method: 'PUT',
+
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({password}),
       });
+
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+
+      navigate(`/CustomerProfile/${objectId}`,{objectId});
+
       } catch (error) {
           console.error('Error updating user:', error);
       }
@@ -141,93 +158,40 @@ const ResetPwd = props => {
   };
 
   const handleCancel = () => {
+
     setCurrentPassword('');
     setNewPassword('');
     setConfirmPassword('');
     setErrors({});
-    navigate(`/CustomerProfile/${objectId}`,{objectId});
+
+    //navigate(`/CustomerProfile/${objectId}`,{objectId});
+
   };
 
-
-
-  // const handleSubmit = async () => {
-  //   const currentpasswordError = validateCurrentPassword(currentpassword);
-  //   const newpasswordError = validateNewPassword(password);
-  //   const confirmPasswordError = validateConfirmPassword(password, confirmPassword);
-    
-  //   if (currentpasswordError || newpasswordError || confirmPasswordError) {
-  //     setErrors({
-  //       currentpassword: currentpasswordError,
-  //       password: newpasswordError, 
-  //       confirmPassword: confirmPasswordError
-  //     });
-  //   }
-  //   else if (currentpassword !== fetchedPassword) {
-  //     setErrors({
-  //     ...errors,
-  //     currentpassword: "*Current Password is incorrect."
-  //     });
-  //     return;
-  //   }
-  //   else {
-  //     Alert.alert('Information', 'Your password has been updated.',
-  //     [
-  //       {text: 'OK', 
-  //       onPress: () => console.log('OK Pressed')},
-  //     ],
-  //     { cancelable: false },);
-      
-  //     try {
-  //     //   const updateFields = {
-  //     //     password
-  //     //   };
-  //     //   await axios.put(`http://localhost:8070/UserDetails/update/${Cname}`,updateFields);
-  //     //   alert('Details updated successfully');
-  //     const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${Cname}`,
-  //      {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({password}),
-  //     });
-  //     } catch (error) {
-  //         console.error('Error updating user:', error);
-  //     }
-  //   }
-  // };
-
-  // const handleCancel = () => {
-  //   setCurrentPassword('');
-  //   setNewPassword('');
-  //   setConfirmPassword('');
-  //   setErrors({});
-  // };
-
- 
   return (
-    <View style={styles.container}>
-        <Text style={styles.title}>Reset Password</Text>
-      
+
+    <View style={styles.container}>      
+      <Text style={styles.title}>RESET PASSWORD</Text>     
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.inputContainer}>
-    
+
         <TextInput style={styles.inputField}
           placeholder="Current Password"
           secureTextEntry={true}
           autoCapitalize="none"
           autoCorrect={false}
           value={currentpassword}
-          onChangeText={setCurrentPassword}/>
+          onChangeText={handleCurrentPasswordChange}/>
           {errors.currentpassword && <Text style={styles.errorText}>{errors.currentpassword}</Text>}
 
-          <TextInput style={styles.inputField}
-            placeholder="New Password"
-            secureTextEntry={true}
-            autoCapitalize="none"
-            autoCorrect={false}
-            value={password}
-            onChangeText={setNewPassword}/>
-            {errors.newpassword && <Text style={styles.errorText}>{errors.newpassword}</Text>}
+        <TextInput style={styles.inputField}
+          placeholder="New Password"
+          secureTextEntry={true}
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={password}
+          onChangeText={handlePasswordChange}/>
+          {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}           
 
         <TextInput style={styles.inputField}
           placeholder="Confirm Password"
@@ -235,31 +199,35 @@ const ResetPwd = props => {
           autoCapitalize="none"
           autoCorrect={false}
           value={confirmPassword}
-          onChangeText={setConfirmPassword}/>
+          onChangeText={handleConfirmPasswordChange}/>
           {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
-    
+
         <TouchableOpacity  style={styles.btnContainer}
           onPress={handleSubmit}>
-          <Text style={styles.btnText}>Change Password</Text>       
+          <Text style={styles.btnText}>RESET</Text>      
         </TouchableOpacity>
 
         <TouchableOpacity  style={styles.btnContainer}
           onPress={handleCancel}>
-          <Text style={styles.btnText}>Cancel</Text>
+          <Text style={styles.btnText}>CANCEL</Text>
         </TouchableOpacity>
-      </View>   
-    </View> 
+
+      </View>  
+      </ScrollView>
+    </View>
+
   );
+
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
+    paddingTop: 100,
     backgroundColor: '#084C4F',
     alignItems: "center",
     justifyContent: 'center',
-    width: 360,
+    width: 400,
   },
 
   scrollContainer: {
@@ -278,8 +246,8 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     backgroundColor: '#FFFFFF',
-    height: 650,
-    width: 360,
+    height: 700,
+    width: 400,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
     paddingTop: 50,
@@ -287,14 +255,13 @@ const styles = StyleSheet.create({
   },
 
   inputField: {
-    borderRadius: 10, 
-    color: '#000000', 
-    paddingHorizontal: 10, 
-    width: '78%', 
+    borderRadius: 10,
+    color: '#000000',
+    paddingHorizontal: 10,
+    width: '78%',
     height: 35,
-    backgroundColor: 'rgb(220,220, 220)', 
+    backgroundColor: 'rgb(220,220, 220)',
     marginVertical: 10,
-    placeholderTextColor: '#084C4F',
   },
 
   btnContainer:{
@@ -308,17 +275,18 @@ const styles = StyleSheet.create({
   },
 
   btnText:{
-    color: '#FFFFFF', 
+    color: '#FFFFFF',
     fontSize: 20,
     fontWeight: 'bold',
-    bgColor: '#084C4F',
+    backgroundColor: '#084C4F',
   },
 
   errorText:{
     textAlign: 'left',
-    color: '#DC143C', 
+    color: '#DC143C',
     fontSize: 12,
   }
+
 });
 
 export default ResetPwd;

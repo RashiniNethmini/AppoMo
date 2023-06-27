@@ -1,81 +1,142 @@
 import React, { useState, useEffect } from 'react';
-import {View, SafeAreaView, StyleSheet, ToastAndroid, TouchableWithoutFeedback} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ToastAndroid, TouchableWithoutFeedback, Alert} from 'react-native';
 import {Avatar, Title, Caption, Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker';
 import { BackHandler } from 'react-native';
 import { useParams } from 'react-router-native';
-
-
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 
 const ProfileScreen = () => {
 
   const [galleryPermission, setGalleryPermission] = useState(null);
-    const [imageUri, setImageUri] = useState(null);
+  const [imageUri, setImageUri] = useState(null);
+  const [username, setUsername] = useState('');
 
-    const setToastMsg = msg => {
-        ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
+  const setToastMsg = msg => {
+    ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
+  };
+
+  const permisionFunction = async () => {
+
+    const imagePermission = await ImagePicker.getMediaLibraryPermissionsAsync();
+    console.log(imagePermission.status);
+
+    setGalleryPermission(imagePermission.status === 'granted');
+
+    if (imagePermission.status !== 'granted') {
+        setToastMsg('Permission for media access needed.');
     }
+  };
 
-    const permisionFunction = async () => {
+  useEffect(() => {
+      permisionFunction();
+  }, );
 
-        const imagePermission = await ImagePicker.getMediaLibraryPermissionsAsync();
-        console.log(imagePermission.status);
+  const pick = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          quality: 1,
+      });
 
-        setGalleryPermission(imagePermission.status === 'granted');
+      if (!result.cancelled) {
+          setImageUri(result.uri);
+      }
+  }
 
-        if (imagePermission.status !== 'granted') {
-            setToastMsg('Permission for media access needed.');
+  const navigate = useNavigate();
+
+  const handleBackButton = () => {
+    navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
+    return true;
+  };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => backHandler.remove();
+  }, [handleBackButton]);
+
+  const EditProfile = () => {
+    navigate(`/EditProfile/${objectId}`,{objectId});
+
+  };
+  const Resetpwd = () => {
+    navigate(`/ResetPwd/${objectId}`,{objectId});
+
+  };
+  const deleteAccount = () => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to delete your account?',
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: confirmDeleteAccount,
+        },
+      ],
+      { cancelable: false },
+    );
+  };
+
+  useEffect(() => {
+    fetchdata();
+  }, []);
+
+  const fetchdata = async () => {
+    try {
+      const response = await fetch(`http://10.0.2.2:8070/UserDetails/getusername/${objectId}`);
+      const data = await response.json();
+  
+      if (response.ok) {
+        const userDetails = data.UserDetails;
+        setUsername(userDetails.username);
+        
+      } else {
+        console.error('Error fetching data:', data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const confirmDeleteAccount = () => {
+
+    fetch(`http://10.0.2.2:8070/UserDetails/delete/${objectId}`, {
+      method: 'DELETE',
+    })
+      .then(response => {
+
+        if (response.ok) {
+          Alert.alert('Information', 'Your account has been deleted.',
+          [
+            {text: 'OK',
+            onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false },);
+        } else {
+          Alert.alert('Information', 'Account deletion failed.',
+          [
+            {text: 'OK',
+            onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false },);
         }
-    }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
-    useEffect(() => {
-        permisionFunction();
-    }, );
-
-    const pick = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            quality: 1,
-        });
-
-        if (!result.cancelled) {
-            setImageUri(result.uri);
-        }
-    }
-
-
-    const navigate = useNavigate();
-    const handleBackButton = () => {
-      navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
-      return true;
-    };
-    useEffect(() => {
-      const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
-  
-      return () => backHandler.remove();
-    }, [handleBackButton]);
-
-    const EditProfile = () => {
-      navigate(`/EditProfile/${objectId}`,{objectId});
-  
-    };
-    const Resetpwd = () => {
-      navigate(`/ResetPwd/${objectId}`,{objectId});
-  
-    };
-    const {objectId} = useParams();
+  const {objectId} = useParams();
 
   return (
     <SafeAreaView style={styles.container}>     
       <View style={styles.userInfoSection}>  
-        {/* <TouchableWithoutFeedback>
-          <View style={styles.topContainer}>
-            <Icon name="arrow-left" color="#084C4F" size={25}/>
-            <Text style={styles.btnText}>Back</Text>
-          </View>
-        </TouchableWithoutFeedback>  */}
 
         <View style={styles.imageContainer}>     
           <Avatar.Image
@@ -84,8 +145,7 @@ const ProfileScreen = () => {
           />
         </View>
         <View style={{alignItems: 'center'}}>
-            <Title style={styles.title}>John Doe</Title>
-            <Caption style={styles.caption}>@j_doe</Caption>
+            <Title style={styles.title}>@{username}</Title>
         </View>
       </View>
 
@@ -114,7 +174,7 @@ const ProfileScreen = () => {
           </View>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={deleteAccount}>
           <View style={styles.menuItem}>
             <Icon name="account" color="#FFFFFF" size={25}/>
             <Text style={styles.menuItemText}>Delete Account</Text>
@@ -125,7 +185,7 @@ const ProfileScreen = () => {
         <Link to='/'  component={TouchableWithoutFeedback}>
           <View style={styles.menuItem}>
             <Icon name="logout" color="#FFFFFF" size={25}/>
-            <Text style={styles.menuItemText}>Log Out</Text>
+            <Text style={styles.menuItemText}>Sign Out</Text>
             <Icon name="arrow-right-circle" color="#FFFFFF" size={25}/>
           </View>
        </Link>
@@ -175,12 +235,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop:15,
     marginBottom: 5,
-  },
-
-  caption: {
-    fontSize: 14,
-    lineHeight: 14,
-    fontWeight: '500',
   },
 
   menuWrapper: {

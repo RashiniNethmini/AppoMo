@@ -72,16 +72,15 @@ export default function App() {
       <Route path="/DateTimePicker/:objectId/:BranchDetails/:_id" element={<DateTimePicker/>} /> 
       <Route path="/AdvPayment/:objectId/:BranchDetails/:issueId/:selectedDate/:selectedtime" element={<AdvPayment/>} /> 
     </Routes>  
+
+
     {/* <ForgotPW/>
     {/* <AdvPayment/> */}
     {/* <ResetPwd/> */}
     {/* <EditProfile/> */}
     {/* <NotificationInterface/> */}
     {/* <CustomerProfile/> */}
-
     {/* <ProductDetailsCompany/> */}
-
-
     {/* <ProductDetails/> */}
     {/* <NotificationInterface/> */}
    
@@ -118,7 +117,7 @@ export default function App() {
         {/* <VerifyOTP/> */}
         {/* <ProductDetails/> */}
         {/* <EditProfile/> */}
-        {/* <EditProfile/>  */}
+        {/* <ResetPwd/>  */}
         {/* <DateTimePicker/> */}
         
         {/* <ResetPassword/> */}
@@ -131,9 +130,6 @@ export default function App() {
   </NativeRouter>
   );
 }
-
-
-
 
 const styles = StyleSheet.create({
   container: {

@@ -163,6 +163,9 @@ router.route('/groupedData').get(async (req, res) => {
       address,
       nic,
     }
+
+})
+
   /*router.route("/update/:id").put (async (req,res)=>{
     let AppointmentId=req.params.id;
     const{ ApntmntDate,
@@ -180,27 +183,6 @@ router.route('/groupedData').get(async (req, res) => {
     console.log(err);
     res.status(500).send({status:"Error scheduling appointment."});
     })*/
-
-})
-
-// PUT /Appointments/updateFinalAmount/:aptNumber endpoint
-router.put('/Appointments/updateFinalAmount/:aptNumber', async (req, res) => {
-  try {
-    const { aptNumber } = req.params;
-    const { finalAmount } = req.body;
-
-    // Update the finalAmount in the Appointment table based on the aptNumber
-    await Appointment.findOneAndUpdate(
-      { AptNumber: aptNumber },
-      { $set: { finalAmount: finalAmount } }
-    );
-
-    res.status(200).json({ message: 'Final amount updated successfully' });
-  } catch (error) {
-    console.error('Error updating final amount:', error);
-    res.status(500).json({ error: 'An error occurred while updating the final amount' });
-  }
-});
 
 
 module.exports = router;
