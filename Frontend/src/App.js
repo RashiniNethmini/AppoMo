@@ -82,11 +82,9 @@ function App() {
     {/* <Reg/> */}
     {/* <FPw/>
     <RPw/> */}
-    {/* <Admin/>
+    <Admin/>
     <SignUp/>
-    <AppointmentConfirm/>
-    <Termination/>
-    <AppointmentConfirm/> */}
+    {/* <AppointmentConfirm/> */}
     </ThemeProvider>
     {/* <BrUpdate/> */}
     {/* <AppointmentConfirm/> */}
