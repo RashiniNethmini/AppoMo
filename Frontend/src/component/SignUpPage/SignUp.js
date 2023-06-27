@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from './SignUp.module.css';
 import { Paper, TextField, Button,} from "@mui/material";
 import Dialog from '@mui/material/Dialog';
@@ -75,7 +75,7 @@ const SignUp = () => {
     const [verificationCodeError, setVerificationCodeError] = useState(null);
     const handleVerificationCodeChange = (event) => {
         const value = event.target.value;
-        setVerificationCode(verificationCode);
+        setVerificationCode(value);
         setVerificationCodeError(validateVerificationCode(value));
     };
 
@@ -83,7 +83,20 @@ const SignUp = () => {
     const handleClickOpen = () => {setOpen(true);}; //Opening popup messages.
     const handleClose = () => {setOpen(false);}; //Closing the popup messages.
  
-    
+    useEffect(() => {
+        // Enable or disable the "Next" button based on form validity
+        const isFormValid =
+          serviceProviderNameError === null &&
+          emailError === null &&
+          regNoError === null &&
+          verificationCodeError === null;
+        const nextButton = document.getElementById("nextButton");
+        if (nextButton) {
+          nextButton.disabled = !isFormValid;
+        }
+      }, [serviceProviderNameError, emailError, regNoError, verificationCodeError]);
+
+      
     function sendSignUpDetails(e){
         e.preventDefault();
         
@@ -123,6 +136,7 @@ const SignUp = () => {
             .catch((error) => {
               // Show an error message to the user
               console.log(error);
+              alert("Invalid Verification Code");
             });
         }
       };
@@ -164,7 +178,7 @@ const SignUp = () => {
                     </div>
 
                     <div className={styles.signUpButton}>
-                            <Button variant="contained" type="submit"  sx={{mr:'10px'}} onClick={sendSignUpDetails} 
+                            <Button variant="contained" type="submit"  sx={{mr:'10px'}} onClick={sendSignUpDetails} disabled={verificationCodeError !== null}
                             // disabled={(serviceProviderName && email && regNo && verificationCode )}
                             >Send</Button> 
                             <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
@@ -188,7 +202,7 @@ const SignUp = () => {
                     <div className={styles.signUpButton}>
                         
                         
-                        <Button variant="contained" sx={{mr:'10px'}} 
+                        <Button variant="contained" sx={{mr:'10px'}} disabled={!(serviceProviderName && email && regNo && (verificationCodeError !== null))}
                         // disabled={!(serviceProviderName && email && regNo && verificationCode )}
                         onClick={handleVerifyAccount} >Next</Button>
                         

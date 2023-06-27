@@ -49,13 +49,13 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
 
-    <Router>
+    {/* <Router> */}
     {/* <EditProfile/> */}
-{/*    
-      <NavBar/> */}
-       <Routes>
+   
+      {/* <NavBar/> */}
+      {/* <Routes> */}
       
-      <Route path='/' exact element={<FirstPage/>} />
+      {/* <Route path='/' exact element={<FirstPage/>} />
         <Route path='/Reg' exact element={<Reg/>} />
         <Route path='/TwoSignIn' exact element={<TwoSignIn/>} />
         <Route path='/BranchSignin' exact element={<BranchSignin/>} />
@@ -70,8 +70,8 @@ function App() {
        {/* <Route path='/team' component={Teams} />
         <Route path='/blogs' component={Blogs} />
         <Route path='/sign-up' component={SignUp} /> */}
-      </Routes>
-    </Router>
+      {/* </Routes> */}
+    {/* </Router> */}
     {/* <Signin/>
     <BrUpdate/>
     <AppointmentConfirm/> */}
@@ -86,7 +86,7 @@ function App() {
     <AppointmentConfirm/> */}
     </ThemeProvider>
     {/* <BrUpdate/> */}
-    
+    {/* <AppointmentConfirm/> */}
     {/* </ThemeProvider> */}
 
     </div>
