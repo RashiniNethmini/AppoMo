@@ -15,10 +15,7 @@ const signUpSchema = new Schema({
         type : String,
         required: true
     },
-    verificationCode :{
-        type : Number,
-    }
-
+   
 })
 
 const SignUpDetails = mongoose.model("SignUpDetails", signUpSchema);

@@ -4,7 +4,7 @@ import { Provider, Appbar, Searchbar } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import {
-  StyleSheet, Text, View, Button, TouchableOpacity, SafeAreaView,
+  StyleSheet, View, Button, TouchableOpacity, SafeAreaView,
   TouchableWithoutFeedback,
   Animated, AppRegistry,ScrollView
 } from 'react-native';
@@ -112,6 +112,7 @@ export default function App() {
         {/*<ComBranchDetails/>*/}
         {/* <SelectServiceCenter/> */}
 
+         {/* <SCIssueSubmission/>  */}
         {/* <AdvPayment/>
                  {/* <ForgotPW/>  */}
         {/* <VerifyOTP/> */}
