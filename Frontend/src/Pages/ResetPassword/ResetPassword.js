@@ -4,6 +4,8 @@ import './resetPassword.css';
 import {IconButton,OutlinedInput,InputAdornment,Stack, Button,Paper} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import NavBar from '../../component/NavBar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 
@@ -162,6 +164,7 @@ const Cancel = () => {
 
   return (
     <div>
+    <NavBar/>
     <div className='resetPassword'>
    
       <Paper elevation={6} classname="resetPaper" >

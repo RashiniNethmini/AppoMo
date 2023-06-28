@@ -9,7 +9,7 @@ import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
 import FirstPage from "./Pages/FirstPage/FirstPage";
-import TwoSignIn from "./Pages/TwoSignIn/TwoSignIn";
+
 import BranchSignin from "./component/BranchSignin/BranchSignin";
 import RPw from "./component/ResetPwPage/RPw";
 import Admin from "./component/AdminPage/Admin";
@@ -50,24 +50,26 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
 
-    {/* <Router> */}
+    <Router>
     {/* <EditProfile/> */}
    
       {/* <NavBar/> */}
-      {/* <Routes> */}
+      <Routes>
       
-      {/* <Route path='/' exact element={<FirstPage/>} />
-        <Route path='/Reg' exact element={<Reg/>} />
-        <Route path='/TwoSignIn' exact element={<TwoSignIn/>} />
+      <Route path='/' exact element={<FirstPage/>} />
+      <Route path='/SignUp' exact element={<SignUp/>} />
+        <Route path='/Reg/:serviceProviderName/:email/:regNo' exact element={<Reg/>} />
         <Route path='/BranchSignin' exact element={<BranchSignin/>} />
+        <Route path='/Admin' exact element={<Admin/>} />
         <Route path='/Dashboard' element={<Dashboard/>} />
+        <Route path='/ProviderType' element={<ProviderType/>} />
         <Route path='/AppointmentConfirm' element={<AppointmentConfirm/>} />
         <Route path='/BrUpdate/:objectId' element={<BrUpdate/>} />
-        <Route path='/EditProfile' element={<EditProfile/>} />
+        <Route path='/EditProfile/:objectId' element={<EditProfile/>} />
         <Route path='/ResetPassword' element={<ResetPassword/>} />
         <Route path='/Signin' element={<Signin/>} /> 
          {/* <Route path='/events' component={Events} />
-        <Route path='/annual' component={AnnualReport} /> */}
+        <Route path='/annual' component={AnnualReport} />
        {/* <Route path='/team' component={Teams} />
         <Route path='/blogs' component={Blogs} />
         <Route path='/sign-up' component={SignUp} /> */}
@@ -76,14 +78,14 @@ function App() {
     {/* <Signin/>
     <BrUpdate/>
     <AppointmentConfirm/> */}
-      {/* </Routes>
-    </Router> */}
+      </Routes>
+    </Router>
     {/* <Signin/> */}
     {/* <Reg/> */}
     {/* <FPw/>
     <RPw/> */}
-    <Admin/>
-    <SignUp/>
+    {/* <Admin/>
+    <SignUp/> */}
     {/* <AppointmentConfirm/> */}
     </ThemeProvider>
     {/* <BrUpdate/> */}

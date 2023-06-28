@@ -10,6 +10,8 @@ import {
   Button,
 } from "@mui/material";
 import axios from "axios";
+import NavBar from '../NavBar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 export default function ProviderType() {
   const [types, setTypes] = useState([]);
@@ -99,6 +101,7 @@ export default function ProviderType() {
 
   return (
     <div className={styles.typeContainer}>
+    <NavBar/>
       <Paper elevation={6} className={styles.pDiv}>
         <div className={styles.typeTitle}>
           <h1>Product Type</h1>

@@ -3,6 +3,9 @@ import axios from 'axios';
 import './editprofile.css';
 import {Avatar,Stack,TextField,Paper,Button} from '@mui/material';
 import validator from 'validator';
+import NavBar from '../../component/NavBar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 
 export default function EditProfile() {
@@ -116,6 +119,7 @@ const validateEmail = (e) => {
   return (
   
     <div className='edit' style={{width:1000,margin:130}}>
+    <NavBar/>
       <Paper elevation={6} className="editPaper">
         <div classname="editform" style={{padding:"10px"}}>
             <div className='editdetailslogo' >
