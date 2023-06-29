@@ -1,4 +1,4 @@
-import React,{useContext}from 'react';
+import React from 'react';
 import {
 Nav,
 NavLink,
@@ -10,7 +10,6 @@ NavBtnLink,
 import { Dropdown } from 'rsuite';
 // import {Menu ,MenuItem ,ListItemIcon , Divider , IconButton, Typography ,Tooltip} from '@mui/material';
 import {PersonAdd ,Settings , Logout} from '@mui/icons-material';
-import MyContext from '../../MyContext';
 // import Box from '@mui/material/Box';
 // import Avatar from 'react-avatar';
 
@@ -23,23 +22,22 @@ const Navbar = () => {
 	// const handleClose = () => {
 	//   setAnchorEl(null);
 	// };
-
-  const objectId = useContext(MyContext);
-
 return (
 	<>
 	<Nav>
 		{/* <Bars /> */}
 
 		<NavMenu>
-
-		<NavLink to={`/BrUpdate/${objectId}`} activeStyle>
-		Add	Branch 
+		<NavLink to='/Dashboard' activeStyle>
+			Appointment
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-    <NavLink to='/ProviderType' activeStyle>
-			Add Product
+        <NavLink to='/AppointmentConfirm' activeStyle>
+			Issues
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to={`/EditProfile/${objectId}`} activeStyle>
+		<NavLink to='/BrUpdate' activeStyle>
+			Branch Details
+		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
+		<NavLink to='/EditProfile' activeStyle>
 		Edit Profile
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
 		<NavLink to='/ResetPassword' activeStyle>

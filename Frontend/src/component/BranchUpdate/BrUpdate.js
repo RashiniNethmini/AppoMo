@@ -15,7 +15,10 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditIcon from '@mui/icons-material/Edit';
 // import data from './mock-data.json';
 import axios from 'axios';
-import {useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom';
+import NavBar from '../NavBar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MyContext from '../../MyContext';
 
 
 
@@ -430,7 +433,12 @@ const ServiceProvider="648661d73faee59051640f01";
 
   
   return (
+
     <div className={styleset.mainContainer}>
+    <MyContext.Provider value={objectId}>
+    <NavBar/>
+    </MyContext.Provider>
+       
       <div >
         <Paper elevation={6}
           className={styleset.brDetails}

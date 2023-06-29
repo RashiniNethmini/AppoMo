@@ -6,6 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import axios  from "axios";
+import {useNavigate} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 function validateServiceProviderName(serviceProviderName){  // checks if the Service Provider Name field is not empty after removing any leading or trailing whitespace.
@@ -122,7 +124,7 @@ const SignUp = () => {
 
         
     }
-
+    const navigate = useNavigate();
     const handleVerifyAccount = () => {
         if (!verificationCodeError) {
           // Make an API call to verify the account with the entered OTP code
@@ -133,6 +135,7 @@ const SignUp = () => {
             .then((response) => {
               console.log(response);
               alert("Verified Registration Number");
+              navigate(`/Reg/${serviceProviderName}/${email}/${regNo}`,{serviceProviderName,email,regNo});
               // Show a success message to the user
              
             })

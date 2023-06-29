@@ -4,18 +4,63 @@ import { Link } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import styles from './FirstPage.module.css';
 import FirstPageImage from './FirstPageImage.png';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 
 export default function FirstPage() {
+  const [openn, setOpenn] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenn(true);
+  };
+
+    const handleOnClose = () => {
+      setOpenn(false);
+    };
   return (
-    <div style={{ display: 'flex', flexDirection: 'row-reverse', marginTop: 20 }}>
-      <div style={{ marginRight: 5 }}>
-        <Link to='/Reg'><Button variant="contained" size="large">Sign Up</Button></Link>
-      </div>
-      <div style={{ marginRight: 5 }}>
-        <Link to='/TwoSignIn'><Button variant="contained" size="large">Sign In</Button></Link>
-      </div>
-     
-      <div className={styles.mainContainer}>
+
+    <div style={{display:'flex', flexDirection: 'row-reverse',marginTop:20}}>
+
+        <div style={{marginRight:50}}>
+        <Link to='/Admin'>
+        <Button variant="contained" size="large">
+         Admin SignIn
+        </Button>
+        </Link>
+        </div>
+        <div style={{marginRight:50}}>
+        <Link to='/SignUp'><Button variant="contained" size="large">
+         Sign Up
+        </Button></Link>
+        </div>
+        <div style={{marginRight:50}}>
+        <Button variant="contained" size="large" onClick={handleClickOpen}>
+         Sign In
+        </Button>
+        <Dialog open={openn} onClose={handleOnClose}>
+       
+
+              <DialogActions>
+                <div style={{marginRight:50}}>
+         <Link to='/Signin'><Button variant="outlined" size="large">
+          Company ?
+        </Button></Link>
+        </div>
+        <div>
+        <Link to='/BranchSignin'><Button variant="outlined" size="large">
+          Branch ?
+        </Button></Link>
+        </div>
+              </DialogActions>
+         </Dialog>
+
+
+
+        </div>
+        <div className={styles.mainContainer}>
         <Paper elevation={6} className={styles.paper}>
           <div className={styles.description}>
             <div className={styles.heading}>
@@ -32,6 +77,7 @@ export default function FirstPage() {
             <img src={FirstPageImage} width={500} alt="AppoMo" />
           </div>
         </Paper>
+        
       </div>
     </div>
   );

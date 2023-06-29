@@ -7,7 +7,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
 import axios  from "axios";
-
+import {useParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 
@@ -115,6 +117,10 @@ function validateRegNo(regNo){  // checks if the Reg No field is not empty after
 
 export const Reg = (props) => {
 
+    const {serviceProviderName} = useParams();
+    const {email} = useParams();
+    const {regNo} = useParams();
+
     
     const [providerType, setProviderType] = useState('');
     const handleRadioChange = (event) => {
@@ -153,13 +159,13 @@ export const Reg = (props) => {
         event.preventDefault();
     };
 
-    const [serviceProviderName, setServiceProviderName] =useState("");
-    const [serviceProviderNameError, setServiceProviderNameError] = useState(null);
-    const handleServiceProviderNameChange = (event) => {
-        const value = event.target.value;
-        setServiceProviderName(value);
-        setServiceProviderNameError(validateServiceProviderName(value));
-      };
+    // const [serviceProviderName, setServiceProviderName] =useState("");
+    // const [serviceProviderNameError, setServiceProviderNameError] = useState(null);
+    // const handleServiceProviderNameChange = (event) => {
+    //     const value = event.target.value;
+    //     setServiceProviderName(value);
+    //     setServiceProviderNameError(validateServiceProviderName(value));
+    //   };
 
     const [address, setAddress] =useState("");
     const [addressError, setAddressError] = useState(null);
@@ -169,13 +175,13 @@ export const Reg = (props) => {
         setAddressError(validateAddress(value));
       };
 
-    const [email, setEmail] =useState("");
-    const [emailError, setEmailError] = useState(null);
-    const handleEmailChange = (event) => {
-        const value = event.target.value;
-        setEmail(value);
-        setEmailError(validateEmail(value));
-      };
+    // const [email, setEmail] =useState("");
+    // const [emailError, setEmailError] = useState(null);
+    // const handleEmailChange = (event) => {
+    //     const value = event.target.value;
+    //     setEmail(value);
+    //     setEmailError(validateEmail(value));
+    //   };
 
     const [ceoName, setCEOName] =useState("");
     const [ceoNameError, setCEONameError] = useState(null);
@@ -185,13 +191,13 @@ export const Reg = (props) => {
         setCEONameError(validateCEOName(value));
       };
 
-    const [regNo, setRegNo] =useState("");
-    const [regNoError, setRegNoError] = useState(null);
-    const handleRegNoChange = (event) => {
-        const value = event.target.value;
-        setRegNo(value);
-        setRegNoError(validateRegNo(value));
-      };
+    // const [regNo, setRegNo] =useState("");
+    // const [regNoError, setRegNoError] = useState(null);
+    // const handleRegNoChange = (event) => {
+    //     const value = event.target.value;
+    //     setRegNo(value);
+    //     setRegNoError(validateRegNo(value));
+    //   };
 
     // const [workingDates, setWorkingDates] =useState("");
     // const [workingDatesError, setWorkingDatesError] = useState(null);
@@ -220,7 +226,8 @@ export const Reg = (props) => {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {setOpen(true);}; //Opening popup messages.
     const handleClose = () => {setOpen(false);}; //Closing the popup messages.
-    
+    const navigate = useNavigate();
+  
     
     function sendRegDetails(e){
         e.preventDefault();
@@ -245,12 +252,31 @@ export const Reg = (props) => {
         
         axios.post("http://localhost:8070/serviceprovider/add",newServiceProvider).then((response)=>{
             console.log(response.data);    
-            alert("Service provider Added")
-            handleClickOpen();
+            alert("Service provider Added");
+            
+            // handleClickOpen();
         }).catch((err)=>{
             console.log(err);
             alert(err)  
-        })
+        });
+        fetch(`http://localhost:8070/serviceprovider/getid/${username}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+            .then(res => res.json())
+            .then(data => {
+              console.log(data);
+              const objectId = data[0]._id; // Assuming the response from the backend contains the object ID as "_id"
+              console.log(objectId);
+              navigate(`/BrUpdate/${objectId}`,{objectId});
+      
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        
     }
 
     
@@ -332,36 +358,36 @@ export const Reg = (props) => {
                         />
 
                     </div>
-                    <div className={styles.regBodyTextbox}>
+                    {/* <div className={styles.regBodyTextbox}>
                         <TextField required="outlined-required" label="Company / Service Center Name" sx={{ width: '100vw' }} id="serviceProviderName"
                             onChange={handleServiceProviderNameChange} error={Boolean(serviceProviderNameError)} 
                             helperText={serviceProviderNameError}/>
 
-                    </div>
+                    </div> */}
                     <div className={styles.regBodyTextbox}>
                         <TextField required="outlined-required" label="Address" variant="outlined" sx={{ width: '100vw' }} id="address"
                             onChange={handleAddressChange} error={Boolean(addressError)}
                             helperText={addressError}/>
 
                     </div>
-                    <div className={styles.regBodyTextbox}>
+                    {/* <div className={styles.regBodyTextbox}>
                         <TextField required="outlined-required" label="Email" variant="outlined" type="email" sx={{ width: '100vw' }} id="email"
                             onChange={handleEmailChange} error={Boolean(emailError)}
                             helperText={emailError}/>
 
-                    </div>
+                    </div> */}
                     <div className={styles.regBodyTextbox}>
                         <TextField label="CEO Name" variant="outlined" sx={{ width: '100vw' }} id="ceoName"
                         onChange={handleCEONameChange} error={Boolean(ceoNameError)} 
                         helperText={ceoNameError}/>
 
                     </div>
-                    <div className={styles.regBodyTextbox}>
+                    {/* <div className={styles.regBodyTextbox}>
                         <TextField required="outlined-required" label="Business Registration No" variant="outlined" sx={{ width: '100vw' }} id="regNo"
                         onChange={handleRegNoChange} error={Boolean(regNoError)}
                         helperText={regNoError}/>
 
-                    </div>
+                    </div> */}
                     {/* <div className={styles.regBodyTextbox}>
                         <TextField label="Working dates" required="outlined" sx={{ width: '100vw' }} id="workingDates"
                         onChange={handleWorkingDatesChange} error={Boolean(workingDatesError)}
