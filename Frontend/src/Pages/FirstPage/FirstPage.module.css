@@ -1,0 +1,41 @@
+.mainContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .paper {
+    display: flex;
+    flex-direction: row;
+    border-radius: 25px;
+    width: 900px;
+    padding: 10px;
+    margin-top: 70px;
+    padding-bottom: 80px;
+    padding-top: 20px;
+  }
+  
+  .heading {
+    color: #084C4F;
+    display: flex;
+  }
+  
+  .description {
+    flex: 1;
+    width: 80%;
+    padding-right: 60px;
+    padding-left: 10px;
+  }
+  
+  .imageContainer {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .image-container img {
+    max-width: 100%;
+    height: auto;
+  }
+  
