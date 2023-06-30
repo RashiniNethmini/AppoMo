@@ -14,7 +14,7 @@ import BranchSignin from "./component/BranchSignin/BranchSignin";
 import RPw from "./component/ResetPwPage/RPw";
 import Admin from "./component/AdminPage/Admin";
 import SignUp from "./component/SignUpPage/SignUp";
-
+import AdminSignIn from "./component/AdminSignIn/AdminSignIn";
 import ProviderType from "./component/ProviderTypePage/ProviderType";
 // import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard/Dashboard"
@@ -61,6 +61,7 @@ function App() {
         <Route path='/Reg/:serviceProviderName/:email/:regNo' exact element={<Reg/>} />
         <Route path='/BranchSignin' exact element={<BranchSignin/>} />
         <Route path='/Admin' exact element={<Admin/>} />
+        <Route path='/AdminSignIn' exact element={<AdminSignIn/>} />
         <Route path='/Dashboard' element={<Dashboard/>} />
         <Route path='/ProviderType' element={<ProviderType/>} />
         <Route path='/AppointmentConfirm' element={<AppointmentConfirm/>} />

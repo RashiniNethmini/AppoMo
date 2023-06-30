@@ -21,11 +21,11 @@ export default function FirstPage() {
       setOpenn(false);
     };
   return (
-
+<div>
     <div style={{display:'flex', flexDirection: 'row-reverse',marginTop:20}}>
 
         <div style={{marginRight:50}}>
-        <Link to='/Admin'>
+        <Link to='/AdminSignIn'>
         <Button variant="contained" size="large">
          Admin SignIn
         </Button>
@@ -60,6 +60,7 @@ export default function FirstPage() {
 
 
         </div>
+        </div>
         <div className={styles.mainContainer}>
         <Paper elevation={6} className={styles.paper}>
           <div className={styles.description}>
@@ -78,7 +79,7 @@ export default function FirstPage() {
           </div>
         </Paper>
         
-      </div>
+     </div> 
     </div>
   );
 }
