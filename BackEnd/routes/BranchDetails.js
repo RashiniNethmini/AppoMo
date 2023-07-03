@@ -59,7 +59,7 @@ router.route("/").get((req, res) => {
 router.route("/get/:id").get(async (req, res) => {
     let branchDetailsId = req.params.id;
 
-    const select = await BranchDetails.findById(branchDetailsId)
+    const select = await Branch.findById(branchDetailsId)
         .then((branchdetail) => {
             res.status(200).send({ status: "Branch Detail fetched", branchdetail })
 
@@ -121,4 +121,23 @@ router.route("/delete/:id").delete(async (req, res) => {
         })
 })
 
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+  
+    try {
+      const user = await Branch.findOne({ username, password });
+  
+      if (user) {
+        res.status(200).json({ success: true, message: 'Login successful' });
+        console.log("success")
+      } else {
+        res.status(401).json({ success: false, message: 'Invalid username or password' });
+        console.log("invalid")
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'An error occurred during login' });
+      console.log("error logging in")
+    }
+});
 module.exports = router;
