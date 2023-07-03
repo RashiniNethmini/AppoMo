@@ -67,31 +67,62 @@ export default function BranchForm() {
     return email.trim() !== '' && regex.test(email);
   }
 
+  const validateUsername= (username)=>{
+    
+    const lengthURegex = /^.{3,16}$/; // ensure that the username is between 3 and 16 characters long.
+    const contentRegex = /^[a-zA-Z0-9_-]*$/; // ensure that the username contains only letters, numbers, underscores, or hyphens.
+    return username.trim() !== '' && lengthURegex.test(username) &&contentRegex.test(username);
+//     if(username.trim()===""){
+//         return "Username is required.";
+//     }else if (!lengthURegex.test(username)){
+//         return "Username must be in between 3 and 16 characters long.";
+//     } else if (!contentRegex.test(username)){
+//         return "Username must contain only letters, numbers, underscores, or hyphens.";
+//     }
+};
 
+const  validatePassword = (password)=> { 
+    
+  const uppercaseRegex = /^(?=.*[A-Z])/; // ensure that the password contains at least one uppercase letter.
+  const lowercaseRegex = /^(?=.*[a-z])/; // ensure that the password contains at least one lowercase letter.
+  const numberRegex = /^(?=.*\d)/; // ensure that the password contains at least one number.
+  const specialCharRegex = /^(?=.*[!@#$%&+*^()_])/; // ensure that the password contains at least one of the following symbols: !@#$%&+*^()_.
+  const lengthPRegex = /^.{8,}$/; // ensure that the password is at least 8 characters long.
 
+  return password.trim()!=="" && uppercaseRegex.test(password) && lowercaseRegex.test(password) && numberRegex.test(password) && specialCharRegex.test(password) && lengthPRegex.test(password);
+  
+  // if(password.trim()===""){
+  //     return "Password is required.";
+  // } else if (!uppercaseRegex.test(password)){
+  //     return "Password must contain at least one uppercase letter.";
+  // } else if (!lowercaseRegex.test(password)){
+  //     return "Password must contain at least one lowercase letter.";
+  // } else if (!numberRegex.test(password)){
+  //     return "Password must contain at least one number.";
+  // } else if (!specialCharRegex.test(password)){
+  //     return "Password must contain at least one of the following symbols: !@#$%&+*^()_.";
+  // }else if (!lengthPRegex.test(password)){
+  //     return "Password must be at least 8 characters long.";
+  // }
+  
+};
 
-  // const [tableData, setTableData] = useState(() => {
-  //   // const storedData = localStorage.getItem('tableData');
-  //   // return storedData ? JSON.parse(storedData) : [];
-  // });
 
 
   const [tableData, setTableData] = useState([]);
-
-
-
-
-  const [editIndex, setEditIndex] = useState(-1);
-  const [formData, setFormData] = useState({
-    BrName: "",
-    ManName: "",
-    Cntct: "",
-    Addrs: "",
-    Email: "",
-    ApptmntsPerHr: "",
-    WHrsPerDay: "",
-    DaysOpen: ""
-  });
+  // const [editIndex, setEditIndex] = useState(-1);
+  // const [formData, setFormData] = useState({
+  //   BrName: "",
+  //   ManName: "",
+  //   Cntct: "",
+  //   Addrs: "",
+  //   Email: "",
+  //   ApptmntsPerHr: "",
+  //   WHrsPerDay: "",
+  //   DaysOpen: "",
+  //   Username:"",
+  //   Password:""
+  // });
 
   const [brName, setBrName] = useState('');
   const [manName, setManName] = useState('');
@@ -101,9 +132,8 @@ export default function BranchForm() {
   const [hrs, setHrs] = useState('');
   const [whrs, setWHrs] = useState('');
   const [opdays, setOpdays] = useState('');
-
-
-
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const [brNameError, setBrNameError] = useState('');
   const [manNameError, setManNameError] = useState('');
@@ -113,7 +143,8 @@ export default function BranchForm() {
   const [hrsError, setHrsError] = useState('');
   const [whrsError, setWHrsError] = useState('');
   const [opdaysError, setOpdaysError] = useState('');
-
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
 
 
@@ -123,12 +154,6 @@ export default function BranchForm() {
       setBrNameError('*Name should contain only alphabets and spaces');
     } else {
       setBrNameError('');
-
-      // const updatedTableData = [...tableData];
-      // updatedTableData[editIndex].BrName = event.target.value;
-      // setTableData(updatedTableData);
-
-
     }
   };
 
@@ -139,9 +164,7 @@ export default function BranchForm() {
       setManNameError('*Name should contain alphabets ,spaces and fullstops only');
     } else {
       setManNameError('');
-      // const updatedTableData = [...tableData];
-      // updatedTableData[editIndex].BrName = event.target.value;
-      // setTableData(updatedTableData);
+
     }
   };
 
@@ -151,9 +174,7 @@ export default function BranchForm() {
       setAddressError('*Address should contain  alphabets,digits,spaces, commas and fullstops only');
     } else {
       setAddressError('');
-      const updatedTableData = [...tableData];
-      updatedTableData[editIndex].BrName = event.target.value;
-      setTableData(updatedTableData);
+      
     }
   };
 
@@ -188,7 +209,7 @@ export default function BranchForm() {
   const handleOpenDaysChange = (event) => {
     setOpdays(event.target.value);
     if (!validateOpenDays(event.target.value)) {
-      setOpdaysError('*Address should contain  alphabets,digits,spaces, commas and fullstops only');
+      setOpdaysError('*Open days should contain  alphabets and commas only');
     } else {
       setOpdaysError('');
     }
@@ -203,25 +224,46 @@ export default function BranchForm() {
     }
   };
 
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+    if (!validateUsername(event.target.value)) {
+      setUsernameError('*Username must contain only 3-16 charachters with letters, numbers, underscores, or hyphens ');
+    } else {
+      setUsernameError('');
+    }
+
+  
+};
+const handlePasswordChange = (event) => {
+  setPassword(event.target.value);
+  if (!validatePassword(event.target.value)) {
+    setPasswordError('*Password must contain minimum 8 charachters with at least one uppercase,one lowercase,one number and any of the symbols !@#$%&+*^()_.');
+  } else {
+    setPasswordError('');
+  }
+ 
+};
+
+
   // Fetch table data from the backend on page load
   useEffect(() => {
     getData();
   }, []);
 
 
-const getData=()=>{
-  fetch('http://localhost:8070/BranchDetails/')
-  .then((res) => res.json())
-  .then((data) => {
-    console.log(data);
-    setTableData(data);
+  const getData = () => {
+    fetch('http://localhost:8070/BranchDetails/')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setTableData(data);
 
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-  
-};
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  };
 
 
   const handleCreateNewRow = (values) => {
@@ -234,24 +276,86 @@ const getData=()=>{
 
 
   //open and close modal
-  const [open, setOpen] = React.useState(false);
+  
+  const [addFormOpen, setAddFormOpen] = useState(false);
+  const [editFormOpen, setEditFormOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    // setEditIndex(index);
-    setOpen(true);
+  const [addFormData, setAddFormData] = useState({
+    branchName: "",
+    managerName: "",
+    contactNo: "",
+    address: "",
+    email: "",
+    nofappnmntsPerHr: "",
+    nofworkinghrsPerDay: "",
+    daysopen: "",
+    username:"",
+    password:""
+  });
+
+
+  const [editFormData, setEditFormData] = useState({
+    branchName: "",
+    managerName: "",
+    contactNo: "",
+    address: "",
+    email: "",
+    nofappnmntsPerHr: "",
+    nofworkinghrsPerDay: "",
+    daysopen: "",
+    username:"",
+    password:""
+  });
+
+  const handleAddFormOpen = () => {
+    setAddFormData({
+      BrName: "",
+      ManName: "",
+      Cntct: "",
+      Addrs: "",
+      Email: "",
+      ApptmntsPerHr: "",
+      WHrsPerDay: "",
+      DaysOpen: "",
+      Username:"",
+      Password:""
+
+    });
+    setAddFormOpen(true);
   };
 
-  const handleOnClose = () => {
-    setOpen(false);
+  const handleEditFormOpen = (index) => {
+    const rowData = tableData[index];
+    setEditFormData({
+      branchName: rowData.branchName,
+      managerName: rowData.managerName,
+      contactNo: rowData.contactNo,
+      address: rowData.address,
+      email: rowData.email,
+      nofappnmntsPerHr: rowData.nofappnmntsPerHr,
+      nofworkinghrsPerDay: rowData.nofworkinghrsPerDay,
+      daysopen: rowData.daysopen,
+      username: rowData.username,
+      password: rowData.password
+    });
+    setEditFormOpen(true);
   };
 
+
+  const handleAddFormClose = () => {
+    setAddFormOpen(false);
+  };
+
+  const handleEditFormClose = () => {
+    setEditFormOpen(false);
+  };
   //delete a row
   const handleOnDelete = (index) => {
     if (!window.confirm(`Are you sure you want to delete this row?`)) {
       return;
     }
     const branchToDelete = tableData[index];
-  
+
     // Make an API request to delete the document from the MongoDB database
     fetch(`http://localhost:8070/BranchDetails/delete/${branchToDelete._id}`, {
       method: 'DELETE',
@@ -259,7 +363,7 @@ const getData=()=>{
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-  
+
         // Update the state to remove the deleted document from the tableData
         const updatedTableData = [...tableData];
         updatedTableData.splice(index, 1);
@@ -269,7 +373,7 @@ const getData=()=>{
         console.log(error);
       });
   }
-  
+
   //edit row
   // const handleOnEdit = (index) => {
   //   setEditIndex(index);
@@ -302,22 +406,25 @@ const getData=()=>{
     { id: 'nofappnmntsPerHr', label: 'No. of Appointments Per Hour', Width: 300, align: 'center' },
     { id: 'nofworkinghrsPerDay', label: 'No. of Working Hours Per Day', Width: 300, align: 'center' },
     { id: 'daysopen', label: 'Days Open', Width: 300, align: 'center' },
+    { id: 'username', label: 'Branch Username', Width: 300, align: 'center' },
+    { id: 'password', label: 'Branch Password', Width: 300, align: 'center' },
   ];
 
-const ServiceProvider="648661d73faee59051640f01";
+  const ServiceProvider = "648661d73faee59051640f01";
 
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
 
-    if (editIndex === -1) {
-      if (validateBrName(brName) &&
-        validateManName(manName) &&
-        validateAddress(address) &&
-        validateContactNumber(contactNumber) &&
-        validateAptmntHrs(hrs) &&
-        validateWorkingHrs(whrs) &&
-        validateOpenDays(opdays)) {
-        const newBranch = {
+    if (validateBrName(brName) &&
+      validateManName(manName) &&
+      validateAddress(address) &&
+      validateContactNumber(contactNumber) &&
+      validateAptmntHrs(hrs) &&
+      validateWorkingHrs(whrs) &&
+      validateOpenDays(opdays)&&
+      validateUsername(username)&&
+       validatePassword(password)) {
+      const newBranch = {
 
         BrName: brName,
         ManName: manName,
@@ -327,11 +434,13 @@ const ServiceProvider="648661d73faee59051640f01";
         ApptmntsPerHr: hrs,
         WHrsPerDay: whrs,
         DaysOpen: opdays,
-        ServiceProvider:ServiceProvider
+        Username: username,
+        Password: password,
+        ServiceProvider: ServiceProvider
 
-        };
-        console.log('Submit button pressed');
-        console.log(brName, contactNumber);
+      };
+      console.log('Submit button pressed');
+      console.log(brName, contactNumber);
 
       // Make an API request to send the data to the backend
       fetch("http://localhost:8070/BranchDetails/add", {
@@ -348,90 +457,116 @@ const ServiceProvider="648661d73faee59051640f01";
           "nofappnmntsPerHr": hrs,
           "nofworkinghrsPerDay": whrs,
           "daysopen": opdays,
-          "ServiceProvider":ServiceProvider
+          "username": username,
+          "password":password,
+          "ServiceProvider": ServiceProvider
 
 
-          })
         })
-          .then(res => res.json())
-          .then(data => {
-            console.log(data);
-            handleOnClose();
-            getData();
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        if (editIndex !== -1) {
-          // If in edit mode, update the existing branch
-          const updatedTableData = [...tableData];
-          updatedTableData[editIndex] = newBranch;
-          setTableData(updatedTableData);
-        } else {
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          handleAddFormClose();
+          getData();
+        })
+        .catch(error => {
+          console.log(error);
+        });
 
-          handleCreateNewRow(newBranch);
-        }
 
-        handleOnClose();
-      }
-      else {
-        alert('Please fill in all fields correctly');
-      }
+      handleCreateNewRow(newBranch);
 
+
+      handleAddFormClose();
     }
-  };
-
-  const handleEditFormSubmit = (i) => {
-    handleClickOpen();
-    setEditIndex(i);
-    const rowData = tableData[i];
-    setFormData({
-      BrName: rowData.BrName,
-      ManName: rowData.ManName,
-      Cntct: rowData.Cntct,
-      Addrs: rowData.Addrs,
-      Email: rowData.Email,
-      ApptmntsPerHr: rowData.ApptmntsPerHr,
-      WHrsPerDay: rowData.WHrsPerDay,
-      DaysOpen: rowData.DaysOpen
-    });
-  };
-
-  const submitForm = () => {
-    if (
-      validateBrName(brName) &&
-      validateManName(manName) &&
-      validateAddress(address) &&
-      validateContactNumber(contactNumber) &&
-      validateEmail(email) &&
-      validateAptmntHrs(hrs) &&
-      validateWorkingHrs(whrs) &&
-      validateOpenDays(opdays)
-    ) {
-      const updatedRow = {
-        BrName: brName,
-        ManName: manName,
-        Cntct: contactNumber,
-        Addrs: address,
-        Email: email,
-        ApptmntsPerHr: hrs,
-        WHrsPerDay: whrs,
-        DaysOpen: opdays
-      };
-
-      // Update the tableData state with the edited row
-      const updatedTableData = [...tableData];
-      updatedTableData[editIndex] = updatedRow;
-      setTableData(updatedTableData);
-
-      // Close the form
-      handleOnClose();
-    } else {
+    else {
       alert('Please fill in all fields correctly');
     }
+
   };
 
-  
+  const handleEditFormSubmit = (index) => {
+    const branchToUpdate ={ ...tableData[index]};
+    // Update the branchToUpdate object with new form values
+  branchToUpdate.branchName = brName;
+  branchToUpdate.managerName = manName;
+  branchToUpdate.contactNo = contactNumber;
+  branchToUpdate.address = address;
+  branchToUpdate.email = email;
+  branchToUpdate.nofappnmntsPerHr = hrs;
+  branchToUpdate.nofworkinghrsPerDay = whrs;
+  branchToUpdate.daysopen = opdays;
+  branchToUpdate.username = username;
+  branchToUpdate.password = password;
+    
+    // if (validateBrName(brName) &&
+    //   validateManName(manName) &&
+    //   validateAddress(address) &&
+    //   validateContactNumber(contactNumber) &&
+    //   validateAptmntHrs(hrs) &&
+    //   validateWorkingHrs(whrs) &&
+    //   validateOpenDays(opdays)&&
+    //   validateUsername(username)&&
+    //    validatePassword(password)
+    //   ) {
+    
+      console.log('Submit button pressed');
+      console.log(brName, contactNumber);
+
+     
+      // Make an API request to send the data to the backend
+      fetch(`http://localhost:8070/BranchDetails/update/${branchToUpdate._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "branchName": brName,
+          "managerName": manName,
+          "contactNo": contactNumber,
+          "address": address,
+          "email": email,
+          "nofappnmntsPerHr": hrs,
+          "nofworkinghrsPerDay": whrs,
+          "daysopen": opdays,
+          "username": username,
+          "password":password,
+          "ServiceProvider": ServiceProvider
+
+
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          handleEditFormClose();
+          getData();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    // }
+    // else {
+    //   alert('Please fill in all fields correctly');
+    // }
+    // Update the tableData state with the edited row
+    const updatedTableData = [...tableData];
+    updatedTableData[index] = branchToUpdate ;
+    setTableData(updatedTableData);
+    // handleEditFormClose();
+  }
+
+
+  const handleEditFormChange = (event) => {
+    const { id, value } = event.target;
+    setEditFormData((prevFormData) => ({
+      ...prevFormData,
+      [id]: value
+    }));
+  };
+
+
   return (
 
     <div className={styleset.mainContainer}>
@@ -454,9 +589,9 @@ const ServiceProvider="648661d73faee59051640f01";
 
           {/* to add new  branch */}
           <div className={styleset.buttonadd}>
-            <Button variant="contained" sx={{ mr: '10px' }} onClick={handleClickOpen}>Add Branch</Button>
+            <Button variant="contained" sx={{ mr: '10px' }} onClick={handleAddFormOpen}>Add Branch</Button>
 
-            <Dialog open={open} onClose={handleOnClose}>
+            <Dialog open={addFormOpen} onClose={handleAddFormClose}>
               <DialogTitle className={styleset.DialogTitle} textAlign="center">
                 <h4 >  Enter Branch details</h4>
               </DialogTitle>
@@ -465,11 +600,11 @@ const ServiceProvider="648661d73faee59051640f01";
                 <div className={styleset.bodyTextbox}>
                   <TextField
                     required
-                    id="BrName"
+                    id="branchName"
                     label="Branch Name "
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    // value={editIndex !== -1 ? tableData[editIndex].BrName : ''}
+                    value={addFormData.branchName}
                     onChange={handleBrNameChange} />
                   {brNameError && <span style={{ color: 'red', fontSize: 12 }}>{brNameError}</span>}
                 </div>
@@ -477,11 +612,11 @@ const ServiceProvider="648661d73faee59051640f01";
                 <div className={styleset.bodyTextbox}>
                   <TextField
                     required
-                    id="ManName"
+                    id="managerName"
                     label="Name of Manager"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    // value={editIndex !== -1 ? tableData[editIndex].ManName : ''}
+                    value={addFormData.managerName}
                     onChange={handleManNameChange} />
                   {manNameError && <span style={{ color: 'red', fontSize: 12 }}>{manNameError}</span>}
                 </div>
@@ -493,7 +628,7 @@ const ServiceProvider="648661d73faee59051640f01";
                     label="Contact No"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    // value={editIndex !== -1 ? tableData[editIndex].Cntct : ''}
+                    value={addFormData.contactNo}
                     onChange={handleContactNumberChange} />
                   {contactNumberError && <span style={{ color: 'red', fontSize: 12 }}>{contactNumberError}</span>}
                 </div>
@@ -504,7 +639,7 @@ const ServiceProvider="648661d73faee59051640f01";
                     label="Address"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    // value={editIndex !== -1 ? tableData[editIndex].Addrs : ''}
+                    value={addFormData.address}
                     onChange={handleAddressChange} />
                   {addressError && <span style={{ color: 'red', fontSize: 12 }}>{addressError}</span>}
 
@@ -516,58 +651,222 @@ const ServiceProvider="648661d73faee59051640f01";
                     label="Email"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    // value={editIndex !== -1 ? tableData[editIndex].Email : ''}
+                    value={addFormData.email}
                     onChange={handleEmailChange} />
                   {emailError && <span style={{ color: 'red', fontSize: 12 }}>{emailError}</span>}
                 </div>
 
                 <div className={styleset.bodyTextbox}>
                   <TextField
-                    required id="ApptmntsPerHr
-                  };"
+                    required id="nofappnmntsPerHr"
                     label="No. of Appointments Per Hour"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    // value={editIndex !== -1 ? tableData[editIndex].ApptmntsPerHr : ''}
+                    value={addFormData.nofappnmntsPerHr}
                     onChange={handleAptmntHrsChange} />
                 </div>
                 {hrsError && <span style={{ color: 'red', fontSize: 12 }}>{hrsError}</span>}
 
                 <div className={styleset.bodyTextbox}>
                   <TextField
-                    required id="WHrsPerDay
-                  };"
+                    required id="nofworkinghrsPerDay"
                     label="No. of Working Hours Per Day"
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    // value={editIndex !== -1 ? tableData[editIndex].WHrsPerDay : ''}
+                    value={addFormData.nofworkinghrsPerDay}
                     onChange={handleWorkingHrsChange} />
                 </div>
                 {whrsError && <span style={{ color: 'red', fontSize: 12 }}>{whrsError}</span>}
 
                 <div className={styleset.bodyTextbox}>
                   <TextField
-                    required id="Days Open"
+                    required id="daysopen"
                     label="Days Open "
                     variant="outlined"
                     sx={{ width: '100vw' }}
-                    // value={editIndex !== -1 ? tableData[editIndex].DaysOpen : ''}
+                    value={addFormData.daysopen}
                     onChange={handleOpenDaysChange} />
                   {opdaysError && <span style={{ color: 'red', fontSize: 12 }}>{opdaysError}</span>}
+
+                </div>
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="Username"
+                    label="Branch Username"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={addFormData.username}
+                    onChange={handleUsernameChange}
+                    />
+                  {usernameError && <span style={{ color: 'red', fontSize: 12 }}>{usernameError}</span>}
+
+                </div>
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="Password"
+                    label="Branch Password"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={addFormData.password}
+                    onChange={handlePasswordChange} 
+                   />
+                  {passwordError && <span style={{ color: 'red', fontSize: 12 }}>{passwordError}</span>}
 
                 </div>
 
               </DialogContent>
 
               <DialogActions>
-                <Button onClick={handleOnClose}>Cancel</Button>
+                <Button onClick={handleAddFormClose}>Cancel</Button>
 
                 <Button onClick={handleAddFormSubmit}>Done</Button>
               </DialogActions>
             </Dialog>
-
-
           </div>
+
+          {/* editForm Dialog*/}
+
+<div>
+
+<Dialog open={editFormOpen} onClose={handleEditFormClose}>
+              <DialogTitle className={styleset.DialogTitle} textAlign="center">
+                <h4 >  Edit Branch details</h4>
+              </DialogTitle>
+
+              <DialogContent>
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required
+                    id="branchName"
+                    label="Branch Name "
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={editFormData.branchName}
+                    onChange={handleEditFormChange} />
+                  {brNameError && <span style={{ color: 'red', fontSize: 12 }}>{brNameError}</span>}
+                </div>
+
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required
+                    id="managerName"
+                    label="Name of Manager"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={editFormData.managerName}
+                    onChange={handleEditFormChange} />
+                  {manNameError && <span style={{ color: 'red', fontSize: 12 }}>{manNameError}</span>}
+                </div>
+
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required
+                    id="Cntct"
+                    label="Contact No"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={editFormData.contactNo}
+                    onChange={handleEditFormChange} />
+                  {contactNumberError && <span style={{ color: 'red', fontSize: 12 }}>{contactNumberError}</span>}
+                </div>
+
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="Addrs"
+                    label="Address"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={editFormData.address}
+                    onChange={handleEditFormChange} />
+                  {addressError && <span style={{ color: 'red', fontSize: 12 }}>{addressError}</span>}
+
+                </div>
+
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="Email"
+                    label="Email"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={editFormData.email}
+                    onChange={handleEditFormChange} />
+                  {emailError && <span style={{ color: 'red', fontSize: 12 }}>{emailError}</span>}
+                </div>
+
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="nofappnmntsPerHr"
+                    label="No. of Appointments Per Hour"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={editFormData.nofappnmntsPerHr}
+                    onChange={handleEditFormChange} />
+                </div>
+                {hrsError && <span style={{ color: 'red', fontSize: 12 }}>{hrsError}</span>}
+
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="nofworkinghrsPerDay"
+                    label="No. of Working Hours Per Day"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={editFormData.nofworkinghrsPerDay}
+                    onChange={handleEditFormChange} />
+                </div>
+                {whrsError && <span style={{ color: 'red', fontSize: 12 }}>{whrsError}</span>}
+
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="daysopen"
+                    label="Days Open "
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={editFormData.daysopen}
+                    onChange={handleEditFormChange} />
+                  {opdaysError && <span style={{ color: 'red', fontSize: 12 }}>{opdaysError}</span>}
+
+                </div>
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="username"
+                    label="Branch Username"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={editFormData.username}
+                    onChange={handleUsernameChange}
+                    />
+                  {usernameError && <span style={{ color: 'red', fontSize: 12 }}>{usernameError}</span>}
+
+                </div>
+                <div className={styleset.bodyTextbox}>
+                  <TextField
+                    required id="password"
+                    label="Branch Password"
+                    variant="outlined"
+                    sx={{ width: '100vw' }}
+                    value={editFormData.password}
+                    onChange={handlePasswordChange} 
+                   />
+                  {passwordError && <span style={{ color: 'red', fontSize: 12 }}>{passwordError}</span>}
+
+                </div>
+
+              </DialogContent>
+
+              <DialogActions>
+                <Button onClick={handleEditFormClose}>Cancel</Button>
+
+                <Button onClick={handleEditFormSubmit}>Done</Button>
+              </DialogActions>
+            </Dialog>
+
+</div>
+
+
+
+
+
+
 
           <TableContainer  >
             <Table stickyHeader aria-label="sticky table">
@@ -605,7 +904,7 @@ const ServiceProvider="648661d73faee59051640f01";
 
                       <div className={styleset.iconsUpDel}>
                         <Tooltip arrow placement="left" title="Edit">
-                          <IconButton aria-label="" onClick={() => handleEditFormSubmit(i)}>
+                          <IconButton aria-label="" onClick={() => handleEditFormOpen(i)}>
                             <EditIcon color="primary" />
                           </IconButton>
                         </Tooltip>
@@ -631,4 +930,3 @@ const ServiceProvider="648661d73faee59051640f01";
     </div >
   )
 }
-
