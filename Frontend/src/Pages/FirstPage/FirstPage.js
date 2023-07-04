@@ -41,21 +41,24 @@ export default function FirstPage() {
          Sign In
         </Button>
         <Dialog open={openn} onClose={handleOnClose}>
-       
+  <DialogContent>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <h2 style={{ marginBottom: '20px' }}>How do you want to sign in?</h2>
+      <Link to='/Signin'>
+        <Button variant="outlined" size="large" fullWidth>
+          Sign in as a company?
+        </Button>
+      </Link>
+      <br />
+      <Link to='/BranchSignin'>
+        <Button variant="outlined" size="large" fullWidth>
+          Sign in as a branch?
+        </Button>
+      </Link>
+    </div>
+  </DialogContent>
+</Dialog>
 
-              <DialogActions>
-                <div style={{marginRight:50}}>
-         <Link to='/Signin'><Button variant="outlined" size="large">
-          Company ?
-        </Button></Link>
-        </div>
-        <div>
-        <Link to='/BranchSignin'><Button variant="outlined" size="large">
-          Branch ?
-        </Button></Link>
-        </div>
-              </DialogActions>
-         </Dialog>
 
 
 
