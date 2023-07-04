@@ -3,7 +3,7 @@ import bstyles from './BranchSignin.module.css';
 import { Paper, TextField, Button, Link,InputAdornment, IconButton} from "@mui/material";
 import { maxWidth } from "@mui/system";
 import {Visibility, VisibilityOff} from '@mui/icons-material';
-// import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 
 function validateUsername(username){
@@ -44,7 +44,7 @@ function validatePassword(password) {
 };
 
 export const BranchSignin = (props) => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
 
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -115,7 +115,7 @@ export const BranchSignin = (props) => {
         alert(error.message)
         
       });
-      fetch(`http://localhost:8070/branchdetails/get/${username}`, {
+      fetch(`http://localhost:8070/branchdetails/getid/${username}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -126,7 +126,7 @@ export const BranchSignin = (props) => {
           console.log(data);
           const objectId = data[0]._id; // Assuming the response from the backend contains the object ID as "_id"
           console.log(objectId);
-          // navigate(`/BrUpdate/${objectId}`,{objectId});
+          navigate(`/BrUpdate/${objectId}`,{objectId});
   
         })
         .catch(error => {
@@ -150,7 +150,7 @@ export const BranchSignin = (props) => {
         <div className={bstyles.signContainer}>
         <Paper elevation={6} className={bstyles.signpapDiv}>
             <div className={bstyles.signTitle}>
-                <h1>Sign in to AppoMo</h1>
+                <h1>Sign in to AppoMo : Branch</h1>
             </div>
             <div>
                 <div className={bstyles.signDiv}>

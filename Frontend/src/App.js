@@ -51,46 +51,29 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
 
-    {/* <Router> */}
+    <Router>
     {/* <EditProfile/> */}
    
       {/* <NavBar/> */}
-      {/* <Routes>
+       <Routes>
       
       <Route path='/' exact element={<FirstPage/>} />
       <Route path='/SignUp' exact element={<SignUp/>} />
         <Route path='/Reg/:serviceProviderName/:email/:regNo' exact element={<Reg/>} />
         <Route path='/BranchSignin' exact element={<BranchSignin/>} />
         <Route path='/Admin' exact element={<Admin/>} />
-        <Route path='/AdminSignIn' exact element={<AdminSignIn/>} />
+        <Route path='/AdminSignIn' exact element={<AdminSignIn/>} /> 
         <Route path='/Dashboard' element={<Dashboard/>} />
         <Route path='/ProviderType' element={<ProviderType/>} />
         <Route path='/AppointmentConfirm' element={<AppointmentConfirm/>} />
         <Route path='/BrUpdate/:objectId' element={<BrUpdate/>} />
         <Route path='/EditProfile/:objectId' element={<EditProfile/>} />
         <Route path='/ResetPassword' element={<ResetPassword/>} />
-        <Route path='/Signin' element={<Signin/>} />  */}
-         {/* <Route path='/events' component={Events} />
-        <Route path='/annual' component={AnnualReport} />
-       {/* <Route path='/team' component={Teams} />
-        <Route path='/blogs' component={Blogs} />
-        <Route path='/sign-up' component={SignUp} /> */}
-      {/* </Routes> */}
-    {/* </Router> */}
-    {/* <Signin/>
-    <BrUpdate/>
-    <AppointmentConfirm/> */}
-      {/* </Routes>
-    </Router> */}
-    {/* <Signin/> */}
-    {/* <Reg/> */}
-    {/* <FPw/>
-    <RPw/> */}
-    {/* <Admin/>
-    <SignUp/> */}
-    {/* <AppointmentConfirm/> */}
-
-    <BranchSignin/>
+        <Route path='/Termination/:_id' element={<Termination/>} />
+        <Route path='/Signin' element={<Signin/>} /> 
+      </Routes>
+    </Router>
+    
     </ThemeProvider>
    
 

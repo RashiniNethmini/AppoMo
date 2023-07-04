@@ -1,8 +1,10 @@
 import React,{useState,useEffect} from 'react';
 import axios from 'axios';
 import s from './dashboard.css';
-import { Button, IconButton, Paper, TextField, Tooltip,Checkbox } from "@mui/material";
+import { Button, IconButton, Paper, TextField, Tooltip } from "@mui/material";
+import Checkbox from '@mui/material/Checkbox';
 import SendIcon from '@mui/icons-material/Send';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { AppointmentList } from '../../AppointmentList';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -20,6 +22,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import {useNavigate} from 'react-router-dom'
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -37,6 +40,14 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     const fetchGroupedData = async () => {
       try {
         const response = await axios.get('http://localhost:8070/Appointments/groupedData'); // Replace with your backend route
+        
+        const fetchedData = response.data;
+
+        const initialCheckboxValues = fetchedData.map(group => group.details.map(a => a.Checked));
+       
+        setCheckboxValues(initialCheckboxValues);
+        setSubmitButtonsDisabled(initialCheckboxValues);
+        setSendButtonClickedOut(initialCheckboxValues);
         setGroupedData(response.data);
       } catch (error) {
         console.error(error);
@@ -52,7 +63,17 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     const fetchGroupedData1 = async () => {
       try {
         const response1 = await axios.get('http://localhost:8070/Appointments/groupedData1'); // Replace with your backend route
+       
+    
+        const fetchedData = response1.data;
+
+        const initialCheckboxValues = fetchedData.map(group => group.details.map(a => a.Checked));
+       
+        setCheckboxValuesIn(initialCheckboxValues);
+        setSubmitButtonsDisabledIn(initialCheckboxValues);
+        setSendButtonClicked(initialCheckboxValues);
         setGroupedData1(response1.data);
+  
       } catch (error) {
         console.error(error);
       }
@@ -77,25 +98,111 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     };
 
 
+
+const [checkboxValues, setCheckboxValues] = useState([]);
+const [submitButtonsDisabled, setSubmitButtonsDisabled] = useState([]);
+const [sendButtonClickedOut, setSendButtonClickedOut] = useState([]);
+const [checkboxValuesIn, setCheckboxValuesIn] = useState([]);
+const [submitButtonsDisabledIn, setSubmitButtonsDisabledIn] = useState([]);
+const [sendButtonClicked, setSendButtonClicked] = useState([]);
+
+
+const handleCheckboxChange = async (_id, group, row) => {
+  const updatedCheckboxValues = [...checkboxValues];
+  updatedCheckboxValues[group][row] = !updatedCheckboxValues[group][row];
+  setCheckboxValues(updatedCheckboxValues);
+  setSubmitButtonsDisabled(updatedCheckboxValues);
+  setSendButtonClickedOut(updatedCheckboxValues);
+
+  try {
+    const response = await axios.put(`http://localhost:8070/Appointments/update/${_id}`, {
+      Checked: updatedCheckboxValues[group][row]
+    });
+    console.log(response.data);
+    // alert('Status updated successfully');
+  } catch (error) {
+    console.error('Error updating status', error);
+    alert('Failed to update status');
+  }
+};
+
+
+const handleCheckboxChangeIn = async (_id, group, row) => {
+  const updatedCheckboxValues = [...checkboxValuesIn];
+  updatedCheckboxValues[group][row] = !updatedCheckboxValues[group][row];
+  setCheckboxValuesIn(updatedCheckboxValues);
+  setSubmitButtonsDisabledIn(updatedCheckboxValues);
+  setSendButtonClicked(updatedCheckboxValues);
+
+  try {
+    const response = await axios.put(`http://localhost:8070/Appointments/update/${_id}`, {
+      Checked: updatedCheckboxValues[group][row]
+    });
+    console.log(response.data);
+    // alert('Status updated successfully');
+  } catch (error) {
+    console.error('Error updating status', error);
+    alert('Failed to update status');
+  }
+};
+
+
+const navigate = useNavigate();
+
+
+const buttonpressedin = (_id) => {
+  navigate(`/Termination/${_id}`, { _id });
+};
+
+
+
+
+const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
+  const [selectedAppointmentId, setSelectedAppointmentId] = React.useState('');
+
+const handleOpenDeleteDialog = (appointmentId) => {
+  setSelectedAppointmentId(appointmentId);
+  setOpenDeleteDialog(true);
+};
+
+
+const handleCancelDelete = () => {
+  setOpenDeleteDialog(false);
+};
+
+const handleDeleteAppointment =async () => {
+  try {const response =await axios.put(`http://localhost:8070/Appointments/update/${selectedAppointmentId}`, {
+        Completed:true
+      });
+      console.log(response.data);
+      setOpenDeleteDialog(false);
+      alert('Appointment deleted successfully');
+    } catch (error) {
+      console.error('Error deleting appointment', error);
+      alert('Failed to delete appointment');
+    }
+};
+
+
     return (
 <Paper style={{width:1000,margin:130}}>
       <div style={{marginTop:150,width:1000}}>
           <div className={s.buttonadd} >
             &nbsp; &nbsp;<Button variant="contained" sx={{ mr: '10px' }} style={{marginTop:10}} onClick={handleClickOpen}>Ongoing Appointments</Button>
 
-            <Dialog open={openn} onClose={handleOnClose}>
+            <Dialog open={openn} onClose={handleOnClose} >
               {/* <DialogTitle className={s.DialogTitle} textAlign="center">
                 <h4 >  Enter Branch details</h4>
               </DialogTitle> */}
 
-              <DialogContent>
+              <DialogContent style={{width:600}}>
               <TableContainer component={Paper} style={{marginTop:'20px'}}>
        
  
      
         
         
-       {groupedData1.map((group) => (
+       {groupedData1.map((group, groupIndex) => (
          <Table aria-label="collapsible table">
          
              <TableHead>
@@ -111,7 +218,7 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
              </TableHead>
            
              <TableBody>
-             {group.details.map((a) => (
+             {group.details.map((a, rowIndex) => (
            <React.Fragment key={a.id}>
            <TableRow >
              
@@ -125,22 +232,50 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
                  aria-label="expand row"
                  size="small"
                 //  onClick={() => setOpen(!open)}
-                onClick={() => handleOpenRow(a.id)}
+                onClick={() => handleOpenRow(groupIndex * group.details.length + rowIndex)}
                >
                   {/* {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />} */}
-                {openRow === a.id ? (
+                {openRow === groupIndex * group.details.length + rowIndex ? (
                                   <KeyboardArrowUpIcon />
                                 ) : (
                                   <KeyboardArrowDownIcon />
                                 )}
                </IconButton></TableCell>
-               <TableCell><Checkbox {...label} /></TableCell>
-              <TableCell> <Button v endIcon={<SendIcon />}></Button></TableCell>
-             
+               <TableCell>
+               <Checkbox
+          checked={checkboxValuesIn[groupIndex][rowIndex]}
+            // checkboxValuesIn[groupIndex * group.details.length + rowIndex]}
+            onChange={() => handleCheckboxChangeIn(a._id,groupIndex,rowIndex)}
+
+        />
+               </TableCell>
+              <TableCell> 
+              <Button endIcon={<SendIcon />} disabled={!submitButtonsDisabledIn[groupIndex][rowIndex]}
+              // submitButtonsDisabledIn[groupIndex * group.details.length + rowIndex]} 
+              onClick={() => buttonpressedin(a._id)}/>
+              </TableCell>
+              <TableCell> 
+              <Button
+  endIcon={<DeleteIcon />}
+  disabled={!sendButtonClicked[groupIndex][rowIndex]}
+  onClick={() => handleOpenDeleteDialog(a._id)}
+/>
+
+<Dialog open={openDeleteDialog} onClose={handleCancelDelete}>
+        <DialogTitle>Delete Appointment</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete this appointment?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDelete}>Cancel</Button>
+          <Button onClick={handleDeleteAppointment}>Delete</Button>
+        </DialogActions>
+      </Dialog>
+              </TableCell>
            </TableRow>
            <TableRow>
              <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-               <Collapse in={openRow === a.id} timeout="auto" unmountOnExit>
+               <Collapse in={openRow === groupIndex * group.details.length + rowIndex} timeout="auto" unmountOnExit>
                  <Box sx={{ margin: 1 }}>
                    <Typography variant="h6">
                  {/* Appointment {id} */}
@@ -213,7 +348,7 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
      
         
         
-        {groupedData.map((group) => (
+        {groupedData.map((group,groupIndex) => (
           <Table aria-label="collapsible table">
           
               <TableHead>
@@ -229,7 +364,7 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
               </TableHead>
             
               <TableBody>
-              {group.details.map((a) => (
+              {group.details.map((a, rowIndex) => (
             <React.Fragment>
             <TableRow >
               
@@ -242,16 +377,48 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
               <IconButton
                   aria-label="expand row"
                   size="small"
-                  onClick={() => setOpen(!open)}
-                >
-                  {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                  onClick={() => handleOpenRow(groupIndex * group.details.length + rowIndex)}
+               >
+                  {/* {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />} */}
+                {openRow === groupIndex * group.details.length + rowIndex ? (
+                                  <KeyboardArrowUpIcon />
+                                ) : (
+                                  <KeyboardArrowDownIcon />
+                                )}
                 </IconButton></TableCell>
-              <TableCell><Checkbox {...label} /></TableCell>
-              <TableCell> <Button  endIcon={<SendIcon />}></Button></TableCell>
+              <TableCell>
+              <Checkbox
+          checked={checkboxValues[groupIndex][rowIndex]}
+            // checkboxValuesIn[groupIndex * group.details.length + rowIndex]}
+            onChange={() => handleCheckboxChange(a._id,groupIndex,rowIndex)}
+
+        /></TableCell>
+              <TableCell> <Button endIcon={<SendIcon />} disabled={!submitButtonsDisabled[groupIndex][rowIndex]}
+              // submitButtonsDisabledIn[groupIndex * group.details.length + rowIndex]} 
+              onClick={() => buttonpressedin(a._id)}/></TableCell>
+
+<TableCell> 
+              <Button
+  endIcon={<DeleteIcon />}
+  disabled={!sendButtonClickedOut[groupIndex][rowIndex]}
+  onClick={() => handleOpenDeleteDialog(a._id)}
+/>
+
+<Dialog open={openDeleteDialog} onClose={handleCancelDelete}>
+        <DialogTitle>Delete Appointment</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to delete this appointment?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDelete}>Cancel</Button>
+          <Button onClick={handleDeleteAppointment}>Delete</Button>
+        </DialogActions>
+      </Dialog>
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                <Collapse in={open} timeout="auto" unmountOnExit>
+                <Collapse in={openRow === groupIndex * group.details.length + rowIndex} timeout="auto" unmountOnExit>
                   <Box sx={{ margin: 1 }}>
                     <Typography variant="h6">
                   {/* Appointment {id} */}

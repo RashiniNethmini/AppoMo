@@ -6,9 +6,11 @@ router.route("/add").post((req, res) => {
     const ContactNo = req.body.ContactNo;
     const InvoiceNo = req.body.InvoiceNo;
     const Product = req.body.Product;
+    const Model = req.body.Model;
     const IssueInBrief = req.body.IssueInBrief;
     const ApntmntDate=  req.body.ApntmntDate;
     const Time =  req.body.Time;
+    const Checked = req.body.Checked;
     const Completed = req.body.Completed;
     const finalAmount = req.body.finalAmount;
    const BranchDetails = req.body.BranchDetails;
@@ -19,9 +21,11 @@ router.route("/add").post((req, res) => {
         ContactNo,
         InvoiceNo,
         Product,
+        Model,
         IssueInBrief,
         ApntmntDate,
         Time,
+        Checked,
         Completed,
         finalAmount,
         BranchDetails,
@@ -44,28 +48,28 @@ router.route("/").get((req,res)=>{
     })
 })
 
-router.route("/get/:id").get(async(req,res)=>{
-    console.log(req.params.id);   
+// router.route("/get/:id").get(async(req,res)=>{
+//     console.log(req.params.id);   
 
     
-    let data=await Appointment.find(
-        {
-            "$or":[
-                {
-                   "AptmntStatus":{$eq:req.params.id}
-                }
-            ]
-        }
-    )
-    // res.send(data);
-    .then((data)=>{
-    res.send(data)
+//     let data=await Appointment.find(
+//         {
+//             "$or":[
+//                 {
+//                    "AptmntStatus":{$eq:req.params.id}
+//                 }
+//             ]
+//         }
+//     )
+//     // res.send(data);
+//     .then((data)=>{
+//     res.send(data)
    
-    }).catch((err)=>{
-    console.log(err);
-    res.status(500).send({status:"Error with get Appointment"});
-    })
-})
+//     }).catch((err)=>{
+//     console.log(err);
+//     res.status(500).send({status:"Error with get Appointment"});
+//     })
+// })
 
 router.route('/groupedData').get(async (req, res) => {
    
@@ -74,7 +78,7 @@ router.route('/groupedData').get(async (req, res) => {
         const groupedData = await Appointment.aggregate([
             {
                 $match: {
-                    AptmntStatus: true,
+                  
                     Completed:false,
                     ApntmntDate: { $gte: today }
                 }
@@ -94,7 +98,7 @@ router.route('/groupedData').get(async (req, res) => {
               //     date: '$ApntmntDate'
               //   }
               // },
-              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', IssueInBrief: '$IssueInBrief', Time: '$Time', }},
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time', }},
             },
           },
         ]);
@@ -113,7 +117,6 @@ router.route('/groupedData').get(async (req, res) => {
         const groupedData = await Appointment.aggregate([
             {
                 $match: {
-                    AptmntStatus: true,
                     Completed: false,
                     ApntmntDate: { $lt: today }
                 }
@@ -133,7 +136,7 @@ router.route('/groupedData').get(async (req, res) => {
           //     date: '$ApntmntDate'
           //   }
           // },
-              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', IssueInBrief: '$IssueInBrief', Time: '$Time', }},
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time', }},
             },
           },
         ]);
@@ -146,25 +149,47 @@ router.route('/groupedData').get(async (req, res) => {
   })
 
   router.route("/update/:id").put (async (req,res)=>{
-    let uId=req.params.id;
-    const{ 
-      username,
-      password,
-      email,
-      contactNo,
-      address,
-      nic}=req.body;
+    let aId=req.params.id;
+    const{ Name,
+      ContactNo,
+      InvoiceNo,
+      Product,
+      Model,
+      IssueInBrief,
+      ApntmntDate,
+      Time,
+      Checked,
+      Completed,
+      finalAmount,
+      BranchDetails,
+      UserDetails}=req.body;
 
-    const updateUser={
-      username,
-      password,
-      email,
-      contactNo,
-      address,
-      nic,
+    const updateA={
+      Name,
+      ContactNo,
+      InvoiceNo,
+      Product,
+      Model,
+      IssueInBrief,
+      ApntmntDate,
+      Time,
+      Checked,
+      Completed,
+      finalAmount,
+      BranchDetails,
+      UserDetails
     }
 
+    const update=await Appointment.findByIdAndUpdate(aId, updateA)
+    .then(()=>{
+    res.status(200).send({status:"Status updated"})
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with updating data"});
+    })
 })
+
+  
 
   /*router.route("/update/:id").put (async (req,res)=>{
     let AppointmentId=req.params.id;

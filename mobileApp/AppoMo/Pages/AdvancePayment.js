@@ -72,6 +72,7 @@ function AdvPayment() {
             const ContactNo = data.Issues.ContactNo;
             const InvoiceNo = data.Issues.InvoiceNo;
             const Product = data.Issues.Product;
+            const Model = data.Issues.Model;
             const IssueInBrief = data.Issues.IssueInBrief; // Assuming the response from the backend contains the object ID as "_id"
             const fAmount='100';
             
@@ -85,10 +86,13 @@ function AdvPayment() {
                 "ContactNo": ContactNo,
                 "InvoiceNo": InvoiceNo,
                 "Product":Product,
+                "Model":Model,
+                "Checked":false,
                 "IssueInBrief": IssueInBrief,
                 "ApntmntDate":selectedDate, // Add the audio URI field
                 "Time":time,
                 "finalAmount":fAmount,
+                "Completed":false,
                 // Model:selectedModel,
                 "BranchDetails":BranchDetails,
                 "UserDetails":objectId
