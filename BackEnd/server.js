@@ -70,8 +70,8 @@ app.use('/Issues', issueRouter);
 const issueDetailsRouter = require('./routes/IssuesDetails.js');
 app.use('/IssuesDetails', issueDetailsRouter);
 
-// const appointmentRouter = require('./routes/Appointments.js');
-// app.use('/Appointments', appointmentRouter);
+const appointmentRouter = require('./routes/Appointments.js');
+app.use('/Appointments', appointmentRouter);
 
 const finalAmountRouter = require('./routes/FinalAmount.js');
 app.use('/FinalAmount', finalAmountRouter);

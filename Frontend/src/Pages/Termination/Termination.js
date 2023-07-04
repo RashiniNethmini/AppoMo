@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import styles from './Termination.module.css';
 import { Paper, TextField,  Button } from "@mui/material";
 import { Email } from "@mui/icons-material";
+import {useParams} from 'react-router-dom';
 import axios from 'axios';
 
 function Termination() {
@@ -19,7 +20,9 @@ function Termination() {
   const [isSendMessageButtonDisabled, setIsSendMessageButtonDisabled] = useState(true);
   const [showInvoice, setShowInvoice] = useState(false); // New state for showing/hiding the invoice
   const [isPaid, setIsPaid] = useState(false);
-  const _id = "64860fade9907344a0e6039a";
+ const {_id}=useParams();
+
+  // const _id = "64860fade9907344a0e6039a";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -263,7 +266,7 @@ function Termination() {
                 <TextField
                   id="outlined-basic"
                   label="Contact No"
-                  value={a.ContactNo}
+                  value={_id}
                   variant="outlined"
                   fullWidth
                   InputProps={{

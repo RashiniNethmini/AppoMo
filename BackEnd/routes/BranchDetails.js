@@ -140,4 +140,26 @@ router.post('/login', async (req, res) => {
       console.log("error logging in")
     }
 });
+
+router.route("/getid/:id").get(async(req,res)=>{
+    console.log(req.params.id);  
+    
+    let Pro=await Branch.find(
+        {
+            "$or":[
+                {
+                   "username":{$regex:req.params.id}
+                }
+            ]
+        },
+    )
+    // res.send(data);
+    .then((Pro)=>{
+    res.send(Pro);
+    }).catch((err)=>{
+    console.log(err);
+    res.status(500).send({status:"Error with get userid"});
+    })
+  })
+
 module.exports = router;

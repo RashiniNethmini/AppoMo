@@ -150,7 +150,7 @@ export const Signin = (props) => {
         <div className={styles.signContainer}>
         <Paper elevation={6} className={styles.signpapDiv}>
             <div className={styles.signTitle}>
-                <h1>Sign in to AppoMo</h1>
+                <h1>Sign in to AppoMo : Company</h1>
             </div>
             <div>
                 <div className={styles.signDiv}>
