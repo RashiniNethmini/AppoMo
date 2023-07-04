@@ -1,0 +1,64 @@
+.signTitle{
+    display: flex;
+    justify-content: center;
+}
+.signContainer {
+    display: flex;
+    justify-content: center;
+    padding-left: 50vw;
+    padding-right: 50vw;
+
+
+}
+.signpapDiv {
+    max-width: 700px;
+    border-radius: 25px !important;
+    width: 75vw;
+    margin: 10vw;
+    padding: 10px;
+    
+}
+.signDiv{
+    display: flex;
+    flex-direction: column;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    justify-content: center;
+
+
+}
+.signBodyText {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+.signFPw {
+    display: flex;
+    justify-content: center; 
+    margin: 10px;
+}
+.signOR{
+    display: flex;
+    justify-content: center;
+    
+}
+.signNot{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content:center ;
+    margin: 10px;
+}
+.signButton{
+    display: flex;
+    justify-content: center;
+    border-radius: 15px;
+    margin: 10px;
+}
+.GButton{
+    border-radius: 20px !important;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    
+}

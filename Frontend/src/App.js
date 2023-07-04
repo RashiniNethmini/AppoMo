@@ -10,11 +10,12 @@ import EditProfile from "./Pages/EditProfile/EditProfile";
 import Termination from "./Pages/Termination/Termination";
 import FirstPage from "./Pages/FirstPage/FirstPage";
 
-import BranchSignin from "./component/BranchSignin/BranchSignin";
+import {BranchSignin} from "./component/BranchSignin/BranchSignin";
 import RPw from "./component/ResetPwPage/RPw";
 import Admin from "./component/AdminPage/Admin";
 import SignUp from "./component/SignUpPage/SignUp";
 import AdminSignIn from "./component/AdminSignIn/AdminSignIn";
+
 import ProviderType from "./component/ProviderTypePage/ProviderType";
 // import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard/Dashboard"
@@ -50,11 +51,11 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
 
-    <Router>
+    {/* <Router> */}
     {/* <EditProfile/> */}
    
       {/* <NavBar/> */}
-      <Routes>
+      {/* <Routes>
       
       <Route path='/' exact element={<FirstPage/>} />
       <Route path='/SignUp' exact element={<SignUp/>} />
@@ -68,7 +69,7 @@ function App() {
         <Route path='/BrUpdate/:objectId' element={<BrUpdate/>} />
         <Route path='/EditProfile/:objectId' element={<EditProfile/>} />
         <Route path='/ResetPassword' element={<ResetPassword/>} />
-        <Route path='/Signin' element={<Signin/>} /> 
+        <Route path='/Signin' element={<Signin/>} />  */}
          {/* <Route path='/events' component={Events} />
         <Route path='/annual' component={AnnualReport} />
        {/* <Route path='/team' component={Teams} />
@@ -79,8 +80,8 @@ function App() {
     {/* <Signin/>
     <BrUpdate/>
     <AppointmentConfirm/> */}
-      </Routes>
-    </Router>
+      {/* </Routes>
+    </Router> */}
     {/* <Signin/> */}
     {/* <Reg/> */}
     {/* <FPw/>
@@ -88,10 +89,10 @@ function App() {
     {/* <Admin/>
     <SignUp/> */}
     {/* <AppointmentConfirm/> */}
+
+    <BranchSignin/>
     </ThemeProvider>
-    {/* <BrUpdate/> */}
-    {/* <AppointmentConfirm/> */}
-    {/* </ThemeProvider> */}
+   
 
     </div>
   );

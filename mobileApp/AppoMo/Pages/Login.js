@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import {
     StyleSheet,
@@ -18,52 +18,31 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 //import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { BackHandler } from 'react-native';
+import * as Expo from "expo";
+import * as Google from 'expo-auth-session/providers/google';
+import { useAuthRequest } from 'expo-auth-session';
+import CompanyOrServiceCenter from "./CompanyOrServiceCenter";
+import AdvPayment from "./AdvancePayment";
+import * as WebBrowser from 'expo-web-browser';
+
+WebBrowser.maybeCompleteAuthSession();
 
 function Login() {
     const navigate = useNavigate();
     const handleBackButton = () => {
         navigate('/');
         return true;
-      };
-      
-      
-    
-      useEffect(() => {
+    };
+
+
+
+    useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
-    
+
         return () => backHandler.remove();
-      }, [handleBackButton]);
-    
-    const handlePress = () => {
-        navigate('/UserRegistr');
-    };
+    }, [handleBackButton]);
 
-    // const navigation = useNavigation();
 
-    const handlePressReg = () => {
-        // navigation.navigate('UserReg');
-    };
-
-    // backend
-    // const handleLogin = async () => {
-    //     const response = await fetch('https://loccalhost:8070/api/login', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             username: enteredUsername,
-    //             password: enteredPassword
-    //         })
-    //     });
-    //     const data = await response.json();
-
-    //     if (data.success) {
-    //         // Login successful, navigate to the home screen
-    //     } else {
-    //         // Login failed, show error message to the user
-    //     }
-    // };
 
 
     const [data, setData] = React.useState({
@@ -147,15 +126,15 @@ function Login() {
 
         // Make an API request to send the data to the backend
         fetch("http://10.0.2.2:8070/Login/login", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            "username": username,
-            "password": password,
-            
-          })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "username": username,
+                "password": password,
+
+            })
         })
           .then(res => res.json())
           .then(data => {
@@ -177,52 +156,81 @@ function Login() {
         console.log(objectId);
         navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
 
-      })
-      .catch(error => {
-        console.log(error);
-      });
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
-    // React.useEffect(() => {
-    //     GoogleSignin.configure({
-    //         webClientId: '<YOUR_WEB_CLIENT_ID>',
-    //         offlineAccess: true,
-    //         forceCodeForRefreshToken: true,
-    //     });
-    // }, []);
 
-    
+//     const [signedIn, setSignedIn] = useState(false);
+//     const [name, setName] = useState('');
+//     const [photoUrl, setPhotoUrl] = useState('');
 
-    // useEffect(() => {
-    //     GoogleSignin.configure({
-    //       AndroidClientId: '850685778557-fkjnbh77b0uqi8s1b2s21p92b6t0dkj3.apps.googleusercontent.com',
-    //       offlineAccess: false,
-    //     });
-    //   }, []);
-    
-    // //   Implement the sign-in function
-    //   const signInWithGoogle = async () => {
-    //     try {
-    //       await GoogleSignin.hasPlayServices();
-    //       const userInfo = await GoogleSignin.signIn();
-    //       console.log('User Info:', userInfo);
-    //       // You can now send the user information to your backend for further processing
-    //     } catch (error) {
-    //       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-    //         console.log('User cancelled the sign-in flow');
-    //       } else if (error.code === statusCodes.IN_PROGRESS) {
-    //         console.log('Sign-in is already in progress');
-    //       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-    //         console.log('Play services are not available');
-    //       } else {
-    //         console.log('Something went wrong:', error.message);
-    //       }
-    //     }
-    // }
+//     const redirectUri = 'com.auth.appomo:/oauthredirect';
+//     const [request, response, promptAsync] = useAuthRequest(
+//         {
+//             clientId: "850685778557-fkjnbh77b0uqi8s1b2s21p92b6t0dkj3.apps.googleusercontent.com",
+//             scopes: ['profile', 'email'],
+//             redirectUri,
+//         },
+//         { authorizationEndpoint: 'https://accounts.google.com/o/oauth2/v2/auth' }
+//     );
 
+
+// const handlesignInGoogle = async () => {
+   
+//     const result = await promptAsync({ redirectUri });
+//     if (result.type === 'success') {
+//       const { authentication } = result;
+//       setSignedIn(true);
+//       setName(authentication.user.name);
+//       setPhotoUrl(authentication.user.photoUrl);
+//       navigate(`/CompanyOrServiceCenter/${objectId}`, { objectId });
+//     }
+//   };
+  
+//   React.useEffect(() => {
+//     if (signedIn) {
+//         navigate(`/CompanyOrServiceCenter/${objectId}`, { objectId });
+        
+//     }
+//   }, [signedIn,navigate]);
+
+const [userData, setUserData] = useState(null);
+const [token, setToken] = useState(null);
+const [request, response, promptAsync] = Google.useAuthRequest({
+  expoClientId: '850685778557-gdb5i26p8n6vjp8t4m08gr0apqmjarig.apps.googleusercontent.com',
+  androidClientId: '850685778557-fkjnbh77b0uqi8s1b2s21p92b6t0dkj3.apps.googleusercontent.com',
+});
+
+useEffect(() => {
+  if (response?.type === 'success') {
+    const { authentication } = response;
+    setToken(authentication?.accessToken);
+    navigate('/CompanyOrServiceCenter/:objectId');
+  }
+}, [response]);
+
+
+const getUserInfo = async () => {
+  const res = await fetch(
+    'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + token
+  );
+  const data = await res.json();
+  setUserData(data);
+  console.log(data);
+  return data;
+};
+
+console.log(userData);
 
     return (
+        
         <View style={styles.container}>
+          
+    
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
+            
             <View
                 // animation="slideInLeft"
                 style={styles.header}>
@@ -318,12 +326,12 @@ function Login() {
                 </View>
                 {data.isValidPassword ? null :
                     <Animatable.View animation="fadeInLeft" duration={500}>
-                    <View>
-                        <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
-                    </View>
-                     </Animatable.View>
+                        <View>
+                            <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+                        </View>
+                    </Animatable.View>
                 }
-{/* onPress={  navigate('/ForgotPW')}  */}
+                {/* onPress={  navigate('/ForgotPW')}  */}
 
                 <TouchableOpacity>
 
@@ -343,7 +351,6 @@ function Login() {
                     >
                         <Text style={[styles.textSign, { color: '#009387' }]}
                             onPress={() => { handleLogin(data.username, data.password) }}
-
                         >Sign In</Text>
                     </TouchableOpacity>
 
@@ -356,24 +363,25 @@ function Login() {
                             marginTop: 15,
                             marginVertical: 0
                         }]}
-                        // onPress={signInWithGoogle}
+                        // onPress={handlesignInGoogle}
+                        onPress={() =>  promptAsync()}
                     >
                         <Text style={[styles.textSign, {
                             color: '#009387'
                         }]}>Sign in with Google</Text>
-                    </TouchableOpacity>
+                                    </TouchableOpacity>
                 </View>
 
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: "center", marginTop: 10 }}>
                     <Text style={{ fontSize: 16, }}>Don't have an account ? </Text>
-                    <Link to={`/UserRegistr`} component={TouchableOpacity}
-                    // onPress={() => props.navigation.navigate("UserRegistr")}
-                    >
+                    <Link to={`/UserRegistr`} component={TouchableOpacity}>
                         <Text style={{ color: "#084C4F", fontWeight: 'bold', fontSize: 16, textDecorationLine: 'underline' }}>Signup</Text>
                     </Link>
                 </View>
             </Animatable.View>
         </View>
+    
+        
     );
 };
 

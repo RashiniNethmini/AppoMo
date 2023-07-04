@@ -4,7 +4,7 @@ const Branch = require('../models/BranchDetails');
 const { findByIdAndUpdate, findByIdAndDelete } = require('../models/BranchDetails');
 
 
- //add new branch
+//add new branch
 
 router.route("/add").post((req, res) => {
     const branchName = req.body.branchName;
@@ -15,8 +15,10 @@ router.route("/add").post((req, res) => {
     const nofappnmntsPerHr = Number(req.body.nofappnmntsPerHr);
     const nofworkinghrsPerDay = Number(req.body.nofworkinghrsPerDay);
     const daysopen = req.body.daysopen;
-    const ServiceProvider=req.body.ServiceProvider;
-    
+    const username = req.body.username;
+    const password = req.body.password;
+    const ServiceProvider = req.body.ServiceProvider;
+
 
     const newBranch = new Branch({
         branchName,
@@ -27,19 +29,21 @@ router.route("/add").post((req, res) => {
         nofappnmntsPerHr,
         nofworkinghrsPerDay,
         daysopen,
+        username,
+        password,
         ServiceProvider
-       
+
     })
 
     newBranch
-    .save()
-    .then(() => {
-      res.json({ status: "Branch Added"});
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ status: "Error with adding branch" });
-    });
+        .save()
+        .then(() => {
+            res.json({ status: "Branch Added" });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({ status: "Error with adding branch" });
+        });
 });
 
 //retrieve entered branches
@@ -52,23 +56,32 @@ router.route("/").get((req, res) => {
 })
 
 //retrieve a selected branch
-router.route("/get/:id").get(async(req,res)=>{
-    let branchDetailsId=req.params.id;   
-   
-    const select=await BranchDetails.findById(branchDetailsId)
-    .then((branchdetail)=>{
-    res.status(200).send({status:"Branch Detail fetched",branchdetail})
-   
-    }).catch((err)=>{
-    console.log(err);
-    res.status(500).send({status:"Error with get branch detail"});
-    })
+router.route("/get/:id").get(async (req, res) => {
+    let branchDetailsId = req.params.id;
+
+    const select = await Branch.findById(branchDetailsId)
+        .then((branchdetail) => {
+            res.status(200).send({ status: "Branch Detail fetched", branchdetail })
+
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send({ status: "Error with get branch detail" });
+        })
 })
 
 //update existing Branch
 router.route("/update/:id").put(async (req, res) => {
     let branchid = req.params.id;
-    const { branchName, managerName, contactNo, address, email,nofappnmntsPerHr} = req.body;
+    const { branchName,
+        managerName,
+        contactNo,
+        address,
+        email,
+        nofappnmntsPerHr,
+        nofworkinghrsPerDay,
+        daysopen,
+        username,
+        password } = req.body;
 
     const updateBranch = {
         branchName,
@@ -78,10 +91,13 @@ router.route("/update/:id").put(async (req, res) => {
         email,
         nofappnmntsPerHr,
         nofworkinghrsPerDay,
-        daysopen
+        daysopen,
+        username,
+        password,
 
- 
+
     }
+    // const branchObjectId = mongoose.Types.ObjectId(branchid);
 
     const update = await Branch.findByIdAndUpdate(branchid, updateBranch)
         .then(() => {
@@ -90,7 +106,7 @@ router.route("/update/:id").put(async (req, res) => {
             console.log(err);
             res.statusMessage(500).send({ status: "Error with updating data" });
         })
-}) 
+})
 
 //delete existing Branch
 router.route("/delete/:id").delete(async (req, res) => {
@@ -105,4 +121,23 @@ router.route("/delete/:id").delete(async (req, res) => {
         })
 })
 
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+  
+    try {
+      const user = await Branch.findOne({ username, password });
+  
+      if (user) {
+        res.status(200).json({ success: true, message: 'Login successful' });
+        console.log("success")
+      } else {
+        res.status(401).json({ success: false, message: 'Invalid username or password' });
+        console.log("invalid")
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'An error occurred during login' });
+      console.log("error logging in")
+    }
+});
 module.exports = router;

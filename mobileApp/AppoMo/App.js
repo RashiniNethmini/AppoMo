@@ -50,10 +50,10 @@ export default function App() {
      
       <Route path="/" element={<SplashScreen/>} />
       <Route path="/Login" element={<Login/>} />
-      <Route path="/ForgotPW" element={<ForgotPW/>} />
+      {/* <Route path="/ForgotPW" element={<ForgotPW/>} />
       <Route path="/VerifyOTP" element={<VerifyOTP/>} />
-      <Route path="/UserRegistr" element={<UserRegistr/>} />
-      <Route path="/CompanyOrServiceCenter/:objectId" element={<CompanyOrServiceCenter/>} />
+      <Route path="/UserRegistr" element={<UserRegistr/>} /> */}
+       <Route path="/CompanyOrServiceCenter/:objectId" element={<CompanyOrServiceCenter/>} />
       <Route path="/CompanyDetails/:objectId" element={<CompanyDetails/>} />
       <Route path="/ComBranchDetails/:objectId/:_id/:serviceProviderName" element={<ComBranchDetails/>} />
       <Route path="/SelectServiceCenter/:objectId" element={<SelectServiceCenter/>} />
@@ -93,14 +93,7 @@ export default function App() {
     
 
         {/* 
-        <NavigationContainer>
-          <Stack.Navigator>
 
-            <Stack.Screen name="login" component={Login} />
-            <Stack.Screen name=" userRegistr" component={UserRegistr} />
-          </Stack.Navigator>
-
-        </NavigationContainer> */} 
         {/* <SplashScreen/> */}
         {/*<IssueSubmitMsg/>*/}
 
@@ -124,7 +117,7 @@ export default function App() {
         {/* <ResetPassword/> */}
         {/* <CustomerProfile/> */}
  
-   
+      {/* </Provider>  */}
 
       <StatusBar style="auto" />
     </View>

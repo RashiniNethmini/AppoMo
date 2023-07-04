@@ -12,13 +12,16 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "add": "^2.0.6",
     "axios": "^1.4.0",
     "browserify-zlib": "^0.2.0",
     "crypto-browserify": "^3.12.0",
+    "eslint-config-react-app": "^7.0.1",
     "https-browserify": "^1.0.0",
     "make-data": "^1.0.6",
     "mkdata": "^0.0.11",
     "nodemailer": "^6.9.3",
+    "or": "^0.2.0",
     "path-browserify": "^1.0.1",
     "react": "^18.2.0",
     "react-avatar": "^5.0.3",
@@ -34,11 +37,12 @@
     "rsuite": "^5.35.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
-    "styled-components": "^5.3.10",
+    "styled-components": "^5.3.11",
     "url": "^0.11.0",
     "util": "^0.12.5",
     "validator": "^13.9.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -65,6 +69,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "eslint-plugin-jsx-a11y": "^6.7.1"
   }
 }

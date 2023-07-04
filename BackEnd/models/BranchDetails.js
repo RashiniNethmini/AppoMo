@@ -25,11 +25,7 @@ const brdetailsSchema = new Schema({
         type: String,
         required: true,
     },
-    contactNo: {
-        type: Number,
-        required: true,
-    },
-    
+
     nofappnmntsPerHr: {
         type: Number,
         required: true,
@@ -39,6 +35,14 @@ const brdetailsSchema = new Schema({
         required: true,
     }, 
     daysopen: {
+        type: String,
+        required: true,
+    }, 
+    username: {
+        type: String,
+        required: true,
+    }, 
+    password: {
         type: String,
         required: true,
     }, 
