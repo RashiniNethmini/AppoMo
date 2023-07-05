@@ -11,10 +11,11 @@ import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
-import NavBar1 from '../.././component/NavBar1'
+import NavBar1 from '../.././component/NavBar1';
+import {useParams} from 'react-router-dom';
 
 export default function AppointmentConfirm() {
- 
+  const {objectId} = useParams();
   const [rejectedAppointments, setRejectedAppointments] = useState([]);
   const [showRejectedAppointmentDetails, setShowRejectedAppointmentDetails] = useState(false);
   const [deleteAllRejectedAppointments, setDeleteAllRejectedAppointments] = useState(false);

@@ -23,11 +23,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { useNavigate } from 'react-router-dom'
-import NavBar1 from '../.././component/NavBar1'
+import NavBar1 from '../.././component/NavBar1';
+import {useParams} from 'react-router-dom';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 export default function CollapsibleTable() {
+  const {objectId} = useParams();
   const [open, setOpen] = React.useState(false);
   const [data, setData] = useState("");
   const [openRow, setOpenRow] = useState(null);

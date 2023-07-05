@@ -21,6 +21,7 @@ import ProviderType from "./component/ProviderTypePage/ProviderType";
 import Dashboard from "./Pages/Dashboard/Dashboard"
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from './component/NavBar';
+import NavBar1 from './component/NavBar1';
 import AppointmentConfirm from "./Pages/AppoinmentConfirm/AppointmentConfirm";
 import { deepmerge } from '@mui/utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -59,16 +60,18 @@ function App() {
       
       <Route path='/' exact element={<FirstPage/>} />
       <Route path='/SignUp' exact element={<SignUp/>} />
+      <Route path='/NavBar/:objectId' element={<NavBar/>} />
+      <Route path='/NavBar1/:objectId' element={<NavBar1/>} />
         <Route path='/Reg/:serviceProviderName/:email/:regNo' exact element={<Reg/>} />
         <Route path='/BranchSignin' exact element={<BranchSignin/>} />
         <Route path='/Admin' exact element={<Admin/>} />
         <Route path='/AdminSignIn' exact element={<AdminSignIn/>} /> 
-        <Route path='/Dashboard' element={<Dashboard/>} />
-        <Route path='/ProviderType' element={<ProviderType/>} />
-        <Route path='/AppointmentConfirm' element={<AppointmentConfirm/>} />
+        <Route path='/Dashboard/:objectId' element={<Dashboard/>} />
+        <Route path='/ProviderType/:objectId' element={<ProviderType/>} />
+        <Route path='/AppointmentConfirm/:objectId' element={<AppointmentConfirm/>} />
         <Route path='/BrUpdate/:objectId' element={<BrUpdate/>} />
-        <Route path='/EditProfile' element={<EditProfile/>} />
-        <Route path='/ResetPassword' element={<ResetPassword/>} />
+        <Route path='/EditProfile/:objectId' element={<EditProfile/>} />
+        <Route path='/ResetPassword/:objectId' element={<ResetPassword/>} />
         <Route path='/Termination/:_id/:UserDetails' element={<Termination/>} />
         <Route path='/Signin' element={<Signin/>} /> 
       </Routes>

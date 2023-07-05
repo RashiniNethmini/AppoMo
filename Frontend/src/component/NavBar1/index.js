@@ -1,4 +1,4 @@
-import React,{useContext}from 'react';
+import React,{useEffect,seContext}from 'react';
 import {
 Nav,
 NavLink,
@@ -10,7 +10,8 @@ NavBtnLink,
 import { Dropdown } from 'rsuite';
 // import {Menu ,MenuItem ,ListItemIcon , Divider , IconButton, Typography ,Tooltip} from '@mui/material';
 import {PersonAdd ,Settings , Logout} from '@mui/icons-material';
-import MyContext from '../../MyContext';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+
 // import Box from '@mui/material/Box';
 // import Avatar from 'react-avatar';
 
@@ -24,7 +25,16 @@ const Navbar1 = () => {
 	//   setAnchorEl(null);
 	// };
 
-  const objectId = useContext(MyContext);
+  const {objectId} = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.pathname ===`/NavBar1/${objectId}`){
+      // Programmatically navigate to the default route
+      navigate(`/Dashboard/${objectId}`,{objectId});
+    }
+  }, [location.pathname, navigate, objectId]);
 
 return (
 	<>
@@ -33,16 +43,16 @@ return (
 
 		<NavMenu>
 
-		<NavLink to={`/Dashboard`} activeStyle>
+		<NavLink  exact to={`/Dashboard/${objectId}`} activeStyle>
 	Appointments 
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-    <NavLink to='/AppointmentConfirm' activeStyle>
+    <NavLink to={`/AppointmentConfirm/${objectId}`} activeStyle>
 			Issues
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to={`/EditProfile`} activeStyle>
+		<NavLink to={`/EditProfile/${objectId}`} activeStyle>
 		Edit Profile
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to='/ResetPassword' activeStyle>
+		<NavLink to={`/ResetPassword/${objectId}`} activeStyle>
 		Change Password
 		</NavLink>
 		<NavLink to='/BranchSignin' activeStyle>&nbsp;&nbsp;&nbsp;&nbsp;

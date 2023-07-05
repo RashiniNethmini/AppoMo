@@ -12,12 +12,14 @@ import {
 import axios from "axios";
 import NavBar from '../NavBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 export default function ProviderType() {
   const [types, setTypes] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedModels, setSelectedModels] = useState({});
   const [error, setError] = useState("");
+  const {objectId} = useParams();
 
   useEffect(() => {
     // Fetch product types and their models from an API or a data source

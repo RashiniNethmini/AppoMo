@@ -18,7 +18,7 @@ import axios from 'axios';
 import {useParams} from 'react-router-dom';
 import NavBar from '../NavBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MyContext from '../../MyContext';
+
 
 
 
@@ -570,9 +570,9 @@ const handlePasswordChange = (event) => {
   return (
 
     <div className={styleset.mainContainer}>
-    <MyContext.Provider value={objectId}>
-    <NavBar/>
-    </MyContext.Provider>
+  
+  <NavBar/>
+
        
       <div >
         <Paper elevation={6}

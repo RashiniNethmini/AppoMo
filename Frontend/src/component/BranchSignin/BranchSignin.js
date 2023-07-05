@@ -126,7 +126,7 @@ export const BranchSignin = (props) => {
           console.log(data);
           const objectId = data[0]._id; // Assuming the response from the backend contains the object ID as "_id"
           console.log(objectId);
-          navigate(`/Dashboard`);
+          navigate(`/NavBar1/${objectId}`,{objectId});
   
         })
         .catch(error => {
