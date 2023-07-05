@@ -6,6 +6,8 @@ import validator from 'validator';
 import NavBar from '../../component/NavBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {useParams} from 'react-router-dom';
+ import NavBar1 from '../.././component/NavBar1'
+
 
 
 export default function EditProfile() {
@@ -117,8 +119,10 @@ const validateEmail = (e) => {
 
 
   return (
+   
   
     <div className='edit' style={{width:1000,margin:130}}>
+   
     <NavBar/>
       <Paper elevation={6} className="editPaper">
         <div classname="editform" style={{padding:"10px"}}>

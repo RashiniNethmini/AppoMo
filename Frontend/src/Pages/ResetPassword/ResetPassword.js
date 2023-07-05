@@ -164,7 +164,7 @@ const Cancel = () => {
 
   return (
     <div>
-    <NavBar/>
+    {/* <NavBar/> */}
     <div className='resetPassword'>
    
       <Paper elevation={6} classname="resetPaper" >

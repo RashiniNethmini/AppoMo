@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext}from 'react';
 import {
 Nav,
 NavLink,
@@ -6,14 +6,15 @@ Bars,
 NavMenu,
 NavBtn,
 NavBtnLink,
-} from './NavbarElements';
+} from './NavbarElements1';
 import { Dropdown } from 'rsuite';
 // import {Menu ,MenuItem ,ListItemIcon , Divider , IconButton, Typography ,Tooltip} from '@mui/material';
 import {PersonAdd ,Settings , Logout} from '@mui/icons-material';
+import MyContext from '../../MyContext';
 // import Box from '@mui/material/Box';
 // import Avatar from 'react-avatar';
 
-const Navbar = () => {
+const Navbar1 = () => {
 	// const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	// const open = Boolean(anchorEl);
 	// const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -22,28 +23,29 @@ const Navbar = () => {
 	// const handleClose = () => {
 	//   setAnchorEl(null);
 	// };
+
+  const objectId = useContext(MyContext);
+
 return (
 	<>
 	<Nav>
 		{/* <Bars /> */}
 
 		<NavMenu>
-		<NavLink to='/Dashboard' activeStyle>
-			Appointment
+
+		<NavLink to={`/Dashboard`} activeStyle>
+	Appointments 
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-        <NavLink to='/AppointmentConfirm' activeStyle>
+    <NavLink to='/AppointmentConfirm' activeStyle>
 			Issues
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to='/BrUpdate' activeStyle>
-			Branch Details
-		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to='/EditProfile' activeStyle>
+		<NavLink to={`/EditProfile`} activeStyle>
 		Edit Profile
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
 		<NavLink to='/ResetPassword' activeStyle>
 		Change Password
 		</NavLink>
-		<NavLink to='/Signin' activeStyle>&nbsp;&nbsp;&nbsp;&nbsp;
+		<NavLink to='/BranchSignin' activeStyle>&nbsp;&nbsp;&nbsp;&nbsp;
 		<Logout fontSize="small" />Logout
 		</NavLink>
 		{/* <NavLink to='/annual' activeStyle>
@@ -162,4 +164,4 @@ return (
 );
 };
 
-export default Navbar;
+export default Navbar1;

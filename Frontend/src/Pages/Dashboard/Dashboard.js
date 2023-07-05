@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import s from './dashboard.css';
 import { Button, IconButton, Paper, TextField, Tooltip } from "@mui/material";
@@ -22,157 +22,159 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import NavBar1 from '../.././component/NavBar1'
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-  export default function CollapsibleTable() {
-    const [open, setOpen] = React.useState(false);
-    const [data,setData]=useState("");
-    const [openRow, setOpenRow] = useState(null);
+export default function CollapsibleTable() {
+  const [open, setOpen] = React.useState(false);
+  const [data, setData] = useState("");
+  const [openRow, setOpenRow] = useState(null);
 
-    const [groupedData, setGroupedData] = useState([]);
+  const [groupedData, setGroupedData] = useState([]);
 
-    useEffect(() => {
-      fetchGroupedData();
-    }, []);
-  
-    const fetchGroupedData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8070/Appointments/groupedData'); // Replace with your backend route
-        
-        const fetchedData = response.data;
+  useEffect(() => {
+    fetchGroupedData();
+  }, []);
 
-        const initialCheckboxValues = fetchedData.map(group => group.details.map(a => a.Checked));
-       
-        setCheckboxValues(initialCheckboxValues);
-        setSubmitButtonsDisabled(initialCheckboxValues);
-        setSendButtonClickedOut(initialCheckboxValues);
-        setGroupedData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const fetchGroupedData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8070/Appointments/groupedData'); // Replace with your backend route
 
-    const [groupedData1, setGroupedData1] = useState([]);
+      const fetchedData = response.data;
 
-    useEffect(() => {
-      fetchGroupedData1();
-    }, []);
-  
-    const fetchGroupedData1 = async () => {
-      try {
-        const response1 = await axios.get('http://localhost:8070/Appointments/groupedData1'); // Replace with your backend route
-       
-    
-        const fetchedData = response1.data;
+      const initialCheckboxValues = fetchedData.map(group => group.details.map(a => a.Checked));
 
-        const initialCheckboxValues = fetchedData.map(group => group.details.map(a => a.Checked));
-       
-        setCheckboxValuesIn(initialCheckboxValues);
-        setSubmitButtonsDisabledIn(initialCheckboxValues);
-        setSendButtonClicked(initialCheckboxValues);
-        setGroupedData1(response1.data);
-  
-      } catch (error) {
-        console.error(error);
-      }
-    };
+      setCheckboxValues(initialCheckboxValues);
+      setSubmitButtonsDisabled(initialCheckboxValues);
+      setSendButtonClickedOut(initialCheckboxValues);
+      setGroupedData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    const handleOpenRow = (index) => {
-      if (openRow === index) {
-        setOpenRow(null);
-      } else {
-        setOpenRow(index);
-      }
-    };
+  const [groupedData1, setGroupedData1] = useState([]);
 
-    const [openn, setOpenn] = React.useState(false);
+  useEffect(() => {
+    fetchGroupedData1();
+  }, []);
+
+  const fetchGroupedData1 = async () => {
+    try {
+      const response1 = await axios.get('http://localhost:8070/Appointments/groupedData1'); // Replace with your backend route
+
+
+      const fetchedData = response1.data;
+
+      const initialCheckboxValues = fetchedData.map(group => group.details.map(a => a.Checked));
+
+      setCheckboxValuesIn(initialCheckboxValues);
+      setSubmitButtonsDisabledIn(initialCheckboxValues);
+      setSendButtonClicked(initialCheckboxValues);
+      setGroupedData1(response1.data);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleOpenRow = (index) => {
+    if (openRow === index) {
+      setOpenRow(null);
+    } else {
+      setOpenRow(index);
+    }
+  };
+
+  const [openn, setOpenn] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpenn(true);
   };
 
-    const handleOnClose = () => {
-      setOpenn(false);
-    };
+  const handleOnClose = () => {
+    setOpenn(false);
+  };
 
 
 
-const [checkboxValues, setCheckboxValues] = useState([]);
-const [submitButtonsDisabled, setSubmitButtonsDisabled] = useState([]);
-const [sendButtonClickedOut, setSendButtonClickedOut] = useState([]);
-const [checkboxValuesIn, setCheckboxValuesIn] = useState([]);
-const [submitButtonsDisabledIn, setSubmitButtonsDisabledIn] = useState([]);
-const [sendButtonClicked, setSendButtonClicked] = useState([]);
+  const [checkboxValues, setCheckboxValues] = useState([]);
+  const [submitButtonsDisabled, setSubmitButtonsDisabled] = useState([]);
+  const [sendButtonClickedOut, setSendButtonClickedOut] = useState([]);
+  const [checkboxValuesIn, setCheckboxValuesIn] = useState([]);
+  const [submitButtonsDisabledIn, setSubmitButtonsDisabledIn] = useState([]);
+  const [sendButtonClicked, setSendButtonClicked] = useState([]);
 
 
-const handleCheckboxChange = async (_id, group, row) => {
-  const updatedCheckboxValues = [...checkboxValues];
-  updatedCheckboxValues[group][row] = !updatedCheckboxValues[group][row];
-  setCheckboxValues(updatedCheckboxValues);
-  setSubmitButtonsDisabled(updatedCheckboxValues);
-  setSendButtonClickedOut(updatedCheckboxValues);
+  const handleCheckboxChange = async (_id, group, row) => {
+    const updatedCheckboxValues = [...checkboxValues];
+    updatedCheckboxValues[group][row] = !updatedCheckboxValues[group][row];
+    setCheckboxValues(updatedCheckboxValues);
+    setSubmitButtonsDisabled(updatedCheckboxValues);
+    setSendButtonClickedOut(updatedCheckboxValues);
 
-  try {
-    const response = await axios.put(`http://localhost:8070/Appointments/update/${_id}`, {
-      Checked: updatedCheckboxValues[group][row]
-    });
-    console.log(response.data);
-    // alert('Status updated successfully');
-  } catch (error) {
-    console.error('Error updating status', error);
-    alert('Failed to update status');
-  }
-};
-
-
-const handleCheckboxChangeIn = async (_id, group, row) => {
-  const updatedCheckboxValues = [...checkboxValuesIn];
-  updatedCheckboxValues[group][row] = !updatedCheckboxValues[group][row];
-  setCheckboxValuesIn(updatedCheckboxValues);
-  setSubmitButtonsDisabledIn(updatedCheckboxValues);
-  setSendButtonClicked(updatedCheckboxValues);
-
-  try {
-    const response = await axios.put(`http://localhost:8070/Appointments/update/${_id}`, {
-      Checked: updatedCheckboxValues[group][row]
-    });
-    console.log(response.data);
-    // alert('Status updated successfully');
-  } catch (error) {
-    console.error('Error updating status', error);
-    alert('Failed to update status');
-  }
-};
+    try {
+      const response = await axios.put(`http://localhost:8070/Appointments/update/${_id}`, {
+        Checked: updatedCheckboxValues[group][row]
+      });
+      console.log(response.data);
+      // alert('Status updated successfully');
+    } catch (error) {
+      console.error('Error updating status', error);
+      alert('Failed to update status');
+    }
+  };
 
 
-const navigate = useNavigate();
+  const handleCheckboxChangeIn = async (_id, group, row) => {
+    const updatedCheckboxValues = [...checkboxValuesIn];
+    updatedCheckboxValues[group][row] = !updatedCheckboxValues[group][row];
+    setCheckboxValuesIn(updatedCheckboxValues);
+    setSubmitButtonsDisabledIn(updatedCheckboxValues);
+    setSendButtonClicked(updatedCheckboxValues);
+
+    try {
+      const response = await axios.put(`http://localhost:8070/Appointments/update/${_id}`, {
+        Checked: updatedCheckboxValues[group][row]
+      });
+      console.log(response.data);
+      // alert('Status updated successfully');
+    } catch (error) {
+      console.error('Error updating status', error);
+      alert('Failed to update status');
+    }
+  };
 
 
-const buttonpressedin = (_id) => {
-  navigate(`/Termination/${_id}`, { _id });
-};
+  const navigate = useNavigate();
+
+
+  const buttonpressedin = (_id) => {
+    navigate(`/Termination/${_id}`, { _id });
+  };
 
 
 
 
-const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
   const [selectedAppointmentId, setSelectedAppointmentId] = React.useState('');
 
-const handleOpenDeleteDialog = (appointmentId) => {
-  setSelectedAppointmentId(appointmentId);
-  setOpenDeleteDialog(true);
-};
+  const handleOpenDeleteDialog = (appointmentId) => {
+    setSelectedAppointmentId(appointmentId);
+    setOpenDeleteDialog(true);
+  };
 
 
-const handleCancelDelete = () => {
-  setOpenDeleteDialog(false);
-};
+  const handleCancelDelete = () => {
+    setOpenDeleteDialog(false);
+  };
 
-const handleDeleteAppointment =async () => {
-  try {const response =await axios.put(`http://localhost:8070/Appointments/update/${selectedAppointmentId}`, {
-        Completed:true
+  const handleDeleteAppointment = async () => {
+    try {
+      const response = await axios.put(`http://localhost:8070/Appointments/update/${selectedAppointmentId}`, {
+        Completed: true
       });
       console.log(response.data);
       setOpenDeleteDialog(false);
@@ -181,10 +183,13 @@ const handleDeleteAppointment =async () => {
       console.error('Error deleting appointment', error);
       alert('Failed to delete appointment');
     }
-};
+  };
 
 
-    return (
+  return (
+      <div>
+<NavBar1/>
+      
 <Paper style={{width:1000,margin:130}}>
       <div style={{marginTop:150,width:1000}}>
           <div className={s.buttonadd} >
@@ -470,8 +475,9 @@ const handleDeleteAppointment =async () => {
 </div>
 </div>
 </Paper>
-      
-    );
-  }
-  
+</div>
+
+  );
+}
+
 
