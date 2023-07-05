@@ -39,7 +39,7 @@ return (
     <NavLink to='/ProviderType' activeStyle>
 			Add Product
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to={`/EditProfile/${objectId}`} activeStyle>
+		<NavLink to={`/EditProfile`} activeStyle>
 		Edit Profile
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
 		<NavLink to='/ResetPassword' activeStyle>

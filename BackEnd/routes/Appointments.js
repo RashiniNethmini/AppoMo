@@ -98,7 +98,7 @@ router.route('/groupedData').get(async (req, res) => {
               //     date: '$ApntmntDate'
               //   }
               // },
-              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time', }},
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time',UserDetails:'UserDetails' }},
             },
           },
         ]);
@@ -136,7 +136,7 @@ router.route('/groupedData').get(async (req, res) => {
           //     date: '$ApntmntDate'
           //   }
           // },
-              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time', }},
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time',UserDetails:'UserDetails' }},
             },
           },
         ]);

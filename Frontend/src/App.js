@@ -67,9 +67,9 @@ function App() {
         <Route path='/ProviderType' element={<ProviderType/>} />
         <Route path='/AppointmentConfirm' element={<AppointmentConfirm/>} />
         <Route path='/BrUpdate/:objectId' element={<BrUpdate/>} />
-        <Route path='/EditProfile/:objectId' element={<EditProfile/>} />
+        <Route path='/EditProfile' element={<EditProfile/>} />
         <Route path='/ResetPassword' element={<ResetPassword/>} />
-        <Route path='/Termination/:_id' element={<Termination/>} />
+        <Route path='/Termination/:_id/:UserDetails' element={<Termination/>} />
         <Route path='/Signin' element={<Signin/>} /> 
       </Routes>
     </Router>

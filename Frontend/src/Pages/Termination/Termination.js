@@ -21,6 +21,7 @@ function Termination() {
   const [showInvoice, setShowInvoice] = useState(false); // New state for showing/hiding the invoice
   const [isPaid, setIsPaid] = useState(false);
  const {_id}=useParams();
+ const {UserDetails}=useParams();
 
   // const _id = "64860fade9907344a0e6039a";
 
@@ -266,7 +267,7 @@ function Termination() {
                 <TextField
                   id="outlined-basic"
                   label="Contact No"
-                  value={_id}
+                  value={a.ContactNo}
                   variant="outlined"
                   fullWidth
                   InputProps={{

@@ -151,8 +151,8 @@ export default function CollapsibleTable() {
   const navigate = useNavigate();
 
 
-  const buttonpressedin = (_id) => {
-    navigate(`/Termination/${_id}`, { _id });
+  const buttonpressedin = (_id,UserDetails) => {
+    navigate(`/Termination/${_id}/${UserDetails}`, { _id,UserDetails });
   };
 
 
@@ -257,7 +257,7 @@ export default function CollapsibleTable() {
               <TableCell> 
               <Button endIcon={<SendIcon />} disabled={!submitButtonsDisabledIn[groupIndex][rowIndex]}
               // submitButtonsDisabledIn[groupIndex * group.details.length + rowIndex]} 
-              onClick={() => buttonpressedin(a._id)}/>
+              onClick={() => buttonpressedin(a._id,a.UserDetails)}/>
               </TableCell>
               <TableCell> 
               <Button
@@ -400,7 +400,7 @@ export default function CollapsibleTable() {
         /></TableCell>
               <TableCell> <Button endIcon={<SendIcon />} disabled={!submitButtonsDisabled[groupIndex][rowIndex]}
               // submitButtonsDisabledIn[groupIndex * group.details.length + rowIndex]} 
-              onClick={() => buttonpressedin(a._id)}/></TableCell>
+              onClick={() => buttonpressedin(a._id,a.UserDetails)}/></TableCell>
 
 <TableCell> 
               <Button
