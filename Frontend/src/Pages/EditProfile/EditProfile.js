@@ -6,7 +6,7 @@ import validator from 'validator';
 import NavBar from '../../component/NavBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {useParams} from 'react-router-dom';
- import NavBar1 from '../.././component/NavBar1'
+//  import NavBar1 from '../.././component/NavBar1'
 
 
 
@@ -123,7 +123,7 @@ const validateEmail = (e) => {
   
     <div className='edit' style={{width:1000,margin:130}}>
    
-    <NavBar/>
+    {/* <NavBar/> */}
       <Paper elevation={6} className="editPaper">
         <div classname="editform" style={{padding:"10px"}}>
             <div className='editdetailslogo' >
