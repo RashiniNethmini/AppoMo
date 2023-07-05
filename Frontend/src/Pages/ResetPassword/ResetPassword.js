@@ -6,12 +6,13 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import NavBar from '../../component/NavBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 
 
 
 export default function ResetPassword() {
-
+  const {objectId} = useParams();
   
   const [showPassword, setShowPassword] = React.useState(false);
   const [passwordError0, setPasswordErr0] = useState("");

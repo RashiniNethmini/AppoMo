@@ -1,4 +1,4 @@
-import React,{useContext}from 'react';
+import React,{useEffect,useContext}from 'react';
 import {
 Nav,
 NavLink,
@@ -10,7 +10,10 @@ NavBtnLink,
 import { Dropdown } from 'rsuite';
 // import {Menu ,MenuItem ,ListItemIcon , Divider , IconButton, Typography ,Tooltip} from '@mui/material';
 import {PersonAdd ,Settings , Logout} from '@mui/icons-material';
-import MyContext from '../../MyContext';
+// import {useParams} from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+
+
 // import Box from '@mui/material/Box';
 // import Avatar from 'react-avatar';
 
@@ -24,7 +27,17 @@ const Navbar = () => {
 	//   setAnchorEl(null);
 	// };
 
-  const objectId = useContext(MyContext);
+  const {objectId} = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.pathname ===`/NavBar/${objectId}`){
+      // Programmatically navigate to the default route
+      navigate(`/BrUpdate/${objectId}`,{objectId});
+    }
+  }, [location.pathname, navigate, objectId]);
+
 
 return (
 	<>
@@ -33,16 +46,16 @@ return (
 
 		<NavMenu>
 
-		<NavLink to={`/BrUpdate/${objectId}`} activeStyle>
+		<NavLink exact to={`/BrUpdate/${objectId}`} activeStyle>
 		Add	Branch 
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-    <NavLink to='/ProviderType' activeStyle>
+    <NavLink to={`/ProviderType/${objectId}`} activeStyle>
 			Add Product
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to={`/EditProfile`} activeStyle>
+		<NavLink to={`/EditProfile/${objectId}`} activeStyle>
 		Edit Profile
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to='/ResetPassword' activeStyle>
+		<NavLink to={`/ResetPassword/${objectId}`} activeStyle>
 		Change Password
 		</NavLink>
 		<NavLink to='/Signin' activeStyle>&nbsp;&nbsp;&nbsp;&nbsp;

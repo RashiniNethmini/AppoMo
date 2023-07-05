@@ -20,6 +20,7 @@ export default function EditProfile() {
   const [valid, validity] = useState('');
   const [ceoName, setceo] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
+  const {objectId} = useParams();
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
