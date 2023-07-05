@@ -11,6 +11,7 @@ import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
+import NavBar1 from '../.././component/NavBar1'
 
 export default function AppointmentConfirm() {
  
@@ -145,6 +146,9 @@ export default function AppointmentConfirm() {
 
 
   return (
+    <div>
+    <NavBar1/>
+
     <div className={styles.mainContainer}>
       <Paper elevation={6} className={styles.paper}>
         <div className={styles.heading}>
@@ -226,6 +230,7 @@ export default function AppointmentConfirm() {
 
 
       </Paper>
+    </div>
     </div>
   );
 }

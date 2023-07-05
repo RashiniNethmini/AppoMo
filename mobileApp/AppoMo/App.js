@@ -50,9 +50,9 @@ export default function App() {
      
       <Route path="/" element={<SplashScreen/>} />
       <Route path="/Login" element={<Login/>} />
-      {/* <Route path="/ForgotPW" element={<ForgotPW/>} />
+  <Route path="/ForgotPW" element={<ForgotPW/>} />
       <Route path="/VerifyOTP" element={<VerifyOTP/>} />
-      <Route path="/UserRegistr" element={<UserRegistr/>} /> */}
+       <Route path="/UserRegistr" element={<UserRegistr/>} />
        <Route path="/CompanyOrServiceCenter/:objectId" element={<CompanyOrServiceCenter/>} />
       <Route path="/CompanyDetails/:objectId" element={<CompanyDetails/>} />
       <Route path="/ComBranchDetails/:objectId/:_id/:serviceProviderName" element={<ComBranchDetails/>} />
@@ -89,7 +89,7 @@ export default function App() {
 
     <ProductDetailsCompany/>
 
-    {/*</Provider> */}
+ 
     
 
         {/* 
@@ -106,7 +106,8 @@ export default function App() {
         {/* <SelectServiceCenter/> */}
 
          {/* <SCIssueSubmission/>  */}
-        {/* <AdvPayment/>
+         {/* <StatusBar style="auto" />
+        <AdvPayment/>
                  {/* <ForgotPW/>  */}
         {/* <VerifyOTP/> */}
         {/* <ProductDetails/> */}
@@ -117,9 +118,9 @@ export default function App() {
         {/* <ResetPassword/> */}
         {/* <CustomerProfile/> */}
  
-      {/* </Provider>  */}
+        
 
-      <StatusBar style="auto" />
+     
     </View>
   </NativeRouter>
   );

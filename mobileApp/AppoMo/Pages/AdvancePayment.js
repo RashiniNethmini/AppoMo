@@ -54,7 +54,7 @@ function AdvPayment() {
           onPress: () => {
             
             // Perform payment deduction and send SMS using API
-            // performPaymentAndSendSMS();
+            performPaymentAndSendSMS();
 
             
           
@@ -119,57 +119,56 @@ function AdvPayment() {
       { cancelable: false }
     );
   } else {
-    Alert.alert("Error", "Please enter mobile number and amount.");
+    Alert.alert("Error", "Please enter mobile number .");
   }
 
-  
 
 };
 
 
-  // const performPaymentAndSendSMS = () => {
+  const performPaymentAndSendSMS = () => {
  
-  //     // Use the mobileNumber state variable as the mobile number to send the SMS to
-  //     console.log("Performing payment deduction and sending SMS...");
+      // Use the mobileNumber state variable as the mobile number to send the SMS to
+      console.log("Performing payment deduction and sending SMS...");
     
     
-  //     // Make the fetch request to update appointment status and send SMS
-  //   //   fetch('http://10.0.2.2:8070/Advpayment/update', {
-  //   //     method: 'POST',
-  //   //     headers: {
-  //   //       'Content-Type': 'application/json'
-  //   //     },
-  //   //     body: JSON.stringify( { mobileNumber: mobileNumber})
-  //   //   })
-  //   //     .then(response => response.json())
-  //   //     .then(data => {
-  //   //       console.log('Appointment status updated  and message sent successfully');
+      // Make the fetch request to update appointment status and send SMS
+    //   fetch('http://10.0.2.2:8070/Advpayment/update', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify( { mobileNumber: mobileNumber})
+    //   })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       console.log('Appointment status updated  and message sent successfully');
          
-  //   //     })
-  //   //     .catch(error => {
-  //   //       console.error('Error updating appointment status and message sending :', error);
-  //   //       // Handle error case
-  //   //     });
-  //   // };
+    //     })
+    //     .catch(error => {
+    //       console.error('Error updating appointment status and message sending :', error);
+    //       // Handle error case
+    //     });
+    // };
     
-  //   axios.post("http://10.0.2.2:8070/Advpayment/payment", { mobileNumber: mobileNumber})
-  //       .then((response) => {
-  //         console.log(response);
-  //         console.log('Appointment status updated  and message sent successfully');
+    axios.post("http://10.0.2.2:8070/Advpayment/payment", { mobileNumber: mobileNumber})
+        .then((response) => {
+          console.log(response);
+          console.log('Appointment status updated  and message sent successfully');
  
-  //     })
+      })
     
-  //         .catch(error => {
-  //           console.error(error);
-  //           console.error('Error updating appointment status and message sending :', error);
+          .catch(error => {
+            console.error(error);
+            console.error('Error updating appointment status and message sending :', error);
            
-  //         });
+          });
 
     
-  //       setMobileNumber('');
-  //       // navigate('/VerifyOTP');
+        setMobileNumber('');
+        // navigate('/VerifyOTP');
       
-  //   };
+    };
 
 
   

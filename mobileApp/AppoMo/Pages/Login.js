@@ -19,7 +19,8 @@ import Feather from 'react-native-vector-icons/Feather';
 //import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { BackHandler } from 'react-native';
 import * as Expo from "expo";
-import * as Google from 'expo-auth-session/providers/google';
+import * as GoogleAuthSession from 'expo-auth-session/providers/google';
+
 import { useAuthRequest } from 'expo-auth-session';
 import CompanyOrServiceCenter from "./CompanyOrServiceCenter";
 import AdvPayment from "./AdvancePayment";
@@ -198,7 +199,7 @@ function Login() {
 
 const [userData, setUserData] = useState(null);
 const [token, setToken] = useState(null);
-const [request, response, promptAsync] = Google.useAuthRequest({
+const [request, response, promptAsync] = GoogleAuthSession.useAuthRequest({
   expoClientId: '850685778557-gdb5i26p8n6vjp8t4m08gr0apqmjarig.apps.googleusercontent.com',
   androidClientId: '850685778557-fkjnbh77b0uqi8s1b2s21p92b6t0dkj3.apps.googleusercontent.com',
 });
