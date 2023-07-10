@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import styles from './Admin.module.css';
 import { Paper, Button, Box, Dialog, DialogTitle, DialogContent, DialogActions, List, ListItem, ListItemText } from "@mui/material";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 
 export default function Admin(){
@@ -134,6 +135,16 @@ export default function Admin(){
     };
 
     return(
+        <div>
+        <div style={{display:'flex', flexDirection: 'row-reverse',marginTop:20}}>
+
+<div style={{marginRight:50}}>
+<Link to='/'>
+<Button variant="contained" size="large">
+ Log Out
+</Button>
+</Link>
+</div></div>
         <div className={styles.AdContainer}>
             <Paper elevation={6} className={styles.pDiv}>
                 <div className={styles.AdTitle}>
@@ -236,6 +247,7 @@ export default function Admin(){
                 </div>
 
             </Paper>
+        </div>
         </div>
     )
 } 

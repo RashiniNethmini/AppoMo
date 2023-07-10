@@ -62,7 +62,23 @@ const appntmntSchema = new Schema({
           type: mongoose.Schema.Types.ObjectId, 
           ref: 'UserDetails' 
     }
-})
+});
+
+appntmntSchema.pre('save', function (next) {
+    const doc = this;
+    Counterr.findByIdAndUpdate(
+      { _id: 'AptNumber' },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    )
+      .then((counter) => {
+        doc.AptNumber = counter.seq;
+        next();
+      })
+      .catch((error) => {
+        next(error);
+      });
+  });
 
 
 

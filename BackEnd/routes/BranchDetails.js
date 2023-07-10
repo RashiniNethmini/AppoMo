@@ -162,4 +162,16 @@ router.route("/getid/:id").get(async(req,res)=>{
     })
   })
 
+  router.route("/get/:id").get(async(req,res)=>{
+    let branchId=req.params.id;   
+   
+    const select=await Branch.findById(branchId)
+    .then((branch)=>{
+    res.status(200).send({status:"branch fetched",branch})
+}).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status:"Error with get Branch"});
+        })
+    })
+
 module.exports = router;

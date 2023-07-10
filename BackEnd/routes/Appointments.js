@@ -75,10 +75,11 @@ router.route('/groupedData').get(async (req, res) => {
    
     try {
         const today = new Date().toISOString().split('T')[0];
+ 
+     
         const groupedData = await Appointment.aggregate([
             {
                 $match: {
-                  
                     Completed:false,
                     ApntmntDate: { $gte: today }
                 }
@@ -98,7 +99,7 @@ router.route('/groupedData').get(async (req, res) => {
               //     date: '$ApntmntDate'
               //   }
               // },
-              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time',UserDetails:'UserDetails' }},
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time',UserDetails:'$UserDetails',BranchDetails:'$BranchDetails' }},
             },
           },
         ]);
@@ -136,7 +137,7 @@ router.route('/groupedData').get(async (req, res) => {
           //     date: '$ApntmntDate'
           //   }
           // },
-              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time',UserDetails:'UserDetails' }},
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time',UserDetails:'$UserDetails',BranchDetails:'$BranchDetails' }},
             },
           },
         ]);

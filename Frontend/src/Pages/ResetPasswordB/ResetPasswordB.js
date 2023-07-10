@@ -1,10 +1,10 @@
 import React,{useState,useRef,useEffect} from 'react';
 import axios from 'axios';
-import './resetPassword.css';
+import './resetPasswordB.css';
 import {IconButton,OutlinedInput,InputAdornment,Stack, Button,Paper} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import NavBar from '../../component/NavBar';
+import NavBar1 from '../../component/NavBar1';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {useParams} from 'react-router-dom';
 
@@ -37,9 +37,12 @@ export default function ResetPassword() {
   }, []);
 
   const fetchdata= async ()=>{
-    const data=await axios.get(`http://localhost:8070/serviceprovider/getr/${objectId}`);
+    const up = {
+      password
+    };
+    const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Sname}`,up);
     setData(data);
-    const response = data.data.serviceprovider.password;
+    const response = data.data[0].password;
     setCP(response);
   };
 
@@ -49,7 +52,7 @@ export default function ResetPassword() {
       const updateFields = {
         password
       };
-      await axios.put(`http://localhost:8070/serviceprovider/updater/${objectId}`,updateFields);
+      await axios.put(`http://localhost:8070/serviceprovider/update/${Sname}`,updateFields);
       
       setIP(false);
       setCurrent("");
@@ -162,7 +165,7 @@ const Cancel = () => {
 
   return (
     <div>
-    <NavBar/>
+    <NavBar1/>
     <div className='resetPassword'>
    
       <Paper elevation={6} classname="resetPaper" >

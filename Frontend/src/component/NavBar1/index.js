@@ -49,13 +49,13 @@ return (
     <NavLink to={`/AppointmentConfirm/${objectId}`} activeStyle>
 			Issues
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to={`/EditProfile/${objectId}`} activeStyle>
+		<NavLink to={`/EditProfileB/${objectId}`} activeStyle>
 		Edit Profile
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to={`/ResetPassword/${objectId}`} activeStyle>
+		<NavLink to={`/ResetPasswordB/${objectId}`} activeStyle>
 		Change Password
 		</NavLink>
-		<NavLink to='/BranchSignin' activeStyle>&nbsp;&nbsp;&nbsp;&nbsp;
+		<NavLink to='/' activeStyle>&nbsp;&nbsp;&nbsp;&nbsp;
 		<Logout fontSize="small" />Logout
 		</NavLink>
 		{/* <NavLink to='/annual' activeStyle>

@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react';
 import axios from 'axios';
-import './editprofile.css';
+import './editprofileB.css';
 import {Avatar,Stack,TextField,Paper,Button} from '@mui/material';
 import validator from 'validator';
 import NavBar from '../../component/NavBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {useParams} from 'react-router-dom';
- import NavBar1 from '../.././component/NavBar'
+ import NavBar1 from '../.././component/NavBar1'
 
 
 
@@ -124,7 +124,7 @@ const validateEmail = (e) => {
   
     <div className='edit' style={{width:1000,margin:130}}>
    
-    <NavBar/>
+    <NavBar1/>
       <Paper elevation={6} className="editPaper">
         <div classname="editform" style={{padding:"10px"}}>
             <div className='editdetailslogo' >
