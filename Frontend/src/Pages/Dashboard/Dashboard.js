@@ -44,14 +44,15 @@ export default function CollapsibleTable() {
     try {
       const response = await axios.get('http://localhost:8070/Appointments/groupedData'); // Replace with your backend route
 
-      const fetchedData = response.data;
+      const fetchedDataa = response.data;
+      const fetchedData = fetchedDataa.filter(group => group.details.some(a => a.BranchDetails === objectId));
 
       const initialCheckboxValues = fetchedData.map(group => group.details.map(a => a.Checked));
 
       setCheckboxValues(initialCheckboxValues);
       setSubmitButtonsDisabled(initialCheckboxValues);
       setSendButtonClickedOut(initialCheckboxValues);
-      setGroupedData(response.data);
+      setGroupedData(fetchedData);
     } catch (error) {
       console.error(error);
     }
@@ -68,14 +69,17 @@ export default function CollapsibleTable() {
       const response1 = await axios.get('http://localhost:8070/Appointments/groupedData1'); // Replace with your backend route
 
 
-      const fetchedData = response1.data;
+      const fetchedDataa = response1.data;
+      
+      const fetchedData = fetchedDataa.filter(group => group.details.some(a => a.BranchDetails === objectId));
+      console.log(fetchedData)
 
       const initialCheckboxValues = fetchedData.map(group => group.details.map(a => a.Checked));
 
       setCheckboxValuesIn(initialCheckboxValues);
       setSubmitButtonsDisabledIn(initialCheckboxValues);
       setSendButtonClicked(initialCheckboxValues);
-      setGroupedData1(response1.data);
+      setGroupedData1(fetchedData);
 
     } catch (error) {
       console.error(error);

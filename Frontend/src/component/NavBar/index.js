@@ -58,7 +58,7 @@ return (
 		<NavLink to={`/ResetPassword/${objectId}`} activeStyle>
 		Change Password
 		</NavLink>
-		<NavLink to='/Signin' activeStyle>&nbsp;&nbsp;&nbsp;&nbsp;
+		<NavLink to='/' activeStyle>&nbsp;&nbsp;&nbsp;&nbsp;
 		<Logout fontSize="small" />Logout
 		</NavLink>
 		{/* <NavLink to='/annual' activeStyle>

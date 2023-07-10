@@ -435,7 +435,7 @@ router.route("/searchE/:id").get(async(req,res)=>{
         {
             "$or":[
                 {
-                   "serviceProviderName":{$regex:req.params.id}
+                   "_id":{$eq:req.params.id}
                 }
             ]
         },
@@ -513,6 +513,7 @@ router.route("/getCom").get(async(req,res)=>{
     res.status(500).send({status:"Error with get Appointment"});
     })
 })
+
 router.route("/getr/:id").get(async(req,res)=>{
         let serviceProviderId=req.params.id;   
        
@@ -523,7 +524,7 @@ router.route("/getr/:id").get(async(req,res)=>{
             console.log(err);
             res.status(500).send({status:"Error with get service provider"});
             })
-        })
+})
 
         router.route("/getid/:id").get(async(req,res)=>{
           console.log(req.params.id);  
@@ -545,5 +546,52 @@ router.route("/getr/:id").get(async(req,res)=>{
           res.status(500).send({status:"Error with get userid"});
           })
         })
+
+
+        router.route("/updater/:id").put (async (req,res)=>{
+          let serviceProviderId=req.params.id;
+          const{type,
+            username,
+            password,
+            serviceProviderName,
+            address,
+            email,
+            ceoName,
+            regNo,
+            logo,}=req.body;
+      
+          const updateServiceprovider={
+            type,
+        username,
+        password,
+        serviceProviderName,
+        address,
+        email,
+        ceoName,
+        regNo,
+        logo,
+          }
+      
+          const update=await ServiceProvider.findByIdAndUpdate(serviceProviderId, updateServiceprovider)
+          .then(()=>{
+          res.status(200).send({status:"Service Provider updated"})
+          }).catch((err)=>{
+          console.log(err);
+          res.status(500).send({status:"Error with updating data"});
+          })
+      
+      })
+      router.route("/getre/:id").get(async(req,res)=>{
+        let serviceProviderId=req.params.id;   
+       
+        const s=await ServiceProvider.findById(serviceProviderId)
+        .then((s)=>{
+        res.send(s)
+    }).catch((err)=>{
+            console.log(err);
+            res.status(500).send({status:"Error with get service provider"});
+            })
+})
+      
 
 module.exports = router;

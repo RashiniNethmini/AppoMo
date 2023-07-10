@@ -6,7 +6,9 @@ import { Reg } from "./component/RegistrationPage/Reg";
 import FPw from "./component/FPwPage/FPw";
 import BrUpdate from "./component/BranchUpdate/BrUpdate";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
+import ResetPasswordB from "./Pages/ResetPasswordB/ResetPasswordB";
 import EditProfile from "./Pages/EditProfile/EditProfile";
+import EditProfileB from "./Pages/EditProfileB/EditProfileB";
 import Termination from "./Pages/Termination/Termination";
 import FirstPage from "./Pages/FirstPage/FirstPage";
 
@@ -71,7 +73,9 @@ function App() {
         <Route path='/AppointmentConfirm/:objectId' element={<AppointmentConfirm/>} />
         <Route path='/BrUpdate/:objectId' element={<BrUpdate/>} />
         <Route path='/EditProfile/:objectId' element={<EditProfile/>} />
+        <Route path='/EditProfileB/:objectId' element={<EditProfileB/>} />
         <Route path='/ResetPassword/:objectId' element={<ResetPassword/>} />
+        <Route path='/ResetPasswordB/:objectId' element={<ResetPasswordB/>} />
         <Route path='/Termination/:_id/:UserDetails' element={<Termination/>} />
         <Route path='/Signin' element={<Signin/>} /> 
       </Routes>
