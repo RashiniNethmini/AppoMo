@@ -19,15 +19,13 @@ import SignUp from "./component/SignUpPage/SignUp";
 import AdminSignIn from "./component/AdminSignIn/AdminSignIn";
 
 import ProviderType from "./component/ProviderTypePage/ProviderType";
-// import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard/Dashboard"
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from './component/NavBar';
 import NavBar1 from './component/NavBar1';
 import AppointmentConfirm from "./Pages/AppoinmentConfirm/AppointmentConfirm";
 import { deepmerge } from '@mui/utils';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 const theme = createTheme({
