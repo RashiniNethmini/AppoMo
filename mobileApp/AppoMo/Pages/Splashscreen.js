@@ -52,6 +52,7 @@ const SplashScreen = ({navigation}) => {
                         name="navigate-next"
                         color="#fff"
                         size={20}
+                      paddingVertical={10}
                     />  */}
                     </View>
                 </Text>

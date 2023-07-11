@@ -72,7 +72,8 @@ router.route("/get/:id").get(async (req, res) => {
 //update existing Branch
 router.route("/update/:id").put(async (req, res) => {
     let branchid = req.params.id;
-    const { branchName,
+    const { 
+        branchName,
         managerName,
         contactNo,
         address,
@@ -94,8 +95,6 @@ router.route("/update/:id").put(async (req, res) => {
         daysopen,
         username,
         password,
-
-
     }
     // const branchObjectId = mongoose.Types.ObjectId(branchid);
 
