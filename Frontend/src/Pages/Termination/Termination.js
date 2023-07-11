@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment } from "react";
 import styles from './Termination.module.css';
 import { Paper, TextField,  Button } from "@mui/material";
 import { Email } from "@mui/icons-material";
-import {useParams} from 'react-router-dom';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
 
