@@ -7,13 +7,12 @@ const serviceproviderSchema = new Schema({
         required: true
     },
     logo :{
-        // data: Buffer,
-        // contentType: String,
         type : String,    
     },
     username : {
         type : String,
-        required: true
+        required: true,
+        unique: true
     },
     password :{
         type: String,
@@ -36,27 +35,11 @@ const serviceproviderSchema = new Schema({
         type : String,
         // required: true
     },
-    regNo : {
-        type : String,
-        required: true
-    },
+    // regNo : {
+    //     type : String,
+    //     required: true
+    // },
 
-    // starRating: {
-    //     type: Number,
-    //     // required: true,
-    //   },
-    // workingDates : {
-    //     type : String,
-    //     required: true
-    // },
-    // workingHours : {
-    //     type : String,
-    //     required: true
-    // },
-    // noOfAppoinments : {
-    //     type : String,
-    //     required: true
-    // },
     starRating: {
         type: Number,
         // required: true,
@@ -69,23 +52,4 @@ const serviceproviderSchema = new Schema({
 const ServiceProvider = mongoose.model("ServiceProvider", serviceproviderSchema);
 module.exports = ServiceProvider;
 
-// // AppointmentSchedule Schema
-// const appointmentSchema = new Schema({
-//     timeSlot: {
-//       type: Date,
-//       required: true,
-//     },
-//     serviceCenterId: {
-//       type: Schema.Types.ObjectId,
-//       ref: 'ServiceProvider',
-//       required: true,
-//     },
-//     appointmentCount: {
-//       type: Number,
-//       default: 0,
-//     },
-//   });
-  
-  
-//   const AppointmentSchedule = mongoose.model('AppointmentSchedule', appointmentSchema);
-//   module.exports = AppointmentSchedule;
+

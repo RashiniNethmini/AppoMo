@@ -195,8 +195,8 @@ export default function Admin(){
                     <ListItemText primary={provider.serviceProviderName}
                     secondary={
                         <>
-                        <div>{`Email: ${provider.email}`}</div>
-                        <div>{`Registration No: ${provider.regNo}`}</div>
+                        <div>{`Email : ${provider.email}`}</div>
+                        <div>{`Registration No : ${provider.regNo}`}</div>
                         </>
                     }/>
                     </ListItem>

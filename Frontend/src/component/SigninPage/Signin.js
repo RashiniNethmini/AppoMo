@@ -9,7 +9,7 @@ import {useNavigate} from 'react-router-dom'
 function validateUsername(username){
     
     const lengthURegex = /^.{3,16}$/; // ensure that the username is between 3 and 16 characters long.
-    const contentRegex = /^[a-zA-Z0-9_-]*$/; // ensure that the username contains only letters, numbers, underscores, or hyphens.
+    const contentRegex = /^[a-zA-Z0-9._-]*$/; // ensure that the username contains only letters, numbers, underscores, or hyphens.
     
     if(username.trim()===""){
         return "Username is required.";
@@ -120,7 +120,7 @@ export const Signin = (props) => {
           console.log(data);
           const objectId = data[0]._id; // Assuming the response from the backend contains the object ID as "_id"
           console.log(objectId);
-        //   navigate(`/BrUpdate/${objectId}`,{objectId});
+          navigate(`/BrUpdate/${objectId}`,{objectId});
           navigate(`/NavBar/${objectId}`,{objectId});
   
         })
