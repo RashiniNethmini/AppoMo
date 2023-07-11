@@ -156,7 +156,7 @@ export default function AppointmentConfirm() {
     <div className={styles.mainContainer}>
       <Paper elevation={6} className={styles.paper}>
         <div className={styles.heading}>
-          <h3>Confirm/Reject Appointments</h3>
+          <h3>Confirm/Reject Issues</h3>
         </div>
 
         <Container className={styles.issueTabs} sx={{ maxWidth: { xs: '250px', sm: '400px', md: '700px' } }}>
@@ -177,7 +177,7 @@ export default function AppointmentConfirm() {
 
         <Container>
           <Button size="medium" onClick={handleToggleRejectedAppointmentDetails}>
-            {showRejectedAppointmentDetails ? 'Hide Rejected Appointment List' : 'Show Rejected Appointment List'}
+            {showRejectedAppointmentDetails ? 'Hide Rejected Appointment List' : 'Show Rejected Issue List'}
           </Button>
         </Container>
         
@@ -196,7 +196,7 @@ export default function AppointmentConfirm() {
           {filteredRejectedAppointments.map((appointment) => (
           <div key={appointment._id}>
             <p>
-              <u>Appointment: {appointment.issueNumber}</u>
+              <u>Issue: {appointment.issueNumber}</u>
               <br />
               <b>Name:</b> {appointment.Name}
               <br />

@@ -622,6 +622,6 @@ const styles = StyleSheet.create({
 
   textSign: {
     fontSize: 15,
-    color: "white"
-  }
+    color: "white"
+  }
 });
