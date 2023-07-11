@@ -4,11 +4,13 @@ import { Paper, TextField,  Button } from "@mui/material";
 import { Email } from "@mui/icons-material";
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
+import {useParams} from 'react-router-dom';
 
 function Termination() {
 
-  const [emailAddress, setEmailAddress] = useState("uththaragvg.20@uom.lk");
+  const [email, setEmail] = useState('');
   const [data,setData]=useState('');
+  const [userdata,setUserData]=useState('');
   const [AptNumber, setAptNumber] = useState('');
   const [Name, setName] = useState('');
   const [ContactNo, setContactNo] = useState('');
@@ -20,10 +22,11 @@ function Termination() {
   const [isSendMessageButtonDisabled, setIsSendMessageButtonDisabled] = useState(true);
   const [showInvoice, setShowInvoice] = useState(false); // New state for showing/hiding the invoice
   const [isPaid, setIsPaid] = useState(false);
- const {_id}=useParams();
- const {UserDetails}=useParams();
-
-  // const _id = "64860fade9907344a0e6039a";
+  const {_id}=useParams();
+  const {UserDetails}=useParams();
+  //const _id = "64860fade9907344a0e6039a";
+  //const userId = '6484043054a3156cf1220784';
+  const userId = UserDetails;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +47,27 @@ function Termination() {
         
       } catch (error) {
         console.error('Error:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      try { 
+        const response = await axios.get(`http://localhost:8070/UserDetails/getemail/${userId}`);
+        const userdata = response.data;
+        
+        setUserData(userdata);
+        setEmail(userdata.email);
+
+        console.log(userdata);
+
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to fetch Email.');
       }
     };
   
@@ -97,7 +121,6 @@ function Termination() {
         };
         // Here, you can send the invoiceDetails to your backend or perform any other necessary actions
         console.log(invoiceDetails);
-        // alert('Invoice generated successfully');
         setShowInvoice(true); // Show the invoice section
       } else {
         alert('Data not available');
@@ -217,7 +240,7 @@ function Termination() {
     // Make a POST request to the backend endpoint
     axios
       .post(`http://localhost:8070/Invoice/send-invoice`, {
-        email: emailAddress, // Updated the variable name
+        email: email, 
         invoiceHTML: invoiceHTML, // HTML content of the invoice
       })
       .then((response) => {

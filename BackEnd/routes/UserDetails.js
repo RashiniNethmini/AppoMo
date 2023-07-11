@@ -25,8 +25,7 @@ router.route("/add").post((req, res) => {
     }).catch((err) => {
         res.status(500).send({ status: "Error with adding data" });
     })
-}) 
-
+});
 
 
 router.route("/getu/:id").get(async(req,res)=>{
@@ -48,48 +47,8 @@ router.route("/getu/:id").get(async(req,res)=>{
   console.log(err);
   res.status(500).send({status:"Error with get Appointment"});
   })
-})
+});
 
-  
-  
-
-//   router.route("/update/:id").put (async (req,res)=>{
-//     let uId=req.params.id;
-//     const{ 
-//       username,
-//       password,
-//       email,
-//       contactNo,
-//       address,
-//       nic}=req.body;
-
-//     const updateUser={
-//       username,
-//       password,
-//       email,
-//       contactNo,
-//       address,
-//       nic,
-//     }
-
-//     const update=await User.findOneAndUpdate(
-//         {
-//             "$or":[
-//                 {
-//                     "username":{$regex:uId}
-//                 }
-//             ]
-              
-//         }
-//         , updateUser)
-//     .then(()=>{
-//     res.status(200).send({status:"updated"})
-//     }).catch((err)=>{
-//     console.log(err);
-//     res.status(500).send({status:"Error with updating data"});
-//     })
-
-// })
 router.route('/getuser/:id').get(async (req, res) => {
     try {
       const userId = req.params.id;
@@ -100,27 +59,31 @@ router.route('/getuser/:id').get(async (req, res) => {
       }
   
       res.status(200).json({ status: 'User fetched', UserDetails: userDetails });
+
     } catch (error) {
       console.error(error);
       res.status(500).json({ status: 'Error' });
     }
 });
 
-router.route('/getusername/:id').get(async (req, res) => {
-    try {
-      const userId = req.params.id;
-      const userDetails = await User.findById(userId);
+router.route('/getemail/:id').get(async (req, res) => {
 
-      if (!userDetails) {
-        return res.status(404).json({ status: 'User not found' });
-      }
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
 
-      res.status(200).json({ status: 'User fetched', UserDetails: userDetails });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ status: 'Error' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  });
+
+    const email = user.email;
+    res.status(200).json({ email });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 router.route("/get/:id").get(async(req,res)=>{
     let userId=req.params.id;   
@@ -161,7 +124,7 @@ router.route("/get/:id").get(async(req,res)=>{
     console.log(err);
     res.status(500).send({status:"Error with updating data"});
     })
-})
+});
   
 router.route('/delete/:id').delete(async (req, res) => {
     try {

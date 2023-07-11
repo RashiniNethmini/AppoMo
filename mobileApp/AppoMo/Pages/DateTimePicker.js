@@ -1,10 +1,10 @@
 import React, { useEffect,useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import axios from 'axios';
 import { BackHandler } from 'react-native';
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import { useParams } from 'react-router-native';
+import axios from 'axios';
 
 const DateTimePicker = () => {
   const [showContainer, setShowContainer] = useState(true);
@@ -13,6 +13,7 @@ const DateTimePicker = () => {
   const {BranchDetails} = useParams();
   const {_id} = useParams();
   const issueId=_id;
+  const branchid = '649ff4ae0a1daddc6153e8f2';
 
   const handleBackButton = () => {
     navigate(`/NotificationInterface/${objectId}`,{objectId});
@@ -29,32 +30,71 @@ const DateTimePicker = () => {
   const [showTimeSlots, setShowTimeSlots] = useState(false);
   const [showCalendar, setShowCalendar] = useState(true);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-  const today = new Date();
+  const [noOfAppointmentsPerHour, setNoOfAppointmentsPerHour] = useState('');
+  const [timeSlots, setTimeSlots] = useState([]);
+  const today = new Date().toISOString().split('T')[0];
 
-  const branchID = '';
-  // const AptNumber = 1;
-  // const Name = 'Gimhani';
-  // const ContactNo = 774423315;
-  // const InvoiceNo= '2065';
-  // const Product= 'Phone';
-  // const IssueInBrief= 'Broken';
-  // const AptmntStatus = true;
-  // const Completed = false;
-  const startTime = '08:00';
-  const endTime = '19:00';
-  const noOfAppointmentsPerHour = 4;
+  const WeekFromToday = new Date();
+  WeekFromToday.setDate(WeekFromToday.getDate() + 7);
+  const maxDate = WeekFromToday.toISOString().split('T')[0];
 
-  const timeSlots = generateTimeSlots(startTime, endTime, noOfAppointmentsPerHour);
+  useEffect(() => {
+    fetchdata();
+  }, []);
 
-  const twoWeeksFromToday = new Date();
-  twoWeeksFromToday.setDate(twoWeeksFromToday.getDate() + 14);
+  const fetchdata = async () => {
+    try {
+      const response = await fetch(`http://10.0.2.2:8070/BranchDetails/getbranch/${branchid}`);
+      const data = await response.json();
+  
+      if (response.ok) {
+        const branchDetails = data.BranchDetails;
+        setNoOfAppointmentsPerHour(branchDetails.nofappnmntsPerHr);
 
-  const handleDateSelect = (date) => {
+      } else {
+        console.error('Error fetching data:', data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const handleDateSelect = async (date) => {
     setSelectedDate(date.dateString);
     setShowTimeSlots(true);
     setShowCalendar(false);
     setShowContainer(false);
+
+    try {
+      const response = await axios.get(`http://10.0.2.2:8070/BranchAvailability/getTimeSlots`, {
+        params: {
+          branchId: branchid,
+          selectedDate: date.dateString,
+        },
+      });
+
+      if (response.status === 200) {
+        const fetchedTimeSlots = response.data.timeSlots;
+        const updatedTimeSlots = fetchedTimeSlots.map((slot) => {
+          const currNoOfAppointment = slot.currNoOfAppointment;
+          const available = currNoOfAppointment < noOfAppointmentsPerHour;
+          return { ...slot, currNoOfAppointment, available };
+        });
+        setTimeSlots(updatedTimeSlots);
+        // setTimeSlots(fetchedTimeSlots);
+      } else {
+        console.error('Error fetching time slots');
+        setTimeSlots([]);
+      }
+    } catch (error) {
+      //console.error('Error fetching time slots:', error);
+      setTimeSlots([]);
+      setShowTimeSlots(false);
+      setShowCalendar(true);
+      Alert.alert('Invalid Date', 'Please select a date with available time slots.');
+    }
   };
+  
 
   const handleGoBack = () => {
     setSelectedTimeSlot(null);
@@ -62,101 +102,54 @@ const DateTimePicker = () => {
     setShowCalendar(true);
   };
 
-  const handleAppointmentConfirmation = async() => {
+  const handleAppointmentConfirmation = async () => {
     if (selectedTimeSlot) {
-      const timeSlotIndex = timeSlots.findIndex((slot) => slot.time === selectedTimeSlot.time);
+      const timeSlotIndex = timeSlots.findIndex(
+        (slot) =>
+          slot.startTime === selectedTimeSlot.startTime &&
+          slot.endTime === selectedTimeSlot.endTime
+      );
       if (timeSlotIndex !== -1) {
         const updatedTimeSlots = [...timeSlots];
-        updatedTimeSlots[timeSlotIndex].booked = true;
-        setSelectedTimeSlot(updatedTimeSlots[timeSlotIndex]);
+        const currNoOfAppointment = updatedTimeSlots[timeSlotIndex].currNoOfAppointment;
+        const maxNoOfAppointmentsPerHour = parseInt(noOfAppointmentsPerHour, 10);
+        
+        if (currNoOfAppointment < maxNoOfAppointmentsPerHour) {
+          updatedTimeSlots[timeSlotIndex].booked = true;
+          updatedTimeSlots[timeSlotIndex].currNoOfAppointment = currNoOfAppointment + 1;
+          setSelectedTimeSlot(updatedTimeSlots[timeSlotIndex]);
+  
+          // Update the currNoOfAppointment in the backend database
+          try {
+            await axios.put(`http://10.0.2.2:8070/BranchAvailability/updateCurrNoOfAppointment`, {
+              branchId: branchid,
+              selectedDate: selectedDate,
+              startTime: selectedTimeSlot.startTime,
+              endTime: selectedTimeSlot.endTime,
+              currNoOfAppointment: currNoOfAppointment + 1,
+            });
+            Alert.alert('Success', 'Appointment scheduled successfully!');
+          } catch (error) {
+            console.error('Error updating currNoOfAppointment:', error);
+          }
+        } else {
+          console.error('Cannot schedule appointment. Maximum appointments reached.');
+        }
       }
     }
-
-    // Make an API request to send the data to the backend
-    fetch('http://10.0.2.2:8070/Appointments/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        Name,
-        ContactNo,
-        InvoiceNo,
-        Product,
-        IssueInBrief,
-        ApntmntDate,
-        Time,
-        AptmntStatus,
-        Completed,
-      }),
-    })
-    .then((res) => res.json())
-    .then((data) => {
-        console.log(data);
-    })
-      .catch((error) => {
-        console.log(error);
-    });
-    /*try {
-      const updateFields = {
-        ApntmntDate,
-        Time
-      };
-      await axios.put(`http://localhost:8070/serviceprovider/update/${_id}`,updateFields);
-      alert('Appointment scheduled successfully.');
-    } catch (error) {
-      console.error('Error scheduling appointment:', error);
-    }
-
-    const requestBody = {
-      Name: name,
-      ContactNo: contactNo,
-      InvoiceNo: invoice,
-      Product: product,
-      IssueInBrief: issueInBrief,
-      //ApntmntDate: ,
-      //Time:
-      AptmntStatus: aptmntStatus,
-      Completed: completed,
-
-    };
-  
-  // Make an API request to send the data to the backend
-  fetch("http://10.0.2.2:8070/Appointments/add", {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      "Name": name,
-      "ContactNo": contactNo,
-      "InvoiceNo": invoice,
-      "Product": product,
-      "IssueInBrief": issueInBrief,
-      //"ApntmntDate":,
-      //"Time":,
-      //"AptmntStatus":,
-      //"Completed":,
-    })
-  })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.log(error);
-    });*/
-
-    };
-
+  };
 
   return (
-    <ScrollView>
-      {/* <Text style={styles.title}>Select a Date</Text> */}
+    <ScrollView contentContainerStyle={styles.scrollViewContainer} >
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>Schedule Your Appointment</Text>
+        <Text style={styles.subtitleText}>Select a Date and Time Slot</Text>
+      </View>
       {/* Calendar */}
       {showCalendar && (
         <View style={styles.calendarContainer}>
-          <Calendar onDayPress={handleDateSelect} minDate={today} maxDate={twoWeeksFromToday} />
+          <Calendar onDayPress={handleDateSelect} minDate={today} maxDate={maxDate} />
+          {/* <Calendar onDayPress={handleDateSelect} minDate={today} maxDate={WeekFromToday} /> */}
         </View>
       )}
 
@@ -171,9 +164,16 @@ const DateTimePicker = () => {
               <Text style={styles.dateText}>Selected Date: {selectedDate}</Text>
               {selectedTimeSlot ? (
                 <View>
-                  <Text style={styles.dateText}>Selected Time Slot: {selectedTimeSlot.time}</Text>
+                  <Text style={styles.dateText}>Selected Time Slot: {selectedTimeSlot && selectedTimeSlot.startTime} - {selectedTimeSlot && selectedTimeSlot.endTime}</Text>
+
                   <Text style={styles.timeSlotText}>Do you want to schedule an appointment?</Text>
-                  <Link to={`/AdvPayment/${objectId}/${BranchDetails}/${issueId}/${selectedDate}/${selectedTimeSlot.time}`} component={TouchableOpacity} style={styles.timeSlotButton} >
+                  <Link
+                    to={`/AdvPayment/${objectId}/${BranchDetails}/${issueId}/${selectedDate}/${selectedTimeSlot.startTime}-${selectedTimeSlot.endTime}`}
+                    // to={`/AdvPayment/${objectId}/${BranchDetails}/${issueId}/${selectedDate}/${selectedTimeSlot.startTime}-${endTime}`}
+                    component={TouchableOpacity}
+                    onPress={() => handleAppointmentConfirmation()}
+                    style={styles.timeSlotButton}
+                  >
                     <Text style={styles.timeSlotButtonText}>Yes</Text>
                   </Link>
                   <TouchableOpacity
@@ -182,6 +182,26 @@ const DateTimePicker = () => {
                   >
                     <Text style={styles.timeSlotButtonText}>Cancel</Text>
                   </TouchableOpacity>
+
+{/* <Text style={styles.timeSlotText}>Do you want to schedule an appointment?</Text>
+<TouchableOpacity
+  onPress={() => {
+    handleAppointmentConfirmation();
+    navigate(
+      `/AdvPayment/${objectId}/${BranchDetails}/${issueId}/${selectedDate}/${selectedTimeSlot.startTime}-${selectedTimeSlot.endTime}`,
+      { objectId }
+    );
+  }}
+  style={styles.timeSlotButton}
+>
+  <Text style={styles.timeSlotButtonText}>Yes</Text>
+</TouchableOpacity>
+    <TouchableOpacity
+      onPress={handleAppointmentConfirmation}
+      style={styles.timeSlotButton}
+    >
+      <Text style={styles.timeSlotButtonText}>Cancel</Text>
+    </TouchableOpacity> */}
                 </View>
               ) : (
                 <View>
@@ -201,7 +221,7 @@ const DateTimePicker = () => {
                       disabled={!slot.available}
                     >
                       <Text style={styles.timeSlotButtonText}>
-                        {slot.time} {slot.available ? 'Available' : 'Booked'}
+                        {slot.startTime} - {slot.endTime} {slot.available ? 'Available' : 'Booked'}
                       </Text>
                     </TouchableOpacity>
                   ))}
@@ -213,49 +233,43 @@ const DateTimePicker = () => {
           )}
         </View>
       )}
-    
     </ScrollView>
   );
 };
 
-const generateTimeSlots = (startTime, endTime, noOfAppointmentsPerHour) => {
-  const timeSlots = [];
-  const startHour = parseInt(startTime.split(':')[0]);
-  const endHour = parseInt(endTime.split(':')[0]);
-
-  for (let hour = startHour; hour < endHour; hour++) {
-    const startMinute = hour === startHour ? 0 : 0; // Set the start minute to 0 for the first hour
-    const endMinute = hour === endHour - 1 ? 60 : 0; // Set the end minute to 60 for the last hour
-
-    const timeSlot = {
-      time: `${hour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')}-${(hour + 1).toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`,
-      available: true,
-      booked: false,
-    };
-    timeSlots.push(timeSlot);
-  }
-
-  return timeSlots;
-};
 
 const styles = StyleSheet.create({
+  scrollViewContainer: {
+    flexGrow: 1,
+  },
 
-  // title: {
+  titleContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+  },
 
-  //   fontSize: 30,
-  //   fontWeight: 'bold',
-  //   marginTop: 100,
-  //   marginBottom: 15,
-  //   color: '#FFFFFF',
-  // },
+  titleText: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+    marginTop: 70,
+  },
 
+  subtitleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#FFFFFF',
+  },
+  
   calendarContainer: {
     backgroundColor: '#fff',
     padding: 20,
     width: 400,
     height: 500,
     marginTop: 70,
-    // borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     alignSelf: 'center',
