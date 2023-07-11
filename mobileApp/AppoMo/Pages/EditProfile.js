@@ -128,7 +128,7 @@ const EditProfile = props => {
 
   const fetchdata = async () => {
     try {
-      const response = await fetch(`http://192.168.1.226:8070/UserDetails/getuser/${objectId}`);
+      const response = await fetch(`http://10.0.2.2:8070/UserDetails/getuser/${objectId}`);
       const data = await response.json();
   
       if (response.ok) {
@@ -161,7 +161,7 @@ const EditProfile = props => {
 
       try {
         // const updater = 
-        await fetch(`http://192.168.1.226:8070/UserDetails/update/${objectId}`,
+        await fetch(`http://10.0.2.2:8070/UserDetails/update/${objectId}`,
         {
           method: 'PUT',
           headers: {

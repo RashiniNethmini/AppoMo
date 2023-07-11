@@ -44,7 +44,7 @@ const DateTimePicker = () => {
 
   const fetchdata = async () => {
     try {
-      const response = await fetch(`http://192.168.1.226:8070/BranchDetails/getbranch/${branchid}`);
+      const response = await fetch(`http://10.0.2.2:8070/BranchDetails/getbranch/${branchid}`);
       const data = await response.json();
   
       if (response.ok) {
@@ -66,7 +66,7 @@ const DateTimePicker = () => {
     setShowContainer(false);
 
     try {
-      const response = await axios.get(`http://192.168.1.226:8070/BranchAvailability/getTimeSlots`, {
+      const response = await axios.get(`http://10.0.2.2:8070/BranchAvailability/getTimeSlots`, {
         params: {
           branchId: branchid,
           selectedDate: date.dateString,
@@ -121,7 +121,7 @@ const DateTimePicker = () => {
   
           // Update the currNoOfAppointment in the backend database
           try {
-            await axios.put(`http://192.168.1.226:8070/BranchAvailability/updateCurrNoOfAppointment`, {
+            await axios.put(`http://10.0.2.2:8070/BranchAvailability/updateCurrNoOfAppointment`, {
               branchId: branchid,
               selectedDate: selectedDate,
               startTime: selectedTimeSlot.startTime,

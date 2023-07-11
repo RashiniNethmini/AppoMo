@@ -213,7 +213,7 @@ function CompanyDetails() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://192.168.1.226:8070/serviceprovider/getCom");
+      const response = await fetch("http://10.0.2.2:8070/serviceprovider/getCom");
       const jsonData = await response.json();
       setData(jsonData);
     } catch (error) {
@@ -231,7 +231,7 @@ function CompanyDetails() {
 
   const fetchSearchData = async () => {
      {
-      const responsee = await fetch(`http://192.168.1.226:8070/serviceprovider/getC/${searchTerm}`);
+      const responsee = await fetch(`http://10.0.2.2:8070/serviceprovider/getC/${searchTerm}`);
       const jsonData = await responsee.json();
       setsData(jsonData);
     }

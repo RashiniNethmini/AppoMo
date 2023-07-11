@@ -369,7 +369,7 @@ import { BackHandler } from 'react-native';
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://192.168.1.226:8070/BranchDetails/");
+      const response = await fetch("http://10.0.2.2:8070/BranchDetails/");
       const jsonData = await response.json();
       const filteredData = jsonData.filter(item => item.ServiceProvider === companyID);
       setData(filteredData);
@@ -387,7 +387,7 @@ import { BackHandler } from 'react-native';
   
   const updateStarRating = async () => {
     try {
-      const responsed = await fetch(`http://192.168.1.226:8070/serviceprovider/getr/${_id}`, {
+      const responsed = await fetch(`http://10.0.2.2:8070/serviceprovider/getr/${_id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -400,7 +400,7 @@ import { BackHandler } from 'react-native';
     const updatedRating = currentRating + starRating;
 
 
-      const updateresponse = await fetch(`http://192.168.1.226:8070/serviceprovider/updater/${_id}`,
+      const updateresponse = await fetch(`http://10.0.2.2:8070/serviceprovider/updater/${_id}`,
        {
         method: 'PUT',
         headers: {

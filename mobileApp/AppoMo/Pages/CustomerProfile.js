@@ -106,7 +106,7 @@ const ProfileScreen = () => {
 
   const confirmDeleteAccount = () => {
 
-    fetch(`http://192.168.1.226:8070/UserDetails/delete/${objectId}`, {
+    fetch(`http://10.0.2.2:8070/UserDetails/delete/${objectId}`, {
       method: 'DELETE',
     })
       .then(response => {

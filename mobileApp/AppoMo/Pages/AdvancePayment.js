@@ -59,7 +59,7 @@ function AdvPayment() {
             
           
 
-            fetch(`http://192.168.1.226:8070/Issues/getAdv/${issueId}`, {
+            fetch(`http://10.0.2.2:8070/Issues/getAdv/${issueId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ function AdvPayment() {
             const IssueInBrief = data.Issues.IssueInBrief; // Assuming the response from the backend contains the object ID as "_id"
             const fAmount='100';
             
-            fetch("http://192.168.1.226:8070/Appointments/add", {
+            fetch("http://10.0.2.2:8070/Appointments/add", {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -151,7 +151,7 @@ function AdvPayment() {
     //     });
     // };
     
-    axios.post("http://192.168.1.226:8070/Advpayment/payment", { mobileNumber: mobileNumber})
+    axios.post("http://10.0.2.2:8070/Advpayment/payment", { mobileNumber: mobileNumber})
         .then((response) => {
           console.log(response);
           console.log('Appointment status updated  and message sent successfully');
