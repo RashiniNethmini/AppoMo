@@ -313,7 +313,7 @@ router.route("/get/:id").get(async(req,res)=>{
             "$or":[
                 {
                     "providerType":{$regex:'Service Center'},
-                   "address":{$regex:req.params.id},
+                   "serviceProviderName":{$regex:req.params.id},
                 }
             ]
         }
@@ -359,7 +359,7 @@ router.route("/getC/:id").get(async(req,res)=>{
             "$or":[
                 {
                     "providerType":{$regex:'Company'},
-                   "address":{$regex:req.params.id},
+                   "serviceProviderName":{$regex:req.params.id},
                 }
             ]
         }
@@ -527,7 +527,8 @@ router.route("/getr/:id").get(async(req,res)=>{
             email,
             ceoName,
             regNo,
-            logo,}=req.body;
+            logo
+            ,starRating}=req.body;
       
           const updateServiceprovider={
             type,
@@ -538,7 +539,7 @@ router.route("/getr/:id").get(async(req,res)=>{
         email,
         ceoName,
         regNo,
-        logo,
+        logo,starRating
           }
       
           const update=await ServiceProvider.findByIdAndUpdate(serviceProviderId, updateServiceprovider)

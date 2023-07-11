@@ -112,7 +112,7 @@ function AdvPayment() {
             console.log(error);
           });
           console.log("Payment confirmed");
-          navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
+          navigate(`/Rating/${BranchDetails}`,{BranchDetails});
           },
         },
       ],

@@ -32,8 +32,7 @@ import VerifyOTP from './Pages/VerifyOTP';
 import DateTimePicker from './Pages/DateTimePicker';
 import NotificationInterface from './Pages/NotificationInterface';
 import ProductDetailsCompany from './Pages/ProductDetailsCompany';
-
-
+import Rating from './Pages/Rating';
 
 
 
@@ -49,6 +48,7 @@ export default function App() {
      <Routes>
      
       <Route path="/" element={<SplashScreen/>} />
+  
       <Route path="/Login" element={<Login/>} />
   <Route path="/ForgotPW" element={<ForgotPW/>} />
       <Route path="/VerifyOTP" element={<VerifyOTP/>} />
@@ -71,6 +71,7 @@ export default function App() {
       <Route path="/ResetPwd" element={<ResetPwd/>} /> 
       <Route path="/DateTimePicker/:objectId/:BranchDetails/:_id" element={<DateTimePicker/>} /> 
       <Route path="/AdvPayment/:objectId/:BranchDetails/:issueId/:selectedDate/:selectedtime" element={<AdvPayment/>} /> 
+      <Route path="/Rating/:BranchDetails" element={<Rating/>}/>
     </Routes>  
 
 
