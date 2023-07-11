@@ -20,10 +20,10 @@ export default function ProviderType() {
   const [selectedModels, setSelectedModels] = useState({});
   const [error, setError] = useState("");
   const {objectId} = useParams();
+  const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {
-    // Fetch product types and their models from an API or a data source
-    // For demonstration purposes, I'm using static data here
+   
     const productTypes = [
       {
         name: "Mobile Phone",
@@ -60,18 +60,22 @@ export default function ProviderType() {
 
   const handleTypeChange = (event, typeName) => {
     const isChecked = event.target.checked;
-
+  
     if (isChecked) {
-      const selectedType = types.find((type) => type.name === typeName);
-      setSelectedTypes((prevSelectedTypes) => [...prevSelectedTypes, selectedType]);
+      setSelectedTypes((prevSelectedTypes) => ({
+        ...prevSelectedTypes,
+        [typeName]: true,
+      }));
       setSelectedModels((prevSelectedModels) => ({
         ...prevSelectedModels,
         [typeName]: [],
       }));
     } else {
-      setSelectedTypes((prevSelectedTypes) =>
-        prevSelectedTypes.filter((type) => type.name !== typeName)
-      );
+      setSelectedTypes((prevSelectedTypes) => {
+        const updatedSelectedTypes = { ...prevSelectedTypes };
+        delete updatedSelectedTypes[typeName];
+        return updatedSelectedTypes;
+      });
       setSelectedModels((prevSelectedModels) => {
         const updatedSelectedModels = { ...prevSelectedModels };
         delete updatedSelectedModels[typeName];
@@ -92,7 +96,19 @@ export default function ProviderType() {
       Company:objectId
     
     };
-  
+    
+    if (dataFetched) {
+      axios
+        .put("http://localhost:8070/Product/update", newProduct)
+        .then((response) => {
+          console.log(response.data);
+          alert("Products updated");
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Error occurred while updating the product");
+        });
+    } else {
     axios.post("http://localhost:8070/Product/add",newProduct).then((response) => {
         console.log(response.data);
         alert("Products added");
@@ -101,29 +117,53 @@ export default function ProviderType() {
         console.log(error);
         alert("Error occurred while adding the product");
       });
+    }
   };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8070/Product/get/Relevant")
+      .then((response) => {
+        const productData = response.data;
+        const selectedModels = {
+          MobilePhone: productData.MobilePhone || [],
+          Laptop: productData.Laptop || [],
+          Desktop: productData.Desktop || [],
+          WashingMachine: productData.WashingMachine || [],
+          Television: productData.Television || [],
+        };
+        setSelectedTypes(productData);
+        setSelectedModels(selectedModels);
+        setDataFetched(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError("Error occurred while fetching the product");
+      });
+  }, []);
+
 
   return (
     <div className={styles.typeContainer}>
     <NavBar/>
       <Paper elevation={6} className={styles.pDiv}>
         <div className={styles.typeTitle}>
-          <h1>Product Type</h1>
+          <h1>Product Types</h1>
         </div>
         <div className={styles.typeList}>
           {types.map((type) => (
             <div className={styles.typeItem} key={type.name}>
               <Checkbox
-                checked={selectedTypes.some((selectedType) => selectedType.name === type.name)}
+                checked={Boolean(selectedTypes[type.name])}
                 onChange={(event) => handleTypeChange(event, type.name)}
               />
               <span className={styles.typeName}>{type.name}</span>
-              {selectedTypes.some((selectedType) => selectedType.name === type.name) && (
+              {Boolean(selectedTypes[type.name]) && (
                 <div className={styles.modelDropdown}>
-                  <FormControl>
-                    <div>
-                      <InputLabel>Model</InputLabel>
-                      <Select
+                  <FormControl className={styles.formStyle}>
+                    
+                      <InputLabel >Model</InputLabel>
+                      <Select sx={{ width: '20vw' }}
                         multiple
                         value={selectedModels[type.name] || []}
                         onChange={(event) => handleModelChange(event, type.name)}
@@ -136,16 +176,19 @@ export default function ProviderType() {
                           </MenuItem>
                         ))}
                       </Select>
-                    </div>
+                    
                   </FormControl>
                 </div>
               )}
             </div>
           ))}
         </div>
-        <Button variant="contained" onClick={saveProduct}>
-          Save
-        </Button>
+        <div className={styles.saveB}>
+          <Button variant="contained" onClick={saveProduct} >
+            Save
+          </Button>
+        </div>
+        
         {error && <p>{error}</p>}
       </Paper>
     </div>

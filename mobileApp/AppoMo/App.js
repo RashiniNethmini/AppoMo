@@ -46,7 +46,7 @@ export default function App() {
     <NativeRouter>
     <View style={styles.container}>
     <Provider>
-     <Routes>
+     {/* <Routes>
      
       <Route path="/" element={<SplashScreen/>} />
       <Route path="/Login" element={<Login/>} />
@@ -71,7 +71,7 @@ export default function App() {
       <Route path="/ResetPwd" element={<ResetPwd/>} /> 
       <Route path="/DateTimePicker/:objectId/:BranchDetails/:_id" element={<DateTimePicker/>} /> 
       <Route path="/AdvPayment/:objectId/:BranchDetails/:issueId/:selectedDate/:selectedtime" element={<AdvPayment/>} /> 
-    </Routes>  
+    </Routes>   */}
 
 
     {/* <ForgotPW/>
@@ -113,7 +113,7 @@ export default function App() {
         {/* <ProductDetails/> */}
         {/* <EditProfile/> */}
         {/* <ResetPwd/>  */}
-        {/* <DateTimePicker/> */}
+        <DateTimePicker/>
         
         {/* <ResetPassword/> */}
         {/* <CustomerProfile/> */}

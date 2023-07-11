@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from './Reg.module.css';
-import { Paper, TextField, RadioGroup, Radio, FormControlLabel, Button, Stack, Avatar, IconButton, InputAdornment, Typography, FormHelperText} from "@mui/material";
+import { Paper, TextField, RadioGroup, Radio, FormControlLabel, Button,Avatar, IconButton, InputAdornment, Typography, FormHelperText} from "@mui/material";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -16,7 +16,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function validateUsername(username){
     
     const lengthURegex = /^.{3,16}$/; // ensure that the username is between 3 and 16 characters long.
-    const contentRegex = /^[a-zA-Z0-9_-]*$/; // ensure that the username contains only letters, numbers, underscores, or hyphens.
+    const contentRegex = /^[a-zA-Z0-9._-]*$/; // ensure that the username contains only letters, numbers, underscores, or hyphens.
     
     if(username.trim()===""){
         return "Username is required.";
@@ -50,7 +50,7 @@ function validatePassword(password) {
     
 };
 function validateServiceProviderName(serviceProviderName){  // checks if the Service Provider Name field is not empty after removing any leading or trailing whitespace.
-    const lettersSPNRegex = /^[a-zA-Z ,/'-]*$/; // ensure that the Service Provider Name contains only letters and numbers.
+    const lettersSPNRegex = /^[a-zA-Z. ,/'-]*$/; // ensure that the Service Provider Name contains only letters and numbers.
     if(serviceProviderName.trim()===""){
         return "Company / Service Center Name is required.";
     }else if(!lettersSPNRegex.test(serviceProviderName)){
@@ -75,41 +75,17 @@ function validateEmail(email){  //ensure that the email address is in a valid fo
     }
 };
 function validateCEOName(ceoName){  // checks if the CEOName field is not empty after removing any leading or trailing whitespace.
-    const lettersCEORegex = /^[a-zA-Z ]*$/; // ensure that the CEO Name contains only letters.
+    const lettersCEORegex = /^[a-zA-Z. ]*$/; // ensure that the CEO Name contains only letters.
     if(!lettersCEORegex.test(ceoName)){
         return "CEO Name is invalid."; 
     }
 };
-function validateRegNo(regNo){  // checks if the Reg No field is not empty after removing any leading or trailing whitespace.
-    const lettersRNRegex = /^[a-zA-Z0-9]*$/; // ensure that the Reg No contains only letters and numbers.
-    if(regNo.trim()===""){
-        return "Reg No is required.";
-    }else if(!lettersRNRegex.test(regNo)){
-        return "Reg No is invalid."; 
-    }
-};
-// function validateWorkingDates(workingDates){  // checks if the Working Dates field is not empty after removing any leading or trailing whitespace.
-//     const lettersWDRegex = /^[a-zA-Z, ]*$/; // ensure that the working dates contain only letters with commas.
-//     if(workingDates.trim()===""){
+// function validateRegNo(regNo){  // checks if the Reg No field is not empty after removing any leading or trailing whitespace.
+//     const lettersRNRegex = /^[a-zA-Z0-9]*$/; // ensure that the Reg No contains only letters and numbers.
+//     if(regNo.trim()===""){
 //         return "Reg No is required.";
-//     }else if(!lettersWDRegex.test(workingDates)){
-//         return "Working Dates are invalid.";
-//     }
-// }; 
-// function validateWorkingHours(workingHours){  // checks if the Working Hours field is not empty after removing any leading or trailing whitespace.
-//     const lettersWHRegex = /^[0-9]*$/; //ensure that the no of appoinments contain only numbers.
-//     if(workingHours.trim()===""){
-//         return "Reg No is required.";
-//     } else if(!lettersWHRegex.test(workingHours)){
-//         return "Working Hours are invalid.";
-//     }
-// };
-// function validateNoOfAppoinments(noOfAppoinments){  // checks if the No of appoinments per day field is not empty after removing any leading or trailing whitespace.
-//     const numbersRegex = /^[0-9]*$/; //ensure that the no of appoinments contain only numbers.
-//     if(noOfAppoinments.trim()===""){
-//         return "Reg No is required.";
-//     }else if(!numbersRegex.test(noOfAppoinments)){
-//         return "No of appoinments per day is invalid.";
+//     }else if(!lettersRNRegex.test(regNo)){
+//         return "Reg No is invalid."; 
 //     }
 // };
 
@@ -129,11 +105,17 @@ export const Reg = (props) => {
 
 
     
-    const [logo, setLogo] =useState("");
+    const [logo, setLogo] = useState("");
     const handleLogoUpload = (event) => {
-        const logo = event.target.files[0];
-        setLogo (URL.createObjectURL(logo));
-    }
+        const logoFile = event.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result.split(",")[1];
+          setLogo(base64String);
+        };
+        reader.readAsDataURL(logoFile);
+    };
+
     const handleClickLogo =() => {
         document.getElementById('fileInput').click();
     };
@@ -199,36 +181,13 @@ export const Reg = (props) => {
     //     setRegNoError(validateRegNo(value));
     //   };
 
-    // const [workingDates, setWorkingDates] =useState("");
-    // const [workingDatesError, setWorkingDatesError] = useState(null);
-    // const handleWorkingDatesChange = (event) => {
-    //     const value = event.target.value;
-    //     setWorkingDates(value);
-    //     setWorkingDatesError(validateWorkingDates(value));
-    //   };
+    
 
-    // const [workingHours, setWorkingHours] = useState("");
-    // const [workingHoursError, setWorkingHoursError] = useState(null);
-    // const handleWorkingHoursChange = (event) => {
-    //     const value = event.target.value;
-    //     setWorkingHours(value);
-    //     setWorkingHoursError(validateWorkingHours(value));
-    //   };
-
-    // const [noOfAppoinments, setNoOfAppoinments] = useState("");
-    // const [noOfAppoinmentsError, setNoOfAppoinmentsError] = useState(null);
-    // const handleNoOfAppoinmentsChange = (event) => {
-    //     const value = event.target.value;
-    //     setNoOfAppoinments(value);
-    //     setNoOfAppoinmentsError(validateNoOfAppoinments(value));
-    // };
-
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {setOpen(true);}; //Opening popup messages.
-    const handleClose = () => {setOpen(false);}; //Closing the popup messages.
+    // const [open, setOpen] = React.useState(false);
+    // const handleClickOpen = () => {setOpen(true);}; //Opening popup messages.
+    // const handleClose = () => {setOpen(false);}; //Closing the popup messages.
     const navigate = useNavigate();
   
-    
     function sendRegDetails(e){
         e.preventDefault();
         
@@ -242,7 +201,7 @@ export const Reg = (props) => {
             address,
             email,
             ceoName,
-            regNo,
+            // regNo,
            
             
 
@@ -254,6 +213,7 @@ export const Reg = (props) => {
             console.log(response.data);    
             alert("Service provider Added");
             fetch(`http://localhost:8070/serviceprovider/getid/${username}`, {
+
             method: 'GET',
             headers: {
               'Content-Type': 'application/json'
@@ -317,7 +277,7 @@ export const Reg = (props) => {
 
                 <div className={styles.reglogoB}>
                 
-                    <Avatar src={logo} type="file" variant="contained" onClick={handleClickLogo} component="label" display="flex" justify-content="center" align="center"sx={{ width: 100, height: 100 }} id="logo" >
+                    <Avatar src={`data:image/jpeg;base64,${logo}`} type="file" variant="contained" onClick={handleClickLogo} component="label" display="flex" justify-content="center" align="center"sx={{ width: 100, height: 100 }} id="logo" >
                     <p className={styles.regUlogo}>Upload Logo</p>
                     <input hidden accept="image/*" type="file" onChange={handleLogoUpload}/>
                     </Avatar>
@@ -389,32 +349,15 @@ export const Reg = (props) => {
                         helperText={regNoError}/>
 
                     </div> */}
-                    {/* <div className={styles.regBodyTextbox}>
-                        <TextField label="Working dates" required="outlined" sx={{ width: '100vw' }} id="workingDates"
-                        onChange={handleWorkingDatesChange} error={Boolean(workingDatesError)}
-                        helperText={workingDatesError}/>
-
-                    </div>
-                    <div className={styles.regBodyTextbox}>
-                        <TextField label="Working hours per day" required="outlined" sx={{ width: '100vw' }} id="workingHours"
-                        onChange={handleWorkingHoursChange} error={Boolean(workingHoursError)}
-                        helperText={workingHoursError}/>
-
-                    </div> */}
-                    {/* <div className={styles.regBodyTextbox}>
-                        <TextField label="Reparing products" sx={{ width: '100vw' }} id="ReparingProducts"
-                        onChange={handleProduct} 
-                        />
-
-                    </div> */} 
+                    
 
                     <div className={styles.regButton}>
                         <Button variant="contained" sx={{mr:'10px'}}  >Cancel</Button>
                         <div>
                             <Button variant="contained" type="submit"  sx={{mr:'10px'}} 
-                            // onClick={CombinedOnClick} 
+        
                             onClick={sendRegDetails}>Next</Button> 
-                            <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+                            {/* <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         
                                 <DialogContent>
                                     <DialogContentText id="alert-dialog-description">
@@ -424,7 +367,7 @@ export const Reg = (props) => {
                                 <DialogActions>
                                 <Button onClick={handleClose} >OK</Button>  
                                 </DialogActions>
-                            </Dialog>
+                            </Dialog> */}
                         </div>
                         
                             

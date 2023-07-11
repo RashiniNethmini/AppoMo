@@ -113,6 +113,7 @@ export default function Fpw() {
             .catch((error) => {
               // Show an error message to the user
               console.log(error);
+              alert("Can't verify Account");
             });
         }
       };

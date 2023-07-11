@@ -1,18 +1,31 @@
 import React, { useState, useEffect } from "react";
 import styleset from './brUpdate.module.css';
-import { Button, IconButton, Paper, TextField, Tooltip } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Paper,
+  TextField,
+  MenuItem,
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Box,
+  Alert,
+  Tooltip
+} from "@mui/material";
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from "@mui/icons-material/Add";
+import ScheduleRoundedIcon from '@mui/icons-material/ScheduleRounded';
 // import data from './mock-data.json';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
@@ -21,17 +34,239 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 
-
 export default function BranchForm() {
 
   const {objectId} = useParams();
 
+  const timeSlotOptions = [
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+  ];
+
+  const [selectedBranchId, setSelectedBranchId] = useState("");
+  const [selectedDates, setSelectedDates] = useState([]);
+  const [error, setError] = useState("");
+  const [openTimeSlotDialog, setOpenTimeSlotDialog] = useState(false);
+
+  const handleAddDate = (date) => {
+    setSelectedDates((prevSelectedDates) => [
+      ...prevSelectedDates,
+      { date: new Date(date), timeSlots: [] },
+    ]);
+  };
+  
+  const handleAddTimeSlot = (dateIndex) => {
+    setSelectedDates((prevSelectedDates) => {
+      const updatedDates = [...prevSelectedDates];
+      const timeSlots = updatedDates[dateIndex].timeSlots;
+      updatedDates[dateIndex].timeSlots.push({ start: "", end: "" });
+      return updatedDates;
+    });
+  };
+
+  const handleTimeSlotChange = (dateIndex, timeSlotIndex, field, value) => {
+    setSelectedDates((prevSelectedDates) => {
+      const updatedDates = [...prevSelectedDates];
+      const timeSlots = updatedDates[dateIndex].timeSlots;
+      const selectedTimeSlot = timeSlots[timeSlotIndex];
+      const startTimeOptions = timeSlotOptions.filter((option) => {
+        return (
+          option !== selectedTimeSlot.end &&
+          !timeSlots.some((timeSlot) => timeSlot.start === option)
+        );
+      });
+      const endTimeOptions = timeSlotOptions.filter((option) => {
+        return (
+          option !== selectedTimeSlot.start &&
+          !timeSlots.some((timeSlot) => timeSlot.end === option)
+        );
+      });
+  
+      // Update the respective time slot object
+      selectedTimeSlot[field] = value;
+  
+      if (field === "start" && startTimeOptions.indexOf(value) === -1) {
+        setError("Invalid start time");
+      } else if (field === "end" && endTimeOptions.indexOf(value) === -1) {
+        setError("Invalid end time");
+      } else {
+        setError("");
+      }
+  
+      // Update the time slot in the state
+      timeSlots[timeSlotIndex] = selectedTimeSlot;
+  
+      return updatedDates;
+    });
+  };
+
+  const getBranchAvailability = (branchId) => {
+    // Make an API request to retrieve the branch availability data for the given branchId
+    axios
+      .get(`http://localhost:8070/BranchAvailability/get/${branchId}`)
+      .then((response) => {
+        const branchAvailability = response.data;
+        const selectedDates = branchAvailability.dates.map((dateObj) => {
+          return {
+            date: new Date(dateObj.date),
+            timeSlots: dateObj.timeSlots.map((timeSlot) => {
+              return {
+                start: timeSlot.startTime,
+                end: timeSlot.endTime,
+              };
+            }),
+          };
+        });
+        setSelectedDates(selectedDates);
+      })
+      .catch((error) => {
+        console.error("Error retrieving branch availability:", error);
+      });
+  };
+
+    const handleDeleteTimeSlot = (dateIndex, timeSlotIndex) => {
+    setSelectedDates((prevSelectedDates) => {
+      const updatedDates = [...prevSelectedDates];
+      const timeSlots = updatedDates[dateIndex].timeSlots;
+      timeSlots.splice(timeSlotIndex, 1);
+      return updatedDates;
+    });
+  };
+
+  const handleDeleteDate = (dateIndex) => {
+    setSelectedDates((prevSelectedDates) => {
+      const updatedDates = [...prevSelectedDates];
+      updatedDates.splice(dateIndex, 1);
+      return updatedDates;
+    });
+  };
+
+  const handleCloseError = () => {
+    setError("");
+  };
+
+  const formatDate = (date) => {
+    return date.toDateString();
+  };
+
+  const today = new Date();
+  const availableDates = [];
+
+  for (let i = 0; i < 7; i++) {
+    const date = new Date();
+    date.setDate(today.getDate() + i);
+    availableDates.push(date);
+  }
+
+  const handleOpenTimeSlotDialog = (branchId) => {
+    setSelectedBranchId(branchId);
+    setOpenTimeSlotDialog(true);
+    getBranchAvailability(branchId); // Retrieve branch availability when the dialog is opened
+  };
+
+  const handleCloseTimeSlotDialog = () => {
+    setSelectedDates([]);
+    setOpenTimeSlotDialog(false);
+  };
+
+  // const saveBranchAvailability = () => {
+  //   const data = {
+  //     branchId: selectedBranchId, // Use the selected branch ID
+  //     dates: selectedDates.map((dateObj) => {
+  //       return {
+  //         date: dateObj.date,
+  //         timeSlots: dateObj.timeSlots.map((timeSlot) => {
+  //           return {
+  //             startTime: timeSlot.start,
+  //             endTime: timeSlot.end,
+  //             currNoOfAppointment: 0, // Set the initial value to 0
+  //           };
+  //         }),
+  //       };
+  //     }),
+  //   };
+
+  //   // Send a POST request to the backend API to save the data
+  //   axios.post("http://localhost:8070/BranchAvailability/add", data)
+  //     .then((response) => {
+  //       console.log("Data saved successfully:", response.data);
+  //       alert('Data saved successfully');
+  //       setSelectedDates([]);
+  //       setOpen(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error saving data:", error);
+  //       alert('Failed to save data');
+  //     });
+  // };
+  const saveBranchAvailability = () => {
+    if (selectedDates.length === 0) {
+      alert("Please select at least one date");
+      return;
+    }
+  
+    for (const dateObj of selectedDates) {
+      if (dateObj.timeSlots.length === 0) {
+        alert(`Please select at least one time slot for ${formatDate(dateObj.date)}`);
+        return;
+      }
+  
+      for (const timeSlot of dateObj.timeSlots) {
+        if (timeSlot.start.trim() === "" || timeSlot.end.trim() === "") {
+          alert("Please fill in all time slot fields");
+          return;
+        }
+      }
+    }
+  
+    const data = {
+      branchId: selectedBranchId, // Use the selected branch ID
+      dates: selectedDates.map((dateObj) => {
+        return {
+          date: dateObj.date,
+          timeSlots: dateObj.timeSlots.map((timeSlot) => {
+            return {
+              startTime: timeSlot.start,
+              endTime: timeSlot.end,
+              currNoOfAppointment: 0, // Set the initial value to 0
+            };
+          }),
+        };
+      }),
+    };
+  
+    // Send a POST request to the backend API to save the data
+    axios
+      .post("http://localhost:8070/BranchAvailability/add", data)
+      .then((response) => {
+        console.log("Data saved successfully:", response.data);
+        alert("Data saved successfully");
+        setSelectedDates([]);
+        setOpenTimeSlotDialog(false);
+      })
+      .catch((error) => {
+        console.error("Error saving data:", error);
+        alert("Failed to save data");
+      });
+  };
 
   const validateBrName = (brName) => {
     const regex = /^[a-zA-Z\s]*$/;
     return brName.trim() !== '' && regex.test(brName);
   }
-
 
   const validateManName = (manName) => {
     const regex = /^[a-zA-Z\s.]+$/;
@@ -154,6 +389,10 @@ const  validatePassword = (password)=> {
       setBrNameError('*Name should contain only alphabets and spaces');
     } else {
       setBrNameError('');
+
+      // const updatedTableData = [...tableData];
+      // updatedTableData[editIndex].BrName = event.target.value;
+      // setTableData(updatedTableData);
     }
   };
 
@@ -721,6 +960,143 @@ const handlePasswordChange = (event) => {
 
                 <Button onClick={handleAddFormSubmit}>Done</Button>
               </DialogActions>
+            </Dialog>                       
+          </div>
+          <div>
+          <Dialog open={openTimeSlotDialog}
+              onClose={handleCloseTimeSlotDialog}
+               maxWidth="sm" fullWidth>
+              <DialogTitle>
+                <Typography style={{ fontWeight: "bold", textAlign: "center" }}>Enter Dates and Time Slots</Typography>
+              </DialogTitle>
+              <DialogContent>
+                <div>
+                  <div>
+                    <TextField
+                      select
+                      label="Select Dates"
+                      value=""
+                      onChange={(e) => handleAddDate(e.target.value)}
+                      style={{ marginRight: "10px", width: "150px" }}
+                    >
+                      {availableDates
+                        .filter(
+                          (date) =>
+                            !selectedDates.some(
+                              (selectedDate) =>
+                                formatDate(selectedDate.date) ===
+                                formatDate(date)
+                            )
+                        )
+                        .map((date) => (
+                          <MenuItem key={date} value={date}>
+                            {formatDate(date)}
+                          </MenuItem>
+                        ))}
+                    </TextField>
+                  </div>
+
+                  {selectedDates.map((dateObj, dateIndex) => (
+                    <div key={dateIndex}>
+                      <Typography variant="subtitle1">
+                        Date: {formatDate(dateObj.date)}
+                        <IconButton
+                          onClick={() => handleDeleteDate(dateIndex)}
+                        >
+                          <DeleteRoundedIcon />
+                        </IconButton>
+                      </Typography>
+                      {dateObj.timeSlots.map((timeSlot, timeSlotIndex) => (
+                        <Box
+                          key={timeSlotIndex}
+                          sx={{ display: "flex", alignItems: "center", mt: 1 }}
+                        >
+                          <TextField
+                            label="Start Time"
+                            value={timeSlot.start}
+                            onChange={(e) =>
+                              handleTimeSlotChange(
+                                dateIndex,
+                                timeSlotIndex,
+                                "start",
+                                e.target.value
+                              )
+                            }
+                            style={{ marginRight: "10px", width: "150px" }}
+                            select
+                            SelectProps={{
+                              displayEmpty: true,
+                              renderValue: (value) => (value === "" ? "" : value),
+                            }}
+                            variant="outlined"
+                          >
+                            {timeSlotOptions
+                              .filter(
+                                (option) =>
+                                  option !== timeSlot.end &&
+                                  !dateObj.timeSlots.some((ts) => ts.start === option)
+                              )
+                              .map((option) => (
+                                <MenuItem key={option} value={option}>
+                                  {option}
+                                </MenuItem>
+                              ))}
+                          </TextField>
+                          <TextField
+                            label="End Time"
+                            value={timeSlot.end}
+                            onChange={(e) =>
+                              handleTimeSlotChange(
+                                dateIndex,
+                                timeSlotIndex,
+                                "end",
+                                e.target.value
+                              )
+                            }
+                            style={{ marginRight: "10px", width: "150px" }}
+                            select
+                            SelectProps={{
+                              displayEmpty: true,
+                              renderValue: (value) => (value === "" ? "" : value),
+                            }}
+                            variant="outlined"
+                          >
+                            {timeSlotOptions
+                              .filter(
+                                (option) =>
+                                  option !== timeSlot.start &&
+                                  timeSlotOptions.indexOf(option) >
+                                    timeSlotOptions.indexOf(timeSlot.start) &&
+                                  !dateObj.timeSlots.some((ts) => ts.end === option)
+                              )
+                              .map((option) => (
+                                <MenuItem key={option} value={option}>
+                                  {option}
+                                </MenuItem>
+                              ))}
+                          </TextField>
+                          <IconButton
+                            onClick={() =>
+                              handleDeleteTimeSlot(dateIndex, timeSlotIndex)
+                            }
+                          >
+                            <DeleteRoundedIcon />
+                          </IconButton>
+                        </Box>
+                      ))}
+                      <IconButton
+                        onClick={() => handleAddTimeSlot(dateIndex)}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                    </div>
+                  ))}
+                </div>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={saveBranchAvailability}>Save</Button>
+                <Button onClick={handleCloseTimeSlotDialog}>Close</Button>
+              </DialogActions>
             </Dialog>
           </div>
 
@@ -915,6 +1291,11 @@ const handlePasswordChange = (event) => {
                           </IconButton>
                         </Tooltip>
 
+                        <Tooltip arrow placement="left" title="Add Time Slot">
+                          <IconButton aria-label="" onClick={() => handleOpenTimeSlotDialog(row._id)}>
+                            <ScheduleRoundedIcon color="primary" />
+                          </IconButton>
+                        </Tooltip>
                       </div>
 
                     </TableRow>
@@ -927,6 +1308,11 @@ const handlePasswordChange = (event) => {
           </TableContainer>
         </Paper>
       </div >
+      {error && (
+        <Alert severity="error" onClose={handleCloseError}>
+          {error}
+        </Alert>
+      )}
     </div >
-  )
+  );
 }

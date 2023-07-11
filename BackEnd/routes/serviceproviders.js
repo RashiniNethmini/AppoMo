@@ -10,35 +10,39 @@ const crypto = require('crypto');
 let ServiceProvider = require("../models/ServiceProvider");
 
 
+// Multer configuration
+const storage = multer.memoryStorage(); // Store files in memory
+const upload = multer({ storage });
 
-
-router.route("/add").post((req,res) => {
+router.route("/add", upload.single('logo')).post((req,res) => {
 
     const providerType = req.body.providerType;
-    const logo = req.body.logo;
+    const logoFile = req.file;
     const username = req.body.username;
     const  password = req.body.password;
     const serviceProviderName = req.body.serviceProviderName;
     const address = req.body.address;
     const email = req.body.email;
     const ceoName = req.body.ceoName;
-    const regNo = req.body.regNo;
+    // const regNo = req.body.regNo;
    
+    
+    const logoData = logoFile ? logoFile.buffer.toString('base64') : null;
 
     const newServiceProvider = new ServiceProvider({
         providerType,
-        logo,  
+        logo: logoData, 
         username,
         password,
         serviceProviderName,
         address,
         email,
         ceoName,
-        regNo
+        // regNo
     
     })
     newServiceProvider.save().then(()=>{
-      
+      console.log(logoData);
         res.json("Service Provider Added")
     }).catch((err)=>{
         console.log(err);
@@ -120,41 +124,14 @@ const sendOTP = (email, otp) => {
       console.log(error);
     } else {
       console.log('Email sent: ' + info.response);
-      // Store the generated OTP in the session or database
+      // Store the generated OTP in the session 
       gotp = otp;
       
       
     }
   });
 };
-// router.route("/login").post (async (req,res) => {
-//     try {
-//         const { email, password } = req.body;
-//     const user = await ServiceProvider.findOne({ email });
-//     if (!user) {
-//       return res.status(401).json({ message: 'Invalid credentials' });
-//     }
 
-//     const isPasswordValid = await bcrypt.compare(password, user.password);
-//     if (!isPasswordValid) {
-//       return res.status(401).json({ message: 'Invalid credentials' });
-//     }
-
-//     const token = jwt.sign({ userId: user._id }, 'secret-key');
-//     res.json({ token });
-//     }catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: 'Server error' });
-//     }
-
-//     // const username = req.body.username;
-//     // const  password = req.body.password;
-//     // const user = newServiceProvider.findOne((username));
-//     // if(!user){
-//     //     return res.json({error : ""});
-//     // }
-
-// })
 
 
 // Route for sending OTP
@@ -209,11 +186,9 @@ router.route("/update/:id").put (async (req,res)=>{
         address,
         email,
         ceoName,
-        regNo,
+        // regNo,
         logo,
-        // workingDates,
-        // workingHours,
-        // noOfAppoinments
+       
       }=req.body;
 
     const updateServiceprovider={
@@ -224,11 +199,9 @@ router.route("/update/:id").put (async (req,res)=>{
         address,
         email,
         ceoName,
-        regNo,
+        // regNo,
         logo,
-        // workingDates,
-        // workingHours,
-        // noOfAppoinments,
+        
     }
 
     const update=await ServiceProvider.findOneAndUpdate(
@@ -259,11 +232,9 @@ router.route("/resetPw/:id").put (async (req,res)=>{
         address,
         email,
         ceoName,
-        regNo,
+        // regNo,
         logo,
-        // workingDates,
-        // workingHours,
-        // noOfAppoinments
+        
       }=req.body;
 
     const resetPwServiceprovider={
@@ -274,11 +245,9 @@ router.route("/resetPw/:id").put (async (req,res)=>{
         address,
         email,
         ceoName,
-        regNo,
+        // regNo,
         logo,
-        // workingDates,
-        // workingHours,
-        // noOfAppoinments
+        
     }
 
     const resetPw =await ServiceProvider.findOneAndUpdate(

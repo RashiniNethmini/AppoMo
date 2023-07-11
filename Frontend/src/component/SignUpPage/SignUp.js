@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 function validateServiceProviderName(serviceProviderName){  // checks if the Service Provider Name field is not empty after removing any leading or trailing whitespace.
-    const lettersSPNRegex = /^[a-zA-Z ,/'-]*$/; // ensure that the Service Provider Name contains only letters and numbers.
+    const lettersSPNRegex = /^[a-zA-Z. ,/'-]*$/; // ensure that the Service Provider Name contains only letters and numbers.
     if(serviceProviderName.trim()===""){
         return "Company / Service Center Name is required.";
     }else if(!lettersSPNRegex.test(serviceProviderName)){

@@ -46,6 +46,82 @@ router.route("/add").post((req, res) => {
         });
 });
 
+//with date-time modifications
+
+// const branch = new BranchDetails({
+//     branchName: 'Branch 1',
+//     managerName: 'John Doe',
+//     contactNo: 1234567890,
+//     address: '123 Main St',
+//     email: 'branch1@example.com',
+//     nofappnmntsPerHr: 4,
+//     nofworkinghrsPerDay: 8,
+//     daysopen: 'Monday to Friday',
+//     serviceProvider: serviceProviderId,
+//     appointments: generateAppointments(),
+//   });
+  
+//   function generateAppointments() {
+//     const appointments = [];
+  
+//     const today = new Date();
+//     const startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+//     const endDate = new Date(startDate.getTime() + 6 * 24 * 60 * 60 * 1000); // Add 6 days
+  
+//     let currentDate = startDate;
+//     while (currentDate <= endDate) {
+//       const date = currentDate.toISOString().split('T')[0];
+  
+//       const timeSlots = [
+//         {
+//           startTime: '08:00',
+//           endTime: '10:00',
+//           currNumOfAppointments: 0,
+//         },
+//         {
+//           startTime: '10:00',
+//           endTime: '12:00',
+//           currNumOfAppointments: 0,
+//         },
+//         {
+//           startTime: '12:00',
+//           endTime: '14:00',
+//           currNumOfAppointments: 0,
+//         },
+//         {
+//           startTime: '14:16:00',
+//           endTime: '16:00',
+//           currNumOfAppointments: 0,
+//         },
+//         {
+//           startTime: '16:00',
+//           endTime: '18:00',
+//           currNumOfAppointments: 0,
+//         },
+//       ];
+  
+//       appointments.push({
+//         date,
+//         timeSlots,
+//       });
+  
+//       currentDate.setDate(currentDate.getDate() + 1);
+//     }
+  
+//     return appointments;
+//   }
+  
+//   branch.save((err) => {
+//     if (err) {
+//       // Handle the error
+//     } else {
+//       // Branch saved successfully
+//     }
+//   });
+
+  
+
+
 //retrieve entered branches
 router.route("/").get((req, res) => {
     Branch.find().then((branches) => {
@@ -68,6 +144,23 @@ router.route("/get/:id").get(async (req, res) => {
             res.status(500).send({ status: "Error with get branch detail" });
         })
 })
+
+router.route('/getbranch/:id').get(async (req, res) => {
+    try {
+      const branchId = req.params.id;
+      const branchDetails = await Branch.findById(branchId);
+  
+      if (!branchDetails) {
+        return res.status(404).json({ status: 'Branch not found' });
+      }
+  
+      res.status(200).json({ status: 'Branch fetched', BranchDetails: branchDetails });
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ status: 'Error' });
+    }
+});
 
 //update existing Branch
 router.route("/update/:id").put(async (req, res) => {
