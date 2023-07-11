@@ -55,9 +55,7 @@ function App() {
       <ThemeProvider theme={theme}>
 
     <Router>
-    {/* <EditProfile/> */}
    
-      {/* <NavBar/> */}
        <Routes>
       
       <Route path='/' exact element={<FirstPage/>} />

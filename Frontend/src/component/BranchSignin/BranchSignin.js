@@ -109,29 +109,30 @@ export const BranchSignin = (props) => {
       .then(data => {
         console.log(data);
         alert("Login Successful");
+        fetch(`http://localhost:8070/branchdetails/getid/${username}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+            .then(res => res.json())
+            .then(data => {
+              console.log(data);
+              const objectId = data[0]._id; // Assuming the response from the backend contains the object ID as "_id"
+              console.log(objectId);
+              navigate(`/NavBar1/${objectId}`,{objectId});
+      
+            })
+            .catch(error => {
+              console.log(error);
+            });
       })
       .catch(error => {
         console.log(error);
         alert(error.message)
         
       });
-      fetch(`http://localhost:8070/branchdetails/getid/${username}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          const objectId = data[0]._id; // Assuming the response from the backend contains the object ID as "_id"
-          console.log(objectId);
-          navigate(`/NavBar1/${objectId}`,{objectId});
-  
-        })
-        .catch(error => {
-          console.log(error);
-        });
+     
 
   };
 
