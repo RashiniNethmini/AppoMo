@@ -9,6 +9,7 @@ router.route("/add").post((req, res) => {
   const Desktop = Array.isArray(productData.Desktop) ? productData.Desktop : [productData.Desktop];
   const WashingMachine = Array.isArray(productData.WashingMachine) ? productData.WashingMachine : [productData.WashingMachine];
   const Television = Array.isArray(productData.Television) ? productData.Television : [productData.Television];
+  const Company=req.body.Company;
 
 
   const newProduct = new Product({
@@ -17,6 +18,7 @@ router.route("/add").post((req, res) => {
     Desktop,
     WashingMachine,
     Television,
+    Company,
   });
 
   newProduct
@@ -31,8 +33,9 @@ router.route("/add").post((req, res) => {
     });
 });
 
-router.route("/first").get((req, res) => {
-  Product.findOne()
+router.route("/first/:companyId").get((req, res) => {
+  const companyId = req.params.companyId;
+  Product.findOne({ Company: companyId })
     .then((product) => {
       if (!product) {
         res.status(404).json({ error: 'No products found' });
@@ -45,5 +48,7 @@ router.route("/first").get((req, res) => {
       res.status(500).json({ error: 'Failed to fetch product details', message: err.message });
     });
 });
+
+
 
 module.exports = router;

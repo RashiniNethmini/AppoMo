@@ -24,21 +24,24 @@ export default function AppointmentConfirm() {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    function getAppointments(){
+    function getAppointments() {
       axios
-      .get('http://localhost:8070/Issues/')
-      .then((res) => {
-        const allAppointments = res.data;
-        const pendingAppointments = allAppointments.filter(appointment => appointment.status === null);
-        setAppointments(pendingAppointments);
-        setRejectedAppointments(allAppointments.filter(appointment => appointment.status === 'rejected'));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .get('http://localhost:8070/Issues/')
+        .then((res) => {
+          const allAppointments = res.data;
+          const pendingAppointments = allAppointments.filter(appointment => appointment.status === null && appointment.BranchDetails === objectId);
+          const rejectedAppointments = allAppointments.filter(appointment => appointment.status === 'rejected' && appointment.BranchDetails === objectId);
+          setAppointments(pendingAppointments);
+          setRejectedAppointments(rejectedAppointments);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
     
-    }getAppointments();
-  }, []);
+    getAppointments();
+  }, [objectId]);
+  
 
 
   const sendSms = (message, issueNumber, comment) => {

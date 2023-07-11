@@ -43,7 +43,7 @@ export default function ProductDetails() {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://10.0.2.2:8070/Product/first'); 
+      const response = await axios.get(`http://10.0.2.2:8070/Product/first/${companyID}`);
       const product = response.data;
       const availableCategories = Object.keys(product).filter(category => Array.isArray(product[category]) && product[category].length > 0);
       console.log(availableCategories);
@@ -56,10 +56,11 @@ export default function ProductDetails() {
       console.error('Failed to fetch categories:', error);
     }
   };
+  
 
   const fetchModels = async (category) => {
     try {
-      const response = await axios.get('http://10.0.2.2:8070/Product/first'); 
+      const response = await axios.get(`http://10.0.2.2:8070/Product/first/${companyID}`); 
       const product = response.data;
       const availableModels = product[category] || [];
       console.log(availableModels);
