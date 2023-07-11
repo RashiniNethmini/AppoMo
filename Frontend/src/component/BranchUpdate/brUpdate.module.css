@@ -1,6 +1,6 @@
 
 .brDetails{
-    max-width: 1200px;
+    max-width: 1400px;
     border-radius: 25px !important;
     width: 100vw !important;
     margin: 15vw;
@@ -12,7 +12,7 @@
 .mainContainer {
     display: flex;
     justify-content: center;
-    max-width: 1200px !important;
+    max-width: 1400px !important;
     padding-left: 20vw;
     padding-right: 30vw;
    margin-top: -5%;

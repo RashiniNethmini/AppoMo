@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     Text,
@@ -10,11 +10,22 @@ import {
 import { NativeRouter, Link, Route, useNavigate } from 'react-router-native';
 import * as Animatable from 'react-native-animatable';
 import { Button } from "react-native-paper";
+import { BackHandler } from 'react-native';
 import axios from 'axios';
 
 export default function ForgotPW() {
 
     const navigate = useNavigate();
+    const handleBackButton = () => {
+        navigate('/Login');
+        return true;
+    };
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+        return () => backHandler.remove();
+    }, [handleBackButton]);
 
     const [email, setEmail] = useState('');
     const [error, setError] = useState({});

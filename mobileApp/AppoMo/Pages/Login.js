@@ -34,6 +34,7 @@ function Login() {
         navigate('/');
         return true;
     };
+   
 
 
 
@@ -43,6 +44,7 @@ function Login() {
         return () => backHandler.remove();
     }, [handleBackButton]);
 
+   
 
 
 
@@ -101,7 +103,7 @@ function Login() {
     }
 
     const handleValidUser = (val) => {
-        if (val.trim().length >= 4) {
+        if (val.trim().length >= 5) {
             setData({
                 ...data,
                 isValidUser: true
@@ -190,12 +192,11 @@ function Login() {
 //     }
 //   };
   
-//   React.useEffect(() => {
-//     if (signedIn) {
-//         navigate(`/CompanyOrServiceCenter/${objectId}`, { objectId });
-        
-//     }
-//   }, [signedIn,navigate]);
+  const handleForgotPW=()=>{
+    navigate(`/ForgotPW`);
+  }
+//         
+
 
 const [userData, setUserData] = useState(null);
 const [token, setToken] = useState(null);
@@ -332,11 +333,11 @@ console.log(userData);
                         </View>
                     </Animatable.View>
                 }
-                {/* onPress={  navigate('/ForgotPW')}  */}
+                
 
                 <TouchableOpacity>
 
-                    <Text style={{ color: '#009387', marginTop: 15 }}   >Forgot password?</Text>
+                    <Text style={{ color: '#009387', marginTop: 15 }}  onPress={ handleForgotPW}  >Forgot password?</Text>
                 </TouchableOpacity>
                 <View style={styles.button}>
 
@@ -348,10 +349,10 @@ console.log(userData);
                             marginTop: 125,
 
                         }]}
-
+                        onPress={() => { handleLogin(data.username, data.password) }}
                     >
                         <Text style={[styles.textSign, { color: '#009387' }]}
-                            onPress={() => { handleLogin(data.username, data.password) }}
+                           
                         >Sign In</Text>
                     </TouchableOpacity>
 
