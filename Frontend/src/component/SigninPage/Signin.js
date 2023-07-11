@@ -109,13 +109,7 @@ export const Signin = (props) => {
       .then(data => {
         console.log(data);
         alert("Login Successful");
-      })
-      .catch(error => {
-        console.log(error);
-        alert(error.message)
-        
-      });
-      fetch(`http://localhost:8070/serviceprovider/getid/${username}`, {
+        fetch(`http://localhost:8070/serviceprovider/getid/${username}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -134,6 +128,13 @@ export const Signin = (props) => {
           console.log(error);
         });
 
+      })
+      .catch(error => {
+        console.log(error);
+        alert(error.message)
+        
+      });
+      
   };
 
   const handleGoogleLoginSuccess = (response) => {

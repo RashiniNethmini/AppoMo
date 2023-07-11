@@ -211,13 +211,9 @@ export const Reg = (props) => {
         
         axios.post("http://localhost:8070/serviceprovider/add",newServiceProvider).then((response)=>{
             console.log(response.data);    
-            alert("Service provider Added")
-            // handleClickOpen();
-        }).catch((err)=>{
-            console.log(err);
-            alert(err)  
-        });
-        fetch(`http://localhost:8070/serviceprovider/getid/${username}`, {
+            alert("Service provider Added");
+            fetch(`http://localhost:8070/serviceprovider/getid/${username}`, {
+
             method: 'GET',
             headers: {
               'Content-Type': 'application/json'
@@ -234,6 +230,13 @@ export const Reg = (props) => {
             .catch(error => {
               console.log(error);
             });
+            
+            // handleClickOpen();
+        }).catch((err)=>{
+            console.log(err);
+            alert(err)  
+        });
+        
         
     }
 
