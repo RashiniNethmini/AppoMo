@@ -45,7 +45,7 @@ const NotificationInterface = () => {
    
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://10.0.2.2:8070/Issues/notIfication/${objectId}`);
+        const response = await fetch(`http://192.168.1.226:8070/Issues/notIfication/${objectId}`);
         const jsonData = await response.json();
         setData(jsonData);
       } catch (error) {
@@ -60,7 +60,7 @@ const NotificationInterface = () => {
    
     const fetchData1 = async () => {
       try {
-        const response = await fetch(`http://10.0.2.2:8070/Issues/notIficationr/${objectId}`);
+        const response = await fetch(`http://192.168.1.226:8070/Issues/notIficationr/${objectId}`);
         const jsonData = await response.json();
         setDatar(jsonData);
       } catch (error) {

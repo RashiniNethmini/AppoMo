@@ -89,7 +89,7 @@ const ProfileScreen = () => {
 
   const fetchdata = async () => {
     try {
-      const response = await fetch(`http://10.0.2.2:8070/UserDetails/getusername/${objectId}`);
+      const response = await fetch(`http://192.168.1.226:8070/UserDetails/getusername/${objectId}`);
       const data = await response.json();
   
       if (response.ok) {
@@ -106,7 +106,7 @@ const ProfileScreen = () => {
 
   const confirmDeleteAccount = () => {
 
-    fetch(`http://10.0.2.2:8070/UserDetails/delete/${objectId}`, {
+    fetch(`http://192.168.1.226:8070/UserDetails/delete/${objectId}`, {
       method: 'DELETE',
     })
       .then(response => {

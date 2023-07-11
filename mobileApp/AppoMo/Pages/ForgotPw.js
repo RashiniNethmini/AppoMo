@@ -54,7 +54,7 @@ export default function ForgotPW() {
          console.log("error")
         }
         else {
-        axios.post("http://10.0.2.2:8070/ForgotPw/forgotPw", { email: email  })
+        axios.post("http://192.168.1.226:8070/ForgotPw/forgotPw", { email: email  })
         .then((response) => {
           console.log(response);
           alert("Email sent to"+ (" " + email))

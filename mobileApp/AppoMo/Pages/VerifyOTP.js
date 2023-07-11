@@ -9,7 +9,7 @@ const VerifyOTP = () => {
     const [enteredOTP, setenteredOTP] = useState('');
 
     const handleVerifyOTP = () => {
-  axios.post('http://10.0.2.2:8070/ForgotPW/validateOTP', { enteredOTP: enteredOTP })
+  axios.post('http://192.168.1.226:8070/ForgotPW/validateOTP', { enteredOTP: enteredOTP })
     .then((response) => {
       const data = response.data; // Get the response data
       if (data.success) {

@@ -95,7 +95,7 @@ const ResetPwd = () => {
   const fetchdata = async () => {
     try {
 
-      const data = await axios.get(`http://10.0.2.2:8070/UserDetails/get/${objectId}`);
+      const data = await axios.get(`http://192.168.1.226:8070/UserDetails/get/${objectId}`);
       setFetchedPassword(data.data.UserDetails.password);
 
     } catch (error) {
@@ -135,7 +135,7 @@ const ResetPwd = () => {
 
       try {
 
-      const updater = await fetch(`http://10.0.2.2:8070/UserDetails/update/${objectId}`,
+      const updater = await fetch(`http://192.168.1.226:8070/UserDetails/update/${objectId}`,
        {
         method: 'PUT',
 

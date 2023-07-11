@@ -128,7 +128,7 @@ function Login() {
         console.log('Submit button pressed');
 
         // Make an API request to send the data to the backend
-        fetch("http://10.0.2.2:8070/Login/login", {
+        fetch("http://192.168.1.226:8070/Login/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -146,7 +146,7 @@ function Login() {
           .catch(error => {
             console.log(error);
           });
-          fetch(`http://10.0.2.2:8070/UserDetails/getu/${username}`, {
+          fetch(`http://192.168.1.226:8070/UserDetails/getu/${username}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
