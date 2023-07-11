@@ -30,19 +30,16 @@ export default function ResetPassword() {
   };
 
   const [data,setData]=useState("");
-  const Sname = 'ABC';
+ 
   
   useEffect(() => {
     fetchdata();
   }, []);
 
   const fetchdata= async ()=>{
-    const up = {
-      password
-    };
-    const data=await axios.get(`http://localhost:8070/serviceprovider/search/${Sname}`,up);
+    const data=await axios.get(`http://localhost:8070/BranchDetails/get/${objectId}`);
     setData(data);
-    const response = data.data[0].password;
+    const response = data.data.branchdetail.password;
     setCP(response);
   };
 
@@ -52,7 +49,7 @@ export default function ResetPassword() {
       const updateFields = {
         password
       };
-      await axios.put(`http://localhost:8070/serviceprovider/update/${Sname}`,updateFields);
+      await axios.put(`http://localhost:8070/BranchDetails/update/${objectId}`,updateFields);
       
       setIP(false);
       setCurrent("");
