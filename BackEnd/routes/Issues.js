@@ -11,6 +11,7 @@ router.route("/add").post((req, res) => {
   
 
   const newIssue = new Issue({
+    
     Name,
     ContactNo,
     InvoiceNo,
@@ -19,7 +20,8 @@ router.route("/add").post((req, res) => {
     IssueInBrief,
     AudioUri,
     BranchDetails,
-    UserDetails
+    UserDetails,
+    
   });
 
   // Save the new issue to the database

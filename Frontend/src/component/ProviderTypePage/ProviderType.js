@@ -89,6 +89,8 @@ export default function ProviderType() {
       Desktop: selectedModels["Desktop"] || [],
       WashingMachine: selectedModels["Washing Machine"] || [],
       Television: selectedModels["Television"] || [],
+      Company:objectId
+    
     };
   
     axios.post("http://localhost:8070/Product/add",newProduct).then((response) => {

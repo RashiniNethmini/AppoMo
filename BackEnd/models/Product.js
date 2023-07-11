@@ -23,6 +23,10 @@ const productSchema = new Schema({
     type: [String],
     default:[]
   },
+  Company: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'ServiceProvider' 
+  }
 });
 
 const Product = mongoose.model("Product", productSchema);
