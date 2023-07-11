@@ -137,16 +137,16 @@ export const Signin = (props) => {
       
   };
 
-  const handleGoogleLoginSuccess = (response) => {
-    const { tokenId } = response;
-    console.log("Encoded JWT ID token: " + tokenId);
-    alert("Google Login Successful")
-    // Send the tokenId to the server for verification and further processing
-  };
+//   const handleGoogleLoginSuccess = (response) => {
+//     const { tokenId } = response;
+//     console.log("Encoded JWT ID token: " + tokenId);
+//     alert("Google Login Successful")
+//     // Send the tokenId to the server for verification and further processing
+//   };
 
-  const handleGoogleLoginFailure = (error) => {
-    console.log("Google login failed:", error);
-  };
+//   const handleGoogleLoginFailure = (error) => {
+//     console.log("Google login failed:", error);
+//   };
 
     return(
         <div className={styles.signContainer}>
@@ -196,7 +196,7 @@ export const Signin = (props) => {
                         <Link href="#">Register Now</Link>
                         
                      </div> 
-                    <div className={styles.GButton} onClick={handleGoogleLoginSuccess} id="signInDiv"></div> 
+                    {/* <div className={styles.GButton} onClick={handleGoogleLoginSuccess} id="signInDiv"></div>  */}
                     
                 </div>
             </div>
