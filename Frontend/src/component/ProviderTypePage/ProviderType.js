@@ -138,7 +138,7 @@ export default function ProviderType() {
       })
       .catch((error) => {
         console.log(error);
-        setError("Error occurred while fetching the product");
+        alert("Error occurred while fetching the product");
       });
   }, []);
 
