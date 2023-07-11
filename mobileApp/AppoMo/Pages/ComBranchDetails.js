@@ -371,7 +371,9 @@ import { BackHandler } from 'react-native';
     try {
       const response = await fetch("http://10.0.2.2:8070/BranchDetails/");
       const jsonData = await response.json();
-      setData(jsonData);
+      const filteredData = jsonData.filter(item => item.ServiceProvider === companyID);
+      setData(filteredData);
+      // setData(jsonData);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
