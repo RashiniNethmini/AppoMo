@@ -77,9 +77,11 @@ const NotificationInterface = () => {
               {data.map(item => (
                
                 <Link to={`/DateTimePicker/${objectId}/${item.BranchDetails}/${item._id}`} component={TouchableOpacity} style={styles.appButtonContainer} key={item._id}>
-                        <View><Text style={styles.appButtonText1}>{item.IssueInBrief}</Text>
-                        <Text style={styles.appButtonText1}>{objectId}</Text>
-                        <Text style={styles.appButtonText}>Pick a Date and Time </Text>
+                        <View><Text style={styles.appButtonText1}>Issue Accepted :</Text>
+                        <Text style={styles.appButtonText}>Pick a Date and Time   --></Text>
+                        <Text style={styles.appButtonText}>{item.Product}:  {item.Model}</Text>
+                        <Text style={styles.appButtonText}>Issue: {item.IssueInBrief} </Text>
+                        
                         </View>
                 </Link>
                 
@@ -90,7 +92,9 @@ const NotificationInterface = () => {
               {datar.map(item => (
                
                 <Link to={`/CompanyOrServiceCenter/${objectId}`} component={TouchableOpacity} style={styles.appButtonContainer} key={item._id}>
-                        <View><Text style={styles.appButtonText1}>{item.IssueInBrief}</Text>
+                        <View><Text style={styles.appButtonText1}>Issue Rejected :</Text>
+                        <Text style={styles.appButtonText}>{item.Product}:  {item.Model}</Text>
+                        <Text style={styles.appButtonText}>Issue: {item.IssueInBrief} </Text>
                         </View>
                 </Link>
                 
@@ -140,7 +144,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical:5,
     width:360,
-    height:85
+    height:110
     
   },
   appButtonText1: {

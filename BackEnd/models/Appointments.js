@@ -20,7 +20,7 @@ const appntmntSchema = new Schema({
     },
     InvoiceNo: {
         type: String,
-        required: true,
+        // required: true,
     },
     Product: {
         type: String,
@@ -38,10 +38,14 @@ const appntmntSchema = new Schema({
         type: String,
         required: true,
     },
-    Time: {
+    startTime: {
         type: String,
         required: true,
-    }, 
+    },   
+    endTime: {
+      type: String,
+      required: true,
+  }, 
     Checked:{
         type: Boolean,
         // required: true,

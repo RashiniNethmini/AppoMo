@@ -234,7 +234,7 @@ export default function CollapsibleTable() {
            <TableRow >
              
              <TableCell component="th" scope="row">
-             {a.Time} &nbsp;&nbsp;&nbsp;: No {a.AptNumber}
+             {a.startTime}-{a.endTime} &nbsp;&nbsp;&nbsp;: No {a.AptNumber}
              </TableCell>
              
              <TableCell align="right">{a.Name}
@@ -311,6 +311,10 @@ export default function CollapsibleTable() {
                        <TableCell>{a.Product}</TableCell>
                      </TableRow>
                      <TableRow>
+                       <TableCell>Model</TableCell>
+                       <TableCell>{a.Model}</TableCell>
+                     </TableRow>
+                     <TableRow>
                        <TableCell>Issue</TableCell>
                        <TableCell>{a.IssueInBrief}</TableCell>
                      </TableRow>
@@ -380,7 +384,7 @@ export default function CollapsibleTable() {
             <TableRow >
               
               <TableCell component="th" scope="row">
-              {a.Time} &nbsp;&nbsp;&nbsp;: No {a.AptNumber}
+              {a.startTime}-{a.endTime} &nbsp;&nbsp;&nbsp;: No {a.AptNumber}
               </TableCell>
               
               <TableCell align="right">{a.Name}
@@ -453,6 +457,10 @@ export default function CollapsibleTable() {
                         <TableCell>Product</TableCell>
                         <TableCell>{a.Product}</TableCell>
                       </TableRow>
+                      <TableRow>
+                       <TableCell>Model</TableCell>
+                       <TableCell>{a.Model}</TableCell>
+                     </TableRow>
                       <TableRow>
                         <TableCell>Issue</TableCell>
                         <TableCell>{a.IssueInBrief}</TableCell>

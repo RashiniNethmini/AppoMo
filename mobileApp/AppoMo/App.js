@@ -70,8 +70,8 @@ export default function App() {
       <Route path="/EditProfile" element={<EditProfile/>} /> 
       <Route path="/ResetPwd" element={<ResetPwd/>} /> 
       <Route path="/DateTimePicker/:objectId/:BranchDetails/:_id" element={<DateTimePicker/>} /> 
-      <Route path="/AdvPayment/:objectId/:BranchDetails/:issueId/:selectedDate/:selectedtime" element={<AdvPayment/>} /> 
-      <Route path="/Rating/:BranchDetails" element={<Rating/>}/>
+      <Route path="/AdvPayment/:objectId/:BranchDetails/:issueId/:selectedDate/:startTime/:endTime" element={<AdvPayment/>} /> 
+      <Route path="/Rating/:BranchDetails/:objectId" element={<Rating/>}/>
     </Routes>  
 
 
