@@ -22,8 +22,9 @@ function AdvPayment() {
   const {BranchDetails} = useParams();
   const {issueId} = useParams();
   const {selectedDate} = useParams();
-  const {selectedtime} = useParams();
-  const time=selectedtime;
+  const {startTime} = useParams();
+  const {endTime} = useParams();
+  // const time=selectedtime;
   const handleBackButton = () => {
     navigate(`/DateTimePicker/${objectId}/${BranchDetails}/${issueId}`,{objectId,BranchDetails,issueId});
     return true;
@@ -56,8 +57,6 @@ function AdvPayment() {
             // Perform payment deduction and send SMS using API
             performPaymentAndSendSMS();
 
-            
-          
 
             fetch(`http://10.0.2.2:8070/Issues/getAdv/${issueId}`, {
           method: 'GET',
@@ -90,7 +89,8 @@ function AdvPayment() {
                 "Checked":false,
                 "IssueInBrief": IssueInBrief,
                 "ApntmntDate":selectedDate, // Add the audio URI field
-                "Time":time,
+                "startTime":startTime,
+                "endTime":endTime,
                 "finalAmount":fAmount,
                 "Completed":false,
                 // Model:selectedModel,
@@ -112,7 +112,7 @@ function AdvPayment() {
             console.log(error);
           });
           console.log("Payment confirmed");
-          navigate(`/Rating/${BranchDetails}`,{BranchDetails});
+          navigate(`/Rating/${BranchDetails}/${objectId}`,{BranchDetails,objectId});
           },
         },
       ],
@@ -151,7 +151,7 @@ function AdvPayment() {
     //     });
     // };
     
-    axios.post("http://10.0.2.2:8070/Advpayment/payment", { mobileNumber: mobileNumber})
+    axios.post("http://10.0.2.2:5100/Advpayment/payment", { mobileNumber: mobileNumber})
         .then((response) => {
           console.log(response);
           console.log('Appointment status updated  and message sent successfully');

@@ -12,13 +12,14 @@ import { BackHandler } from 'react-native';
 export default function Rating() {
 
     const {BranchDetails} = useParams();
+    const {objectId} = useParams();
     // const BranchDetails='649fcfd20a1daddc6153e8ca';
    
     const [s, setS] = useState(null);
    
     const navigate = useNavigate();
     const handleBackButton = () => {
-      navigate(`/SelectServiceCenter/${objectId}`,{objectId});
+      navigate(`/CompanyOrServiceCenter/${objectId}`,{objectId});
       return true;
     };
   

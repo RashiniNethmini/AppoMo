@@ -49,9 +49,9 @@ return (
     <NavLink to={`/AppointmentConfirm/${objectId}`} activeStyle>
 			Issues
 		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
-		<NavLink to={`/EditProfileB/${objectId}`} activeStyle>
+		{/* <NavLink to={`/EditProfileB/${objectId}`} activeStyle>
 		Edit Profile
-		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp;
+		</NavLink>&nbsp;&nbsp;&nbsp;&nbsp; */}
 		<NavLink to={`/ResetPasswordB/${objectId}`} activeStyle>
 		Change Password
 		</NavLink>

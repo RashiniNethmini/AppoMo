@@ -9,7 +9,8 @@ router.route("/add").post((req, res) => {
     const Model = req.body.Model;
     const IssueInBrief = req.body.IssueInBrief;
     const ApntmntDate=  req.body.ApntmntDate;
-    const Time =  req.body.Time;
+    const startTime =  req.body.startTime;
+    const endTime =  req.body.endTime;
     const Checked = req.body.Checked;
     const Completed = req.body.Completed;
     const finalAmount = req.body.finalAmount;
@@ -24,7 +25,8 @@ router.route("/add").post((req, res) => {
         Model,
         IssueInBrief,
         ApntmntDate,
-        Time,
+        startTime,
+        endTime,
         Checked,
         Completed,
         finalAmount,
@@ -87,7 +89,7 @@ router.route('/groupedData').get(async (req, res) => {
               {
                 $sort: {
                   ApntmntDate: 1,
-                  Time:1 // Sort by ascending order of ApntmntDate field
+                  startTime:1 // Sort by ascending order of ApntmntDate field
                 }
               },
           {
@@ -99,7 +101,7 @@ router.route('/groupedData').get(async (req, res) => {
               //     date: '$ApntmntDate'
               //   }
               // },
-              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time',UserDetails:'$UserDetails',BranchDetails:'$BranchDetails' }},
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', startTime: '$startTime', endTime: '$endTime',UserDetails:'$UserDetails',BranchDetails:'$BranchDetails' }},
             },
           },
         ]);
@@ -125,7 +127,7 @@ router.route('/groupedData').get(async (req, res) => {
               {
                 $sort: {
                   ApntmntDate: -1,
-                  Time:-1 // Sort by ascending order of ApntmntDate field
+                  startTime:-1 // Sort by ascending order of ApntmntDate field
                 }
               },
           {
@@ -137,7 +139,7 @@ router.route('/groupedData').get(async (req, res) => {
           //     date: '$ApntmntDate'
           //   }
           // },
-              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', Time: '$Time',UserDetails:'$UserDetails',BranchDetails:'$BranchDetails' }},
+              details: { $push: { _id: '$_id', AptNumber: '$AptNumber', Name: '$Name', ContactNo: '$ContactNo', InvoiceNo: '$InvoiceNo', Product: '$Product', Model: '$Model', Checked: '$Checked', IssueInBrief: '$IssueInBrief', startTime: '$startTime', endTime: '$endTime',UserDetails:'$UserDetails',BranchDetails:'$BranchDetails' }},
             },
           },
         ]);

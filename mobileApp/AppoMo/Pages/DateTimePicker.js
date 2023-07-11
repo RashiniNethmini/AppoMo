@@ -168,7 +168,7 @@ const DateTimePicker = () => {
 
                   <Text style={styles.timeSlotText}>Do you want to schedule an appointment?</Text>
                   <Link
-                    to={`/AdvPayment/${objectId}/${BranchDetails}/${issueId}/${selectedDate}/${selectedTimeSlot.startTime}-${selectedTimeSlot.endTime}`}
+                    to={`/AdvPayment/${objectId}/${BranchDetails}/${issueId}/${selectedDate}/${selectedTimeSlot.startTime}/${selectedTimeSlot.endTime}`}
                     // to={`/AdvPayment/${objectId}/${BranchDetails}/${issueId}/${selectedDate}/${selectedTimeSlot.startTime}-${endTime}`}
                     component={TouchableOpacity}
                     onPress={() => handleAppointmentConfirmation()}
