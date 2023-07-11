@@ -19,9 +19,9 @@ router.post('/send-invoice', async (req, res) => {
 
     // Compose the email message
     const mailOptions = {
-      from: 'nadunidhanushika@gmail.com', // Replace with your email address
-      to: email, // Email address to which the invoice will be sent
-      subject: 'Invoice',
+      from: 'nadunidhanushika@gmail.com', 
+      to: email, 
+      subject: 'Invoice for Device Repair Services',
       html: invoiceHTML, // Use the HTML content received from the frontend
     };
 

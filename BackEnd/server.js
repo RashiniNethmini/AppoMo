@@ -67,20 +67,23 @@ app.use("/SignUpDetails", SignUpDetailsRouter);
 const issueRouter = require('./routes/Issues.js');
 app.use('/Issues', issueRouter);
 
-const issueDetailsRouter = require('./routes/IssuesDetails.js');
-app.use('/IssuesDetails', issueDetailsRouter);
+const issueDetailsRoute = require('./routes/IssuesDetails.js');
+app.use('/IssuesDetails', issueDetailsRoute);
+
+const scheduleRoute = require('./routes/BranchAvailability.js');
+app.use('/BranchAvailability', scheduleRoute);
 
 const appointmentRouter = require('./routes/Appointments.js');
 app.use('/Appointments', appointmentRouter);
 
-const finalAmountRouter = require('./routes/FinalAmount.js');
-app.use('/FinalAmount', finalAmountRouter);
+const finalAmountRoute = require('./routes/FinalAmount.js');
+app.use('/FinalAmount', finalAmountRoute);
 
 const sendMsgRouter = require('./APIs/TerminationSMS.js');
 app.use('/TerminationSMS', sendMsgRouter);
 
-const invoiceRoutes = require('./routes/Invoice.js');
-app.use('/Invoice', invoiceRoutes);
+const invoiceRoute = require('./routes/Invoice.js');
+app.use('/Invoice', invoiceRoute);
 
 
 

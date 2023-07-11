@@ -52,15 +52,15 @@ const appntmntSchema = new Schema({
     },
     finalAmount: {
       type: Number,
-      required: true,
+      default: 0,
     }, 
     BranchDetails: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'BranchDetails' 
     }, 
     UserDetails: { 
-          type: mongoose.Schema.Types.ObjectId, 
-          ref: 'UserDetails' 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'UserDetails' 
     }
 });
 
