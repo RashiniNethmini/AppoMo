@@ -20,6 +20,11 @@ export default function FirstPage() {
     const handleOnClose = () => {
       setOpenn(false);
     };
+
+    const pstyles = {
+      textAlign: 'justify'
+    };
+    
   return (
 <div>
     <div style={{display:'flex', flexDirection: 'row-reverse',marginTop:20}}>
@@ -68,13 +73,19 @@ export default function FirstPage() {
         <Paper elevation={6} className={styles.paper}>
           <div className={styles.description}>
             <div className={styles.heading}>
-              <h3>Welcome to,</h3>
-              <div className={styles.titles1}>
-                <br /><h1>AppoMo</h1>
-              </div>
+            
+              <h1>Welcome to  AppoMo!  </h1> 
+              <h1>   </h1>
+
+              {/* <div className={styles.titles1}> */}
+                {/* <h1>AppoMo</h1> */}
+              {/* </div> */}
+              
             </div>
-            <p>
-              The ultimate appointment management system designed exclusively for electronic device repairing companies. With our intuitive web application, you can effortlessly view customer issues and accept them with just a few clicks. Stay organized and never miss a beat as you keep track of scheduled appointments made by your valuable customers. Dive deeper into the details and effortlessly manage payments related to appointments. Experience the convenience and efficiency of AppoMo, your one-stop solution for streamlined appointment management.
+            <p style={pstyles}>
+              The ultimate appointment management system designed exclusively for electronic device repairing companies. With our intuitive web application, you can effortlessly view customer issues and accept them with just a few clicks.<br/> Stay organized and never miss a beat as you keep track of scheduled appointments made by your valuable customers. Dive deeper into the details and effortlessly manage payments related to appointments.
+              <br/>   
+              Experience the convenience and efficiency of AppoMo, your one-stop solution for streamlined appointment management.
             </p>
           </div>
           <div className={`${styles.imageContainer} image-container`}>
