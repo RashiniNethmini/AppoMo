@@ -399,7 +399,7 @@ const  validatePassword = (password)=> {
 
   const handleManNameChange = (event) => {
     setManName(event.target.value);
-    if (!validateBrName(event.target.value)) {
+    if (!validateManName(event.target.value)) {
       setManNameError('*Name should contain alphabets ,spaces and fullstops only');
     } else {
       setManNameError('');
@@ -487,16 +487,16 @@ const handlePasswordChange = (event) => {
   // Fetch table data from the backend on page load
   useEffect(() => {
     getData();
-  }, []);
+  }, [objectId]);
 
 
   const getData = () => {
     fetch('http://localhost:8070/BranchDetails/')
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setTableData(data);
-
+      .then((brdata) => {
+        console.log(brdata);
+        const filteredData = brdata.filter((branch) => branch.ServiceProvider === objectId);
+        setTableData(filteredData);
       })
       .catch((error) => {
         console.log(error);
@@ -649,7 +649,7 @@ const handlePasswordChange = (event) => {
     { id: 'password', label: 'Branch Password', Width: 300, align: 'center' },
   ];
 
-  const ServiceProvider = "648661d73faee59051640f01";
+   //const ServiceProvider = "648661d73faee59051640f01";
 
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
@@ -675,7 +675,7 @@ const handlePasswordChange = (event) => {
         DaysOpen: opdays,
         Username: username,
         Password: password,
-        ServiceProvider: ServiceProvider
+        ServiceProvider: objectId
 
       };
       console.log('Submit button pressed');
@@ -698,7 +698,7 @@ const handlePasswordChange = (event) => {
           "daysopen": opdays,
           "username": username,
           "password":password,
-          "ServiceProvider": ServiceProvider
+          "ServiceProvider": objectId
 
 
         })
@@ -771,7 +771,7 @@ const handlePasswordChange = (event) => {
           "daysopen": opdays,
           "username": username,
           "password":password,
-          "ServiceProvider": ServiceProvider
+          "ServiceProvider": objectId
 
 
         })
