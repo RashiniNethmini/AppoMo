@@ -137,13 +137,32 @@ export default function BranchForm() {
       });
   };
 
-    const handleDeleteTimeSlot = (dateIndex, timeSlotIndex) => {
+  const handleDeleteTimeSlot = (dateIndex, timeSlotIndex) => {
     setSelectedDates((prevSelectedDates) => {
       const updatedDates = [...prevSelectedDates];
       const timeSlots = updatedDates[dateIndex].timeSlots;
       timeSlots.splice(timeSlotIndex, 1);
       return updatedDates;
     });
+    fetch(`http://localhost:8070/BranchAvailability/deleteTimeSlot/${dateIndex}/${timeSlotIndex}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        branchId: selectedBranchId, // Replace with the actual branch ID
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Time Slot deleted successfully:", data);
+        alert("Time Slot deleted successfully");
+      })
+      .catch(error => {
+        console.error("Error deleting data:", error);
+        alert("Failed to delete data");
+      });
+  
   };
 
   const handleDeleteDate = (dateIndex) => {
@@ -152,6 +171,25 @@ export default function BranchForm() {
       updatedDates.splice(dateIndex, 1);
       return updatedDates;
     });
+
+    fetch(`http://localhost:8070/BranchAvailability/deleteDate/${dateIndex}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        branchId: selectedBranchId, // Replace with the actual branch ID
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Date deleted successfully:", data);
+        alert("Date deleted successfully");
+      })
+      .catch(error => {
+        console.error("Error deleting data:", error);
+        alert("Failed to delete data");
+      });
   };
 
   const handleCloseError = () => {
@@ -182,36 +220,6 @@ export default function BranchForm() {
     setOpenTimeSlotDialog(false);
   };
 
-  // const saveBranchAvailability = () => {
-  //   const data = {
-  //     branchId: selectedBranchId, // Use the selected branch ID
-  //     dates: selectedDates.map((dateObj) => {
-  //       return {
-  //         date: dateObj.date,
-  //         timeSlots: dateObj.timeSlots.map((timeSlot) => {
-  //           return {
-  //             startTime: timeSlot.start,
-  //             endTime: timeSlot.end,
-  //             currNoOfAppointment: 0, // Set the initial value to 0
-  //           };
-  //         }),
-  //       };
-  //     }),
-  //   };
-
-  //   // Send a POST request to the backend API to save the data
-  //   axios.post("http://localhost:8070/BranchAvailability/add", data)
-  //     .then((response) => {
-  //       console.log("Data saved successfully:", response.data);
-  //       alert('Data saved successfully');
-  //       setSelectedDates([]);
-  //       setOpen(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error saving data:", error);
-  //       alert('Failed to save data');
-  //     });
-  // };
   const saveBranchAvailability = () => {
     if (selectedDates.length === 0) {
       alert("Please select at least one date");
@@ -247,31 +255,30 @@ export default function BranchForm() {
         };
       }),
     };
-  
-    // Send a POST request to the backend API to save the data
+
     axios
-      .post("http://localhost:8070/BranchAvailability/add", data)
-      .then((response) => {
-        console.log("Data saved successfully:", response.data);
-        alert("Data saved successfully");
-        setSelectedDates([]);
-        setOpenTimeSlotDialog(false);
-      })
-      .catch((error) => {
-        console.error("Error saving data:", error);
-        alert("Failed to save data");
-      });
+    .post('http://localhost:8070/BranchAvailability/save', data)
+    .then((response) => {
+      console.log('Data saved successfully:', response.data);
+      alert('Data saved successfully');
+      setSelectedDates([]);
+      setOpenTimeSlotDialog(false);
+    })
+    .catch((error) => {
+      console.error('Error saving data:', error);
+      alert('Failed to save data');
+    });
   };
 
   const validateBrName = (brName) => {
     const regex = /^[a-zA-Z\s]*$/;
     return brName.trim() !== '' && regex.test(brName);
-  }
+  };
 
   const validateManName = (manName) => {
     const regex = /^[a-zA-Z\s.]+$/;
     return manName.trim() !== '' && regex.test(manName);
-  }
+  };
 
   const validateAddress = (address) => {
     const regex = /^[a-zA-Z0-9\s./,]+$/;
@@ -1237,13 +1244,6 @@ const handlePasswordChange = (event) => {
             </Dialog>
 
 </div>
-
-
-
-
-
-
-
           <TableContainer  >
             <Table stickyHeader aria-label="sticky table">
               <TableHead >

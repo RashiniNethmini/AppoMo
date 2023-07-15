@@ -13,7 +13,7 @@ const DateTimePicker = () => {
   const {BranchDetails} = useParams();
   const {_id} = useParams();
   const issueId=_id;
-  const branchid = '649ff4ae0a1daddc6153e8f2';
+  const branchid = BranchDetails;
 
   const handleBackButton = () => {
     navigate(`/NotificationInterface/${objectId}`,{objectId});
@@ -25,7 +25,6 @@ const DateTimePicker = () => {
     return () => backHandler.remove();
   }, [handleBackButton]);
  
-  
   const [selectedDate, setSelectedDate] = useState(null);
   const [showTimeSlots, setShowTimeSlots] = useState(false);
   const [showCalendar, setShowCalendar] = useState(true);
@@ -81,7 +80,7 @@ const DateTimePicker = () => {
           return { ...slot, currNoOfAppointment, available };
         });
         setTimeSlots(updatedTimeSlots);
-        // setTimeSlots(fetchedTimeSlots);
+
       } else {
         console.error('Error fetching time slots');
         setTimeSlots([]);
@@ -182,26 +181,6 @@ const DateTimePicker = () => {
                   >
                     <Text style={styles.timeSlotButtonText}>Cancel</Text>
                   </TouchableOpacity>
-
-{/* <Text style={styles.timeSlotText}>Do you want to schedule an appointment?</Text>
-<TouchableOpacity
-  onPress={() => {
-    handleAppointmentConfirmation();
-    navigate(
-      `/AdvPayment/${objectId}/${BranchDetails}/${issueId}/${selectedDate}/${selectedTimeSlot.startTime}-${selectedTimeSlot.endTime}`,
-      { objectId }
-    );
-  }}
-  style={styles.timeSlotButton}
->
-  <Text style={styles.timeSlotButtonText}>Yes</Text>
-</TouchableOpacity>
-    <TouchableOpacity
-      onPress={handleAppointmentConfirmation}
-      style={styles.timeSlotButton}
-    >
-      <Text style={styles.timeSlotButtonText}>Cancel</Text>
-    </TouchableOpacity> */}
                 </View>
               ) : (
                 <View>
