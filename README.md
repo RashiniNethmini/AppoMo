@@ -27,4 +27,12 @@ ReactJs, React Native, NodeJs, MongoDB
 # ER Diagram
 ![er](https://github.com/RashiniNethmini/AppoMo/assets/88890398/70c98e5b-06bc-4f8f-bc45-413602f6875f)
 
+# Contributors
+- [Rashini Nethmini](https://github.com/RashiniNethmini)
+- [Prasadi Sankalpana](https://github.com/BLPSankalpana)
+- [Anudhi Disara](https://github.com/AnudhiDisara).
+- [Naduni Jayasinghe](https://github.com/NDJayasinghe).
+- [Gimhani Uththara](https://github.com/GVGUththara).
+
+
 
