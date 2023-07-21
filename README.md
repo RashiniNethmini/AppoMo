@@ -23,3 +23,8 @@ Appomo is a booking system with a mobile and web application designed exclusivel
 
 # Technologies & Database
 ReactJs, React Native, NodeJs, MongoDB
+
+# ER Diagram
+![er](https://github.com/RashiniNethmini/AppoMo/assets/88890398/70c98e5b-06bc-4f8f-bc45-413602f6875f)
+
+
